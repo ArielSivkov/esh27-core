@@ -1,0 +1,385 @@
+openapi: 3.0.3
+info:
+  title: esh27-core LLM Microservice
+  description: >
+    Production-ready OpenAPI spec for the esh27 AI ecosystem microservices backend.
+    Endpoints: /v1/generate, /v1/citation/verify, /v1/plagiarism/check, /v1/embeddings, /v1/memory/query, /health
+  version: "1.0.0"
+servers:
+  - url: https://api.example.com
+    description: Production server (replace with your Cloud Run URL)
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    GenerateRequest:
+      type: object
+      required:
+        - prompt
+      properties:
+        prompt:
+          type: string
+          description: The text prompt to generate from.
+          example: "Write a concise summary of the latest esh27 design meeting."
+        mode:
+          type: string
+          description: "Mode of generation. 'chat' or 'completion'"
+          example: "chat"
+        language:
+          type: string
+          description: "Language code (ISO)."
+          example: "en"
+        length:
+          type: integer
+          description: "Maximum output tokens (heuristic)."
+          example: 256
+        conversation_id:
+          type: string
+          description: "Optional conversation identifier for context continuity."
+          example: "conv-1234"
+        model:
+          type: string
+          description: "Optional model override. Defaults to gemini-2.5-flash"
+          example: "gemini-2.5-flash"
+
+    GenerateUsage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+        estimated_cost_usd:
+          type: number
+          format: float
+
+    GenerateResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        model:
+          type: string
+        text:
+          type: string
+        sanitized_text:
+          type: string
+        usage:
+          $ref: '#/components/schemas/GenerateUsage'
+        meta:
+          type: object
+          additionalProperties: true
+
+    CitationVerifyRequest:
+      type: object
+      required:
+        - content
+        - citations
+      properties:
+        content:
+          type: string
+          example: "The esh27 microservices use Cloud Run for deployments."
+        citations:
+          type: array
+          items:
+            type: object
+            properties:
+              citation_id:
+                type: string
+                example: "cite-1"
+              text:
+                type: string
+                example: "Cloud Run scales serverless containers in GCP."
+              url:
+                type: string
+                example: "https://cloud.google.com/run"
+
+    CitationVerifyResponse:
+      type: object
+      properties:
+        verified:
+          type: boolean
+        details:
+          type: object
+          additionalProperties: true
+
+    PlagiarismCheckRequest:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          type: string
+          example: "A large number of microservices were deployed..."
+        language:
+          type: string
+          example: "en"
+
+    PlagiarismCheckResponse:
+      type: object
+      properties:
+        plagiarism_score:
+          type: number
+          format: float
+          description: "Normalized 0.0-1.0 score, 1.0 is exact match"
+        matches:
+          type: array
+          items:
+            type: object
+            properties:
+              source:
+                type: string
+              excerpt:
+                type: string
+              similarity:
+                type: number
+                format: float
+
+    EmbeddingsRequest:
+      type: object
+      required:
+        - input
+      properties:
+        input:
+          type: array
+          items:
+            type: string
+          description: "Array of texts to embed"
+          example: ["esh27 microservices architecture", "Cloud Run deployment guide"]
+
+    EmbeddingsResponse:
+      type: object
+      properties:
+        embeddings:
+          type: array
+          items:
+            type: object
+            properties:
+              input:
+                type: string
+              vector:
+                type: array
+                items:
+                  type: number
+                  format: float
+
+    MemoryQueryRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          example: "What did we decide about autoscaling last sprint?"
+        top_k:
+          type: integer
+          example: 5
+
+    MemoryQueryResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              text:
+                type: string
+              score:
+                type: number
+
+  responses:
+    HealthCheck:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              uptime_seconds:
+                type: number
+            example:
+              status: "ok"
+              uptime_seconds: 12345.6
+
+paths:
+  /v1/generate:
+    post:
+      summary: Generate text using Vertex (Gemini)
+      operationId: generate
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateRequest'
+      responses:
+        '200':
+          description: Generation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateResponse'
+              examples:
+                basic:
+                  value:
+                    id: "gen-uuid-1"
+                    model: "gemini-2.5-flash"
+                    text: "Assistant: Hello! Here's the summary..."
+                    sanitized_text: "Hello! Here's the summary..."
+                    usage:
+                      prompt_tokens: 50
+                      completion_tokens: 80
+                      total_tokens: 130
+                      estimated_cost_usd: 0.0039
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+
+  /v1/citation/verify:
+    post:
+      summary: Verify citations in content
+      operationId: verifyCitation
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CitationVerifyRequest'
+      responses:
+        '200':
+          description: Citation verification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CitationVerifyResponse'
+              examples:
+                ok:
+                  value:
+                    verified: true
+                    details:
+                      cite-1: "Found exact match on authoritative doc"
+        '400':
+          description: Bad request
+
+  /v1/plagiarism/check:
+    post:
+      summary: Check content for plagiarism
+      operationId: checkPlagiarism
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlagiarismCheckRequest'
+      responses:
+        '200':
+          description: Plagiarism check result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlagiarismCheckResponse'
+              examples:
+                sample:
+                  value:
+                    plagiarism_score: 0.12
+                    matches:
+                      - source: "https://example.com/article"
+                        excerpt: "A similar phrasing found..."
+                        similarity: 0.78
+
+  /v1/embeddings:
+    post:
+      summary: Generate embeddings for texts
+      operationId: embeddings
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbeddingsRequest'
+      responses:
+        '200':
+          description: Embeddings result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingsResponse'
+              examples:
+                sample:
+                  value:
+                    embeddings:
+                      - input: "esh27 microservices architecture"
+                        vector: [0.001, -0.002, 0.34]
+
+  /v1/memory/query:
+    post:
+      summary: Query conversation memory
+      operationId: memoryQuery
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemoryQueryRequest'
+      responses:
+        '200':
+          description: Memory query results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryQueryResponse'
+              examples:
+                sample:
+                  value:
+                    results:
+                      - id: "mem-1"
+                        text: "We will use Cloud Run for production"
+                        score: 0.92
+
+  /health:
+    get:
+      summary: Service health
+      operationId: health
+      responses:
+        '200':
+          $ref: '#/components/responses/HealthCheck'
+security:
+  - BearerAuth: []
+tags:
+  - name: generation
+    description: Text generation operations
+  - name: verification
+    description: Citation and plagiarism utilities
+  - name: embeddings
+    description: Embeddings and memory
