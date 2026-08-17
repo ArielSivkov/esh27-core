@@ -29,10 +29,10 @@ jobs:
       - name: Set up Docker Auth
         run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
-      # 4. בניית ה-Docker ע"י שרתי GitHub
+      # 4. בניית ה-Docker מתוך תיקיית backend
       - name: Build Docker Image
         run: |
-          docker build -t us-central1-docker.pkg.dev/esh27-unicorn-core/esh27-repo/backend:${{ github.sha }} -t us-central1-docker.pkg.dev/esh27-unicorn-core/esh27-repo/backend:latest .
+          docker build -f backend/Dockerfile -t us-central1-docker.pkg.dev/esh27-unicorn-core/esh27-repo/backend:${{ github.sha }} -t us-central1-docker.pkg.dev/esh27-unicorn-core/esh27-repo/backend:latest .
 
       # 5. דחיפה ל-Artifact Registry
       - name: Push to Artifact Registry
