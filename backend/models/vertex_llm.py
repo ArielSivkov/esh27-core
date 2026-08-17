@@ -54,7 +54,7 @@ logger.setLevel(logging.INFO)
 class GenerateRequest(BaseModel):
     prompt: str = Field(..., description="User prompt / message text")
     mode: Optional[str] = Field("chat", description="Mode of generation, e.g., 'chat' or 'completion'")
-    language: Optional[str] = Field("en", description="Language code (ISO), e.g., 'en', 'fr')
+    language: Optional[str] = Field("en", description="Language code (ISO), e.g., 'en', 'fr'")
     length: Optional[int] = Field(256, ge=1, le=65536, description="Approx maximum output tokens to generate")
     conversation_id: Optional[str] = Field(None, description="Optional conversation ID for context continuity")
     model: Optional[str] = Field("gemini-2.5-flash", description="Model identifier to use (defaults to Gemini 2.5 Flash)")
