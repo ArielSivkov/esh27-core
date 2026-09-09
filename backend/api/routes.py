@@ -15,6 +15,10 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import JSONResponse
 from typing import Optional, List, Dict, Any
 import time
+import os
+import logging
+import httpx
+import html
 
 from pydantic import BaseModel, Field
 
@@ -27,6 +31,45 @@ from backend.models.vertex_llm import (
 )
 
 router = APIRouter()
+
+logger = logging.getLogger("esh27-routes")
+
+async def send_telegram_notification(message: str) -> None:
+    bot_token = os.getenv("ESH27BOT")
+    chat_id = os.getenv("TELEGRAM_ADMIN_CHAT_ID")
+
+    if not bot_token or not chat_id:
+        logger.warning("Telegram credentials not configured. Skipping notification.")
+        return
+
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": message,
+        "parse_mode": "HTML"
+    }
+
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=payload, timeout=10.0)
+            response.raise_for_status()
+    except httpx.HTTPError as e:
+        logger.error(f"Failed to send Telegram notification: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to send notification"
+        )
+
+# New models for leads endpoint
+class LeadWorkRequest(BaseModel):
+    name: str = Field(..., description="Name of the contractor or daily worker")
+    phone: str = Field(..., description="Phone number")
+    city: str = Field(..., description="City")
+    trade: str = Field(..., description="Trade profession")
+    role: str = Field(..., description="Role")
+    count: int = Field(1, description="Count of workers")
+    notes: Optional[str] = Field(None, description="Additional notes")
+
 
 # Lightweight models for the other endpoints (these mirror openapi.yaml)
 class CitationVerifyRequest(BaseModel):
@@ -77,6 +120,27 @@ async def health():
 # Dependency provider for LLM instance
 def get_llm() -> VertexLLM:
     return get_default_llm()
+
+
+@router.post("/api/v1/leads/work", tags=["leads"])
+async def create_lead_work(req: LeadWorkRequest):
+    """
+    Capture a new contractor/daily worker lead.
+    Validates payload and sends an immediate Telegram notification.
+    """
+    message = (
+        f"<b>New Lead: {html.escape(req.role)}</b>\n"
+        f"<b>Name:</b> {html.escape(req.name)}\n"
+        f"<b>Phone:</b> <a href='tel:{html.escape(req.phone)}'>{html.escape(req.phone)}</a>\n"
+        f"<b>City:</b> {html.escape(req.city)}\n"
+        f"<b>Trade:</b> {html.escape(req.trade)}\n"
+        f"<b>Count:</b> {req.count}"
+    )
+    if req.notes:
+        message += f"\n<b>Notes:</b> {html.escape(req.notes)}"
+
+    await send_telegram_notification(message)
+    return JSONResponse(status_code=200, content={"status": "success", "message": "Lead captured successfully"})
 
 
 @router.post("/v1/generate", response_model=GenerateResponse, tags=["generation"])

@@ -18,7 +18,8 @@ RUN pip install --no-cache-dir \
     google-cloud-aiplatform \
     cachetools \
     tenacity \
-    pydantic
+    pydantic \
+    httpx
 
 # העתקת הקוד הקיים ברפוזיטורי
 COPY backend/ ./backend/
