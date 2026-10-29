@@ -18,7 +18,8 @@ RUN pip install --no-cache-dir \
     google-cloud-aiplatform \
     cachetools \
     tenacity \
-    pydantic
+    pydantic \
+    "mcp==2.3.0"
 
 # העתקת הקוד הקיים ברפוזיטורי
 COPY backend/ ./backend/

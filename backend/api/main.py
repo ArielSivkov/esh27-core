@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import logging
 import os
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import List, Optional
 
@@ -22,6 +23,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 # Import and mount router
+from backend.api import mcp_gateway
 from backend.api import routes as api_routes
 
 logger = logging.getLogger("esh27-core")
@@ -33,6 +35,17 @@ REDOC_URL = "/redoc"
 OPENAPI_JSON_URL = "/openapi.json"
 OPENAPI_YAML_PATH = Path(__file__).resolve().parents[2] / "openapi.yaml"  # repo-root/openapi.yaml
 
+# MCP gateway (streamable HTTP at /mcp). Its session manager runs inside our lifespan.
+mcp_app = mcp_gateway.http_app()
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    await startup_event()
+    async with mcp_app.router.lifespan_context(mcp_app):
+        yield
+
+
 app = FastAPI(
     title="esh27-core LLM Microservice",
     description="Core microservice for esh27 AI ecosystem",
@@ -40,6 +53,7 @@ app = FastAPI(
     docs_url=DOCS_URL,
     redoc_url=REDOC_URL,
     openapi_url=OPENAPI_JSON_URL,
+    lifespan=lifespan,
 )
 
 # CORS configuration
@@ -71,7 +85,6 @@ async def openapi_yaml():
     return JSONResponse(status_code=404, content={"detail": "openapi.yaml not found"})
 
 
-@app.on_event("startup")
 async def startup_event():
     """
     At startup, attempt to load openapi.yaml and use it as the app.openapi schema.
@@ -116,6 +129,11 @@ async def startup_event():
 @app.get("/", include_in_schema=False)
 async def root():
     return {"status": "ok", "service": "esh27-core"}
+
+
+# Mounted last so FastAPI routes match first; the MCP app only answers /mcp.
+app.add_middleware(mcp_gateway.BearerAuth)
+app.mount("/", mcp_app)
 
 
 if __name__ == "__main__":
