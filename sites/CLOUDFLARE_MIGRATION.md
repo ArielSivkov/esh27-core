@@ -15,7 +15,7 @@ scripts/import-hostinger-backup.sh /c/27Devs/_hostinger_backup_2026-10-30
 git status   # לעבור על הקבצים לפני קומיט
 ```
 
-הסקריפט מעתיק 11 תתי-דומיינים: shuru, ‏farms, ‏neomi, ‏jaale, ‏danda, ‏game, ‏academy, ‏status, ‏books, ‏news ו-security. כל אחד נכנס ל-`sites/<name>/`. הסקריפט משאיר בחוץ קבצי PHP, ‏`.htaccess`, ‏`default.php` של Hostinger וכל דבר שנראה כמו סוד, ומדפיס רשימה של מה שדילג עליו.
+הסקריפט מעתיק את החזית הסטטית של esh27.com (מתוך `esh27.com/static/` אל `sites/portal/`) ו-11 תתי-דומיינים: shuru, ‏farms, ‏neomi, ‏jaale, ‏danda, ‏game, ‏academy, ‏status, ‏books, ‏news ו-security. כל אחד נכנס ל-`sites/<name>/`. הסקריפט משאיר בחוץ קבצי PHP, ‏`.htaccess`, ‏`default.php` של Hostinger וכל דבר שנראה כמו סוד, ומדפיס רשימה של מה שדילג עליו.
 
 ## שלב 3: Cloudflare Pages
 
@@ -36,7 +36,7 @@ git status   # לעבור על הקבצים לפני קומיט
 
 ## שלב 5: esh27.com עצמו (WordPress)
 
-את WordPress אי אפשר להריץ ב-Pages. בחזית יש כבר `index.html` סטטי (31KB), ואותו מעלים כפרויקט `esh27-portal` עם הדומיין `esh27.com`. את תוכן ה-WordPress (מסד של 13MB) ממירים לסטטי, למשל עם התוסף Simply Static, לפני 2.11, או מוותרים עליו. **החלטה של אריאל.** גם `vrf/api.php` ו-`tikkun.php` לא ירוצו. צריך להחליט מה מהם נחוץ.
+את WordPress אי אפשר להריץ ב-Pages. בחזית יש כבר `index.html` סטטי (31KB). הסקריפט מעתיק אותו אל `sites/portal/`, והוא עולה כפרויקט `esh27-portal` עם הדומיין `esh27.com`. את תוכן ה-WordPress (מסד של 13MB) ממירים לסטטי, למשל עם התוסף Simply Static, לפני 2.11, או מוותרים עליו. **החלטה של אריאל.** גם `vrf/api.php` ו-`tikkun.php` לא ירוצו. צריך להחליט מה מהם נחוץ.
 
 ## הדואר (עד 2.12.2026)
 
@@ -44,4 +44,4 @@ git status   # לעבור על הקבצים לפני קומיט
 
 ## Firebase
 
-ה-workflow `deploy-hosting.yml` וקבצי `firebase.json` / `.firebaserc` הם הטיוטה הקודמת ל-Firebase. אם Cloudflare נבחר סופית, מוחקים אותם לפני המיזוג ל-main, כדי שלא ירוצו שתי פריסות.
+הטיוטה הקודמת ל-Firebase (`firebase.json`, ‏`.firebaserc` ו-`deploy-hosting.yml`) נמחקה בענף הזה ב-30.10, אחרי שבחרנו ב-Cloudflare. כך לא ירוצו שתי פריסות.

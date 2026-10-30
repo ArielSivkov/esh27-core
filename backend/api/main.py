@@ -43,8 +43,9 @@ app = FastAPI(
 )
 
 # CORS configuration
-# Default: esh27.com, its subdomains and Firebase Hosting domains. Override with CORS_ORIGINS (comma-separated).
-DEFAULT_CORS_ORIGIN_REGEX = r"https://(([a-z0-9-]+\.)?esh27\.com|[a-z0-9-]+\.(web\.app|firebaseapp\.com))"
+# Default: esh27.com, its subdomains and the sites' Cloudflare Pages domains (esh27-<name>.pages.dev and their
+# preview subdomains). Override with CORS_ORIGINS (comma-separated).
+DEFAULT_CORS_ORIGIN_REGEX = r"https://(([a-z0-9-]+\.)?esh27\.com|([a-z0-9-]+\.)?esh27-[a-z0-9-]+\.pages\.dev)"
 _cors_origins_env = os.getenv("CORS_ORIGINS", "").strip()
 origins: List[str] = [o.strip() for o in _cors_origins_env.split(",") if o.strip()]
 
