@@ -53,7 +53,41 @@ async def esh27_generate(prompt: str, language: str = "he", length: int = 512) -
     return resp.model_dump() if hasattr(resp, "model_dump") else dict(resp)
 
 
-TOOL_GROUPS = ["esh27"]
+TOOL_GROUPS = ["esh27", "control"]
+
+
+def _control():
+    from backend.control.router import get_control
+    return get_control()
+
+
+@server.tool()
+def ask_ariel(agent: str, question: str, options: list[str] | None = None,
+              urgency: str = "normal", sensitive: bool = False) -> dict:
+    """Ask Ariel a question through CrownBot (Telegram; phone call if 'blocking' and unanswered).
+
+    urgency: info | normal | blocking. sensitive=True for payments, uploads to the live
+    site or messages sent in Ariel's name: it needs a second confirmation in Telegram.
+    Returns the request with its id; poll get_ariel_answer. If it expires, do not act.
+    """
+    from backend.control.service import Paused
+    try:
+        return _control().ask(agent, question, options, urgency, sensitive).public()
+    except Paused as exc:
+        return {"status": "paused", "detail": str(exc)}
+
+
+@server.tool()
+def get_ariel_answer(request_id: str) -> dict:
+    """Status and answer of a request made with ask_ariel (open | answered | expired)."""
+    req = _control().store.get(request_id)
+    return req.public() if req else {"status": "not_found"}
+
+
+@server.tool()
+def control_status() -> dict:
+    """Whether Ariel paused all agents (/stop), and how many questions wait for him."""
+    return _control().status()
 
 try:
     from hub.mcp_server import land_tenders, residual_land_value, sale_deals_near

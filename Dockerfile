@@ -19,6 +19,9 @@ RUN pip install --no-cache-dir \
     cachetools \
     tenacity \
     pydantic \
+    httpx \
+    python-multipart \
+    tzdata \
     "mcp==2.3.0"
 
 # העתקת הקוד הקיים ברפוזיטורי

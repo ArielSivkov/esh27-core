@@ -12,6 +12,7 @@ ASGI entrypoint for the esh27-core FastAPI application.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
 from contextlib import asynccontextmanager
@@ -25,6 +26,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # Import and mount router
 from backend.api import mcp_gateway
 from backend.api import routes as api_routes
+from backend.control import router as control_router
 
 logger = logging.getLogger("esh27-core")
 logger.setLevel(os.getenv("LOG_LEVEL", "INFO"))
@@ -39,11 +41,27 @@ OPENAPI_YAML_PATH = Path(__file__).resolve().parents[2] / "openapi.yaml"  # repo
 mcp_app = mcp_gateway.http_app()
 
 
+async def _control_ticker(every: int):
+    """Run the HITL escalation ladder in-process (VPS / local). On Cloud Run use Cloud Scheduler → /control/tick."""
+    while True:
+        await asyncio.sleep(every)
+        try:
+            await asyncio.to_thread(control_router.get_control().tick)
+        except Exception:
+            logger.exception("control tick failed")
+
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     await startup_event()
-    async with mcp_app.router.lifespan_context(mcp_app):
-        yield
+    every = int(os.getenv("CONTROL_TICK_SECONDS", "0") or 0)
+    ticker = asyncio.create_task(_control_ticker(every)) if every > 0 else None
+    try:
+        async with mcp_app.router.lifespan_context(mcp_app):
+            yield
+    finally:
+        if ticker:
+            ticker.cancel()
 
 
 app = FastAPI(
@@ -73,6 +91,7 @@ app.add_middleware(
 
 # Include API routes
 app.include_router(api_routes.router)
+app.include_router(control_router.router)
 
 
 @app.get("/openapi.yaml", include_in_schema=False)
