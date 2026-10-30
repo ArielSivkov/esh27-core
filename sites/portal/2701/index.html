@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מעבדת הצופן התורני v5.5</title>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Recharts -->
+    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/recharts@2.12.3/umd/Recharts.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Frank+Ruhl+Libre:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: #0f172a; /* Darker background for the glow effect */
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+        
+        .torah-font {
+            font-family: 'Frank Ruhl Libre', serif;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .highlight-els {
+            background-color: #fbbf24;
+            color: #000;
+            font-weight: 800;
+            border-bottom: 2px solid #d97706;
+            display: inline-block;
+            box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(15, 23, 42, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            padding: 1rem;
+        }
+
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            font-weight: 800;
+            margin-top: 1em;
+            color: #312e81;
+        }
+        
+        /* Custom scrollbar for text viewer */
+        .custom-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+        const apiKey = ""; 
+        const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
+        
+        const RechartsObj = window.Recharts || {};
+        const { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = RechartsObj;
+
+        // --- SACRED ATMOSPHERE ANIMATION ---
+        const SacredAtmosphere = () => {
+            const canvasRef = useRef(null);
+
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let animationFrameId;
+                let frameCount = 0;
+
+                const resizeCanvas = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                const heb = "אבגדהוזחטיכלמנסעפצקרשת";
+                
+                // Falling Letters Configuration
+                const columns = Math.floor(window.innerWidth / 20);
+                const drops = Array(columns).fill(0).map(() => Math.random() * -100);
+                const speeds = Array(columns).fill(0).map(() => 0.5 + Math.random() * 0.8); // Slower, calmer
+                const glowIndices = new Set(); // Random glowing letters
+
+                // Tree of Life Coordinates (Relative 0-1)
+                const treeNodes = [
+                    {x:0.5, y:0.15}, // Keter
+                    {x:0.65, y:0.25}, {x:0.35, y:0.25}, // Chochmah, Binah
+                    {x:0.65, y:0.45}, {x:0.35, y:0.45}, // Chesed, Gevurah
+                    {x:0.5, y:0.55}, // Tiferet
+                    {x:0.65, y:0.75}, {x:0.35, y:0.75}, // Netzach, Hod
+                    {x:0.5, y:0.85}, // Yesod
+                    {x:0.5, y:1.0}   // Malchut
+                ];
+                
+                // Connections between nodes
+                const treeLines = [
+                    [0,1],[0,2],[1,2], // Top triangle
+                    [1,3],[2,4],[1,5],[2,5],[3,5],[4,5], // Middle
+                    [3,6],[4,7],[5,6],[5,7],[5,8],[6,8],[7,8], // Lower
+                    [8,9],[6,9],[7,9] // Bottom
+                ];
+
+                const draw = () => {
+                    frameCount++;
+                    
+                    // Clear with slight transparency for trail effect
+                    ctx.fillStyle = 'rgba(15, 23, 42, 0.15)'; // Deep blue dark background
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // --- 1. Draw Sacred Geometry (Tree of Life) ---
+                    const centerX = canvas.width / 2;
+                    const scaleY = canvas.height * 0.6; // Take up 60% height
+                    const offsetY = canvas.height * 0.2;
+                    const scaleX = Math.min(canvas.width * 0.8, 400); // Max width 400px
+
+                    // Pulse effect
+                    const pulse = (Math.sin(frameCount * 0.02) + 1) / 2; // 0 to 1
+                    const alphaGeo = 0.05 + (pulse * 0.08); // Very subtle
+
+                    ctx.strokeStyle = `rgba(255, 215, 0, ${alphaGeo})`; // Gold
+                    ctx.lineWidth = 1;
+
+                    // Draw Lines
+                    treeLines.forEach(([start, end]) => {
+                        const p1 = treeNodes[start];
+                        const p2 = treeNodes[end];
+                        
+                        // Map relative coords to screen
+                        const x1 = centerX + (p1.x - 0.5) * scaleX;
+                        const y1 = offsetY + p1.y * scaleY;
+                        const x2 = centerX + (p2.x - 0.5) * scaleX;
+                        const y2 = offsetY + p2.y * scaleY;
+
+                        ctx.beginPath();
+                        ctx.moveTo(x1, y1);
+                        ctx.lineTo(x2, y2);
+                        ctx.stroke();
+                    });
+
+                    // Draw Nodes (Sefirot)
+                    treeNodes.forEach((node, i) => {
+                        const x = centerX + (node.x - 0.5) * scaleX;
+                        const y = offsetY + node.y * scaleY;
+                        
+                        ctx.fillStyle = `rgba(100, 200, 255, ${alphaGeo * 1.5})`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+
+
+                    // --- 2. Draw Falling Letters ---
+                    ctx.font = '14px monospace';
+
+                    for (let i = 0; i < drops.length; i++) {
+                        // Wind effect using Sine wave
+                        const wind = Math.sin(frameCount * 0.01 + i) * 10;
+                        const x = i * 20 + wind;
+                        const y = drops[i];
+
+                        const char = heb.charAt(Math.floor(Math.random() * heb.length));
+                        
+                        // Random glow logic
+                        const isGlowing = Math.random() > 0.99;
+                        
+                        if (isGlowing) {
+                            ctx.fillStyle = '#fcd34d'; // Gold/Amber
+                            ctx.shadowBlur = 8;
+                            ctx.shadowColor = '#fbbf24';
+                        } else {
+                            ctx.fillStyle = '#475569'; // Slate-600 (Dim)
+                            ctx.shadowBlur = 0;
+                        }
+
+                        ctx.fillText(char, x, y);
+
+                        // Move drop
+                        drops[i] += speeds[i];
+
+                        // Reset when off screen
+                        if (drops[i] > canvas.height) {
+                            drops[i] = -20;
+                            // Randomize speed slightly again
+                            speeds[i] = 0.5 + Math.random() * 0.8;
+                        }
+                    }
+                    
+                    // Reset shadow for next frame
+                    ctx.shadowBlur = 0;
+
+                    animationFrameId = requestAnimationFrame(draw);
+                };
+                
+                draw();
+
+                return () => {
+                    window.removeEventListener('resize', resizeCanvas);
+                    cancelAnimationFrame(animationFrameId);
+                };
+            }, []);
+
+            return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />;
+        };
+
+        // --- DATA & MATH (Same as before) ---
+        const BOOKS = {
+            "Genesis": { he: "בראשית", chapters: 50, parashot: ["Bereshit", "Noach", "Lech Lecha", "Vayera", "Chayei Sara", "Toldot", "Vayetzei", "Vayishlach", "Vayeshev", "Miketz", "Vayigash", "Vayechi"] },
+            "Exodus": { he: "שמות", chapters: 40, parashot: ["Shemot", "Vaera", "Bo", "Beshalach", "Yitro", "Mishpatim", "Terumah", "Tetzaveh", "Ki Tisa", "Vayakhel", "Pekudei"] },
+            "Leviticus": { he: "ויקרא", chapters: 27, parashot: ["Vayikra", "Tzav", "Shmini", "Tazria", "Metzora", "Achrei Mot", "Kedoshim", "Emor", "Behar", "Bechukotai"] },
+            "Numbers": { he: "במדבר", chapters: 36, parashot: ["Bamidbar", "Nasso", "Beha'alotcha", "Sh'lach", "Korach", "Chukat", "Balak", "Pinchas", "Matot", "Masei"] },
+            "Deuteronomy": { he: "דברים", chapters: 34, parashot: ["Devarim", "Vaetchanan", "Eikev", "Re'eh", "Shoftim", "Ki Teitzei", "Ki Tavo", "Nitzavim", "Vayeilech", "Ha'Azinu", "V'Zot HaBerachah"] }
+        };
+
+        const PARASHA_NAMES = {
+            "Bereshit": "בראשית", "Noach": "נח", "Lech Lecha": "לך לך", "Vayera": "וירא", "Chayei Sara": "חיי שרה", "Toldot": "תולדות", "Vayetzei": "ויצא", "Vayishlach": "וישלח", "Vayeshev": "וישב", "Miketz": "מקץ", "Vayigash": "ויגש", "Vayechi": "ויחי",
+            "Shemot": "שמות", "Vaera": "וארא", "Bo": "בא", "Beshalach": "בשלח", "Yitro": "יתרו", "Mishpatim": "משפטים", "Terumah": "תרומה", "Tetzaveh": "תצוה", "Ki Tisa": "כי תשא", "Vayakhel": "ויקהל", "Pekudei": "פקודי",
+            "Vayikra": "ויקרא", "Tzav": "צו", "Shmini": "שמיני", "Tazria": "תזריע", "Metzora": "מצורע", "Achrei Mot": "אחרי מות", "Kedoshim": "קדושים", "Emor": "אמור", "Behar": "בהר", "Bechukotai": "בחוקתי",
+            "Bamidbar": "במדבר", "Nasso": "נשא", "Beha'alotcha": "בהעלותך", "Sh'lach": "שלח", "Korach": "קרח", "Chukat": "חוקת", "Balak": "בלק", "Pinchas": "פנחס", "Matot": "מטות", "Masei": "מסעי",
+            "Devarim": "דברים", "Vaetchanan": "ואתחנן", "Eikev": "עקב", "Re'eh": "ראה", "Shoftim": "שופטים", "Ki Teitzei": "כי תצא", "Ki Tavo": "כי תבוא", "Nitzavim": "ניצבים", "Vayeilech": "וילך", "Ha'Azinu": "האזינו", "V'Zot HaBerachah": "וזאת הברכה"
+        };
+
+        const MAPS = {
+            gematria: {'א':1,'ב':2,'ג':3,'ד':4,'ה':5,'ו':6,'ז':7,'ח':8,'ט':9,'י':10,'כ':20,'ל':30,'מ':40,'נ':50,'ס':60,'ע':70,'פ':80,'צ':90,'ק':100,'ר':200,'ש':300,'ת':400,'ך':20,'ם':40,'ן':50,'ף':80,'ץ':90},
+            ordinal: {'א':1,'ב':2,'ג':3,'ד':4,'ה':5,'ו':6,'ז':7,'ח':8,'ט':9,'י':10,'כ':11,'ל':12,'מ':13,'נ':14,'ס':15,'ע':16,'פ':17,'צ':18,'ק':19,'ר':20,'ש':21,'ת':22,'ך':11,'ם':13,'ן':14,'ף':17,'ץ':18},
+            atbash: {'א':'ת','ב':'ש','ג':'ר','ד':'ק','ה':'צ','ו':'פ','ז':'ע','ח':'ס','ט':'נ','י':'מ','כ':'ל','ל':'כ','מ':'י','נ':'ט','ס':'ח','ע':'ז','פ':'ו','צ':'ה','ק':'ד','ר':'ג','ש':'ב','ת':'א','ך':'ל','ם':'י','ן':'ט','ף':'ו','ץ':'ה'},
+            albam: {'א':'ל','ב':'מ','ג':'נ','ד':'ס','ה':'ע','ו':'פ','ז':'צ','ח':'ק','ט':'ר','י':'ש','כ':'ת','ל':'א','מ':'ב','נ':'ג','ס':'ד','ע':'ה','פ':'ו','צ':'ז','ק':'ח','ר':'ט','ש':'י','ת':'כ','ך':'ת','ם':'ב','ן':'ג','ף':'ו','ץ':'ז'},
+            milui: {'א':'אלף','ב':'בית','ג':'גימל','ד':'דלת','ה':'הא','ו':'ויו','ז':'זין','ח':'חית','ט':'טית','י':'יוד','כ':'כף','ל':'למד','מ':'מם','נ':'נון','ס':'סמך','ע':'עין','פ':'פא','צ':'צדי','ק':'קוף','ר':'ריש','ש':'שין','ת':'תיו','ך':'כף','ם':'מם','ן':'נון','ף':'פא','ץ':'צדי'}
+        };
+
+        const fmt = (n) => (typeof n === 'number' ? n.toLocaleString() : "0");
+        const cleanText = (text) => text ? text.replace(/[\u0591-\u05C7]/g, '').replace(/[^\u05D0-\u05EA]/g, '') : "";
+        const calcGem = (text, type) => {
+            const clean = cleanText(text);
+            if(!clean) return 0;
+            if(type === 'regular') return clean.split('').reduce((a,c)=>a+(MAPS.gematria[c]||0),0);
+            if(type === 'ordinal') return clean.split('').reduce((a,c)=>a+(MAPS.ordinal[c]||0),0);
+            if(type === 'atbash') return clean.split('').map(c=>MAPS.atbash[c]||c).reduce((a,c)=>a+(MAPS.gematria[c]||0),0);
+            if(type === 'albam') return clean.split('').map(c=>MAPS.albam[c]||c).reduce((a,c)=>a+(MAPS.gematria[c]||0),0);
+            if(type === 'milui') return clean.split('').reduce((a,c)=>a+calcGem(MAPS.milui[c]||'', 'regular'),0);
+            if(type === 'kolel') return calcGem(clean, 'regular') + clean.length;
+            return 0;
+        };
+        const calcSmall = (n) => { while(n>9) n = String(n).split('').reduce((a,b)=>a+parseInt(b),0); return n; };
+        const isTriangular = (n) => n > 0 && Number.isInteger((Math.sqrt(8*n+1)-1)/2);
+        const isPrime = (n) => { if(n<=1)return false; for(let i=2; i<=Math.sqrt(n); i++) if(n%i===0)return false; return true; };
+        const getEntropy = (text) => {
+            const len = text ? text.length : 0; if(len===0) return 0;
+            const freq = {}; for(let c of text) freq[c]=(freq[c]||0)+1;
+            return Object.values(freq).reduce((a,f) => a - (f/len)*Math.log2(f/len), 0);
+        };
+
+        // --- COMPONENTS ---
+        const Modal = ({ children, onClose, title }) => (
+            <div className="modal-overlay" onClick={onClose}>
+                <div className="bg-white rounded-xl shadow-2xl p-4 md:p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                    <div className="flex justify-between items-center mb-4 border-b pb-2 sticky top-0 bg-white z-10">
+                        <h3 className="text-xl font-bold text-slate-800">{title}</h3>
+                        <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full">
+                            <i data-lucide="x" className="w-6 h-6 text-slate-500"></i>
+                        </button>
+                    </div>
+                    {children}
+                </div>
+            </div>
+        );
+
+        const CalculationExplainer = ({ type, text }) => {
+            const clean = cleanText(text).substring(0, 50);
+            let explanation = [];
+            let title = "";
+
+            if (type === 'reg' || type === 'kolel' || type === 'small') {
+                title = "גימטריה רגילה";
+                explanation = clean.split('').map(c => ({ char: c, val: MAPS.gematria[c] || 0 }));
+            } else if (type === 'ordinal') {
+                title = "גימטריה סידורית";
+                explanation = clean.split('').map(c => ({ char: c, val: MAPS.ordinal[c] || 0 }));
+            } else if (type === 'atbash') {
+                title = "צופן אתב״ש";
+                explanation = clean.split('').map(c => ({ char: c, transformed: MAPS.atbash[c], val: MAPS.gematria[MAPS.atbash[c]] || 0 }));
+            } else if (type === 'albam') {
+                title = "צופן אלב״ם";
+                explanation = clean.split('').map(c => ({ char: c, transformed: MAPS.albam[c], val: MAPS.gematria[MAPS.albam[c]] || 0 }));
+            } else if (type === 'milui') {
+                title = "מילוי אותיות";
+                explanation = clean.split('').map(c => {
+                    const filled = MAPS.milui[c] || '';
+                    const val = calcGem(filled, 'regular');
+                    return { char: c, filled: filled, val: val };
+                });
+            } else { return <div>אין פירוט</div>; }
+
+            return (
+                <div className="space-y-4">
+                    <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
+                        <strong>איך זה מחושב?</strong> חישוב לפי שיטת {title}.
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-right whitespace-nowrap">
+                            <thead className="bg-slate-100 text-slate-600">
+                                <tr><th className="p-2">אות</th>{(type==='atbash'||type==='albam'||type==='milui') && <th className="p-2">המרה</th>}<th className="p-2">ערך</th></tr>
+                            </thead>
+                            <tbody>
+                                {explanation.map((item, i) => (
+                                    <tr key={i} className="border-b hover:bg-slate-50">
+                                        <td className="p-2 font-bold">{item.char}</td>
+                                        {(type==='atbash'||type==='albam'||type==='milui') && <td className="p-2">{item.filled||item.transformed}</td>}
+                                        <td className="p-2 font-mono text-indigo-600">{item.val}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            );
+        };
+
+        const Diagnostics = ({ onClose }) => {
+            const [results, setResults] = useState([]);
+            useEffect(() => {
+                const tests = [
+                    { name: "בדיקת גימטריה (א)", fn: () => calcGem('א', 'regular') === 1 },
+                    { name: "בדיקת אתב״ש (א=ת)", fn: () => calcGem('א', 'atbash') === 400 },
+                    { name: "בדיקת ניקוי טקסט", fn: () => cleanText("בְּרֵאשִׁית") === "בראשית" },
+                ];
+                setResults(tests.map(t => { try { return { name: t.name, passed: t.fn() }; } catch(e) { return { name: t.name, passed: false }; } }));
+            }, []);
+            const allPassed = results.every(r => r.passed);
+            return (
+                <div className="space-y-4">
+                    <div className={`p-4 rounded-lg font-bold text-center ${allPassed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {allPassed ? "מערכת תקינה" : "שגיאה בחישוב"}
+                    </div>
+                    <div className="grid grid-cols-1 gap-2">
+                        {results.map((r, i) => (
+                            <div key={i} className="flex justify-between p-2 border rounded"><span>{r.name}</span>{r.passed ? <span className="text-green-600">תקין</span> : <span className="text-red-600">נכשל</span>}</div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const Roadmap = () => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white/90 backdrop-blur p-6 rounded-xl card-shadow">
+                    <h3 className="font-bold text-lg mb-4 text-slate-700 flex items-center gap-2">
+                        <i data-lucide="map" className="w-5 h-5 text-indigo-500"></i> מפת דרכים
+                    </h3>
+                    <ul className="space-y-4">
+                        {[
+                            { title: "ייצוא דוחות PDF", desc: "שמירת תוצאות להדפסה.", status: "בתכנון" },
+                            { title: "מערכת משתמשים", desc: "שמירת מועדפים בענן.", status: "בתכנון" },
+                            { title: "צפנים מתקדמים", desc: "אח״ס בט״ע, דילוגים בריבוע.", status: "בפיתוח" },
+                            { title: "אופליין מלא", desc: "עבודה ללא אינטרנט.", status: "נשקל" }
+                        ].map((item, i) => (
+                            <li key={i} className="border-b pb-2 last:border-0">
+                                <div className="flex justify-between items-center"><span className="font-bold text-slate-800">{item.title}</span><span className="text-xs px-2 py-1 bg-slate-100 rounded-full text-slate-500">{item.status}</span></div>
+                                <p className="text-sm text-slate-500 mt-1">{item.desc}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="bg-gradient-to-br from-indigo-900 to-purple-900 p-6 rounded-xl card-shadow text-white flex flex-col justify-between">
+                    <div>
+                        <h3 className="font-bold text-2xl mb-4">יצירת קשר</h3>
+                        <p className="opacity-90 mb-6">רעיונות? באגים? דברו איתנו.</p>
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3 bg-white/10 p-4 rounded-lg">
+                                <i data-lucide="user" className="w-6 h-6"></i>
+                                <div><div className="text-xs opacity-70">מפתח ראשי</div><div className="font-bold text-lg">אריאל</div></div>
+                            </div>
+                            <a href="tel:0502525066" className="flex items-center gap-3 bg-white/10 p-4 rounded-lg hover:bg-white/20 transition">
+                                <i data-lucide="phone" className="w-6 h-6"></i>
+                                <div><div className="text-xs opacity-70">טלפון נייד</div><div className="font-bold text-lg font-mono">050-252-5066</div></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const StatCard = ({ label, value, sub, color, icon:Icon, onClick, type }) => (
+            <div onClick={() => onClick && onClick(type, label)} className={`bg-white/95 backdrop-blur p-4 rounded-xl border-t-4 border-${color}-500 shadow-sm hover:shadow-md transition cursor-pointer active:scale-95 group relative flex flex-col justify-between h-full`}>
+                <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition text-slate-300"><i data-lucide="info" className="w-4 h-4"></i></div>
+                <div className="flex justify-between items-start mb-2">
+                    <span className={`text-xs font-bold text-${color}-600 uppercase`}>{label}</span>
+                    {Icon && <Icon className={`w-5 h-5 text-${color}-400`} />}
+                </div>
+                <div className="text-2xl md:text-3xl font-bold text-slate-800 break-all">{value}</div>
+                {sub && <div className="text-xs text-slate-400 mt-1">{sub}</div>}
+            </div>
+        );
+
+        const Navigator = ({ onNavigate, current, onRunDiagnostics }) => {
+            const [book, setBook] = useState("Genesis");
+            const [parasha, setParasha] = useState("");
+            const [chapter, setChapter] = useState("");
+            const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile collapse state
+
+            useEffect(() => {
+                if(current) {
+                    const parts = current.split(' ');
+                    if(BOOKS[parts[0]]) setBook(parts[0]);
+                }
+                if(window.lucide) window.lucide.createIcons();
+            }, [current]);
+
+            const handleBook = (e) => { setBook(e.target.value); setParasha(""); setChapter(""); };
+            const handleParasha = (e) => { setParasha(e.target.value); setChapter(""); if(e.target.value) onNavigate(`Parashat ${e.target.value}`); };
+            const handleChapter = (e) => { setChapter(e.target.value); setParasha(""); if(e.target.value) onNavigate(`${book} ${e.target.value}`); };
+            const navStep = (d) => {
+                const curr = parseInt(chapter)||1;
+                const next = curr+d;
+                if(next>0 && next<=BOOKS[book].chapters) { setChapter(next); onNavigate(`${book} ${next}`); }
+            };
+
+            return (
+                <div className="bg-white/95 backdrop-blur p-4 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-lg font-bold text-slate-700 flex items-center gap-2">
+                            <i data-lucide="compass" className="w-5 h-5 text-indigo-600"></i> <span className="hidden md:inline">סייר התורה</span>
+                        </h2>
+                        
+                        <div className="flex gap-2">
+                            <button onClick={onRunDiagnostics} className="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-2 rounded-lg flex items-center gap-1 transition">
+                                <i data-lucide="stethoscope" className="w-3 h-3"></i> בדיקה
+                            </button>
+                            {/* Mobile Toggle */}
+                            <button onClick={()=>setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                                <i data-lucide={isMenuOpen ? "chevron-up" : "chevron-down"} className="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    {/* Collapsible Area on Mobile */}
+                    <div className={`${isMenuOpen ? 'block' : 'hidden'} md:block transition-all`}>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <select value={book} onChange={handleBook} className="w-full p-3 rounded-lg border bg-slate-50 custom-select outline-none focus:ring-2 focus:ring-indigo-200">
+                                {Object.keys(BOOKS).map(b => <option key={b} value={b}>{BOOKS[b].he}</option>)}
+                            </select>
+                            <select value={parasha} onChange={handleParasha} className="w-full p-3 rounded-lg border bg-slate-50 custom-select outline-none focus:ring-2 focus:ring-indigo-200">
+                                <option value="">בחר פרשה...</option>
+                                {BOOKS[book].parashot.map(p => <option key={p} value={p}>{PARASHA_NAMES[p]}</option>)}
+                            </select>
+                            <div className="flex gap-2">
+                                <button onClick={()=>navStep(-1)} className="p-3 border rounded-lg hover:bg-slate-100"><i data-lucide="chevron-right" className="w-5 h-5"></i></button>
+                                <select value={chapter} onChange={handleChapter} className="w-full p-3 rounded-lg border bg-slate-50 custom-select outline-none focus:ring-2 focus:ring-indigo-200">
+                                    <option value="">בחר...</option>
+                                    {[...Array(BOOKS[book].chapters)].map((_,i)=><option key={i+1} value={i+1}>{i+1}</option>)}
+                                </select>
+                                <button onClick={()=>navStep(1)} className="p-3 border rounded-lg hover:bg-slate-100"><i data-lucide="chevron-left" className="w-5 h-5"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const ELSViewer = ({ text }) => {
+            const [skip, setSkip] = useState(50);
+            const [results, setResults] = useState([]);
+            const [selected, setSelected] = useState(null);
+
+            const search = () => {
+                if(!text) return;
+                const hits = [];
+                const words = ["תורה", "אלוהים", "משיח", "ישראל", "גאולה", "שבת", "ציון", "אמת", "שלום"];
+                const maxRange = Math.min(text.length, 2500); 
+                for(let s=2; s<=120; s++) {
+                    for(let w of words) {
+                        for(let i=0; i<maxRange - (w.length*s); i++) {
+                            let match = true; let idxs = [];
+                            for(let k=0; k<w.length; k++) { if(text[i + k*s] !== w[k]) { match=false; break; } idxs.push(i + k*s); }
+                            if(match) hits.push({ word:w, skip:s, start:i, indices:idxs });
+                        }
+                    }
+                }
+                setResults(hits);
+            };
+
+            const highlightSet = new Set(selected?.indices || []);
+
+            return (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-1 bg-white/95 backdrop-blur p-4 rounded-xl card-shadow h-[300px] lg:h-[500px] flex flex-col">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="font-bold">תוצאות ELS</h3>
+                            <button onClick={search} className="bg-amber-100 text-amber-800 px-3 py-1 rounded text-sm font-bold hover:bg-amber-200">סרוק (2-120)</button>
+                        </div>
+                        <div className="flex-1 overflow-y-auto custom-scroll space-y-2 pr-2">
+                            {results.length === 0 ? <p className="text-center text-slate-400 mt-10">לחץ סרוק</p> : 
+                             results.map((r,i) => (
+                                 <div key={i} onClick={()=>setSelected(r)} className={`p-3 border rounded cursor-pointer flex justify-between ${selected===r ? 'bg-amber-50 border-amber-400' : 'hover:bg-slate-50'}`}>
+                                     <span className="font-bold">{r.word}</span>
+                                     <span className="text-xs bg-white border px-2 py-1 rounded">D={r.skip}</span>
+                                 </div>
+                             ))}
+                        </div>
+                    </div>
+                    <div className="lg:col-span-2 bg-white/95 backdrop-blur p-4 md:p-6 rounded-xl card-shadow h-[500px] overflow-y-auto custom-scroll">
+                        {/* Improved Text Display for Mobile */}
+                        <div className="torah-font text-lg md:text-xl leading-loose text-center md:text-justify" style={{direction:'rtl'}}>
+                            {text.split('').map((char, i) => (
+                                <span key={i} className={highlightSet.has(i) ? "highlight-els" : ""}>{char}</span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [ref, setRef] = useState("Genesis 1");
+            const [data, setData] = useState(null);
+            const [stats, setStats] = useState(null);
+            const [loading, setLoading] = useState(false);
+            const [tab, setTab] = useState("analysis");
+            const [aiResponse, setAiResponse] = useState("");
+            const [aiLoading, setAiLoading] = useState(false);
+            const [showDiagnostics, setShowDiagnostics] = useState(false);
+            const [calculationView, setCalculationView] = useState(null);
+
+            useEffect(() => { fetchData("Genesis 1"); if(window.lucide) window.lucide.createIcons(); }, []);
+
+            const fetchData = async (targetRef) => {
+                setLoading(true); setRef(targetRef); setStats(null); setData(null);
+                try {
+                    const res = await fetch(`https://www.sefaria.org/api/texts/${encodeURIComponent(targetRef)}?context=0&lang=he`);
+                    if(!res.ok) throw new Error("Failed");
+                    const json = await res.json();
+                    let raw = Array.isArray(json.he) ? json.he.flat(9).join(" ") : json.he;
+                    if (!raw) throw new Error("No Text");
+                    const div = document.createElement("div"); div.innerHTML = raw;
+                    const plain = div.textContent || "";
+                    const clean = cleanText(plain);
+                    
+                    const reg = calcGem(clean, 'regular');
+                    const dist = clean.split('').reduce((a,c)=>{a[c]=(a[c]||0)+1;return a},{});
+                    const distArray = Object.entries(dist).map(([k,v])=>({name:k, count:v})).sort((a,b)=>b.name.localeCompare(a.name));
+
+                    setStats({
+                        reg, atbash: calcGem(clean, 'atbash'), albam: calcGem(clean, 'albam'), milui: calcGem(clean, 'milui'), kolel: calcGem(clean, 'kolel'),
+                        small: calcSmall(reg), entropy: getEntropy(clean).toFixed(3), letters: clean.length, words: plain.split(/\s+/).length,
+                        isPrime: isPrime(reg), isTri: isTriangular(reg), dist: distArray
+                    });
+                    setData({ ref: json.ref || targetRef, original: plain, clean });
+                } catch(e) { 
+                    setData({ ref: targetRef, original: "שגיאה בטעינת הנתונים.", clean: "" });
+                    setStats({ reg:0, atbash:0, albam:0, milui:0, kolel:0, small:0, entropy:"0.00", letters:0, words:0, isPrime:false, isTri:false, dist:[] });
+                }
+                setLoading(false);
+            };
+
+            const askGemini = async (type) => {
+                if(!data || !stats) return;
+                setAiLoading(true); setAiResponse("");
+                const prompt = `Analyze Torah text "${data.ref}": ${data.clean.substring(0,500)}... Stats: Gem=${stats.reg}, Entropy=${stats.entropy}. Task: ${type === 'kabbalah' ? 'Deep Kabbalistic insight in Hebrew.' : 'Scientific/Mathematical analysis in Hebrew.'}`;
+                try {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`, {
+                        method: 'POST', headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    });
+                    const j = await res.json();
+                    setAiResponse(j.candidates?.[0]?.content?.parts?.[0]?.text || "שגיאה בבינה.");
+                } catch(e) { setAiResponse("שגיאת תקשורת."); }
+                setAiLoading(false);
+            };
+
+            return (
+                <div className="min-h-screen pb-20 relative">
+                    <SacredAtmosphere />
+                    
+                    <header className="bg-slate-900/90 backdrop-blur text-white p-4 shadow-lg sticky top-0 z-50 border-b border-indigo-500/30">
+                        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+                            <div>
+                                <h1 className="text-xl md:text-2xl font-bold flex items-center gap-3">
+                                    <span className="bg-indigo-600 p-2 rounded-lg shadow-lg shadow-indigo-500/50"><i data-lucide="cpu" className="w-5 h-5 md:w-6 md:h-6"></i></span>
+                                    מעבדת הצופן התורני
+                                </h1>
+                                <p className="text-indigo-200 text-xs mt-1 mr-12 font-mono">LAB VERSION 5.5</p>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-7xl mx-auto p-4 md:p-6 relative z-10">
+                        <Navigator onNavigate={fetchData} current={ref} onRunDiagnostics={() => setShowDiagnostics(true)} />
+
+                        {loading && <div className="text-center py-10 bg-white/80 rounded-xl animate-pulse"><div className="text-indigo-600 font-bold text-xl">טוען נתונים...</div></div>}
+
+                        {!loading && data && stats && (
+                            <div className="animate-fade-in space-y-6">
+                                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 bg-white/90 p-4 rounded-xl backdrop-blur-sm shadow-lg border border-white/50">
+                                    <div className="w-full md:w-auto">
+                                        <h2 className="text-2xl md:text-4xl font-extrabold text-slate-800">{data.ref}</h2>
+                                        <div className="flex gap-2 mt-2">
+                                            <span className="bg-slate-200 px-2 py-1 rounded text-xs font-bold text-slate-700">{fmt(stats.words)} מילים</span>
+                                            <span className="bg-slate-200 px-2 py-1 rounded text-xs font-bold text-slate-700">{fmt(stats.letters)} אותיות</span>
+                                        </div>
+                                    </div>
+                                    {/* Mobile Responsive Grid for Tabs */}
+                                    <div className="grid grid-cols-2 md:flex gap-2 w-full md:w-auto">
+                                        {[
+                                            {id:'analysis', l:'אנליזה', i:'bar-chart-2'},
+                                            {id:'els', l:'דילוגים', i:'code'},
+                                            {id:'ai', l:'בינה', i:'sparkles'},
+                                            {id:'roadmap', l:'פיתוח', i:'map'}
+                                        ].map(t => (
+                                            <button key={t.id} onClick={()=>setTab(t.id)} className={`px-3 py-3 rounded-lg font-bold flex flex-col md:flex-row gap-2 items-center justify-center transition shadow-sm text-sm ${tab===t.id ? 'bg-indigo-600 text-white shadow-indigo-200' : 'bg-white text-slate-600 hover:bg-slate-50'}`}>
+                                                <i data-lucide={t.i} className="w-5 h-5"></i> {t.l}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {tab === 'analysis' && (
+                                    <>
+                                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                                            <StatCard type="reg" onClick={(t,l) => setCalculationView({type:t, title:l})} label="רגיל" value={fmt(stats.reg)} sub={stats.isTri?"מספר משולש!":stats.isPrime?"מספר ראשוני!":null} color="indigo" />
+                                            <StatCard type="milui" onClick={(t,l) => setCalculationView({type:t, title:l})} label="מילוי" value={fmt(stats.milui)} color="blue" />
+                                            <StatCard type="atbash" onClick={(t,l) => setCalculationView({type:t, title:l})} label="אתב״ש" value={fmt(stats.atbash)} color="purple" />
+                                            <StatCard type="albam" onClick={(t,l) => setCalculationView({type:t, title:l})} label="אלב״ם" value={fmt(stats.albam)} color="fuchsia" />
+                                            <StatCard type="ordinal" onClick={(t,l) => setCalculationView({type:t, title:l})} label="סידורי" value={fmt(stats.ordinal)} color="sky" />
+                                            <StatCard type="kolel" onClick={(t,l) => setCalculationView({type:t, title:l})} label="עם הכולל" value={fmt(stats.kolel)} color="emerald" />
+                                            <StatCard type="entropy" label="אנטרופיה" value={stats.entropy} color="amber" />
+                                        </div>
+                                        <div className="bg-white/90 p-4 rounded-xl card-shadow h-80">
+                                            <h4 className="font-bold text-slate-500 mb-4">התפלגות אותיות</h4>
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                <BarChart data={stats.dist}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="name" /><Tooltip /><Bar dataKey="count" fill="#4f46e5" radius={[4,4,0,0]} /></BarChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    </>
+                                )}
+
+                                {tab === 'els' && <ELSViewer text={data.clean} />}
+
+                                {tab === 'ai' && (
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                        <div className="space-y-4">
+                                            <button onClick={()=>askGemini('kabbalah')} className="w-full p-4 rounded-xl bg-purple-100 text-purple-900 font-bold hover:bg-purple-200 flex gap-2 items-center justify-center border border-purple-300 shadow-sm">
+                                                <i data-lucide="sparkles" className="w-5 h-5"></i> סודות הקבלה
+                                            </button>
+                                            <button onClick={()=>askGemini('science')} className="w-full p-4 rounded-xl bg-blue-100 text-blue-900 font-bold hover:bg-blue-200 flex gap-2 items-center justify-center border border-blue-300 shadow-sm">
+                                                <i data-lucide="microscope" className="w-5 h-5"></i> ניתוח מדעי
+                                            </button>
+                                        </div>
+                                        <div className="col-span-3 bg-white/90 p-6 rounded-xl card-shadow min-h-[300px]">
+                                            {aiLoading ? <div className="space-y-4 animate-pulse"><div className="h-4 bg-slate-200 rounded w-3/4"></div><div className="h-4 bg-slate-200 rounded w-1/2"></div></div> : aiResponse ? <div className="markdown-content" dangerouslySetInnerHTML={{__html: marked.parse(aiResponse)}} /> : <div className="text-center text-slate-400 mt-20">בחר סוג ניתוח</div>}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {tab === 'roadmap' && <Roadmap />}
+                            </div>
+                        )}
+
+                        {showDiagnostics && <Modal title="בדיקת תקינות" onClose={() => setShowDiagnostics(false)}><Diagnostics /></Modal>}
+                        {calculationView && <Modal title={`פירוט חישוב: ${calculationView.title}`} onClose={() => setCalculationView(null)}><CalculationExplainer type={calculationView.type} text={data.clean} /></Modal>}
+                    </main>
+
+                    <footer className="bg-slate-900 text-slate-400 text-center p-6 mt-12 border-t border-slate-800">
+                        <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-sm">
+                            <span>פיתוח: אריאל</span>
+                            <span className="hidden md:inline text-slate-600">|</span>
+                            <a href="tel:0502525066" className="hover:text-indigo-400 transition flex items-center gap-2">
+                                <i data-lucide="phone" className="w-4 h-4"></i> 050-252-5066
+                            </a>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+

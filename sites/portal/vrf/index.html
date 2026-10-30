@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>אומן המיזוג - הנדסת אקלים</title>
+    <style>
+        body { margin: 0; padding: 0; background: #f4f7f9; font-family: Arial, sans-serif; height: 100vh; display: flex; flex-direction: column; }
+        header { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #ddd; }
+        header h1 { margin: 0; font-size: 18pt; color: #1a365d; }
+        header p { margin: 5px 0 0; font-size: 9pt; color: #3182ce; }
+        
+        #chatContainer { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 11pt; line-height: 1.4; word-break: break-word; }
+        .msg.bot { background: #fff; color: #333; align-self: flex-start; border: 1px solid #ddd; }
+        .msg.user { background: #1a365d; color: #fff; align-self: flex-end; }
+        
+        .footer { background: #fff; padding: 10px 15px; display: flex; gap: 10px; border-top: 1px solid #ddd; }
+        #userInput { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 20px; outline: none; font-size: 11pt; }
+        #sendBtn { background: #3182ce; color: #fff; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 14pt; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>אומן המיזוג</h1>
+        <p>מערכות VRF מתקדמות בהובלת קובי</p>
+    </header>
+
+    <div id="chatContainer">
+        <div class="msg bot">שלום רב! אני המומחה של אומן המיזוג. האם מדובר בנכס פרטי או מסחרי?</div>
+    </div>
+
+    <div class="footer">
+        <input type="text" id="userInput" placeholder="הקלד הודעה כאן..." autocomplete="off">
+        <button id="sendBtn" onclick="sendMessage()">➤</button>
+    </div>
+
+    <script>
+        console.log("Script loaded successfully!");
+
+        function appendMsg(text, sender) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.className = 'msg ' + sender;
+            div.textContent = text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // הצגת הודעת המשתמש מיד במסך
+            appendMsg(text, 'user');
+            input.value = '';
+
+            try {
+                const res = await fetch('api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                
+                const data = await res.json();
+                if (data && data.reply) {
+                    appendMsg(data.reply, 'bot');
+                } else {
+                    appendMsg("תשובה ריקה התקבלה מהמערכת.", 'bot');
+                }
+            } catch (err) {
+                appendMsg("שגיאת תקשורת מול השרת.", 'bot');
+            }
+        }
+
+        // אפשרות לשלוח גם בלחיצת Enter במקלדת
+        document.getElementById('userInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

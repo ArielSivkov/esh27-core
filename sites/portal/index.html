@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>ESH 27 · אש 27</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2307090b'/%3E%3Ctext x='32' y='47' font-family='serif' font-weight='900' font-size='44' text-anchor='middle' fill='%23eef2f3'%3E%D7%90%3C/text%3E%3C/svg%3E">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="ESH 27 היא קבוצה רב-תחומית: בנייה והנדסה, טכנולוגיה ו-AI, תורה וידע, ומותגים שאנחנו מקימים. כל החטיבות, הפרויקטים והחדשות במקום אחד.">
+<link rel="canonical" href="https://esh27.com/">
+<link rel="alternate" hreflang="he" href="https://esh27.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESH 27">
+<meta property="og:title" content="ESH 27 · אש שחורה על גבי אש לבנה">
+<meta property="og:description" content="קבוצה רב-תחומית: בנייה והנדסה, טכנולוגיה ו-AI, תורה וידע, ומותגים.">
+<meta property="og:url" content="https://esh27.com/">
+<meta property="og:locale" content="he_IL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#eef2f3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;900&family=Noto+Sans+Hebrew:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://esh27.com/#org",
+  "name": "ESH 27",
+  "alternateName": "אש 27",
+  "url": "https://esh27.com/",
+  "telephone": "+972-50-252-5066",
+  "areaServed": "IL",
+  "subOrganization": [
+    {"@type": "Organization", "name": "שורו – מבט אל המחר", "url": "https://shuru.esh27.com/"},
+    {"@type": "Organization", "name": "ESH27 Build & Facility · מפת החוות", "url": "https://farms.esh27.com/"},
+    {"@type": "Organization", "name": "אומן המיזוג", "url": "https://esh27.com/vrf/"},
+    {"@type": "Organization", "name": "D&A Aerospace & Robotics", "url": "https://danda.esh27.com/"},
+    {"@type": "Organization", "name": "ESH27 Security", "url": "https://security.esh27.com/"},
+    {"@type": "Organization", "name": "ESH27 Academy", "url": "https://academy.esh27.com/"},
+    {"@type": "Organization", "name": "ESH27 Books", "url": "https://books.esh27.com/"},
+    {"@type": "NewsMediaOrganization", "name": "27news", "url": "https://news.esh27.com/"},
+    {"@type": "Organization", "name": "ESH27 Games", "url": "https://game.esh27.com/"},
+    {"@type": "LocalBusiness", "name": "ג'עלה – פיצוחים בטעם טוב", "url": "https://jaale.esh27.com/", "address": {"@type": "PostalAddress", "streetAddress": "שבי ציון 2", "addressLocality": "אשדוד", "addressCountry": "IL"}},
+    {"@type": "LocalBusiness", "name": "נעמי אהרונוב – יופי וטיפוח", "url": "https://neomi.esh27.com/"}
+  ]
+}
+</script>
+<style>
+/* Layout: the hero is "white fire", a pale ground where black letters burn; the page then turns into "black fire" and reads like a sefer's table of contents, one division per chapter letter. */
+:root {
+  --parchment: #eef2f3;   /* white fire: cool pale ground of the hero */
+  --char: #07090b;        /* black fire: ink and the dark page */
+  --soot: #10151a;        /* raised surface on the dark page */
+  --ash: #8d99a4;         /* muted text on dark */
+  --ember: #00f3ff;       /* brand neon, used only on dark */
+  --flame: #0066ff;       /* brand blue */
+  --live: #3ddc97; --build: #ffc107; --plan: #6ea4ff; --vision: #c39bff;
+  --rule: #1c242c;
+  --display: "Frank Ruhl Libre", "David Libre", "Times New Roman", serif;
+  --sans: "Noto Sans Hebrew", "Arial Hebrew", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { margin: 0; background: var(--char); color: #eef2f3; font: 16px/1.65 var(--sans); }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; border-radius: 3px; }
+.pad { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 1200px; margin: 0 auto; }
+.eyebrow { font: 500 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+
+/* ---------- white fire ---------- */
+.hero { background: radial-gradient(ellipse 55% 65% at 72% 38%, #ffffff 0%, rgba(255,255,255,0) 70%), var(--parchment); color: var(--char); position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: .2; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.burn { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 26px; z-index: 3; display: block; }
+.burn path { fill: var(--char); }
+.hero nav { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 20px; position: relative; z-index: 2; }
+.hero nav .mark { font: 900 19px var(--display); text-decoration: none; }
+.hero nav .links { display: flex; gap: 22px; font-size: 15px; font-weight: 500; flex-wrap: wrap; }
+.hero nav .links a { text-decoration: none; opacity: .7; }
+.hero nav .links a:hover { opacity: 1; }
+.stage { position: relative; z-index: 1; padding-block: clamp(60px, 9vw, 120px) 0; }
+.word { position: relative; margin: 0; font: 900 clamp(150px, 31vw, 420px)/.82 var(--display); letter-spacing: -.02em; display: flex; align-items: flex-end; justify-content: flex-start; gap: .1em; white-space: nowrap; }
+.word .num { font: 500 .3em/1 var(--mono); letter-spacing: -.04em; align-self: flex-start; padding-top: .32em; color: var(--flame); }
+#fire { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.thesis { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: end; padding-block: 40px 36px; }
+@media (max-width: 760px) { .thesis { grid-template-columns: 1fr; gap: 18px; } }
+.thesis .eyebrow { color: #5b6772; margin-bottom: 10px; white-space: nowrap; font-size: clamp(9.5px, 2.5vw, 12px); letter-spacing: .1em; }
+.thesis h1 { margin: 0; font: 900 clamp(30px, 4.4vw, 52px)/1.08 var(--display); text-wrap: balance; }
+.thesis blockquote { margin: 10px 0 0; font: 500 14px var(--mono); color: #4a5560; }
+.thesis p { margin: 0; font-size: clamp(16px, 1.6vw, 19px); color: #36414b; max-width: 52ch; }
+.alefbet { position: relative; z-index: 2; border-top: 1.5px solid var(--char); padding-block: 14px 52px; display: grid; gap: 8px; }
+.letters { display: grid; grid-template-columns: repeat(27, minmax(0, 1fr)); font: 900 clamp(15px, 2.3vw, 30px)/1 var(--display); text-align: center; }
+.letters span { padding-block: 4px; transition: color .2s, transform .2s; cursor: default; }
+.letters span.sofit { color: var(--flame); }
+.letters span:hover, .letters span:focus { color: var(--flame); transform: translateY(-4px); outline: none; }
+.letters span:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; border-radius: 3px; }
+.alefbet .legend { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 500 12.5px var(--mono); color: #4a5560; }
+.alefbet .legend b { color: var(--flame); font-weight: 500; }
+@media (max-width: 520px) { .letters { grid-template-columns: repeat(14, minmax(0, 1fr)); row-gap: 6px; } }
+
+/* ---------- black fire ---------- */
+.verbs { border-bottom: 1px solid var(--rule); }
+.verbs .inner { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.verbs a { padding-block: 26px; padding-inline: 0 18px; border-inline-start: 1px solid var(--rule); padding-inline-start: 18px; }
+.verbs a:first-child { border-inline-start: 0; padding-inline-start: 0; }
+.verbs a { text-decoration: none; }
+.verbs b { display: block; font: 900 clamp(30px, 4.2vw, 54px)/1.05 var(--display); transition: color .2s; }
+.verbs a:hover b { color: var(--ember); }
+.verbs em { display: block; margin-top: 8px; font: 500 12px var(--mono); font-style: normal; color: var(--live); }
+.verbs span { color: var(--ash); font-size: 14px; }
+@media (max-width: 760px) { .verbs .inner { grid-template-columns: repeat(2, minmax(0, 1fr)); } .verbs a:nth-child(3) { border-inline-start: 0; padding-inline-start: 0; } .verbs a:nth-child(n+3) { border-top: 1px solid var(--rule); } }
+
+.index { padding-block: 64px 24px; }
+.index-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; padding-bottom: 28px; }
+.index-head h2 { margin: 0; font: 900 clamp(40px, 6vw, 76px)/1 var(--display); }
+.index-head .eyebrow { color: var(--ember); display: block; margin-bottom: 12px; }
+.counts { display: flex; gap: 28px; font: 500 12.5px var(--mono); color: var(--ash); }
+.counts b { display: block; font: 900 34px/1 var(--display); color: #eef2f3; font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; padding-bottom: 20px; }
+.filters button { font: 500 14px var(--sans); color: var(--ash); background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+.filters button:hover { color: #eef2f3; }
+.filters button[aria-pressed="true"] { color: var(--char); background: #eef2f3; border-color: #eef2f3; }
+.filters i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+.chapter { display: grid; grid-template-columns: 120px minmax(0, 300px) minmax(0, 1fr); gap: 28px; border-top: 1px solid var(--rule); padding-block: 34px; }
+@media (max-width: 900px) { .chapter { grid-template-columns: 64px minmax(0, 1fr); } .chapter .gates { grid-column: 1 / -1; } }
+.chapter .ot { font: 900 96px/.8 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--ember); }
+@media (max-width: 900px) { .chapter .ot { font-size: 60px; } }
+.chapter header h3 { margin: 0 0 6px; font: 900 30px/1.15 var(--display); text-wrap: balance; }
+.chapter header p { margin: 0; color: var(--ash); font-size: 15px; }
+.gates { list-style: none; margin: 0; padding: 0; display: grid; }
+.gate { position: relative; display: grid; gap: 4px; padding: 14px; padding-inline-end: 48px; margin-inline: -14px; border-radius: 6px; text-decoration: none; transition: background .15s; }
+.gate + .gate { border-top: 1px solid var(--rule); }
+a.gate:hover { background: var(--soot); }
+a.gate:hover .go { transform: translateX(-6px); color: var(--ember); }
+.gate strong { font-size: 18px; font-weight: 700; }
+.gate p { margin: 0; grid-column: 1; color: var(--ash); font-size: 14.5px; }
+.gate .url { grid-column: 1; font: 400 12.5px var(--mono); color: var(--ember); direction: ltr; text-align: right; opacity: .85; overflow-wrap: anywhere; }
+.gate.quiet .url { color: var(--ash); opacity: .6; }
+.gate .top { display: flex; align-items: center; gap: 4px 12px; flex-wrap: wrap; }
+.st { font: 500 12px var(--mono); white-space: nowrap; display: inline-flex; align-items: center; gap: 7px; }
+.st::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.st.live { color: var(--live); } .st.build { color: var(--build); } .st.plan { color: var(--plan); } .st.vision { color: var(--vision); }
+.st.live::before { box-shadow: 0 0 0 0 currentColor; animation: pulse 2.4s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(61,220,151,.5); } 70% { box-shadow: 0 0 0 7px rgba(61,220,151,0); } 100% { box-shadow: 0 0 0 0 rgba(61,220,151,0); } }
+.go { position: absolute; inset-inline-end: 14px; top: 50%; margin-top: -15px; font-size: 20px; color: var(--ash); transition: transform .2s, color .2s; }
+
+.news { padding-block: 56px 24px; display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 28px; border-top: 1px solid var(--rule); }
+@media (max-width: 900px) { .news { grid-template-columns: 1fr; } }
+.news h2, .contact h2 { margin: 0; font: 900 clamp(36px, 4.6vw, 56px)/1 var(--display); }
+.news ol { list-style: none; margin: 0; padding: 0; }
+.news li { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; padding-block: 16px; border-bottom: 1px solid var(--rule); }
+.news li:first-child { padding-top: 4px; }
+@media (max-width: 520px) { .news li { grid-template-columns: 1fr; gap: 2px; } }
+.news time { font: 400 13px var(--mono); color: var(--ember); padding-top: 4px; font-variant-numeric: tabular-nums; }
+.news b { display: block; font-size: 18px; }
+.news span { color: var(--ash); font-size: 15px; }
+
+.contact { margin-top: 56px; background: var(--parchment); color: var(--char); }
+.contact .inner { padding-block: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; align-items: end; }
+@media (max-width: 760px) { .contact .inner { grid-template-columns: 1fr; } }
+.stage2 { position: relative; padding-top: 56px; }
+.stage2 h2 { display: inline-block; white-space: nowrap; font-size: clamp(32px, 4.6vw, 56px); position: relative; }
+.stage2 canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.contact p { margin: 12px 0 0; color: #36414b; max-width: 48ch; font-size: 17px; }
+.phone { font: 900 clamp(40px, 7vw, 88px)/1 var(--display); direction: ltr; text-align: right; display: block; text-decoration: none; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; margin-top: 16px; }
+.cta a, .cta button { font: 700 15px var(--sans); padding: 12px 20px; border-radius: 6px; border: 1.5px solid var(--char); background: transparent; color: var(--char); cursor: pointer; text-decoration: none; }
+.cta .primary { background: var(--char); color: var(--parchment); }
+footer { padding-block: 26px 34px; color: var(--ash); font-size: 13px; }
+footer .inner { display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+footer nav { display: flex; gap: 8px 16px; flex-wrap: wrap; }
+footer nav a { text-decoration: none; } footer nav a:hover { color: #eef2f3; }
+</style>
+</head>
+<body>
+<div dir="rtl" lang="he">
+  <header class="hero">
+    <div class="pad"><div class="inner">
+      <nav aria-label="ראשי">
+        <a class="mark" href="#">ESH 27</a>
+        <div class="links"><a href="#index">חטיבות</a><a href="#news">חדשות</a><a href="#contact">צור קשר</a></div>
+      </nav>
+      <div class="stage" id="stage">
+        <p class="word" id="word" aria-hidden="true"><span>אש</span><span class="num">27</span></p>
+        <canvas id="fire" aria-hidden="true"></canvas>
+      </div>
+      <div class="thesis">
+        <div>
+          <span class="eyebrow" dir="ltr" style="display:block;text-align:right">Building realities // Programming future</span>
+          <h1>אש שחורה על גבי אש לבנה.</h1>
+          <blockquote>כך נכתבה התורה · ירושלמי, שקלים ו, א</blockquote>
+        </div>
+        <p>ESH 27 היא קבוצה רב-תחומית. יוצקים בטון וכותבים קוד, לומדים תורה ומקימים מותגים. כל חטיבה, כל פרויקט וכל חדשה נמצאים כאן, מאחורי שער אחד.</p>
+      </div>
+      <div class="alefbet">
+        <div class="letters" id="letters" aria-label="27 אותיות האלף-בית"></div>
+        <div class="legend"><span id="gem">22 אותיות + <b>5 סופיות</b> = 27 צורות האות העברית</span><span>גע באות כדי לראות את ערכה</span></div>
+      </div>
+    </div></div>
+    <svg class="burn" viewBox="0 0 1000 30" preserveAspectRatio="none" aria-hidden="true"><path id="burnp" d="M0 30 L0 16 L1000 16 L1000 30 Z"/></svg>
+  </header>
+
+  <main>
+    <section class="verbs pad" aria-label="מה אנחנו עושים">
+      <div class="inner">
+        <a href="#ch0" data-d="0"><b>בונים</b><span>בנייה, התיישבות ואקלים</span><em></em></a>
+        <a href="#ch1" data-d="1"><b>מתכנתים</b><span>AI, רחפנים ואבטחה</span><em></em></a>
+        <a href="#ch2" data-d="2"><b>לומדים</b><span>תורה, ספרים ואקדמיה</span><em></em></a>
+        <a href="#ch3" data-d="3"><b>מקימים</b><span>מותגים ועסקים</span><em></em></a>
+      </div>
+    </section>
+
+    <section class="index pad" id="index">
+      <div class="inner">
+        <div class="index-head">
+          <div><span class="eyebrow">תוכן העניינים</span><h2>החטיבות</h2></div>
+          <div class="counts" id="counts"></div>
+        </div>
+        <div class="filters" role="group" aria-label="סינון לפי מצב" id="filters"></div>
+        <div id="list"></div>
+      </div>
+    </section>
+
+    <section class="pad" id="news">
+      <div class="inner news">
+        <div><span class="eyebrow" style="color:var(--ember)">מהשטח</span><h2>חדשות</h2></div>
+        <ol>
+          <li><time datetime="2026-10-29">29.10.2026</time><div><b>שמונה שערים עלו לאוויר</b><span>שורו, D&A, משחקים, אבטחה, אקדמיה, 27news, ספרים ומצב מערכות קיבלו אתר משלהם.</span></div></li>
+          <li><time datetime="2026-10-28">28.10.2026</time><div><b>"האות שלך": אב-טיפוס ראשון</b><span>שם בעברית הופך ליצירה: גימטריה, פסוק לשם מתוך תהלים, ומיקרוגרפיה בכתב סת״ם.</span></div></li>
+          <li><time datetime="2026-10-14">14.10.2026</time><div><b>מפת החוות הטופוגרפית עלתה</b><span>מרכז שליטה ומפה של יותר מ-130 חוות ביו״ש ובבקעה, מבית ESH27 Build & Facility.</span></div></li>
+          <li><time datetime="2026-08-31">31.08.2026</time><div><b>ג'עלה ונעמי אהרונוב באוויר</b><span>שני המותגים הראשונים מקבלים אתר משלהם תחת ESH 27.</span></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="contact pad" id="contact">
+      <div class="inner">
+        <div>
+          <span class="eyebrow">צור קשר</span>
+          <div class="stage2" id="stage2"><h2 id="lit">בואו נדליק משהו.</h2><canvas id="fire2" aria-hidden="true"></canvas></div>
+          <p>פרויקט בנייה, מערכת טכנולוגית או רעיון למותג חדש. דברו איתנו ישירות.</p>
+        </div>
+        <div>
+          <a class="phone" href="tel:+972502525066" id="phone">050-252-5066</a>
+          <div class="cta">
+            <a class="primary" href="https://wa.me/972502525066" rel="noopener">WhatsApp</a>
+            <button type="button" id="copy">העתקת המספר</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pad"><div class="inner"><span>© 2026 ESH 27 · אש 27</span><nav aria-label="כל האתרים" id="foot"></nav></div></footer>
+</div>
+
+<script>
+const STATUS = { live: "פעיל", build: "בהקמה", plan: "מתוכנן", vision: "חזון" };
+const DIVISIONS = [
+  { ot: "א", name: "בנייה והנדסה", desc: "בנייה, התיישבות, אקלים ותשתיות – מהמגרש ועד המפתח.", gates: [
+    { t: "שורו – מבט אל המחר", d: "וילות, שכונות ויישובים חדשים ביו״ש, בנגב ובדרום.", u: "shuru.esh27.com", s: "live" },
+    { t: "מפת החוות", d: "מרכז שליטה ומפה טופוגרפית של יותר מ-130 חוות ביו״ש ובבקעה.", u: "farms.esh27.com", s: "live" },
+    { t: "אומן המיזוג", d: "הנדסת אקלים ומערכות מיזוג VRF.", u: "esh27.com/vrf/", s: "live" },
+    { t: "ESH 27 Build", d: "ביצוע הנדסי ובנייה ירוקה, עם שקיפות מלאה ללקוח.", u: "build.esh27.com", s: "plan" }
+  ]},
+  { ot: "ב", name: "טכנולוגיה ו-AI", desc: "סוכנים אוטונומיים, רחפנים, אבטחה ותשתית.", gates: [
+    { t: "D&A Aerospace & Robotics", d: "רחפנים היברידיים, מנוע 38cc מודפס וציפור רובוטית.", u: "danda.esh27.com", s: "live" },
+    { t: "ESH27 Security", d: "אבטחה והגנת יישובים: גדר חכמה, מוקד ורחפני סיור.", u: "security.esh27.com", s: "live" },
+    { t: "מצב מערכות", d: "בדיקה חיה של זמינות כל האתרים של הקבוצה.", u: "status.esh27.com", s: "live" },
+    { t: "מעבדת ה-AI", d: "מחקר ופיתוח של סוכנים אוטונומיים.", u: "lab.esh27.com", s: "plan" },
+    { t: "Binah-AI", d: "בינה מלאכותית אופליין למקורות היהדות, בעברית.", u: "binah.esh27.com", s: "plan" }
+  ]},
+  { ot: "ג", name: "תורה, ידע ותוכן", desc: "מהאות הבודדת ועד הספרייה, מהמחקר ועד העיתון.", gates: [
+    { t: "מעבדת הצופן התורני", d: "גרסה 5.5 של כלי המחקר לדילוגי אותיות בתורה.", u: "esh27.com/2701/", s: "live" },
+    { t: "ESH27 Academy", d: "מדריכים ומחקר: AI, מיזוג, חשמל, Web3 והנדסה.", u: "academy.esh27.com", s: "live" },
+    { t: "ESH27 Books", d: "הוצאה לאור: קוד רד, ספר מאלף לאלף ושו״ת.", u: "books.esh27.com", s: "live" },
+    { t: "27news", d: "חדשות ותחקירים על טכנולוגיה, בנייה, תורה ומדע.", u: "news.esh27.com", s: "live" },
+    { t: "האות שלך", d: "שם הופך ליצירה: גימטריה, פסוק ומיקרוגרפיה בכתב סת״ם.", u: "ot.esh27.com", s: "plan" }
+  ]},
+  { ot: "ד", name: "מותגים", desc: "עסקים שאנחנו מקימים ומלווים.", gates: [
+    { t: "ג'עלה · פיצוחים", d: "קלוי במקום כל יום, מארזי מתנה ובר טעימות ברובע א' באשדוד.", u: "jaale.esh27.com", s: "live" },
+    { t: "נעמי אהרונוב", d: "יופי וטיפוח.", u: "neomi.esh27.com", s: "live" }
+  ]},
+  { ot: "ה", name: "חדשנות ועתיד", desc: "משחקים, סימולציות וחזונות שעוד בדרך.", gates: [
+    { t: "ESH27 Games", d: "מנוע סימולציה טקטי, עולם פתוח ועולם חי של סוכני AI.", u: "game.esh27.com", s: "live" },
+    { t: "AI Imperium · Crypto", d: "מנוע מסחר וניהול אוטונומי. בפיתוח ובבדיקות, עוד לא פתוח לציבור.", u: "crypto.esh27.com", s: "vision" }
+  ]}
+];
+
+const all = DIVISIONS.flatMap(d => d.gates);
+const count = s => all.filter(g => g.s === s).length;
+document.getElementById("counts").innerHTML =
+  `<div><b>${DIVISIONS.length}</b>חטיבות</div><div><b>${all.length}</b>שערים</div><div><b>${count("live")}</b>פעילים</div>`;
+
+const GV = [1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900];
+const AB = [..."אבגדהוזחטיכלמנסעפצקרשתךםןףץ"];
+const L = document.getElementById("letters"), gem = document.getElementById("gem"), gem0 = gem.innerHTML;
+L.innerHTML = AB.map((c, i) => `<span tabindex="0" data-v="${GV[i]}"${i > 21 ? ' class="sofit"' : ""}>${c}</span>`).join("");
+const showGem = e => { const t = e.target.closest("span"); if (t && t.dataset.v) gem.innerHTML = `<b>${t.textContent}</b> = ${t.dataset.v} בגימטריה${t.classList.contains("sofit") ? " (סופית, בגימטריה הגדולה)" : ""}`; };
+const hideGem = () => { gem.innerHTML = gem0; };
+L.addEventListener("pointerover", showGem); L.addEventListener("focusin", showGem);
+L.addEventListener("pointerleave", hideGem); L.addEventListener("focusout", hideGem);
+
+let filter = "all";
+const filters = document.getElementById("filters");
+filters.innerHTML = [["all", "הכל"], ...Object.entries(STATUS)].map(([k, v]) =>
+  `<button type="button" data-f="${k}" aria-pressed="${k === "all"}">${k === "all" ? "" : `<i style="background:var(--${k})"></i>`}${v}${k === "all" ? "" : ` · ${count(k)}`}</button>`).join("");
+filters.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  filter = b.dataset.f;
+  filters.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+
+function render() {
+  document.getElementById("list").innerHTML = DIVISIONS.map((d, i) => {
+    const gates = d.gates.filter(g => filter === "all" || g.s === filter);
+    if (!gates.length) return "";
+    return `<section class="chapter" id="ch${i}" aria-labelledby="dv${i}">
+      <div class="ot" aria-hidden="true">${d.ot}</div>
+      <header><h3 id="dv${i}">${d.name}</h3><p>${d.desc}</p></header>
+      <ul class="gates">${gates.map(g => {
+        const open = g.s === "live";
+        const inner = `<span class="top"><strong>${g.t}</strong><span class="st ${g.s}">${STATUS[g.s]}</span></span><p>${g.d}</p><span class="url">${g.u}</span>${open ? '<span class="go" aria-hidden="true">←</span>' : ""}`;
+        return open ? `<li style="display:contents"><a class="gate" href="https://${g.u}" rel="noopener">${inner}</a></li>`
+                    : `<li class="gate quiet">${inner}</li>`;
+      }).join("")}</ul></section>`;
+  }).join("");
+}
+render();
+
+document.getElementById("foot").innerHTML = all.filter(g => g.s === "live").map(g => `<a href="https://${g.u}">${g.t}</a>`).join("");
+
+document.getElementById("copy").addEventListener("click", async e => {
+  const b = e.currentTarget;
+  try { await navigator.clipboard.writeText("050-252-5066"); b.textContent = "הועתק"; }
+  catch { const r = document.createRange(); r.selectNodeContents(document.getElementById("phone")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "המספר מסומן"; }
+  setTimeout(() => { b.textContent = "העתקת המספר"; }, 2200);
+});
+
+/* Black fire: tongues of ink rise off the top edges of the letters. The letters themselves stay real text, so the hero is complete without the canvas. */
+function ignite(cv, stage, word, rate) {
+  const ctx = cv.getContext("2d");
+  if (!ctx || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let t0 = performance.now(), W = 0, H = 0, dpr = 1, edges = [], parts = [], run = true, ptr = null, raf = 0;
+
+  function sample() {
+    const r = stage.getBoundingClientRect(); dpr = Math.min(devicePixelRatio || 1, 2);
+    W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const off = document.createElement("canvas"), step = 3; off.width = Math.ceil(W / step); off.height = Math.ceil(H / step);
+    const o = off.getContext("2d"), cs = getComputedStyle(word);
+    o.scale(1 / step, 1 / step); o.direction = "rtl"; o.fillStyle = "#000"; o.textBaseline = "alphabetic";
+    for (const sp of (word.children.length ? word.children : [word])) {
+      const sr = sp.getBoundingClientRect(), st = getComputedStyle(sp);
+      o.font = `${st.fontWeight} ${st.fontSize} ${st.fontFamily}`;
+      const m = o.measureText(sp.textContent);
+      o.textAlign = "left";
+      o.fillText(sp.textContent, sr.left - r.left + (sr.width - m.width) / 2, sr.top - r.top + m.fontBoundingBoxAscent + (sr.height - m.fontBoundingBoxAscent - m.fontBoundingBoxDescent) / 2);
+    }
+    const d = o.getImageData(0, 0, off.width, off.height).data; edges = [];
+    for (let y = 1; y < off.height; y++) for (let x = 0; x < off.width; x++) {
+      const i = (y * off.width + x) * 4 + 3;
+      if (d[i] > 128 && d[i - off.width * 4] < 40) edges.push([x * step, y * step]);
+    }
+  }
+  function spawn(n) {
+    for (let k = 0; k < n && edges.length; k++) {
+      const [x, y] = edges[(Math.random() * edges.length) | 0];
+      parts.push({ x, y, vx: (Math.random() - .5) * .4, vy: -(.5 + Math.random() * 1.3), life: 0, max: 40 + Math.random() * 70, r: 3 + Math.random() * 6, ph: Math.random() * 6.28 });
+    }
+  }
+  function frame() {
+    if (!run) return;
+    ctx.clearRect(0, 0, W, H);
+    spawn(rate * (W < 600 ? .5 : 1) * Math.min(1, (performance.now() - t0) / 1600));
+    ctx.fillStyle = "#07090b";
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]; p.life++;
+      p.vx += Math.sin(p.life * .09 + p.ph) * .035; p.vy -= .012;
+      if (ptr) { const dx = p.x - ptr.x, dy = p.y - ptr.y, q = dx * dx + dy * dy; if (q < 9000) { const f = (9000 - q) / 9000; p.vx += dx * .004 * f; p.vy += dy * .004 * f - .05 * f; } }
+      p.x += p.vx; p.y += p.vy;
+      const t = p.life / p.max;
+      if (t >= 1 || p.y < -10) { parts.splice(i, 1); continue; }
+      ctx.globalAlpha = Math.min(1, t * 8) * (1 - t) * .55;
+      const rr = p.r * Math.pow(1 - t, .7);
+      ctx.beginPath(); ctx.ellipse(p.x, p.y, rr * .55, rr * 1.7, p.vx * .6, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (parts.length > 1800) parts.splice(0, parts.length - 1800);
+    raf = requestAnimationFrame(frame);
+  }
+  function start() { cancelAnimationFrame(raf); run = true; raf = requestAnimationFrame(frame); }
+  stage.addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(); ptr = { x: e.clientX - r.left, y: e.clientY - r.top }; });
+  stage.addEventListener("pointerleave", () => { ptr = null; });
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) start(); else run = false; }).observe(stage);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) run = false; else start(); });
+  let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(sample, 150); });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { sample(); t0 = performance.now(); start(); });
+}
+ignite(document.getElementById("fire"), document.getElementById("stage"), document.getElementById("word"), 15);
+ignite(document.getElementById("fire2"), document.getElementById("stage2"), document.getElementById("lit"), 5);
+
+document.querySelectorAll(".verbs a").forEach(a => {
+  a.querySelector("em").textContent = DIVISIONS[+a.dataset.d].gates.filter(g => g.s === "live").length + " פעילים";
+});
+
+(() => {
+  let d = "M0 30 L0 18", x = 0;
+  while (x < 1000) { x = Math.min(1000, x + 5 + Math.random() * 24); d += ` L${x.toFixed(1)} ${(4 + Math.random() * 22).toFixed(1)}`; }
+  document.getElementById("burnp").setAttribute("d", d + " L1000 30 Z");
+})();
+</script>
+</body>
+</html>
