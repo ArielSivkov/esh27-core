@@ -1,0 +1,1762 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>ESH27 · מפת החוות הטופוגרפית ומרכז השליטה</title>
+  <meta name="description" content="מפה טופוגרפית בהירה ברמת Apple Maps של 130+ חוות ביו״ש והבקעה, בסיס האם בעין חרשה, 100 פריטי OSINT ו-100 אנשי קשר – ESH27 Build & Facility." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://farms.esh27.com/" />
+  <meta property="og:title" content="ESH27 · מפת החוות הטופוגרפית (130+ חוות ביו״ש והבקעה)" />
+  <meta property="og:description" content="מפה טופוגרפית אינטראקטיבית בהירה, מצגת 5 שלבים לשון, 100 פריטי OSINT ו-100 אנשי קשר ולידים." />
+  <meta name="theme-color" content="#F5F5F7" />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <style>
+    :root {
+      --bg-app: #F5F5F7;
+      --bg-glass: rgba(255, 255, 255, 0.86);
+      --bg-glass-strong: rgba(255, 255, 255, 0.94);
+      --bg-card: #FFFFFF;
+      --text-primary: #1D1D1F;
+      --text-secondary: #515154;
+      --text-muted: #86868B;
+      --border-light: rgba(0, 0, 0, 0.08);
+      --border-subtle: rgba(0, 0, 0, 0.05);
+      --apple-blue: #0071E3;
+      --apple-blue-soft: rgba(0, 113, 227, 0.11);
+      --apple-green: #1D8348;
+      --apple-amber: #D97706;
+      --apple-teal: #0891B2;
+      --apple-purple: #6D28D9;
+      --apple-olive: #4D7C0F;
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 8px 28px rgba(15, 23, 42, 0.09);
+      --shadow-lg: 0 16px 42px rgba(15, 23, 42, 0.13);
+      --radius-pill: 999px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+    html, body {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      background: var(--bg-app);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Heebo', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+
+
+    /* Fullscreen Map Viewport */
+    #map-stage {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100dvh;
+      z-index: 1;
+      background: #E9F1F6;
+      touch-action: none;
+    }
+
+
+    #topo-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #topo-canvas:active {
+      cursor: grabbing;
+    }
+
+
+    /* Top Floating Apple Glass Bar (KISS) */
+    .top-chrome {
+      position: fixed;
+      top: max(10px, env(safe-area-inset-top));
+      left: 12px;
+      right: 12px;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+
+    .nav-bar {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill);
+      padding: 6px 10px;
+      box-shadow: var(--shadow-md);
+      max-width: 980px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-right: 4px;
+      flex-shrink: 0;
+    }
+
+
+    .brand-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0071E3, #00A2FF);
+      color: #fff;
+      font-weight: 800;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+      letter-spacing: -0.3px;
+    }
+
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      display: none;
+    }
+    @media (min-width: 640px) {
+      .brand-sub { display: inline; margin-right: 4px; }
+    }
+
+
+    /* Apple Segmented Control */
+    .segmented-control {
+      display: flex;
+      align-items: center;
+      background: rgba(118, 118, 128, 0.12);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      gap: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .segmented-control::-webkit-scrollbar { display: none; }
+
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+
+    .seg-btn.active {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .action-cluster {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+
+    .pill-action {
+      border: 1px solid var(--border-light);
+      background: #FFFFFF;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+    }
+    .pill-action:active { transform: scale(0.96); }
+    .pill-action.primary {
+      background: var(--apple-blue);
+      color: #FFFFFF;
+      border-color: transparent;
+      box-shadow: 0 3px 10px rgba(0, 113, 227, 0.28);
+    }
+    .pill-action.whatsapp {
+      background: #E8F8EE;
+      color: #127839;
+      border-color: rgba(18, 120, 57, 0.18);
+    }
+
+
+    /* Filter Chips Row */
+    .filter-strip {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      max-width: 980px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 2px 2px;
+    }
+    .filter-strip::-webkit-scrollbar { display: none; }
+
+
+    .chip {
+      border: 1px solid var(--border-light);
+      background: var(--bg-glass);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .chip.active {
+      background: var(--text-primary);
+      color: #FFFFFF;
+      border-color: var(--text-primary);
+    }
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+
+    /* Floating Map Controls (Right Side, Apple Maps style) */
+    .map-controls {
+      position: fixed;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-55%);
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 5px;
+      box-shadow: var(--shadow-md);
+    }
+
+
+    .ctrl-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .ctrl-btn:hover { background: rgba(0, 0, 0, 0.05); }
+    .ctrl-btn.active-toggle {
+      background: var(--apple-blue-soft);
+      color: var(--apple-blue);
+    }
+    .ctrl-divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 1px 4px;
+    }
+
+
+    /* Sean Guided Tour Floating Card */
+    #sean-banner {
+      position: fixed;
+      top: 108px;
+      left: 12px;
+      right: 12px;
+      max-width: 620px;
+      margin: 0 auto;
+      z-index: 35;
+      background: var(--bg-glass-strong);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      border: 1px solid rgba(0, 113, 227, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-lg);
+      display: none;
+      animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .sean-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .sean-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--apple-blue);
+      background: var(--apple-blue-soft);
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+    }
+    .sean-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .sean-desc {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .sean-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+
+    /* Bottom Apple Maps Sheet (KISS) */
+    .bottom-sheet {
+      position: fixed;
+      bottom: max(10px, env(safe-area-inset-bottom));
+      left: 12px;
+      right: 12px;
+      max-width: 980px;
+      margin: 0 auto;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+
+    /* Search & Carousel Bar */
+    .carousel-tray {
+      pointer-events: auto;
+      background: var(--bg-glass);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 10px 12px;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s ease;
+    }
+
+
+    .tray-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+
+    .search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(118, 118, 128, 0.1);
+      border-radius: 10px;
+      padding: 6px 10px;
+    }
+    .search-box input {
+      border: none;
+      background: transparent;
+      width: 100%;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+    }
+    .search-box input::placeholder { color: var(--text-muted); }
+
+
+    .count-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      padding: 0 4px;
+    }
+
+
+    .farm-cards-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .farm-cards-row::-webkit-scrollbar { display: none; }
+
+
+    .mini-card {
+      flex: 0 0 215px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+    .mini-card:hover, .mini-card.selected {
+      border-color: var(--apple-blue);
+      box-shadow: 0 4px 14px rgba(0, 113, 227, 0.16);
+      transform: translateY(-1px);
+    }
+    .mc-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+    .mc-cat {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #F2F2F7;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mc-elev {
+      font-size: 10px;
+      font-weight: 700;
+      color: #6E6E73;
+      direction: ltr;
+    }
+    .mc-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mc-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+
+    /* Selected Farm Inspector Card (Apple Maps Place Card) */
+    #place-card {
+      pointer-events: auto;
+      background: var(--bg-glass-strong);
+      backdrop-filter: blur(28px) saturate(200%);
+      -webkit-backdrop-filter: blur(28px) saturate(200%);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-lg);
+      display: none;
+      animation: slideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+
+    .pc-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .pc-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .pc-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--apple-blue-soft);
+      color: var(--apple-blue);
+    }
+    .pc-badge.topo {
+      background: #EFECE6;
+      color: #5C5346;
+    }
+    .pc-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+    .pc-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(118, 118, 128, 0.14);
+      color: var(--text-secondary);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .pc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      background: #F5F5F7;
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+    @media (min-width: 640px) {
+      .pc-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .pc-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pc-btn {
+      flex: 1;
+      min-width: 110px;
+      text-decoration: none;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 11px;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.15s ease;
+    }
+    .pc-btn:active { transform: scale(0.97); }
+    .pc-btn.waze { background: #0099FF; color: #FFFFFF; }
+    .pc-btn.gmaps { background: #1D8348; color: #FFFFFF; }
+    .pc-btn.source { background: #E5E5EA; color: var(--text-primary); }
+
+
+    /* Fullscreen Clean Apple Sheet for 100 OSINT & 100 CRM */
+    #data-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 28;
+      background: var(--bg-app);
+      padding: 110px 16px 24px;
+      overflow-y: auto;
+      display: none;
+    }
+    .data-container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .data-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      background: #FFFFFF;
+      padding: 12px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+    .data-search {
+      flex: 1;
+      min-width: 220px;
+      border: 1px solid var(--border-light);
+      background: #F5F5F7;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 13.5px;
+      outline: none;
+    }
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 10px;
+    }
+    .apple-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .ac-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .ac-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--apple-blue);
+      background: var(--apple-blue-soft);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+    .ac-cat {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .ac-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .ac-desc {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+    .ac-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 6px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 12px;
+    }
+    .ac-link {
+      color: var(--apple-blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Topographic Interactive Canvas -->
+  <div id="map-stage">
+    <canvas id="topo-canvas"></canvas>
+  </div>
+
+
+  <!-- Top Apple Floating Header (KISS) -->
+  <div class="top-chrome">
+    <div class="nav-bar">
+      <div class="brand-cluster">
+        <div class="brand-dot">E27</div>
+        <div>
+          <span class="brand-title">ESH27 · מפת החוות</span>
+          <span class="brand-sub">טופוגרפיה ומודיעין ביצועי</span>
+        </div>
+      </div>
+
+
+      <div class="segmented-control">
+        <button class="seg-btn active" id="tab-map" onclick="switchView('map')">🗺️ מפה (130+)</button>
+        <button class="seg-btn" id="tab-osint" onclick="switchView('osint')">📡 100 OSINT</button>
+        <button class="seg-btn" id="tab-crm" onclick="switchView('crm')">🤝 100 אנשי קשר</button>
+      </div>
+
+
+      <div class="action-cluster">
+        <button class="pill-action primary" id="btn-sean" onclick="toggleSeanTour()">▶️ מצגת לשון</button>
+        <button class="pill-action whatsapp" onclick="shareWhatsApp()">📲 שתף</button>
+      </div>
+    </div>
+
+
+    <!-- Clean Category Filter Pills (Only visible on Map) -->
+    <div class="filter-strip" id="map-filters">
+      <button class="chip active" onclick="setFilter('all', this)">הכל (58 מוקדים / 130+ חוות)</button>
+      <button class="chip" onclick="setFilter('anchor', this)"><span class="chip-dot" style="background:#0071E3"></span>עוגן ESH27 וחרשה</button>
+      <button class="chip" onclick="setFilter('harasha', this)"><span class="chip-dot" style="background:#1D8348"></span>רדיוס 15 ק״מ מחרשה</button>
+      <button class="chip" onclick="setFilter('tourism', this)"><span class="chip-dot" style="background:#D97706"></span>תיירות, יקבים וקפה</button>
+      <button class="chip" onclick="setFilter('binyamin', this)"><span class="chip-dot" style="background:#0891B2"></span>בנימין</button>
+      <button class="chip" onclick="setFilter('shomron', this)"><span class="chip-dot" style="background:#6D28D9"></span>שומרון וגב ההר</button>
+      <button class="chip" onclick="setFilter('valley', this)"><span class="chip-dot" style="background:#4D7C0F"></span>בקעת הירדן</button>
+      <button class="chip" onclick="setFilter('judea', this)"><span class="chip-dot" style="background:#B45309"></span>גוש עציון והר חברון</button>
+    </div>
+  </div>
+
+
+  <!-- Left Floating Topographic Controls -->
+  <div class="map-controls" id="map-side-controls">
+    <button class="ctrl-btn" title="התקרב" onclick="zoomBy(1.28)">＋</button>
+    <div class="ctrl-divider"></div>
+    <button class="ctrl-btn" title="התרחק" onclick="zoomBy(0.78)">－</button>
+    <div class="ctrl-divider"></div>
+    <button class="ctrl-btn active-toggle" id="btn-map-mode" title="החלף שכבת טופוגרפיה (Apple וקטורי / טופוגרפי חי Esri / קווי גובה OpenTopo)" onclick="cycleTopoMode()">🗺️</button>
+    <div class="ctrl-divider"></div>
+    <button class="ctrl-btn active-toggle" id="btn-contours" title="קווי גובה ופסגות" onclick="toggleContours()">⛰️</button>
+    <div class="ctrl-divider"></div>
+    <button class="ctrl-btn active-toggle" id="btn-rings" title="טווחי רדיוס מחרשה" onclick="toggleRings()">◎</button>
+    <div class="ctrl-divider"></div>
+    <button class="ctrl-btn" title="מרכז לעין חרשה" onclick="focusHarasha()">🎯</button>
+  </div>
+
+
+  <!-- Sean 5-Step Guided Presentation Banner -->
+  <div id="sean-banner">
+    <div class="sean-header">
+      <span class="sean-badge" id="sean-step-badge">שלב 1 מתוך 5</span>
+      <button class="pc-close" onclick="closeSeanTour()">✕</button>
+    </div>
+    <div class="sean-title" id="sean-step-title"></div>
+    <div class="sean-desc" id="sean-step-desc"></div>
+    <div class="sean-nav">
+      <button class="pill-action" onclick="prevSeanStep()">➡️ הקודם</button>
+      <span style="font-size:11.5px;color:var(--text-muted);font-weight:600;">מצגת אסטרטגית לשון רוטשטיין</span>
+      <button class="pill-action primary" onclick="nextSeanStep()">הבא ⬅️</button>
+    </div>
+  </div>
+
+
+  <!-- Bottom Apple Maps Sheet -->
+  <div class="bottom-sheet" id="map-bottom-sheet">
+    <!-- Selected Farm Place Card -->
+    <div id="place-card">
+      <div class="pc-header">
+        <div>
+          <div class="pc-badges">
+            <span class="pc-badge" id="pc-cat"></span>
+            <span class="pc-badge topo" id="pc-elev"></span>
+            <span class="pc-badge topo" id="pc-dist"></span>
+          </div>
+          <div class="pc-title" id="pc-title"></div>
+        </div>
+        <button class="pc-close" onclick="closePlaceCard()">✕</button>
+      </div>
+      <div class="pc-grid">
+        <div><strong>👤 בעלים / אנשי קשר:</strong> <span id="pc-owners"></span></div>
+        <div><strong>🚀 פוטנציאל ESH27:</strong> <span id="pc-opp"></span></div>
+      </div>
+      <div id="pc-topo-profile" style="background:#F5F5F7;border-radius:10px;padding:6px 10px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:#515154;">
+        <span style="white-space:nowrap;font-weight:700;">⛰️ חתך טופוגרפי (מערב ← מזרח):</span>
+        <svg id="pc-topo-svg" viewBox="0 0 240 34" style="width:100%;max-width:260px;height:30px;overflow:visible;"></svg>
+      </div>
+      <div class="pc-actions">
+        <a class="pc-btn waze" id="pc-waze" href="#" target="_blank" rel="noopener">🚗 ניווט Waze</a>
+        <a class="pc-btn gmaps" id="pc-gmaps" href="#" target="_blank" rel="noopener">📍 Google Maps</a>
+        <a class="pc-btn source" id="pc-source" href="#" target="_blank" rel="noopener">📄 מקור ואסמכתא</a>
+      </div>
+    </div>
+
+
+    <!-- Compact Farm Carousel & Instant Search -->
+    <div class="carousel-tray">
+      <div class="tray-top">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="map-search" placeholder="חפש חווה, יישוב, איש קשר או מועצה..." oninput="renderFarmCarousel()" />
+        </div>
+        <div class="count-label" id="visible-count">58 מוקדים</div>
+      </div>
+      <div class="farm-cards-row" id="farm-carousel"></div>
+    </div>
+  </div>
+
+
+  <!-- Clean Apple-Style Fullscreen View for 100 OSINT & 100 CRM -->
+  <div id="data-modal">
+    <div class="data-container">
+      <div class="data-toolbar">
+        <div>
+          <h2 id="dm-title" style="font-size:18px;font-weight:800;"></h2>
+          <p id="dm-sub" style="font-size:12.5px;color:var(--text-secondary);"></p>
+        </div>
+        <input type="text" class="data-search" id="dm-search" placeholder="סינון מהיר לפי מילת מפתח, שם, טלפון או גזרה..." oninput="renderDataCards()" />
+        <a href="https://docs.google.com/spreadsheets/d/1V5Vja7y6kSDdbnosWbQR6tHxItICeR5rK07MI8OGptk/edit?usp=drivesdk&ouid=107132203862571740543" target="_blank" class="pill-action primary" style="text-decoration:none;">📊 פתח ב-Google Sheets</a>
+      </div>
+      <div class="data-grid" id="dm-grid"></div>
+    </div>
+  </div>
+
+
+  <script>
+    const FARMS = [{"id": 1, "name": "וילת משפחת ענתבי – מגרש 15, עין חרשה (בסיס האם ESH27)", "region": "גוש טלמונים (בנימין)", "cat": "עוגן ESH27", "lat": 31.9436, "lon": 35.1527, "owners": "משפחת ענתבי | ביצוע: אריאל סיבקוב, שון רוטשטיין ורועי שריקי", "tags": ["anchor", "harasha", "settlement"], "opp": "פרויקט הדגל (880K ₪ לפני מע״מ, 13 שבועות) + פתיחת דלת ל-14 מגרשים נוספים בהרחבת חרשה", "url": "https://docs.google.com/document/d/1FaoLZM6VKNE3jVTKQdsPDzYJs39hni8XUePChwMXAeU/edit", "elev": 755}, {"id": 2, "name": "משרד אדריכלות ׳ישר ולעניין׳ – כרם רעים", "region": "גוש טלמונים (בנימין)", "cat": "עוגן ESH27", "lat": 31.9485, "lon": 35.138, "owners": "אדריכל אלעד", "tags": ["anchor", "harasha", "settlement"], "opp": "מתכנן וילת ענתבי ובתים פרטיים בכרם רעים, חרשה ונריה + פרויקט ׳כרם רעים הדור הבא׳", "url": "https://kerem-reim.co.il/", "elev": 685}, {"id": 3, "name": "מטה לוגיסטי מערבי – אשדוד (אריאל ושון)", "region": "שפלה ודרום", "cat": "עוגן ESH27", "lat": 31.8044, "lon": 34.6553, "owners": "אריאל סיבקוב ושון רוטשטיין (ESH27)", "tags": ["anchor"], "opp": "מוקד יציאה לציר 443 (50 דק׳ לחרשה) ולציר 35/הר חברון (35 דק׳ לנגוהות ותלם)", "url": "https://drive.google.com/drive/folders/1eoqV580b5VT4Sw-t6xWQ3g4Sb0S4Y2nj", "elev": 24}, {"id": 4, "name": "מטה דרומי – נתיבות (רועי שריקי נדל״ן ויזמות)", "region": "שפלה ודרום", "cat": "עוגן ESH27", "lat": 31.4222, "lon": 34.5886, "owners": "רועי אשר שריקי (ח.פ. 517224895)", "tags": ["anchor"], "opp": "מוקד שליטה למכרזי רמ״י בדרום, חוות דרום הר חברון (מיתרים) ו-11 חוות הנגב החדשות", "url": "https://www.checkid.co.il/company/%D7%A8%D7%95%D7%A2%D7%99-%D7%A9%D7%A8%D7%99%D7%A7%D7%99-%D7%A0%D7%93%D7%9C~%D7%9F-%D7%95%D7%99%D7%96%D7%9E%D7%95%D7%AA-%D7%91%D7%A2~%D7%9E-517224895", "elev": 145}, {"id": 5, "name": "חוות ארץ הצבי (נחליאל / נווה צוף)", "region": "גוש טלמונים (בנימין)", "cat": "בנימין", "lat": 31.969, "lon": 35.143, "owners": "צבי והדסה לקס", "tags": ["harasha", "agri"], "opp": "3 ק״מ בלבד מעין חרשה! יעד מיידי לעבודות רפסודה, סככות משק ומבני מגורים", "url": "https://chavot.co.il/farm/", "elev": 601}, {"id": 6, "name": "חוות אוהל אברהם (נריה)", "region": "גוש טלמונים (בנימין)", "cat": "בנימין", "lat": 31.956, "lon": 35.134, "owners": "גרעין נריה / גוש טלמונים", "tags": ["harasha", "agri"], "opp": "2 ק״מ מעין חרשה! סינרגיה מלאה של צוותים ומשאבות בטון עם מגרש 15 בחרשה", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "elev": 583}, {"id": 7, "name": "חוות גבעת הסלעים (עטרת)", "region": "גוש טלמונים (בנימין)", "cat": "בנימין", "lat": 31.996, "lon": 35.176, "owners": "7 משפחות מתגוררות במקום לצד החווה", "tags": ["harasha", "settlement", "offgrid"], "opp": "6 ק״מ מחרשה; מעבר מקרוואנים למבני קבע, רפסודות, מחיצות גבס ותשתיות", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "elev": 665}, {"id": 8, "name": "חוות קלע דוד / יישוב ׳משעול׳ (נווה צוף)", "region": "גוש טלמונים (בנימין)", "cat": "בנימין", "lat": 32.008, "lon": 35.118, "owners": "ע״ש דוד ליבי ז״ל (איגוד החוות)", "tags": ["harasha", "settlement"], "opp": "מתוכננת להפוך ליישוב קבע חדש בשם ׳משעול׳ – פוטנציאל להקמת עשרות בתי קבע", "url": "https://chavot.co.il/farm/", "elev": 552}, {"id": 9, "name": "חוות חסד עולם (עופרים)", "region": "מערב בנימין", "cat": "בנימין", "lat": 32.001, "lon": 35.049, "owners": "אוריה ואבישג טיירי", "tags": ["harasha", "agri"], "opp": "על ציר הכניסה המערבי לגוש טלמונים – בינוי חקלאי, סככות ומגורים", "url": "https://chavot.co.il/farm/", "elev": 418}, {"id": 10, "name": "חוות המאיר לארץ (עופרים)", "region": "מערב בנימין", "cat": "בנימין", "lat": 31.995, "lon": 35.056, "owners": "מרכז סדנאות ׳חוואי ליום אחד׳", "tags": ["harasha", "tourism"], "opp": "מרכז מבקרים ואירוח קבוצות – דקים, פרגולות, כיתות סדנה ושירותים", "url": "https://chavot.co.il/farm_tourism/", "elev": 431}, {"id": 11, "name": "חוות שוביה (ניל״י / נעלה)", "region": "מערב בנימין", "cat": "בנימין", "lat": 31.962, "lon": 35.045, "owners": "יוסף חיים ודבורה מגנזי", "tags": ["harasha", "settlement"], "opp": "נמצאת בהליכי הסדרה צמוד למודיעין עילית וניל״י – פוטנציאל לבניית קבע", "url": "https://chavot.co.il/farm/", "elev": 410}, {"id": 12, "name": "חוות מבוא הר-אל ומעוז צור (בית חורון)", "region": "מערב בנימין", "cat": "בנימין", "lat": 31.878, "lon": 35.115, "owners": "אלישיב ואורי אטינגר", "tags": ["harasha", "settlement"], "opp": "על כביש 443! מעוז צור הוסדר ב-2026 ומבוא הר-אל בהליכי הסדרה מתקדמים", "url": "https://chavot.co.il/farm/", "elev": 546}, {"id": 13, "name": "חוות שיבולת – החווה ה-50 בבנימין (מבוא חורון)", "region": "מערב בנימין", "cat": "בנימין", "lat": 31.851, "lon": 35.042, "owners": "מועצה אזורית מטה בנימין ואיגוד החוות", "tags": ["harasha", "agri", "offgrid"], "opp": "עלתה לקרקע במאי 2026 צמוד למחלף לטרון – דרישה לבניית תשתיות שלב א׳ וב׳", "url": "https://www.inn.co.il/news/696497", "elev": 404}, {"id": 14, "name": "חוות המכוך (רימונים)", "region": "מזרח בנימין", "cat": "בנימין", "lat": 31.935, "lon": 35.342, "owners": "נריה ורחל בן פזי (׳אבי החוות׳ בבנימין)", "tags": ["agri"], "opp": "מוקד הקשר המרכזי לכל החוות החדשות במזרח בנימין וגב ההר", "url": "https://www.makorrishon.co.il/magazine/local-magazine/article/294326", "elev": 630}, {"id": 15, "name": "חוות סלע רימון (רימונים)", "region": "מזרח בנימין", "cat": "בנימין", "lat": 31.928, "lon": 35.325, "owners": "מתחם תיירות ׳חוויה בחווה׳", "tags": ["tourism"], "opp": "שדרוג תשתיות תיירות, אירוח, הצללות ומבני מבקרים", "url": "https://chavot.co.il/farm_tourism/", "elev": 663}, {"id": 16, "name": "חוות גאון הירדן, מעלה אהוביה ושלישה (כוכב השחר)", "region": "מזרח בנימין", "cat": "בנימין", "lat": 31.965, "lon": 35.352, "owners": "מיכה וחנה סודאי | עשהאל וחסד לב | משה ורות ינון", "tags": ["agri", "offgrid"], "opp": "אשכול 3 חוות צמודות במזרח בנימין – דירים, מערכות סולאריות ומבני מגורים", "url": "https://chavot.co.il/farm/", "elev": 611}, {"id": 17, "name": "חוות הר מלך ונחלת אפרים (כוכב השחר / בעל חצור)", "region": "מזרח בנימין", "cat": "בנימין", "lat": 31.978, "lon": 35.31, "owners": "מתחם אירוח ואירועים הר מלך", "tags": ["tourism", "settlement"], "opp": "אירוח קבוצות ואירועים + נחלת אפרים בהליכי הסדרה", "url": "https://chavot.co.il/farm_tourism/", "elev": 692}, {"id": 18, "name": "החווה של חנינה, משכנות הראל וחוות המצוק (מעלה מכמש)", "region": "מזרח בנימין", "cat": "בנימין", "lat": 31.872, "lon": 35.308, "owners": "חנינה פרידמן | ינון כהן | בניהו כהן", "tags": ["agri"], "opp": "אשכול חוות חזק במעלה מכמש – עבודות רפסודה, שלד, גבס ומכלאות", "url": "https://chavot.co.il/farm/", "elev": 696}, {"id": 19, "name": "חוות רוח הארץ (מצפה דני)", "region": "מזרח בנימין", "cat": "בנימין", "lat": 31.882, "lon": 35.331, "owners": "דרור ובת חן גרנביץ", "tags": ["agri"], "opp": "פיתוח מבני משק ומגורים במצפה דני", "url": "https://chavot.co.il/farm/", "elev": 652}, {"id": 20, "name": "חוות גל יוסף וחוות ראש תאנה (מלאכי השלום)", "region": "גוש שילה (בנימין)", "cat": "בנימין", "lat": 32.035, "lon": 35.338, "owners": "אוריה ושלומית סעדון (וישיבת הרב טורנר) | אביתר ובתיה קארו", "tags": ["agri", "settlement"], "opp": "שילוב משפחות וישיבה – צורך בבית מדרש, פנימייה, מטבח ומבני מגורים", "url": "https://chavot.co.il/farm/", "elev": 638}, {"id": 21, "name": "חוות נחל שילה, ישוב הדעת, שומרי העמק ויקב שילה", "region": "גוש שילה (בנימין)", "cat": "בנימין", "lat": 32.054, "lon": 35.292, "owners": "מיכאל ותהילה שמלה | חוות ישוב הדעת | יקב שילה", "tags": ["tourism", "agri"], "opp": "יקב שילה מקים מרכז מבקרים חדש + פיתוח חוות עמק שילה", "url": "https://www.gobinyamin.co.il/3-winery/", "elev": 728}, {"id": 22, "name": "חוות מגדל דוד (׳קפה אלין׳) ומכתם דוד (אש קודש)", "region": "גוש שילה (בנימין)", "cat": "בנימין", "lat": 32.062, "lon": 35.328, "owners": "קפה אלין – קפה ופטיסרי (חוות דוד ליבי)", "tags": ["tourism", "offgrid"], "opp": "בית קפה ופטיסרי פעיל בחווה חדשה (2025) – עבודות גמר, מיזוג ודקים", "url": "https://chavot.co.il/farm_tourism/", "elev": 657}, {"id": 23, "name": "חוות עמונה/האורנים, חסד לאברהם, צור לבבי וצור הראל (עפרה–בית אל)", "region": "מרכז בנימין", "cat": "בנימין", "lat": 31.958, "lon": 35.265, "owners": "אשכול חוות עפרה ובית אל (2024–2025)", "tags": ["agri", "offgrid"], "opp": "על כביש 60 (15 דק׳ מחרשה) – 5 חוות חדשות הדורשות בינוי ותשתיות", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "elev": 895}, {"id": 24, "name": "חוות צאן בנימין, גור אריה ונחלת בן ישי (אדם / עלמון)", "region": "דרום בנימין", "cat": "בנימין", "lat": 31.848, "lon": 35.268, "owners": "צמוד לפרויקט המגורים החדש של בנייני בר אמנה באדם", "tags": ["agri", "settlement"], "opp": "שילוב עבודות בחוות עם קבלנות משנה בפרויקט המגורים החדש ביישוב אדם", "url": "https://www.bhol.co.il/news/1741640", "elev": 774}, {"id": 25, "name": "חוות לכתחילה, עין פרת ונצח הראל (מצפה יריחו / מבואות יריחו)", "region": "מזרח בנימין / מדבר", "cat": "בנימין", "lat": 31.825, "lon": 35.385, "owners": "יחזקאל ונעמה פרידמן | מלכיאל ואוריה שמואלוביץ", "tags": ["agri", "tourism"], "opp": "חוות מדבריות על ציר ירושלים–ים המלח – הצללות, מיזוג ומתחמי אירוח", "url": "https://chavot.co.il/farm/", "elev": 335}, {"id": 26, "name": "חוות אביחי (בית אריה – צמוד לגוש טלמונים!)", "region": "מערב שומרון", "cat": "שומרון", "lat": 32.042, "lon": 35.068, "owners": "איתן ועדי מלט (בית קפה, סדנאות וארוחות)", "tags": ["harasha", "tourism"], "opp": "10 דק׳ צפונית לחרשה! מפעילה בית קפה ואירוח קבוצות – יעד מיידי לשדרוג והרחבה", "url": "https://chavot.co.il/farm_tourism/", "elev": 455}, {"id": 27, "name": "חוות צרדה (פדואל)", "region": "מערב שומרון", "cat": "שומרון", "lat": 32.065, "lon": 35.082, "owners": "חוני ורעות בירן", "tags": ["harasha", "tourism", "agri"], "opp": "קרובה מאוד לגוש טלמונים – מרכז פעילות קהילתית, חקלאית ותיירותית", "url": "https://chavot.co.il/farm_tourism/", "elev": 482}, {"id": 28, "name": "חוות תל חמד (עגלת שף ׳רמתא׳) וחוות צורים (ברוכין)", "region": "מערב שומרון", "cat": "שומרון", "lat": 32.078, "lon": 35.098, "owners": "ישראל וגאולה דהן | גלריית תכשיטים צורים", "tags": ["harasha", "tourism"], "opp": "מתחם ההסעדה הבשרי ׳רמתא׳ וגלריית התכשיטים בצורים – דקים, גבס ומיזוג", "url": "https://chavot.co.il/farm_tourism/", "elev": 513}, {"id": 29, "name": "חוות שיר לדוד וחוות דורות עלית (שער שומרון / נחל קנה)", "region": "מערב שומרון", "cat": "שומרון", "lat": 32.126, "lon": 35.052, "owners": "מתחם אירועים ומותג הבשר ׳מרעה׳ | בן ישי ולאה אשד", "tags": ["tourism", "settlement", "agri"], "opp": "שיר לדוד בהליכי הסדרה + מתחם אירועים וחדרי קירור לבשר", "url": "https://chavot.co.il/farm_tourism/", "elev": 423}, {"id": 30, "name": "חוות שעורים ויקב ׳יין קנה׳ (עמנואל / נחל קנה)", "region": "שומרון", "cat": "שומרון", "lat": 32.152, "lon": 35.128, "owners": "יאיר והדר אופנהיימר", "tags": ["tourism", "agri"], "opp": "יקב בוטיק בחווה – בניית חדר חביות מבודד ומרכז מבקרים", "url": "https://chavot.co.il/farm_tourism/", "elev": 572}, {"id": 31, "name": "חוות שובי ארץ וחוות קרני ראם (נחל קנה / נופים)", "region": "מערב שומרון", "cat": "שומרון", "lat": 32.142, "lon": 35.095, "owners": "עדן ורבקה לוי", "tags": ["agri", "offgrid"], "opp": "פיתוח תשתיות חווה ומגורים מעל שמורת נחל קנה", "url": "https://chavot.co.il/farm/", "elev": 507}, {"id": 32, "name": "חוות נוף אב״י, חוות שובאל ועמק דורון (אריאל ורבבה)", "region": "מרכז שומרון", "cat": "שומרון", "lat": 32.105, "lon": 35.195, "owners": "ישראל ושרה רפפורט | הראל וטליה ליבי", "tags": ["settlement", "agri"], "opp": "נוף אב״י בהליכי הסדרה כשכונה באריאל – פוטנציאל לבניית קבע רחבה", "url": "https://chavot.co.il/farm/", "elev": 702}, {"id": 33, "name": "חוות עמק קדם (עגלת קפה ׳עטרל׳ה׳ – נופי נחמיה) וטל בנימין (כפר תפוח)", "region": "מרכז שומרון", "cat": "שומרון", "lat": 32.112, "lon": 35.245, "owners": "עגלת קפה עטרל׳ה | רבקה הרצליך (טל בנימין)", "tags": ["tourism", "agri"], "opp": "מוקד תיירות וקפה על ציר חוצה שומרון + עמותת החוות בטל בנימין", "url": "https://tbchavot.wixsite.com/home", "elev": 800}, {"id": 34, "name": "חוות נצח דוד ומעוז יהודה (רחבעם / מגדלים)", "region": "מזרח שומרון", "cat": "שומרון", "lat": 32.092, "lon": 35.315, "owners": "אשכול חוות רחבעם ומגדלים (2025–2026)", "tags": ["agri", "offgrid"], "opp": "חוות חדשות בציר מגדלים–קבלאן הדורשות ביסוס, סככות ומיגון", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "elev": 683}, {"id": 35, "name": "חוות סקאלי (אלון מורה – רכס גדעונים)", "region": "גב ההר (שומרון)", "cat": "שומרון", "lat": 32.228, "lon": 35.355, "owners": "יצחק וחפצי סקלי", "tags": ["agri"], "opp": "חלוצת החוות בשומרון (1998) וקשר מפתח למשפחת סקלי (מהנדס אליהו)", "url": "https://chavot.co.il/farm/", "elev": 605}, {"id": 36, "name": "חוות השקדים וחוות מרום שמואל (אלון מורה ורכס כביר)", "region": "גב ההר (שומרון)", "cat": "שומרון", "lat": 32.245, "lon": 35.342, "owners": "נתי ונסיה שוולב", "tags": ["tourism", "agri"], "opp": "מפעילות סדנאות מנהיגות וסיתות באבן – פוטנציאל למרכז מבקרים ואירוח", "url": "https://chavot.co.il/farm_tourism/", "elev": 696}, {"id": 37, "name": "אשכול חוות איתמר והר ינון (גבעות עולם, איתמר כהן, פניני, שדה שכם)", "region": "גב ההר (שומרון)", "cat": "שומרון", "lat": 32.168, "lon": 35.325, "owners": "איתמר ושקמה כהן | תומר ומיטל פניני | גבעות עולם", "tags": ["agri", "tourism"], "opp": "לולים, מחלבות גבינות, חקלאות אורגנית ו-2 חוות חדשות מ-2026", "url": "https://chavot.co.il/farm/", "elev": 724}, {"id": 38, "name": "אשכול חוות יצהר, הר ברכה והר עיבל (טל בניהו, מגן יהודה, איתן, מצפה יהושע)", "region": "גב ההר (שומרון)", "cat": "שומרון", "lat": 32.185, "lon": 35.235, "owners": "אשכול חוות גב ההר (2025–2026)", "tags": ["agri", "offgrid"], "opp": "6 חוות חדשות מ-2025–2026 הדורשות תשתיות Off-Grid, מיגון ומבני מגורים", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "elev": 757}, {"id": 39, "name": "חוות אל חי, שובה ישראל ומעוז שאול (׳קפה חויא׳) – שבי שומרון, חומש ואבני חפץ", "region": "צפון השומרון", "cat": "שומרון", "lat": 32.285, "lon": 35.165, "owners": "דוד והדר מנצ׳ובסקי | עגלת קפה חויא | דניאל שרמן", "tags": ["tourism", "agri"], "opp": "עגלת קפה באבני חפץ ופיתוח מואץ ברכס חומש ושבי שומרון", "url": "https://chavot.co.il/farm_tourism/", "elev": 644}, {"id": 40, "name": "חוות אל נווה (מצפה מתן), אביה (׳קפה בחווה׳) ומעוז צבי – חרמש, ריחן ומבוא דותן", "region": "צפון השומרון", "cat": "שומרון", "lat": 32.435, "lon": 35.115, "owners": "נדב ובתאל שוורץ | יואב ורחלי פחימה | אברהם ושרון קלנר", "tags": ["tourism", "settlement"], "opp": "אל נווה ומעוז צבי בהליכי הסדרה + בית קפה פעיל בחוות אביה", "url": "https://chavot.co.il/farm_tourism/", "elev": 546}, {"id": 41, "name": "חוות טנא ירוק, בר דליה ובקר עמיחי (רותם ומחולה)", "region": "צפון בקעת הירדן", "cat": "בקעת הירדן", "lat": 32.345, "lon": 35.515, "owners": "דידי ושירה עמוסי | אשכול מחולה", "tags": ["agri", "offgrid"], "opp": "חוות בקר וצאן בצפון הבקעה – סככות ענק, הצללות ומערכות סולאריות", "url": "https://chavot.co.il/farm/", "elev": -282}, {"id": 42, "name": "חוות ארץ שמש, יחד לבבי, גושן ושאגת יהודה (משכיות וחמדת)", "region": "צפון-מרכז הבקעה", "cat": "בקעת הירדן", "lat": 32.268, "lon": 35.485, "owners": "עשהאל ורעות קורניץ | מנחם ואוריה גושן", "tags": ["settlement", "agri", "offgrid"], "opp": "חוות גושן בהליכי הסדרה + דרישה לבידוד תרמי גבוה ומיזוג", "url": "https://chavot.co.il/farm/", "elev": -241}, {"id": 43, "name": "חוות נוף גלעד (׳בריכת עמק הבוקרים׳), בקעות ורועה אברהם (מושב רועי ובקעות)", "region": "מרכז בקעת הירדן", "cat": "בקעת הירדן", "lat": 32.225, "lon": 35.475, "owners": "אורי ואפרת כהן | נריה ואלישבע שלם", "tags": ["tourism", "agri"], "opp": "מתחם הבריכות והתיירות בעמק הבוקרים + הרחבת מבני משק ומגורים", "url": "https://chavot.co.il/farm_tourism/", "elev": -229}, {"id": 44, "name": "חוות עמק תרצה / נווה תרצה (׳חאן בעמק׳ – חמרה)", "region": "מרכז בקעת הירדן", "cat": "בקעת הירדן", "lat": 32.195, "lon": 35.425, "owners": "משה ומוריה שרביט", "tags": ["tourism", "agri"], "opp": "מתחם אירוח ולינה ׳חאן בעמק׳ – פיתוח בקתות, חדרי רחצה ופרגולות", "url": "https://chavot.co.il/farm_tourism/", "elev": 87}, {"id": 45, "name": "חוות סרטבא (משואה) וחוות ג׳קסון, נוף הרים ושיזף (גיתית ומכורה)", "region": "מרכז בקעת הירדן", "cat": "בקעת הירדן", "lat": 32.105, "lon": 35.435, "owners": "רועי ועדן אלמקייס | נעם ג׳קסון | אברהם דורי | יאיא כהן", "tags": ["agri", "offgrid"], "opp": "4 חוות ברכס גיתית–מכורה–משואה הדורשות בינוי מבודד ותשתיות משק", "url": "https://chavot.co.il/farm/", "elev": 24}, {"id": 46, "name": "חוות הרשאש ומצפור פצאל (פצאל)", "region": "בקעת הירדן", "cat": "בקעת הירדן", "lat": 32.025, "lon": 35.425, "owners": "אליאב ושרה ליבי | אורי ורבקה מדמוני", "tags": ["tourism", "agri"], "opp": "פיתוח מצפור פצאל וחוות הרשאש (אפשרות הגעה מהירה מחרשה דרך ציר אלון)", "url": "https://chavot.co.il/farm/", "elev": 87}, {"id": 47, "name": "חוות תומר, מצפה מיכל (עגלת קפה) ונתיב הגדוד", "region": "דרום-מרכז הבקעה", "cat": "בקעת הירדן", "lat": 31.985, "lon": 35.438, "owners": "שמואל וצופיה שליסל | שלמה והלל שליסל", "tags": ["tourism", "agri"], "opp": "מתחם עגלת הקפה במצפה מיכל + בינוי בחוות נתיב הגדוד ותומר", "url": "https://chavot.co.il/farm_tourism/", "elev": 6}, {"id": 48, "name": "חוות עינות קדם (עגלת הקפה ׳NOMIKA׳), העוג׳ה וראש תדהר (ייט״ב)", "region": "דרום הבקעה", "cat": "בקעת הירדן", "lat": 31.942, "lon": 35.418, "owners": "עומר ונעמה עתדייה", "tags": ["tourism", "agri"], "opp": "מוקד התיירות וקפה NOMIKA מעל נחל ייט״ב + 2 חוות לוויין חדשות", "url": "https://chavot.co.il/farm_tourism/", "elev": 130}, {"id": 49, "name": "חוות שער המלך (מתחם אירועים), נווה רועים וחוות זוהר (מבואות יריחו)", "region": "דרום הבקעה", "cat": "בקעת הירדן", "lat": 31.905, "lon": 35.435, "owners": "משה וסיגלית טמיר | צוריאל ואורה לילנטל | זוהר סבח", "tags": ["tourism", "agri"], "opp": "מתחם אירועים עד 100 איש בשער המלך + פיתוח חוות הארמונות (נווה רועים)", "url": "https://chavot.co.il/farm_tourism/", "elev": 24}, {"id": 50, "name": "חוות נווה אורי / היישוב בר כוכבא (גוש עציון)", "region": "גוש עציון", "cat": "גוש עציון והר חברון", "lat": 31.692, "lon": 35.125, "owners": "ליאור ורחלי טל (צימר אורן וגן אירועים)", "tags": ["tourism", "settlement"], "opp": "הוסדרה כיישוב קבע (בר כוכבא) + מפעילה גן אירועים וצימרים פעילים", "url": "https://chavot.co.il/farm_tourism/", "elev": 897}, {"id": 51, "name": "חוות עדן (נווה דניאל), העיטם ויער אל קרן (אפרת) וקשואלה (גבעות)", "region": "מערב גוש עציון", "cat": "גוש עציון והר חברון", "lat": 31.668, "lon": 35.142, "owners": "פדיה ודבורה עדן | אשכול אפרת", "tags": ["settlement", "agri"], "opp": "העיטם ויער אל קרן בהליכי הסדרה כיישוב – פוטנציאל לבניית קבע", "url": "https://chavot.co.il/farm/", "elev": 916}, {"id": 52, "name": "חוות גפן עמי וצור יהודה (כרמי צור)", "region": "דרום גוש עציון", "cat": "גוש עציון והר חברון", "lat": 31.608, "lon": 35.105, "owners": "13 משפחות בחוות גפן עמי", "tags": ["offgrid", "settlement"], "opp": "13 משפחות החיות על אנרגיה סולארית עצמאית (Off-Grid) – יעד מובהק לאגירה ובינוי", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "elev": 867}, {"id": 53, "name": "חוות זוהר יהודה (׳חאן ערוגות׳), פני קדם (הר כנוב) ונחלת אבות (׳Orit Zoo׳)", "region": "מזרח גוש עציון", "cat": "גוש עציון והר חברון", "lat": 31.615, "lon": 35.235, "owners": "אלישע ושחר טורנר | גבריאל ושירה רייס | אברהם ואורית פופר", "tags": ["tourism", "agri"], "opp": "מוקדי תיירות ענקיים במדבר תקוע ומיצד (חאן ערוגות ו-Orit Zoo)", "url": "https://chavot.co.il/farm_tourism/", "elev": 780}, {"id": 54, "name": "חוות צאן קידר (קידר / מעלה אדומים)", "region": "מדבר יהודה / עציון", "cat": "גוש עציון והר חברון", "lat": 31.745, "lon": 35.315, "owners": "אריאל ויסכה גרינגליק", "tags": ["settlement", "agri"], "opp": "נמצאת בהליכי הסדרה – פיתוח דירים, מחלבה ומבני קבע", "url": "https://chavot.co.il/farm/", "elev": 683}, {"id": 55, "name": "חוות נגוהות (אולם אירוח), נופי יהודה וחוות אורות (נגוהות ותלם – 35 דק׳ מאשדוד!)", "region": "מערב הר חברון", "cat": "גוש עציון והר חברון", "lat": 31.535, "lon": 34.965, "owners": "חגי ואמונה ניסים | עזריה ורעיה שוורץ", "tags": ["tourism", "settlement", "agri"], "opp": "הכי קרובות לאשדוד ונתיבות! בחוות נגוהות פועל אולם אירוח ושיחות לקבוצות", "url": "https://chavot.co.il/farm_tourism/", "elev": 176}, {"id": 56, "name": "אשכול מדבר חבר, מעון, כרמל ומצפה יאיר (מדבר חבר, משק מן, שורשים, משק דרומא, שדה הראל)", "region": "דרום הר חברון", "cat": "גוש עציון והר חברון", "lat": 31.425, "lon": 35.165, "owners": "נתן ברוך | יששכר מן | שמעון עטיה | עמיחי שילה | אהרון שמחוביץ", "tags": ["agri", "tourism"], "opp": "רצף של 8 חוות בדרום הר חברון הנגישות מציר הדרום", "url": "https://chavot.co.il/farm/", "elev": 882}, {"id": 57, "name": "חוות מיתרים (גן אירועים), חוות יהודה ונווה עתניאל/אפקה (מיתר, שמעה ועתניאל)", "region": "דרום הר חברון / צפון הנגב", "cat": "גוש עציון והר חברון", "lat": 31.355, "lon": 34.965, "owners": "ינון וספיר לוי | אלישיב ורוני נחום | אוריה ותחיה נחום", "tags": ["tourism", "settlement"], "opp": "25 דק׳ מנתיבות! גן אירועים פעיל בחוות מיתרים + הסדרת יהודה ואפקה", "url": "https://chavot.co.il/farm_tourism/", "elev": 176}, {"id": 58, "name": "11 החוות החדשות בנגב – השומר החדש (פתחת ניצנה, כמהין וצפון הנגב)", "region": "הנגב ופתחת ניצנה", "cat": "הנגב ופתחת ניצנה", "lat": 30.915, "lon": 34.425, "owners": "יואל זילברמן – ארגון השומר החדש וצה״ל (2026)", "tags": ["offgrid", "agri"], "opp": "11 חוות חדשות בנגב המבוססות על תשתיות עצמאיות (Off-Grid), סככות ומבני צוותים", "url": "https://www.makorrishon.co.il/news/local/article/339541", "elev": 35}];
+    const INTEL_DB = {"osint": [{"id": 1, "cat": "1. מאקרו וקרקעות", "title": "שליטת החוות ב-1.1 מיליון דונם", "desc": "החוות החקלאיות שומרות על מעל 1.1 מיליון דונם ביו״ש לעומת כ-200 אלף דונם בתחום הבנוי של היישובים (יחס 1:6).", "url": "https://www.ynet.co.il/news/article/skmecrxtfg", "src": "Ynet מפת החוות"}, {"id": 2, "cat": "1. מאקרו וקרקעות", "title": "מעל 130 חוות פעילות ביו״ש ובבקעה", "desc": "למעלה מ-130 חוות חקלאיות וחוות רועים פועלות בשטח, מתוכן מעל 90 מאוגדות תחת איגוד החוות הרשמי.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 3, "cat": "1. מאקרו וקרקעות", "title": "קצב הקמה: 130+ חוות וגבעות חדשות", "desc": "בשנים 2023–2025 הוקמו 185 נקודות חדשות ביו״ש (מהן כ-130 חוות), וב-2025 לבדה נוספו 300 אלף דונם לשטחי החוות.", "url": "https://www.makorrishon.co.il/news/settlement/article/348502", "src": "מקור ראשון"}, {"id": 4, "cat": "1. מאקרו וקרקעות", "title": "הכרזת 25,959 דונם אדמות מדינה", "desc": "כמעט מחצית מכלל אדמות המדינה שהוכרזו מאז אוסלו הוכרזו בשנים 2023–2025, מה שיוצר עתודות להסדרת חוות.", "url": "https://www.makorrishon.co.il/news/settlement/article/348502", "src": "מקור ראשון"}, {"id": 5, "cat": "1. מאקרו וקרקעות", "title": "תכנון 40,064 יח״ד והכשרת 100+ נקודות", "desc": "שיא תכנוני ביו״ש (27,941 יח״ד ב-2025 לבדה) לצד החלטות ממשלה להסדרת מעל 100 נקודות התיישבות וחוות.", "url": "https://www.makorrishon.co.il/news/settlement/article/348502", "src": "מקור ראשון"}, {"id": 6, "cat": "1. מאקרו וקרקעות", "title": "פריצת 223 ק״מ דרכים חקלאיות חדשות", "desc": "תנופת פריצת דרכי עפר וביטחון לחוות המייצרת ביקוש לעבודות עפר, מצעים, ניקוז וקירות תמך.", "url": "https://www.makorrishon.co.il/news/settlement/article/348502", "src": "מקור ראשון"}, {"id": 7, "cat": "1. מאקרו וקרקעות", "title": "הקצאת 16,121 דונם מרעה במנהל האזרחי", "desc": "הקצאות רשמיות של המנהל האזרחי ומשרד החקלאות לחוות רועים ביו״ש (פברואר 2025).", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 8, "cat": "1. מאקרו וקרקעות", "title": "מנהלת ההתיישבות האזרחית במשרד הביטחון", "desc": "העברת סמכויות התכנון, הבנייה והתשתיות לידיים אזרחיות מקצרת הליכי אישור לתשתיות בחוות.", "url": "https://www.makorrishon.co.il/news/settlement/article/348502", "src": "מקור ראשון"}, {"id": 9, "cat": "1. מאקרו וקרקעות", "title": "הכרת אלוף פקמ״ז ומג״ב בחוות (יולי 2026)", "desc": "אלוף פיקוד המרכז אבי בלוט ומפקד מג״ב איו״ש הגדירו את החוות המוסדרות כמכפיל כוח ביטחוני.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 10, "cat": "1. מאקרו וקרקעות", "title": "מודל שדרוג חווה ליישוב קבע מוסדר", "desc": "חוות הופכות ליישובים (נווה אורי -> בר כוכבא, בית קרניים -> מעוז צור, קלע דוד -> משעול) ופותחות מכרזי בניית קבע.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 11, "cat": "2. מימון ומוסדות", "title": "איגוד החוות – ארגון הגג", "desc": "מאגד מעל 90 בעלי חוות ביו״ש ובבקעה לייצוג, תיאום ביטחוני ותמיכה כלכלית (office@chavot.co.il).", "url": "https://chavot.co.il/about/", "src": "איגוד החוות"}, {"id": 12, "cat": "2. מימון ומוסדות", "title": "קרן החוות (אהבת גלעד) – 22,000+ שותפים", "desc": "מממנת הקמת חוות חדשות ותחזוקת קיימות (בנק מרכנתיל 17, סניף 725, ח-ן 104953022).", "url": "https://chavot.co.il/the-farm-fund/", "src": "קרן החוות"}, {"id": 13, "cat": "2. מימון ומוסדות", "title": "נוהל תמיכה בתשתיות ובינוי 2026 – החטיבה", "desc": "נוהל הקצאות ייעודי של החטיבה להתיישבות (הוראת תכ״ם 6.2.1) למימון בינוי ותשתיות.", "url": "https://www.hityashvut.org.il/wp-content/uploads/2026/01/%D7%A0%D7%95%D7%94%D7%9C-%D7%AA%D7%9E%D7%99%D7%9B%D7%94-%D7%91%D7%A0%D7%95%D7%A9%D7%90%D7%99-%D7%AA%D7%A9%D7%AA%D7%99%D7%95%D7%AA-%D7%95%D7%91%D7%99%D7%A0%D7%95%D7%99-%D7%9C%D7%A9%D7%A0%D7%AA-2026-%D7%9E%D7%AA%D7%A7%D7%A6%D7%99%D7%91-2025-%D7%A1%D7%95%D7%A4%D7%99.pdf", "src": "החטיבה להתיישבות"}, {"id": 14, "cat": "2. מימון ומוסדות", "title": "החטיבה להתיישבות – מרחב מרכז (יו״ש ובקעה)", "desc": "חולשת על בנימין, שומרון, גוש עציון, בקעת הירדן ומגילות (02-6204552/1, Limorko@wzo.org.il).", "url": "https://www.hityashvut.org.il/", "src": "החטיבה להתיישבות"}, {"id": 15, "cat": "2. מימון ומוסדות", "title": "אגף חוזים ובטחונות – החטיבה להתיישבות", "desc": "מנהל את חוזי הביצוע והבטחונות מול ספקים וקבלנים (02-6204587, lisac@wzo.org.il).", "url": "https://www.hityashvut.org.il/hozim-kesher/", "src": "החטיבה להתיישבות"}, {"id": 16, "cat": "2. מימון ומוסדות", "title": "החטיבה להתיישבות – מרחב דרום (הר חברון ונגב)", "desc": "אחראית על הר חברון, הנגב, הערבה ולכיש (08-6295583, Sagitmo@wzo.org.il).", "url": "https://www.hityashvut.org.il/", "src": "החטיבה להתיישבות"}, {"id": 17, "cat": "2. מימון ומוסדות", "title": "משרד ההתיישבות והמשימות הלאומיות", "desc": "מתקצב מרכיבי ביטחון, גרעינים משימתיים וחוות חקלאיות בראשות השרה אורית סטרוק.", "url": "https://www.gov.il/he/departments/ministry_of_community_affairs", "src": "Gov.il"}, {"id": 18, "cat": "2. מימון ומוסדות", "title": "מענקי מרעה וחקלאות – משרד החקלאות", "desc": "מענקים רשמיים לחוות ביו״ש עבור מכלאות צאן, מתקני השקיה, מחלבות ומרעה.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 19, "cat": "2. מימון ומוסדות", "title": "העמותה לפיתוח חוות חקלאיות בשומרון (ע״ר)", "desc": "עמותה ייעודית המגייסת משאבים לפיתוח פיזי וחקלאי בחוות השומרון.", "url": "https://www.jgive.com/new/he/usd/charity-organizations/4155", "src": "JGive"}, {"id": 20, "cat": "2. מימון ומוסדות", "title": "תקציבי מיגון, גדרות ורכבי שטח לחוות", "desc": "מימון מועצתי וממשלתי למרכיבי ביטחון, תאורה היקפית, מצלמות ורכבי שטח לחוות.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 21, "cat": "3. מועצות וחברות כלכליות", "title": "אגף הנדסה – מועצה אזורית מטה בנימין", "desc": "מוקד אישור תוכניות הבינוי, הקצאות הקרקע והיתרי הבנייה ב-46 יישובים ו-50 חוות.", "url": "https://binyamin.org.il/8297/", "src": "מטה בנימין"}, {"id": 22, "cat": "3. מועצות וחברות כלכליות", "title": "חוברת הנחיות ליזמים – מטה בנימין", "desc": "מגדירה את תקני הבנייה והפיתוח בטלמון, חרשה, נריה, כרם רעים ויישובי המועצה.", "url": "https://www.binyamin.org.il/uploads/n/1556531420.7192.pdf", "src": "הנחיות יזמים PDF"}, {"id": 23, "cat": "3. מועצות וחברות כלכליות", "title": "החברה לפיתוח מטה בנימין (*9873)", "desc": "יזמית נדל״ן, מסחר ותשתיות בא.ת. שער בנימין המפרסמת מכרזי בנייה ויזמות.", "url": "https://binyamin.co.il/bids/", "src": "חל״פ בנימין"}, {"id": 24, "cat": "3. מועצות וחברות כלכליות", "title": "החברה הכלכלית מטה בנימין בע״מ", "desc": "זרוע המועצה לבינוי מוסדות ציבור וגני ילדים ביישובים (כגון מכרז 02/26 בכרם רעים).", "url": "https://cbinyamin.org.il/%D7%90%D7%A8%D7%9B%D7%99%D7%95%D7%9F-%D7%9E%D7%9B%D7%A8%D7%96%D7%99%D7%9D/", "src": "חכ״ל בנימין"}, {"id": 25, "cat": "3. מועצות וחברות כלכליות", "title": "אגף הנדסה ותפעול – מועצה אזורית שומרון", "desc": "וועדת תכנון ובנייה, בדק מוסדות חינוך וליווי חוות חקלאיות בשומרון.", "url": "https://www.shomron.org.il/1232/", "src": "מועצת שומרון"}, {"id": 26, "cat": "3. מועצות וחברות כלכליות", "title": "מועצה אזורית וחברה כלכלית גוש עציון", "desc": "מכרזי בינוי, פיתוח ומערכות ביטחון ביישובי גוש עציון ובחוות.", "url": "https://www.baitisraeli.co.il/bids/", "src": "גוש עציון"}, {"id": 27, "cat": "3. מועצות וחברות כלכליות", "title": "מחלקת הנדסה ומכרזים – בקעת הירדן", "desc": "מכרזי שיקום דרכים חקלאיות (מחולה) ואספקת מרכיבי ביטחון (04/08/2026).", "url": "https://www.jordanvalley.org.il/bids/?archive=1", "src": "בקעת הירדן"}, {"id": 28, "cat": "3. מועצות וחברות כלכליות", "title": "מועצה אזורית הר חברון והחברה הכלכלית יהודה", "desc": "מכרזי בינוי ותשתיות בדרום הר חברון (נגישה מציר אשדוד–קריית גת–נתיבות).", "url": "https://www.hrhevron.co.il/bids/", "src": "הר חברון"}, {"id": 29, "cat": "3. מועצות וחברות כלכליות", "title": "השומר החדש – זרוע החוות בנגב ובגליל", "desc": "מקים 11 חוות חדשות בנגב ו-3 יישובים חדשים ב-2026 ומפעיל שינשנים בחוות.", "url": "https://kenes-media.com/%D7%94%D7%A9%D7%95%D7%9E%D7%A8-%D7%94%D7%97%D7%93%D7%A9-%D7%9E%D7%AA%D7%A8%D7%97%D7%91-3-%D7%99%D7%99%D7%A9%D7%95%D7%91%D7%99%D7%9D-%D7%97%D7%93%D7%A9%D7%99%D7%9D-%D7%91%D7%93%D7%A8%D7%9A/", "src": "כנס מדיה"}, {"id": 30, "cat": "3. מועצות וחברות כלכליות", "title": "בתי אמנה / בנייני בר אמנה", "desc": "היזם והמבצע הגדול ביותר ביישובי יו״ש (כרם רעים, אדם, יקיר) – פוטנציאל קבלנות משנה.", "url": "https://home.amana.co.il/%D7%91%D7%99%D7%AA/", "src": "בתי אמנה"}, {"id": 31, "cat": "4. גוש טלמונים וחרשה", "title": "יישוב חרשה (עין חרשה) – בסיס האם", "desc": "כ-90 משפחות בגוש טלמונים, 40 ק״מ מגוש דן ו-20 דק׳ ממודיעין, בתנופת הרחבה פרטית.", "url": "https://www.binyamin.org.il/577/", "src": "מטה בנימין"}, {"id": 32, "cat": "4. גוש טלמונים וחרשה", "title": "וילת משפחת ענתבי – מגרש 15, חרשה", "desc": "פרויקט העוגן של ESH27 (160 מ״ר, 880K ₪ לפני מע״מ, לו״ז 13 שבועות, רווח נקי ~245K ₪).", "url": "https://docs.google.com/document/d/1FaoLZM6VKNE3jVTKQdsPDzYJs39hni8XUePChwMXAeU/edit", "src": "חוזה ענתבי Docs"}, {"id": 33, "cat": "4. גוש טלמונים וחרשה", "title": "14 המגרשים הנוספים בהרחבת חרשה", "desc": "פיילוט מגרש 15 פותח דלת ישירה ל-14 בונים פרטיים באותה שכונת הרחבה בחרשה.", "url": "https://keep.google.com/?note=15yOqudm-egI8AqlbOn5SFAUiTdT3pHTWxRxLFlsfTtAYIF6ovPAyVvF7TViDOQ", "src": "Keep מאסטר"}, {"id": 34, "cat": "4. גוש טלמונים וחרשה", "title": "רועי שריקי נדל״ן ויזמות בע״מ (517224895)", "desc": "התאגדה ב-28.09.2025 (הסוללים 3, נתיבות), שותף חתימה ופיתוח עסקי.", "url": "https://www.checkid.co.il/company/%D7%A8%D7%95%D7%A2%D7%99-%D7%A9%D7%A8%D7%99%D7%A7%D7%99-%D7%A0%D7%93%D7%9C~%D7%9F-%D7%95%D7%99%D7%96%D7%9E%D7%95%D7%AA-%D7%91%D7%A2~%D7%9E-517224895", "src": "CheckID"}, {"id": 35, "cat": "4. גוש טלמונים וחרשה", "title": "משרד אדריכלות ׳ישר ולעניין׳ – אלעד", "desc": "יושב במושב כרם רעים הצמוד לחרשה ומתכנן בתי קרקע בגוש.", "url": "https://www.hakolhayehudi.co.il/item/%D7%9C%D7%95%D7%97_%D7%A2%D7%A1%D7%A7%D7%99%D7%9D/%D7%99%D7%A9%D7%A8_%D7%95%D7%9C%D7%A2%D7%A0%D7%99%D7%99%D7%9F_-_%D7%90%D7%93%D7%A8%D7%99%D7%9B%D7%9C%D7%95%D7%AA_%D7%95%D7%A2%D7%99%D7%A6%D7%95%D7%91_%D7%A4%D7%A0%D7%99%D7%9D", "src": "הקול היהודי"}, {"id": 36, "cat": "4. גוש טלמונים וחרשה", "title": "משרד ׳סקלי הנדסה׳ – מהנדס אליהו", "desc": "קונסטרוקטור וילת ענתבי, מתכנן רפסודות ושלדים ביו״ש ומאשר ביסוס סלע חסכוני.", "url": "https://drive.google.com/file/d/1K_LiQ-jlJXmaMRNBp36bs63Sw0bmutpm/view", "src": "תוכנית רפסודה"}, {"id": 37, "cat": "4. גוש טלמונים וחרשה", "title": "פרויקט ׳כרם רעים – הדור הבא׳ (שלב ה׳)", "desc": "בנייה חדשה בכרם רעים הצמוד לחרשה על ידי בתי אמנה וש.א.ג ולול ושיווק ב. הר-אל.", "url": "https://kerem-reim.co.il/", "src": "כרם רעים"}, {"id": 38, "cat": "4. גוש טלמונים וחרשה", "title": "מכרז 02/26 להקמת 2 כיתות גן בכרם רעים", "desc": "מכרז של החברה הכלכלית בנימין המעיד על תנופת הבינוי הציבורי בגוש טלמונים.", "url": "https://cbinyamin.org.il/%D7%90%D7%A8%D7%9B%D7%99%D7%95%D7%9F-%D7%9E%D7%9B%D7%A8%D7%96%D7%99%D7%9D/", "src": "חכ״ל בנימין"}, {"id": 39, "cat": "4. גוש טלמונים וחרשה", "title": "מרכזי העסקים החדשים בנריה ובכרם רעים", "desc": "פרויקטי מסחר ותעסוקה של חל״פ בנימין בנריה (אכלוס 2028) ובכרם רעים ונחליאל (אכלוס 2029).", "url": "https://www.binyamin.co.il/assets/23/", "src": "חל״פ בנימין"}, {"id": 40, "cat": "4. גוש טלמונים וחרשה", "title": "הרחבות ופרויקטים בטלמון ובנריה (הרי זהב)", "desc": "בניית דירות גן ודו-משפחתיים בטלמון ונריה לצד מגרשי 570 מ״ר לבנייה פרטית.", "url": "https://www.hzahav.co.il/projects/talmon/", "src": "הרי זהב"}, {"id": 41, "cat": "5. חוות בנימין", "title": "חוות ארץ הצבי (נחליאל / נווה צוף)", "desc": "מנוהלת ע״י צבי והדסה לקס בלב גוש טלמונים – דקות נסיעה מאתר העבודה שלכם בחרשה.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 42, "cat": "5. חוות בנימין", "title": "חוות אוהל אברהם (נריה) וגבעת הסלעים (עטרת)", "desc": "צמודות לחרשה; בגבעת הסלעים מתגוררות 7 משפחות לצד החווה ויש דרישה למבנים ותשתיות.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 43, "cat": "5. חוות בנימין", "title": "חוות קלע דוד (נווה צוף) – מתוכננת ליישוב ׳משעול׳", "desc": "הוקמה ב-2025 מערבית לנווה צוף ומתוכננת להפוך ליישוב חדש – הזדמנות לעבודות תשתית ושלד.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 44, "cat": "5. חוות בנימין", "title": "אשכול חוות מערב בנימין (עופרים, ניל״י, בית חורון)", "desc": "כולל את חסד עולם, המאיר לארץ, שוביה, מבוא הר-אל, מעוז צור וחוות שיבולת (החווה ה-50 בבנימין).", "url": "https://www.inn.co.il/news/696497", "src": "ערוץ 7"}, {"id": 45, "cat": "5. חוות בנימין", "title": "אשכול חוות רימונים וכוכב השחר (מזרח בנימין)", "desc": "חוות המכוך (נריה בן פזי), סלע רימון, גאון הירדן (מיכה סודאי), מעלה אהוביה, שלישה, נחלת אפרים והר-מלך.", "url": "https://www.makorrishon.co.il/magazine/local-magazine/article/294326", "src": "מקור ראשון"}, {"id": 46, "cat": "5. חוות בנימין", "title": "אשכול חוות מעלה מכמש ומצפה דני", "desc": "החווה של חנינה (פרידמן), משכנות הראל (ינון כהן), חוות המצוק (בניהו כהן), נחלת צבי ורוח הארץ.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 47, "cat": "5. חוות בנימין", "title": "אשכול חוות גוש שילה ומלאכי השלום", "desc": "גל יוסף (סעדון + ישיבה), ראש תאנה (קארו), נחל שילה (שמלה), ישוב הדעת, נוף המשכן ושומרי העמק.", "url": "https://www.binyamin.org.il/7620/", "src": "מטה בנימין"}, {"id": 48, "cat": "5. חוות בנימין", "title": "אשכול חוות דוד ליבי (אש קודש ומעלה אפרים)", "desc": "מצודת דוד, מכתם דוד, מגדל דוד (קפה אלין) וגיבורי דוד – הוקמו ב-2025 ונמצאות בפיתוח מואץ.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 49, "cat": "5. חוות בנימין", "title": "אשכול חוות עפרה ובית אל", "desc": "חוות עמונה/האורנים, אור אהוביה, עוז יאיר, חסד לאברהם (בעל חצור), צור לבבי וצור הראל.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 50, "cat": "5. חוות בנימין", "title": "אשכול חוות מצפה יריחו, גבע בנימין ועלמון", "desc": "חוות לכתחילה (פרידמן), נצח הראל (שמואלוביץ), צאן בנימין, גור אריה, נחלת בן ישי ועין פרת.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 51, "cat": "6. חוות השומרון", "title": "חוות סקאלי (אלון מורה – 1998)", "desc": "בניהול יצחק וחפצי סקלי – חלוצת החוות בשומרון וקשר מפתח למשפחת סקלי.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 52, "cat": "6. חוות השומרון", "title": "חוות השקדים וחוות מרום שמואל (רכס כביר)", "desc": "בניהול נתי ונסיה שוולב – מפעילות סדנאות מנהיגות במרעה וסיתות באבן.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 53, "cat": "6. חוות השומרון", "title": "אשכול חוות רכס איתמר (גבעות עולם, שדה שכם, בני אהרן)", "desc": "חקלאות אורגנית, מחלבות ונקודות חדשות שהוקמו ב-2026 סביב איתמר.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 54, "cat": "6. חוות השומרון", "title": "חוות איתמר כהן וחוות פניני (הר ינון)", "desc": "מנוהלות ע״י איתמר ושקמה כהן ותומר ומיטל פניני ברכס הר ינון.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 55, "cat": "6. חוות השומרון", "title": "אשכול חוות נחל קנה ושער שומרון", "desc": "דורות עלית (אשד), שיר לדוד (מתחם אירועים ובשר ׳מרעה׳), שעורים (יקב ׳יין קנה׳) ושובי ארץ.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 56, "cat": "6. חוות השומרון", "title": "אשכול ברוכין, פדואל, בית אריה ורבבה", "desc": "תל חמד (עגלת שף ׳רמתא׳), צורים (גלריית תכשיטים), צרדה (בירן), אביחי (בית קפה מלט) ועמק דורון.", "url": "https://www.tourshomron.org.il/business/category/3/", "src": "תיירות שומרון"}, {"id": 57, "cat": "6. חוות השומרון", "title": "אשכול אריאל, כפר תפוח, נופי נחמיה ורחבעם", "desc": "נוף אב״י (רפפורט – בהסדרה כשכונה), שובאל (ליבי), עמק קדם (קפה עטרל׳ה), טל בנימין, נצח דוד ומעוז יהודה.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 58, "cat": "6. חוות השומרון", "title": "אשכול גב ההר (יצהר, הר ברכה, עיבל ואביתר)", "desc": "טל בניהו, מגן יהודה, מבוא קנה, צאן אביעזר, חוות איתן, מצפה יהושע (עיבל) ומבשר השלום.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 59, "cat": "6. חוות השומרון", "title": "אשכול צפון השומרון (שבי שומרון, אבני חפץ, חומש, חרמש, ריחן)", "desc": "אל חי (מנצ׳ובסקי), מעוז שאול (קפה חויא), שובה ישראל (חומש), אל נווה (חרמש), אביה (קפה פחימה) ומעוז צבי.", "url": "https://www.tourshomron.org.il/business/category/27/", "src": "תיירות שומרון"}, {"id": 60, "cat": "6. חוות השומרון", "title": "חוות זית בגלבוע וחוות עמיאל (הר בזק)", "desc": "חוות הקצה הצפוני (בהליכי הסדרה) המחברות את השומרון לעמק בית שאן והגלבוע.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 61, "cat": "7. חוות בקעת הירדן", "title": "זינוק מ-2 ל-30+ חוות בבקעת הירדן", "desc": "התרחבות אדירה של חוות המרעה, התיירות והחקלאות לאורך בקעת הירדן ומורדות השומרון.", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 62, "cat": "7. חוות בקעת הירדן", "title": "חוות נוף גלעד (׳בריכת עמק הבוקרים׳) ורועה אברהם", "desc": "במושב רועי (אורי ואפרת כהן) – משלבת מרעה עם מתחם בריכות ותיירות פעיל.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 63, "cat": "7. חוות בקעת הירדן", "title": "חוות בקעות (שלם) וחוות סרטבא (אלמקייס)", "desc": "שתי חוות מרכזיות ברכס בקעות ומשואה הדורשות בנייה מבודדת לאקלים הבקעה.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 64, "cat": "7. חוות בקעת הירדן", "title": "חוות עמק תרצה / נווה תרצה (׳חאן בעמק׳)", "desc": "ליד מושב חמרה (משה ומוריה שרביט) – מפעילה מתחם חאן, לינה ואירוח קבוצות.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 65, "cat": "7. חוות בקעת הירדן", "title": "אשכול צפון הבקעה (מחולה, רותם, משכיות וחמדת)", "desc": "טנא ירוק (עמוסי), ארץ שמש (קורניץ), יחד לבבי, בר דליה, בקר עמיחי, גושן ושאגת יהודה.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 66, "cat": "7. חוות בקעת הירדן", "title": "חוות עינות קדם (עגלת הקפה ׳NOMIKA׳ בייט״ב)", "desc": "בניהול עומר ונעמה עתדייה – מוקד תיירות וקפה מרכזי בדרום-מרכז הבקעה, לצד חוות העוג׳ה וראש תדהר.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 67, "cat": "7. חוות בקעת הירדן", "title": "אשכול גיתית, מכורה ופצאל", "desc": "חוות ג׳קסון, נוף הרים (דורי), שיזף (כהן), הרשאש (ליבי) ומצפור פצאל (מדמוני).", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 68, "cat": "7. חוות בקעת הירדן", "title": "חוות נתיב הגדוד, חוות תומר וחוות מצפה מיכל", "desc": "מנוהלות ע״י משפחות שליסל ומפעילות עגלת קפה ותצפית לנוף הבקעה.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 69, "cat": "7. חוות בקעת הירדן", "title": "אשכול מבואות יריחו (שער המלך, נווה רועים, זוהר)", "desc": "בחוות שער המלך (משה וסיגלית טמיר) פועל מתחם אירועים עד 100 איש.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 70, "cat": "7. חוות בקעת הירדן", "title": "מכרזי פיתוח עסקי של החברה הכלכלית בקעת הירדן", "desc": "קולות קוראים ומכרזים לפיתוח תשתיות, תיירות וחקלאות במועצה אזורית בקעת הירדן.", "url": "https://wizbiz.co.il/%D7%9E%D7%9B%D7%A8%D7%96%D7%99-%D7%9E%D7%95%D7%A2%D7%A6%D7%94-%D7%90%D7%96%D7%95%D7%A8%D7%99%D7%AA-%D7%91%D7%A7%D7%A2%D7%AA-%D7%94%D7%99%D7%A8%D7%93%D7%9F/", "src": "Wizbiz מכרזים"}, {"id": 71, "cat": "8. גוש עציון, הר חברון ונגב", "title": "חוות נווה אורי / היישוב בר כוכבא (גוש עציון)", "desc": "בניהול ליאור ורחלי טל – הוסדרה כיישוב ומפעילה צימרים וגן אירועים פעיל.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 72, "cat": "8. גוש עציון, הר חברון ונגב", "title": "חוות מערב ומרכז גוש עציון (עדן, העיטם, גפן עמי)", "desc": "בחוות גפן עמי (כרמי צור) גרות 13 משפחות על אנרגיה סולארית עצמאית (Off-Grid).", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 73, "cat": "8. גוש עציון, הר חברון ונגב", "title": "אשכול מזרח גוש עציון (זוהר יהודה, פני קדם, נחלת אבות, קידר)", "desc": "כולל את ׳חאן ערוגות׳ (צימרים ואירועים בתקוע), ׳Orit Zoo׳ (מיצד) וחוות צאן קידר.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 74, "cat": "8. גוש עציון, הר חברון ונגב", "title": "אשכול מערב הר חברון – 35 דק׳ מאשדוד! (נגוהות, תלם, אורות)", "desc": "חוות נגוהות (חגי ניסים – אולם אירוח), נופי יהודה (שוורץ) וחוות אורות (בית גוברין/תלם, בהסדרה).", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 75, "cat": "8. גוש עציון, הר חברון ונגב", "title": "אשכול גב הר חברון ומדבר חבר (מעון, כרמל, פני חבר, מצפה יאיר)", "desc": "מדבר חבר (ברוך), משק מן, טוב הארץ, שורשים (עטיה), משק דרומא (שילה), שדה הראל ושפת המדבר.", "url": "https://chavot.co.il/farm/", "src": "איגוד החוות"}, {"id": 76, "cat": "8. גוש עציון, הר חברון ונגב", "title": "אשכול דרום הר חברון ומיתר (מיתרים, יהודה, נווה עתניאל, מקנה יהודה)", "desc": "בחוות מיתרים (ינון לוי) פועל גן אירועים; חוות יהודה ונווה עתניאל (אפקה) בהליכי הסדרה.", "url": "https://chavot.co.il/farm_tourism/", "src": "איגוד החוות"}, {"id": 77, "cat": "8. גוש עציון, הר חברון ונגב", "title": "יוזמת 11 החוות החדשות בנגב (2026)", "desc": "מוקמות ע״י השומר החדש וצה״ל ברמת הנגב ופתחת ניצנה ודורשות תשתיות Off-Grid ומבני צוותים.", "url": "https://www.makorrishon.co.il/news/local/article/339541", "src": "מקור ראשון"}, {"id": 78, "cat": "8. גוש עציון, הר חברון ונגב", "title": "חוות הירק ע״ש איתמר שמן ז״ל וחוות הצאן בנגב הצפוני", "desc": "פעילות חקלאית בנגב הצפוני הדורשת חממות, בתי אריזה, דירים ומגורי מתנדבים.", "url": "https://www.hashomer.org.il/category/%D7%97%D7%93%D7%A9%D7%95%D7%AA/", "src": "השומר החדש"}, {"id": 79, "cat": "8. גוש עציון, הר חברון ונגב", "title": "מכרזי רמ״י בנתיבות (ספטמבר 2026) – המגרש של רועי שריקי", "desc": "שיווק מתחמי תעשייה, מסחר וגן אירועים של 5,000 מ״ר בנתיבות בהיקף מעל 211 מיליון ₪.", "url": "https://www.nadlancenter.co.il/article/15293", "src": "מרכז הנדל״ן"}, {"id": 80, "cat": "8. גוש עציון, הר חברון ונגב", "title": "יתרון לוגיסטי כפול: אשדוד–נתיבות–בנימין–הר חברון", "desc": "מיקום הצוות באשדוד ונתיבות מאפשר הגעה תוך 35–50 דקות הן למערב הר חברון/נגב והן לגוש טלמונים.", "url": "https://docs.google.com/spreadsheets/d/1hIlIofpiz_mJKSp3CmPcNUQmoKVMZpSmHBFhWNhKVas/edit", "src": "מאסטר ESH27"}, {"id": 81, "cat": "9. תיירות, יקבים ואירועים", "title": "גל הקמת עגלות הקפה ובתי הקפה בחוות", "desc": "קפה אלין (מגדל דוד), אביחי, NOMIKA (עינות קדם), עטרל׳ה (עמק קדם), חויא (מעוז שאול) ורמתא (תל חמד).", "url": "https://chavot.co.il/farm_tourism/", "src": "תיירות החוות"}, {"id": 82, "cat": "9. תיירות, יקבים ואירועים", "title": "הקמת גני ואולמות אירועים בחוות", "desc": "גני אירועים פעילים בנווה אורי, מיתרים, שיר לדוד, שער המלך ונגוהות – ביקוש לפרגולות, גבס, תאורה ומיזוג.", "url": "https://chavot.co.il/farm_tourism/", "src": "תיירות החוות"}, {"id": 83, "cat": "9. תיירות, יקבים ואירועים", "title": "חאנים, גלמפינג וצימרים בחוות", "desc": "חאן ערוגות (זוהר יהודה), חאן בעמק (עמק תרצה), צימר אורן (נווה אורי), סלע רימון והר מלך.", "url": "https://chavot.co.il/farm_tourism/", "src": "תיירות החוות"}, {"id": 84, "cat": "9. תיירות, יקבים ואירועים", "title": "יקבי בוטיק ומרכזי מבקרים חדשים (יקב שילה ויין קנה)", "desc": "יקב שילה מקים מרכז מבקרים חדש בבנימין; בחוות שעורים פועל יקב ׳יין קנה׳.", "url": "https://www.gobinyamin.co.il/3-winery/", "src": "תיירות בנימין"}, {"id": 85, "cat": "9. תיירות, יקבים ואירועים", "title": "בריכות שכשוך, מעיינות ומתחמי ספא בחוות", "desc": "בריכת עמק הבוקרים (נוף גלעד) ומתחמי ספא בשומרון ובבנימין הדורשים יציקות בטון, איטום ודקים.", "url": "https://www.tourshomron.org.il/business/category/2/", "src": "תיירות שומרון"}, {"id": 86, "cat": "9. תיירות, יקבים ואירועים", "title": "מותגי בשר, מחלבות גבינות וחדרי קירור", "desc": "מותג הבשר ׳מרעה׳ בחוות שיר לדוד ומחלבות צאן בחוות הדורשים חדרי קירור ותקני משרד הבריאות.", "url": "https://chavot.co.il/farm_tourism/", "src": "תיירות החוות"}, {"id": 87, "cat": "9. תיירות, יקבים ואירועים", "title": "חוות החינוך החקלאי של החמ״ד והמועצות", "desc": "תקציבי משרד החינוך להקמת כיתות לימוד, חממות לימודיות ופינות חי בבנימין ובשומרון.", "url": "https://agriteach.org.il/%D7%9E%D7%A9%D7%90%D7%91%D7%99-%D7%94%D7%95%D7%A8%D7%90%D7%94/107-%D7%97%D7%95%D7%95%D7%AA-%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA", "src": "מדעי החקלאות"}, {"id": 88, "cat": "9. תיירות, יקבים ואירועים", "title": "חוות סוסים ומתחמי בעלי חיים (Orit Zoo)", "desc": "דרישה לאורוות, מכלאות, גידור בטיחותי והצללות למבקרים.", "url": "https://chavot.co.il/farm_tourism/", "src": "תיירות החוות"}, {"id": 89, "cat": "9. תיירות, יקבים ואירועים", "title": "דד-ליינים קשיחים לשיפוצים לפני חגי סוכות ופסח", "desc": "אירועי השיא של איגוד החוות והמועצות בחול המועד מייצרים גל הזמנות עבודות גמר לפני כל חג.", "url": "https://chavot.co.il/sukkot", "src": "איגוד החוות"}, {"id": 90, "cat": "9. תיירות, יקבים ואירועים", "title": "גלריות אומנים וחדרי סדנאות ממוזגים בחוות", "desc": "גלריית תכשיטי הזהב בחוות צורים וסדנאות האבן בחוות השקדים.", "url": "https://chavot.co.il/farm_tourism/", "src": "תיירות החוות"}, {"id": 91, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "רפסודה על סלע נקי ללא כלונסאות (פטור מבטון רזה)", "desc": "שיטת סקלי הנדסה בוילת ענתבי חוסכת קידוחי כלונסאות ו-12 קוב בטון רזה ומשאבה בכל בית.", "url": "https://drive.google.com/file/d/1K_LiQ-jlJXmaMRNBp36bs63Sw0bmutpm/view", "src": "סקלי הנדסה"}, {"id": 92, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "מחיצות פנים מגבס כפול מבודד (אפס טיח שחור פנים)", "desc": "חוסך 4–6 שבועות עבודה ומאפשר מסירת מפתח ב-13 שבועות בחוות ובהרחבות.", "url": "https://docs.google.com/document/d/1FaoLZM6VKNE3jVTKQdsPDzYJs39hni8XUePChwMXAeU/edit", "src": "מפרט ESH27"}, {"id": 93, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "קירות מעטפת מבודדים: בלוק פומיס או תבניות נודורה/עין כרמל", "desc": "בידוד תרמי קריטי להרי בנימין/שומרון ולבקעת הירדן המאושר הנדסית ללא שינוי קונסטרוקטיבי.", "url": "https://keep.google.com/?note=15yOqudm-egI8AqlbOn5SFAUiTdT3pHTWxRxLFlsfTtAYIF6ovPAyVvF7TViDOQ", "src": "Keep מאסטר"}, {"id": 94, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "מערכות סולאריות ואגירת אנרגיה לחוות Off-Grid", "desc": "מענה לחוות שאינן מחוברות לרשת החשמל הארצית (מינוף דוח אגירת אנרגיה ומונים חכמים של אריאל ושון).", "url": "https://he.wikipedia.org/wiki/%D7%94%D7%97%D7%95%D7%95%D7%AA_%D7%94%D7%97%D7%A7%D7%9C%D7%90%D7%99%D7%95%D7%AA_%D7%91%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%95%D7%9E%D7%A8%D7%95%D7%9F", "src": "ויקיפדיה"}, {"id": 95, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "מערכות מיזוג VRF ומפוצלים (קובי בן עמרם)", "desc": "פתרון מיזוג מלא לוילות, אולמות אירועים, יקבים ומרכזי מבקרים בחוות.", "url": "https://docs.google.com/document/d/1re08dfcw0wRwGXEQ2am8ap4Va0KqKHnu8GVjNbz5ocs/edit", "src": "קואליציית ESH27"}, {"id": 96, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "סימולטור BIM תלת-ממד וזיהוי התנגשויות ככלי סגירת עסקאות", "desc": "הצגת מודל 3D חי וכתב כמויות שקוף ללקוח סוגרת עסקאות מהר יותר מכל מתחרה מסורתי.", "url": "https://drive.google.com/file/d/1ayx3ur6CPumox-RibYL9SJk1y3nX4vaB/view", "src": "סימולטור 3D"}, {"id": 97, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "מיזם הרחפן D&A (דניאל גלר) למיפוי ואבטחת חוות", "desc": "מיפוי שטח פוטוגרמטרי לפני בנייה + סיור אווירי לשמירה על עדרים וזיהוי חדירות בחוות.", "url": "https://docs.google.com/document/d/1re08dfcw0wRwGXEQ2am8ap4Va0KqKHnu8GVjNbz5ocs/edit", "src": "קואליציית ESH27"}, {"id": 98, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "שרשרת אספקה מקזזת מע״מ ורווחיות 28%–30%", "desc": "עבודה עם ספקי חומרים קבועים (בר-אל אופיר, PVC) ומודל מקדמת שלב בתחילת כל שלב (15% בחתימה).", "url": "https://docs.google.com/spreadsheets/d/1hIlIofpiz_mJKSp3CmPcNUQmoKVMZpSmHBFhWNhKVas/edit", "src": "פיננסים ESH27"}, {"id": 99, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "שדרוג מבנים יבילים, איטום ביטומני ותשתיות PEX", "desc": "הפיכת מבנים יבילים וקרוואנים בחוות למבני קבע מבודדים ומאובזרים במהירות.", "url": "https://docs.google.com/document/d/1FaoLZM6VKNE3jVTKQdsPDzYJs39hni8XUePChwMXAeU/edit", "src": "מפרט ESH27"}, {"id": 100, "cat": "10. הנדסה, אנרגיה ומיגון", "title": "הקמת ממ״דים תקניים וסינון אב״כ ביו״ש", "desc": "דרישת חובה בכל בית קבע ומוסד ביו״ש (11 קוב בטון ב-30, קירות 30–40 ס״מ ומערכת סינון).", "url": "https://docs.google.com/document/d/1FaoLZM6VKNE3jVTKQdsPDzYJs39hni8XUePChwMXAeU/edit", "src": "מפרט ESH27"}], "crm": [{"id": 1, "name": "רועי אשר שריקי", "role": "מנכ״ל רועי שריקי נדל״ן ויזמות בע״מ (517224895)", "area": "נתיבות / בנימין / ארצי", "contact": "050-252-5066 (דרך ESH27)", "val": "שותף חתימה בוילת ענתבי, איתור מכרזים ופתיחת דלתות לחוות"}, {"id": 2, "name": "שון רוטשטיין", "role": "שותף מייסד וניהול פרויקטים, ESH27", "area": "אשדוד / בנימין / ארצי", "contact": "rotshteinsean@gmail.com", "val": "שותף ליבה בניהול חוזים, כספים, אנרגיה וציר החוות"}, {"id": 3, "name": "אדריכל אלעד", "role": "בעלים, משרד אדריכלות ׳ישר ולעניין׳", "area": "כרם רעים (גוש טלמונים)", "contact": "050-252-5066 (דרך ESH27)", "val": "מתכנן וילת ענתבי; צינור ישיר לבונים פרטיים בחרשה, כרם רעים, נריה והחוות"}, {"id": 4, "name": "מהנדס אליהו", "role": "בעלים, ׳סקלי הנדסה׳ (קונסטרוקציה)", "area": "בנימין ושומרון", "contact": "050-252-5066 (דרך ESH27)", "val": "קונסטרוקטור וילת ענתבי; מתכנן שלדים ורפסודות ביישובי ההר ובחוות"}, {"id": 5, "name": "משפחת ענתבי", "role": "מזמיני העבודה – מגרש 15 (׳פרויקט בראשית׳)", "area": "עין חרשה (בנימין)", "contact": "תיק פרויקט ESH27", "val": "לקוח עוגן בחרשה – ממליץ מרכזי מול 14 המשפחות הנוספות בהרחבה"}, {"id": 6, "name": "דניאל גלר", "role": "שותף מיזם רחפן D&A והדמיות 3D", "area": "ארצי / יו״ש", "contact": "קואליציית ESH27", "val": "מיפוי אווירי לחוות, הדמיות תלת-ממד להצעות מחיר ורחפני סיור ביטחוניים"}, {"id": 7, "name": "קובי בן עמרם", "role": "מומחה וקבלן מערכות מיזוג אוויר ו-VRF", "area": "ארצי / יו״ש", "contact": "קואליציית ESH27", "val": "מערכות מיזוג לוילות, מרכזי מבקרים, יקבים ואולמות אירועים בחוות"}, {"id": 8, "name": "יוני קטאייב", "role": "שותף ביצועי וקבלני", "area": "ארצי / יו״ש", "contact": "קואליציית ESH27", "val": "תגבור צוותי ביצוע לפרויקטים מקבילים בחוות ובהרחבות"}, {"id": 9, "name": "תומר (עורף הנמל)", "role": "שותף עסקי וביצועי", "area": "אשדוד / דרום ומרכז", "contact": "קואליציית ESH27", "val": "שיתופי פעולה לוגיסטיים וקונסטרוקציה"}, {"id": 10, "name": "יאן", "role": "שותף פרויקטים וביצוע", "area": "ארצי", "contact": "קואליציית ESH27", "val": "הרחבת זרוע הביצוע בשיפוצים, גבס וגמרים"}, {"id": 11, "name": "הנהלת איגוד החוות", "role": "ארגון הגג של מעל 90 חוות ביו״ש ובבקעה", "area": "יהודה, שומרון ובקעה", "contact": "050-252-5066 (דרך ESH27)", "val": "חיבור מרוכז לכלל בעלי החוות, מכרזי הקמה וקרן החוות (אהבת גלעד)"}, {"id": 12, "name": "לימור (החטיבה להתיישבות)", "role": "לשכת מרחב מרכז (בנימין, שומרון, עציון, בקעה)", "area": "ירושלים / יו״ש", "contact": "02-6204552/1 / Limorko@wzo.org.il", "val": "תקציבי תשתיות ובינוי לחוות וליישובים לפי נוהל תמיכה 2026"}, {"id": 13, "name": "ליסה (החטיבה להתיישבות)", "role": "אגף חוזים, התקשרויות ובטחונות", "area": "ירושלים / ארצי", "contact": "02-6204587 / lisac@wzo.org.il", "val": "רישום מאגר קבלנים והתקשרויות ביצוע מול החטיבה להתיישבות"}, {"id": 14, "name": "שגית (החטיבה להתיישבות)", "role": "לשכת מרחב דרום (הר חברון, נגב, ערבה ולכיש)", "area": "באר שבע / הר חברון ונגב", "contact": "08-6295583 / Sagitmo@wzo.org.il", "val": "פרויקטי תשתית ובינוי בחוות הר חברון וחוות הנגב החדשות"}, {"id": 15, "name": "סיגלית (החטיבה להתיישבות)", "role": "לשכת מרחב צפון (גולן וגליל)", "area": "צפון", "contact": "04-6055205 / SigalitH@wzo.org.il", "val": "התרחבות עתידית לחוות חקלאיות בגולן ובגליל"}, {"id": 16, "name": "דורית (החטיבה להתיישבות)", "role": "לשכה ראשית בירושלים", "area": "ירושלים", "contact": "02-6202799 / dorits@wzo.org.il", "val": "תיאום מוסדי ופרוגרמות התיישבות"}, {"id": 17, "name": "ישראל גנץ", "role": "ראש מועצת מטה בנימין ויו״ר מועצת יש״ע", "area": "מטה בנימין", "contact": "binyamin.org.il", "val": "מוביל מדיניות 50 החוות בבנימין ויו״ר החברה לפיתוח מטה בנימין"}, {"id": 18, "name": "החברה לפיתוח מטה בנימין", "role": "זרוע היזמות, המסחר והנדל״ן של בנימין", "area": "א.ת. שער בנימין", "contact": "*9873 / binyamin.co.il/bids", "val": "מכרזי הקמת מרכזי המסחר בנריה ובכרם רעים ופרויקטי מגורים"}, {"id": 19, "name": "החברה הכלכלית מטה בנימין", "role": "זרוע בינוי מוסדות ציבור ותשתיות בבנימין", "area": "פסגות / מטה בנימין", "contact": "02-6492716 / cbinyamin.org.il", "val": "מכרזי הקמת כיתות גן (כמו מכרז 02/26 בכרם רעים) ומבני ציבור"}, {"id": 20, "name": "אגף הנדסה – מטה בנימין", "role": "רישוי בנייה, תוכניות בינוי והקצאות", "area": "פסגות / מטה בנימין", "contact": "binyamin.org.il/8297", "val": "קידום היתרי בנייה ותוכניות עבודה לבונים פרטיים ולחוות"}, {"id": 21, "name": "רבקה הרצליך", "role": "רכזת חווה חקלאית טל בנימין והעמותה לפיתוח חוות בשומרון", "area": "כפר תפוח (שומרון)", "contact": "tbchavot.wixsite.com/home", "val": "פרויקטי בינוי, חקלאות וחינוך בחוות השומרון"}, {"id": 22, "name": "יואל זילברמן", "role": "מייסד ומנכ״ל ארגון ׳השומר החדש׳", "area": "ארצי / נגב וגליל", "contact": "hashomer.org.il", "val": "יוזמת הקמת 11 החוות החדשות בנגב ו-3 יישובים חדשים (2026)"}, {"id": 23, "name": "בתי אמנה / בנייני בר אמנה", "role": "היזם המרכזי בכרם רעים, אדם ויישובי יו״ש", "area": "כרם רעים / יו״ש", "contact": "home.amana.co.il", "val": "קבלנות משנה לשלד, גבס וגמרים בפרויקט ׳כרם רעים הדור הבא׳"}, {"id": 24, "name": "ב. הר-אל שיווק נכסים", "role": "משווקי פרויקט כרם רעים שלב ה׳", "area": "כרם רעים (בנימין)", "contact": "harelshivuk.co.il", "val": "חיבור לרוכשי בתים ומגרשים בכרם רעים עבור שינויי דיירים וגמרים"}, {"id": 25, "name": "חברת הרי זהב", "role": "יזמית פרויקטי מגורים בטלמון, נריה, פני קדם וטל מנשה", "area": "גוש טלמונים ושומרון", "contact": "hzahav.co.il", "val": "קבלנות משנה לגבס, איטום, ריצוף וגמרים בטלמון ובנריה"}, {"id": 26, "name": "צבי והדסה לקס", "role": "בעלי חוות ארץ הצבי", "area": "נחליאל / גוש טלמונים (בנימין)", "contact": "050-252-5066 (דרך ESH27)", "val": "חווה צמודה לעין חרשה – יעד מיידי לביסוס, מבנים ושיפוצים"}, {"id": 27, "name": "נריה ורחל בן פזי", "role": "בעלי חוות המכוך (׳אבי החוות׳ בבנימין)", "area": "רימונים (בנימין)", "contact": "איגוד החוות", "val": "ציר מפתח בבנימין המחובר לכלל החוות החדשות בגזרה"}, {"id": 28, "name": "חנינה ומורשה פרידמן", "role": "בעלי החווה של חנינה", "area": "מעלה מכמש (בנימין)", "contact": "איגוד החוות", "val": "הקמת מבני משק, מכלאות, סככות ומבני מגורים"}, {"id": 29, "name": "מלכיאל ואוריה שמואלוביץ", "role": "בעלי חוות נצח הראל", "area": "מבואות יריחו (בנימין)", "contact": "איגוד החוות", "val": "פיתוח תשתיות חווה, הצללות, מים ומבנים"}, {"id": 30, "name": "מיכה וחנה סודאי", "role": "בעלי חוות גאון הירדן", "area": "כוכב השחר (בנימין)", "contact": "איגוד החוות", "val": "הרחבת מבני מגורים, מרכיבי ביטחון ותשתיות משק"}, {"id": 31, "name": "ינון ותכלת כהן", "role": "בעלי חוות משכנות הראל", "area": "מעלה מכמש (בנימין)", "contact": "איגוד החוות", "val": "עבודות בינוי, רפסודות, גבס ומבני צוותים"}, {"id": 32, "name": "עשהאל וחסד לב", "role": "בעלי חוות מעלה אהוביה", "area": "כוכב השחר (בנימין)", "contact": "איגוד החוות", "val": "פיתוח תשתיות, מיגון, אנרגיה סולארית ומבני קבע"}, {"id": 33, "name": "דרור ובת חן גרנביץ", "role": "בעלי חוות רוח הארץ", "area": "מצפה דני (בנימין)", "contact": "איגוד החוות", "val": "בינוי חקלאי, דירים ומגורים"}, {"id": 34, "name": "משה ורות ינון", "role": "בעלי חוות שלישה", "area": "כוכב השחר (בנימין)", "contact": "איגוד החוות", "val": "חווה חדשה במזרח בנימין – צורך בתשתיות בסיס ובינוי מהיר"}, {"id": 35, "name": "בניהו ושוהם כהן", "role": "בעלי חוות המצוק (בניהו כהן)", "area": "מעלה מכמש (בנימין)", "contact": "איגוד החוות", "val": "עבודות ביסוס על סלע, קונסטרוקציה ומבנים"}, {"id": 36, "name": "אלישיב ואורי אטינגר", "role": "בעלי חוות מבוא הר-אל", "area": "בית חורון (מערב בנימין)", "contact": "איגוד החוות", "val": "חווה על ציר 443 בהליכי הסדרה – פוטנציאל גבוה לבניית קבע"}, {"id": 37, "name": "אוריה ושלומית סעדון", "role": "בעלי חוות גל יוסף (כולל ישיבה)", "area": "מלאכי השלום (בנימין)", "contact": "איגוד החוות", "val": "ביקוש למבני לימוד, פנימייה ומגורי משפחות"}, {"id": 38, "name": "אביתר ובתיה קארו", "role": "בעלי חוות ראש תאנה", "area": "מלאכי השלום (בנימין)", "contact": "איגוד החוות", "val": "הקמת מבני משק, מחסני מזון ומגורים"}, {"id": 39, "name": "מיכאל ותהילה שמלה", "role": "בעלי חוות נחל שילה", "area": "שילה (בנימין)", "contact": "איגוד החוות", "val": "פיתוח תשתיות תיירות וחקלאות בעמק שילה"}, {"id": 40, "name": "יחזקאל ונעמה פרידמן", "role": "בעלי חוות לכתחילה", "area": "מצפה יריחו (בנימין)", "contact": "איגוד החוות", "val": "תשתיות מדבריות, הצללות, מים ובינוי"}, {"id": 41, "name": "יוסף חיים ודבורה מגנזי", "role": "בעלי חוות שוביה", "area": "ניל״י (מערב בנימין)", "contact": "איגוד החוות", "val": "קרובה למודיעין וגוש טלמונים, נמצאת בהליכי הסדרה"}, {"id": 42, "name": "אוריה ואבישג טיירי", "role": "בעלי חוות חסד עולם", "area": "עופרים (מערב בנימין)", "contact": "איגוד החוות", "val": "צמודה לגוש טלמונים – סינרגיה לוגיסטית ישירה עם חרשה"}, {"id": 43, "name": "הנהלת חוות סלע רימון", "role": "מתחם תיירות ואירוח בחווה", "area": "רימונים (בנימין)", "contact": "תיירות איגוד החוות", "val": "שדרוג מתקני אירוח, פרגולות, דקים וגמרים"}, {"id": 44, "name": "הנהלת חוות הר מלך", "role": "מתחם אירוח, שיחות ואירועים", "area": "כוכב השחר / בנימין", "contact": "תיירות איגוד החוות", "val": "הקמת ושדרוג אולם/מתחם אירוח לקבוצות ואירועים"}, {"id": 45, "name": "הנהלת חוות מאיר לארץ", "role": "מרכז מבקרים ׳חוואי ליום אחד׳", "area": "עופרים (מערב בנימין)", "contact": "תיירות איגוד החוות", "val": "צמודה לגוש טלמונים – פיתוח תשתיות קליטת קהל והצללות"}, {"id": 46, "name": "יצחק וחפצי סקלי", "role": "בעלי חוות סקאלי", "area": "אלון מורה (שומרון)", "contact": "איגוד החוות", "val": "חלוצת החוות בשומרון; חיבור משפחתי/מגזרי למהנדס אליהו מסקלי הנדסה"}, {"id": 47, "name": "נתי ונסיה שוולב", "role": "בעלי חוות השקדים ומרום שמואל", "area": "אלון מורה / רכס כביר (שומרון)", "contact": "איגוד החוות", "val": "סדנאות מנהיגות וסיתות באבן – פוטנציאל למרכז מבקרים ואירוח"}, {"id": 48, "name": "הראל וטליה ליבי", "role": "בעלי חוות שובאל", "area": "אריאל (שומרון)", "contact": "איגוד החוות", "val": "חווה חדשה באזור אריאל – בינוי תשתיות, רפסודות ומבנים"}, {"id": 49, "name": "איתן ועדי מלט", "role": "בעלי חוות אביחי (בית קפה ואירוח)", "area": "בית אריה (צמוד לבנימין)", "contact": "איגוד החוות", "val": "ממוקמת דקות מגוש טלמונים – הרחבת בית הקפה ומתחם הסדנאות"}, {"id": 50, "name": "בן ישי ולאה אשד", "role": "בעלי חוות דורות עלית (נחל קנה)", "area": "שער שומרון", "contact": "איגוד החוות", "val": "פיתוח מבני משק ותיירות במערב השומרון"}, {"id": 51, "name": "ישראל ושרה רפפורט", "role": "בעלי חוות נוף אב״י", "area": "אריאל (שומרון)", "contact": "איגוד החוות", "val": "בהליכי הסדרה כשכונה באריאל – פוטנציאל לבניית קבע רחבה"}, {"id": 52, "name": "חוני ורעות בירן", "role": "בעלי חוות צרדה", "area": "פדואל (מערב שומרון)", "contact": "איגוד החוות", "val": "קרובה לגוש טלמונים – מרכז פעילות קהילתית וחקלאית"}, {"id": 53, "name": "עדן ורבקה לוי", "role": "בעלי חוות שובי ארץ", "area": "נחל קנה / נופים (שומרון)", "contact": "איגוד החוות", "val": "פיתוח חווה חדשה ותשתיות בשמורת נחל קנה"}, {"id": 54, "name": "ישראל וגאולה דהן", "role": "בעלי חוות תל חמד (מתחם ׳רמתא׳)", "area": "ברוכין (שומרון)", "contact": "איגוד החוות", "val": "הרחבת מתחם ההסעדה, הצללות, דקים ותשתיות חשמל/מים"}, {"id": 55, "name": "יאיר והדר אופנהיימר", "role": "בעלי חוות שעורים ויקב ׳יין קנה׳", "area": "עמנואל / נחל קנה (שומרון)", "contact": "איגוד החוות", "val": "בנייה ושיפוץ חדר חביות, מרכז מבקרים ליקב ובידוד תרמי"}, {"id": 56, "name": "נדב ובתאל שוורץ", "role": "בעלי חוות אל נווה (מצפה מתן)", "area": "חרמש (צפון השומרון)", "contact": "איגוד החוות", "val": "בהליכי הסדרה ומוקד תיירות בצפון השומרון"}, {"id": 57, "name": "אברהם ושרון קלנר", "role": "בעלי חוות מעוז צבי", "area": "מבוא דותן (צפון השומרון)", "contact": "איגוד החוות", "val": "בהליכי הסדרה – פיתוח מבני קבע ותשתיות"}, {"id": 58, "name": "יואב ורחלי פחימה", "role": "בעלי חוות אביה (׳קפה בחווה׳)", "area": "ריחן (צפון השומרון)", "contact": "איגוד החוות", "val": "שדרוג בית הקפה בחווה ומתחם האירוח"}, {"id": 59, "name": "איתמר ושקמה כהן", "role": "בעלי חוות איתמר כהן", "area": "הר ינון / איתמר (שומרון)", "contact": "איגוד החוות", "val": "שיקום, מיגון והרחבת תשתיות החווה"}, {"id": 60, "name": "תומר ומיטל פניני", "role": "בעלי חוות פניני", "area": "הר ינון (שומרון)", "contact": "איגוד החוות", "val": "הקמת מבני משק ומגורים"}, {"id": 61, "name": "דוד והדר מנצ׳ובסקי", "role": "בעלי חוות אל חי", "area": "שבי שומרון", "contact": "איגוד החוות", "val": "פיתוח תשתיות חווה ומגורים"}, {"id": 62, "name": "הנהלת חוות שיר לדוד", "role": "מתחם אירועים ומותג הבשר ׳מרעה׳", "area": "שער שומרון", "contact": "תיירות איגוד החוות", "val": "בהליכי הסדרה – בניית אולם אירועים, חדרי קירור לבשר ומרכז מבקרים"}, {"id": 63, "name": "הנהלת חוות מגדל דוד (׳קפה אלין׳)", "role": "בית קפה ופטיסרי בחווה", "area": "אש קודש / בנימין-שומרון", "contact": "תיירות איגוד החוות", "val": "עבודות גמר, מיזוג והרחבת מתחם הקפה והפטיסרי"}, {"id": 64, "name": "הנהלת חוות עמק קדם (׳עטרל׳ה׳)", "role": "עגלת קפה ומתחם תיירות", "area": "נופי נחמיה (שומרון)", "contact": "תיירות איגוד החוות", "val": "פיתוח דקים, פרגולות, שירותים ותשתיות למתחם הקפה"}, {"id": 65, "name": "הנהלת חוות מעוז שאול (׳חויא׳)", "role": "עגלת קפה וחווה חקלאית", "area": "אבני חפץ (שומרון)", "contact": "תיירות איגוד החוות", "val": "הקמת תשתיות אירוח וחקלאות"}, {"id": 66, "name": "הנהלת חוות צורים", "role": "חווה וגלריית תכשיטי זהב ויהלומים", "area": "ברוכין (שומרון)", "contact": "תיירות איגוד החוות", "val": "בינוי ממוגן, עיצוב פנים בגבס ותאורה לגלריה ולמגורים"}, {"id": 67, "name": "נריה ואלישבע שלם", "role": "בעלי חוות בקעות", "area": "בקעות (בקעת הירדן)", "contact": "איגוד החוות", "val": "הקמת סככות, מכלאות ומבני מגורים מבודדים לאקלים הבקעה"}, {"id": 68, "name": "רועי ועדן אלמקייס", "role": "בעלי חוות סרטבא", "area": "משואה (בקעת הירדן)", "contact": "איגוד החוות", "val": "פיתוח תשתיות חווה, הצללות ומערכות סולאריות"}, {"id": 69, "name": "משה ומוריה שרביט", "role": "בעלי חוות נווה תרצה (׳חאן בעמק׳)", "area": "חמרה (בקעת הירדן)", "contact": "איגוד החוות", "val": "הרחבת מתחם הלינה והאירוח ׳חאן בעמק׳ ומבני החווה"}, {"id": 70, "name": "עשהאל ורעות קורניץ", "role": "בעלי חוות ארץ שמש", "area": "משכיות (בקעת הירדן)", "contact": "איגוד החוות", "val": "בנייה מבודדת תרמית, מיזוג אוויר ותשתיות משק"}, {"id": 71, "name": "צוריאל ואורה לילנטל", "role": "בעלי חוות נווה רועים (הארמונות)", "area": "מבואות יריחו (בקעת הירדן)", "contact": "איגוד החוות", "val": "פיתוח חווה ומתחם תצפית מעל ארמונות החשמונאים"}, {"id": 72, "name": "דידי ושירה עמוסי", "role": "בעלי חוות טנא ירוק", "area": "רותם (צפון הבקעה)", "contact": "איגוד החוות", "val": "שדרוג מבני קבע, דירים ומערכות אנרגיה"}, {"id": 73, "name": "אורי ואפרת כהן", "role": "בעלי חוות נוף גלעד (׳בריכת עמק הבוקרים׳)", "area": "מושב רועי (בקעת הירדן)", "contact": "איגוד החוות", "val": "תחזוקה והרחבה של מתחם התיירות, הבריכות והאירוח"}, {"id": 74, "name": "עומר ונעמה עתדייה", "role": "בעלי חוות עינות קדם (קפה ׳NOMIKA׳)", "area": "ייט״ב (בקעת הירדן)", "contact": "איגוד החוות", "val": "הרחבת מתחם הקפה, המטבח והאירוח בבקעה"}, {"id": 75, "name": "מנחם ואוריה גושן", "role": "בעלי חוות גושן (מנחם ואוריה)", "area": "חמדת (בקעת הירדן)", "contact": "איגוד החוות", "val": "נמצאת בהליכי הסדרה – פוטנציאל לבניית קבע"}, {"id": 76, "name": "זוהר ורעות סבח", "role": "בעלי חוות זוהר", "area": "מבואות יריחו (בקעת הירדן)", "contact": "איגוד החוות", "val": "תשתיות מרעה, מים ומבני משק"}, {"id": 77, "name": "יאיא ונעמי כהן", "role": "בעלי חוות שיזף", "area": "מכורה (בקעת הירדן)", "contact": "איגוד החוות", "val": "הקמת מבנים מבודדים, הצללות ותשתיות"}, {"id": 78, "name": "שלמה והלל שליסל", "role": "בעלי חוות נתיב הגדוד", "area": "נתיב הגדוד (בקעת הירדן)", "contact": "איגוד החוות", "val": "חווה חדשה (2024) – דרישה לבניית שלב א׳ וב׳"}, {"id": 79, "name": "אליאב ושרה ליבי", "role": "בעלי חוות הרשאש", "area": "פצאל (בקעת הירדן)", "contact": "איגוד החוות", "val": "פיתוח תשתיות חווה ומגורים מעל נחל רשאש"}, {"id": 80, "name": "משה וסיגלית טמיר", "role": "בעלי חוות שער המלך (מתחם אירועים)", "area": "מבואות יריחו (בקעת הירדן)", "contact": "איגוד החוות", "val": "הרחבת ושדרוג מתחם האירועים בחווה"}, {"id": 81, "name": "נעם ומרים ג׳קסון", "role": "בעלי חוות ג׳קסון", "area": "גיתית (בקעת הירדן)", "contact": "איגוד החוות", "val": "עבודות בינוי, סככות ושיפוצים"}, {"id": 82, "name": "אברהם ועינת דורי", "role": "בעלי חוות נוף הרים", "area": "גיתית (בקעת הירדן)", "contact": "איגוד החוות", "val": "פיתוח מבני מגורים ומשק בגיתית"}, {"id": 83, "name": "עמיאל ותמר אחיטוב", "role": "בעלי חוות עמיאל", "area": "בקעת הירדן / הר בזק", "contact": "איגוד החוות", "val": "תשתיות קצה, מערכות סולאריות ובינוי"}, {"id": 84, "name": "איתן ושרי זאב", "role": "בעלי חוות צבי העופרים", "area": "בקעת הירדן", "contact": "איגוד החוות", "val": "הקמת מבני משק ומגורים"}, {"id": 85, "name": "שמואל וצופיה שליסל", "role": "בעלי חוות תומר", "area": "תומר (בקעת הירדן)", "contact": "איגוד החוות", "val": "פיתוח חווה ומתחם עגלת קפה ותיירות"}, {"id": 86, "name": "אורי ורבקה מדמוני", "role": "בעלי חוות מצפור פצאל", "area": "פצאל (בקעת הירדן)", "contact": "איגוד החוות", "val": "פיתוח מצפור תיירותי, דקים, פרגולות ומבנים"}, {"id": 87, "name": "פדיה ודבורה עדן", "role": "בעלי חוות עדן", "area": "נווה דניאל (גוש עציון)", "contact": "איגוד החוות", "val": "בנייה מותאמת לאקלים הררי בגוש עציון"}, {"id": 88, "name": "ליאור ורחלי טל", "role": "בעלי חוות נווה אורי (יישוב בר כוכבא)", "area": "גוש עציון", "contact": "איגוד החוות", "val": "הוסדרה כיישוב + מפעילה צימרים וגן אירועים"}, {"id": 89, "name": "גבריאל ושירה רייס", "role": "בעלי חוות פני קדם (הר כנוב)", "area": "פני קדם (גוש עציון)", "contact": "איגוד החוות", "val": "הקמת מבני מגורים, משק ותיירות במזרח גוש עציון"}, {"id": 90, "name": "אברהם ואורית פופר", "role": "בעלי חוות נחלת אבות (׳Orit Zoo׳)", "area": "מיצד (גוש עציון)", "contact": "איגוד החוות", "val": "הרחבת מתחם המבקרים ופינות החי"}, {"id": 91, "name": "אלישע ושחר טורנר", "role": "בעלי חוות זוהר יהודה (׳חאן ערוגות׳)", "area": "תקוע (גוש עציון)", "contact": "איגוד החוות", "val": "הרחבת צימרים, מתחם סדנאות ואולם אירועים בחאן ערוגות"}, {"id": 92, "name": "אריאל ויסכה גרינגליק", "role": "בעלי חוות צאן קידר", "area": "קידר (גוש עציון / מעלה אדומים)", "contact": "איגוד החוות", "val": "בהליכי הסדרה – פיתוח דירים, מחלבה ומבני קבע"}, {"id": 93, "name": "אלישיב ורוני נחום", "role": "בעלי חוות יהודה", "area": "שמעה (הר חברון)", "contact": "איגוד החוות", "val": "קרובה לאשדוד/נתיבות ונמצאת בהליכי הסדרה"}, {"id": 94, "name": "יששכר ויעל מן", "role": "בעלי חוות משק מן", "area": "מעון (הר חברון)", "contact": "איגוד החוות", "val": "פיתוח מבני משק וחקלאות בדרום הר חברון"}, {"id": 95, "name": "ישראל ונחמה בלוך", "role": "בעלי חוות נחלת דב", "area": "הר חברון", "contact": "איגוד החוות", "val": "עבודות בינוי ותשתית בדרום הר חברון"}, {"id": 96, "name": "נתן ואלומה ברוך", "role": "בעלי חוות מדבר חבר", "area": "פני חבר (הר חברון)", "contact": "איגוד החוות", "val": "הקמת מבנים ואיטום במדבר חבר"}, {"id": 97, "name": "ישראל ומוריה קפלן", "role": "בעלי חוות מקנה יהודה", "area": "עשהאל (הר חברון)", "contact": "איגוד החוות", "val": "מפעילים ימי חיבור לאדמה ואירוח – פוטנציאל למרכז מבקרים"}, {"id": 98, "name": "חגי ואמונה ניסים", "role": "בעלי חוות נגוהות (אולם אירוח ושיחות)", "area": "נגוהות (מערב הר חברון – 35 דק׳ מאשדוד)", "contact": "איגוד החוות", "val": "קרובה מאוד לאשדוד – שדרוג אולם האירוח ומבני החווה"}, {"id": 99, "name": "ינון וספיר לוי", "role": "בעלי חוות מיתרים (גן אירועים)", "area": "מיתר / הר חברון", "contact": "איגוד החוות", "val": "הרחבת גן האירועים, פרגולות, גבס ומערכות מיזוג"}, {"id": 100, "name": "עמיחי שילה / שמעון עטיה / אוריה נחום", "role": "בעלי משק דרומא, חוות שורשים ונווה עתניאל (אפקה)", "area": "הר חברון", "contact": "איגוד החוות", "val": "אשכול חוות דרומי הנגיש ישירות מציר אשדוד–נתיבות"}]};
+    const HARASHA = { lat: 31.9436, lon: 35.1527, elev: 755 };
+
+
+    const SEAN_STEPS = [
+      {
+        title: "1/5 · בסיס האם בעין חרשה ומעגל התקיפה המיידי (0–15 ק״מ)",
+        desc: "שון, במגרש 15 בעין חרשה (גובה +755 מ׳) אנחנו בונים את וילת ענתבי (880K ₪). במרחק 5–15 דקות נסיעה יושבות 11 חוות פעילות (ארץ הצבי, אוהל אברהם, גבעת הסלעים, קלע דוד, חסד עולם, שדה אפרים) + 14 מגרשים חדשים בהרחבת חרשה.",
+        lat: 31.948, lon: 35.145, scale: 3.1, farmId: 1
+      },
+      {
+        title: "2/5 · רכס בנימין וגב ההר (50+ חוות פעילות)",
+        desc: "על קו הרכס של בנימין (גובה 700–1,016 מ׳ בהר בעל חצור) פועלות מעל 50 חוות. בשילוב אדריכל אלעד (׳ישר ולעניין׳) ומהנדס אליהו (׳סקלי הנדסה׳), הצוות שלנו כבר בשטח ויכול לספק בנייה קלה, מערכות מים ובינוי מהיר.",
+        lat: 31.94, lon: 35.23, scale: 1.9, farmId: 14
+      },
+      {
+        title: "3/5 · סקטור התיירות: עגלות קפה, יקבים, חאנים ואירועים",
+        desc: "הרווח המהיר ביותר בחוות: עגלות קפה (אלין, עטרל׳ה, NOMIKA, רמתא), יקבים וגני אירועים (שיר לדוד, נווה אורי, מיתרים). חבילת ESH27 לתיירות: דק + פרגולה + גבס + מיזוג VRF תוך 3 שבועות.",
+        lat: 32.04, lon: 35.21, scale: 1.65, farmId: 22
+      },
+      {
+        title: "4/5 · בקעת הירדן והספר המזרחי (30+ חוות חדשות)",
+        desc: "מגב ההר המפה צונחת טופוגרפית אל בקעת הירדן (-250 מ׳ עד -350 מ׳). קמו שם כ-30 חוות חדשות שצריכות בנייה מבודדת תרמית, הצללות ענק לדירים, חדרי קירור ומערכות סולאריות Off-Grid.",
+        lat: 32.16, lon: 35.42, scale: 1.45, farmId: 38
+      },
+      {
+        title: "5/5 · גוש עציון והר חברון – יעד 100 פרויקטים בשנה",
+        desc: "בדרום (גוש עציון והר חברון, גובה +900 מ׳) פועלים אשכולות חוות ענקיים (קשואלה, פני קדם, ארץ האיילים, מעון וטליה) עם תקציבי מרכיבי ביטחון, דרכי ביטחון ובינוי של עשרות מיליוני ש״ח.",
+        lat: 31.56, lon: 35.14, scale: 1.45, farmId: 47
+      }
+    ];
+
+
+    // Topographic Mountain Peaks & Elevation Contours for Apple-style Terrain Rendering
+    const TOPO_PEAKS = [
+      { name: "הר בעל חצור", lat: 31.978, lon: 35.278, elev: 1016, rx: 0.09, ry: 0.12 },
+      { name: "רכס עין חרשה", lat: 31.944, lon: 35.153, elev: 755, rx: 0.06, ry: 0.07 },
+      { name: "הר עיבל", lat: 32.238, lon: 35.273, elev: 940, rx: 0.08, ry: 0.08 },
+      { name: "הר גריזים (ברכה)", lat: 32.199, lon: 35.273, elev: 881, rx: 0.08, ry: 0.07 },
+      { name: "רכס שילה", lat: 32.055, lon: 35.290, elev: 796, rx: 0.09, ry: 0.10 },
+      { name: "רכס איתמר וגדעונים", lat: 32.162, lon: 35.335, elev: 842, rx: 0.07, ry: 0.09 },
+      { name: "קרן סרטבה", lat: 32.094, lon: 35.456, elev: 377, rx: 0.05, ry: 0.06 },
+      { name: "רכס גוש עציון", lat: 31.655, lon: 35.145, elev: 958, rx: 0.09, ry: 0.11 },
+      { name: "רכס הר חברון (סוסיא/מעון)", lat: 31.425, lon: 35.125, elev: 915, rx: 0.10, ry: 0.13 },
+      { name: "רכס אום זוקא (הבקעה)", lat: 32.275, lon: 35.495, elev: 260, rx: 0.06, ry: 0.09 }
+    ];
+
+
+    // Major Streams / Wadis (נחלים וואדיות)
+    const WADIS = [
+      { name: "נחל שילה", pts: [[32.055, 35.29], [32.04, 35.18], [32.05, 35.04], [32.07, 34.92]] },
+      { name: "נחל קנה", pts: [[32.16, 35.23], [32.15, 35.13], [32.14, 35.02], [32.13, 34.92]] },
+      { name: "נחל תרצה", pts: [[32.26, 35.33], [32.23, 35.43], [32.18, 35.53]] },
+      { name: "נחל פרת (וואדי קלט)", pts: [[31.84, 35.26], [31.84, 35.36], [31.85, 35.45]] },
+      { name: "נחל מודיעין", pts: [[31.94, 35.16], [31.92, 35.06], [31.93, 34.96]] }
+    ];
+
+
+    // Highways
+    const HIGHWAYS = [
+      { name: "60", pts: [[31.38,35.08],[31.53,35.10],[31.66,35.14],[31.78,35.22],[31.90,35.23],[31.99,35.26],[32.06,35.28],[32.15,35.26],[32.22,35.26],[32.33,35.24],[32.45,35.29]], color: "#F59E0B" },
+      { name: "90", pts: [[31.45,35.39],[31.62,35.43],[31.78,35.48],[31.95,35.47],[32.10,35.50],[32.25,35.53],[32.39,35.55]], color: "#EAB308" },
+      { name: "443", pts: [[31.94,34.92],[31.90,35.04],[31.87,35.14],[31.84,35.21]], color: "#3B82F6" },
+      { name: "465", pts: [[32.01,34.96],[31.99,35.08],[31.98,35.16],[31.99,35.26]], color: "#10B981" },
+      { name: "505", pts: [[32.11,34.97],[32.11,35.11],[32.11,35.21],[32.10,35.34],[32.07,35.47]], color: "#3B82F6" },
+      { name: "1", pts: [[31.79,35.21],[31.80,35.33],[31.79,35.46]], color: "#EF4444" },
+      { name: "6", pts: [[31.42,34.81],[31.68,34.89],[31.95,34.95],[32.22,34.99],[32.44,35.03]], color: "#2563EB" }
+    ];
+
+
+    const CITIES = [
+      { name: "ירושלים", lat: 31.778, lon: 35.225, major: true },
+      { name: "אריאל", lat: 32.105, lon: 35.185, major: true },
+      { name: "עין חרשה (בסיס ESH27)", lat: 31.9436, lon: 35.1527, major: true },
+      { name: "בית אל / עפרה", lat: 31.948, lon: 35.235, major: false },
+      { name: "שילה", lat: 32.055, lon: 35.292, major: false },
+      { name: "אלון מורה / איתמר", lat: 32.205, lon: 35.325, major: false },
+      { name: "מעלה אדומים", lat: 31.777, lon: 35.305, major: false },
+      { name: "גוש עציון (אפרת)", lat: 31.654, lon: 35.151, major: false },
+      { name: "קריית ארבע / חברון", lat: 31.528, lon: 35.125, major: false },
+      { name: "מעלה אפרים", lat: 32.068, lon: 35.405, major: false },
+      { name: "משכיות / רותם", lat: 32.315, lon: 35.495, major: false },
+      { name: "מודיעין", lat: 31.898, lon: 35.010, major: false },
+      { name: "אשדוד", lat: 31.804, lon: 34.655, major: false },
+      { name: "נתיבות", lat: 31.423, lon: 34.595, major: false }
+    ];
+
+
+    function distKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+
+    FARMS.forEach(f => {
+      f.distHarasha = Math.round(distKm(HARASHA.lat, HARASHA.lon, f.lat, f.lon));
+    });
+
+
+    const canvas = document.getElementById('topo-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+
+    let cam = { lat: 31.92, lon: 35.22, scale: 1.25 };
+    let activeFilter = 'all';
+    let selectedFarm = FARMS[0];
+    let showContours = true;
+    let showRings = true;
+    let topoMode = 'hybrid'; // 'hybrid' (Esri World Topo + Vector Contours), 'vector' (Pure Apple Vector Topo), 'opentopo' (OpenTopoMap)
+    let currentView = 'map';
+    let seanIdx = -1;
+    const tileCache = {};
+
+
+    function getTileUrl(mode, z, x, y) {
+      if (mode === 'opentopo') {
+        return `https://tile.opentopomap.org/${z}/${x}/${y}.png`;
+      }
+      return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}`;
+    }
+
+
+    function lon2tile(lon, z) { return (lon + 180) / 360 * Math.pow(2, z); }
+    function lat2tile(lat, z) {
+      const rad = lat * Math.PI / 180;
+      return (1 - Math.log(Math.tan(rad) + 1 / Math.cos(rad)) / Math.PI) / 2 * Math.pow(2, z);
+    }
+    function tile2lon(x, z) { return x / Math.pow(2, z) * 360 - 180; }
+    function tile2lat(y, z) {
+      const n = Math.PI - 2 * Math.PI * y / Math.pow(2, z);
+      return 180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
+    }
+
+
+    function drawLiveTopoTiles() {
+      if (topoMode === 'vector') return;
+      const z = Math.max(8, Math.min(13, Math.round(8.6 + Math.log2(cam.scale))));
+      const topLeft = unproject(0, 0);
+      const botRight = unproject(width, height);
+      const minX = Math.max(0, Math.floor(lon2tile(topLeft.lon, z)));
+      const maxX = Math.min(Math.pow(2, z) - 1, Math.floor(lon2tile(botRight.lon, z)));
+      const minY = Math.max(0, Math.floor(lat2tile(topLeft.lat, z)));
+      const maxY = Math.min(Math.pow(2, z) - 1, Math.floor(lat2tile(botRight.lat, z)));
+
+
+      if ((maxX - minX) > 12 || (maxY - minY) > 12) return;
+
+
+      ctx.save();
+      ctx.globalAlpha = topoMode === 'opentopo' ? 0.78 : 0.88;
+      for (let tx = minX; tx <= maxX; tx++) {
+        for (let ty = minY; ty <= maxY; ty++) {
+          const key = `${topoMode}_${z}_${tx}_${ty}`;
+          let img = tileCache[key];
+          if (!img) {
+            img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => { img.ready = true; requestAnimationFrame(drawMap); };
+            img.onerror = () => { img.failed = true; };
+            img.src = getTileUrl(topoMode, z, tx, ty);
+            tileCache[key] = img;
+          }
+          if (img.ready) {
+            const nw = project(tile2lat(ty, z), tile2lon(tx, z));
+            const se = project(tile2lat(ty + 1, z), tile2lon(tx + 1, z));
+            ctx.drawImage(img, nw.x, nw.y, se.x - nw.x + 0.8, se.y - nw.y + 0.8);
+          }
+        }
+      }
+      ctx.restore();
+    }
+
+
+    function cycleTopoMode() {
+      const modes = ['hybrid', 'opentopo', 'vector'];
+      topoMode = modes[(modes.indexOf(topoMode) + 1) % modes.length];
+      document.getElementById('btn-map-mode').classList.toggle('active-toggle', topoMode !== 'vector');
+      drawMap();
+    }
+
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawMap();
+    }
+    window.addEventListener('resize', resize);
+
+
+    function project(lat, lon) {
+      const baseScale = Math.min(width, height) * 0.78 * cam.scale;
+      const cosLat = Math.cos(31.95 * Math.PI / 180);
+      const x = width * 0.5 + (lon - cam.lon) * cosLat * baseScale;
+      const y = height * 0.46 - (lat - cam.lat) * baseScale;
+      return { x, y };
+    }
+
+
+    function unproject(x, y) {
+      const baseScale = Math.min(width, height) * 0.78 * cam.scale;
+      const cosLat = Math.cos(31.95 * Math.PI / 180);
+      const lon = cam.lon + (x - width * 0.5) / (cosLat * baseScale);
+      const lat = cam.lat - (y - height * 0.46) / baseScale;
+      return { lat, lon };
+    }
+
+
+    function getCategoryColor(f) {
+      if (f.tags.includes('anchor')) return '#0071E3';
+      if (f.tags.includes('tourism')) return '#D97706';
+      if (f.tags.includes('binyamin')) return '#0891B2';
+      if (f.tags.includes('shomron')) return '#6D28D9';
+      if (f.tags.includes('valley')) return '#4D7C0F';
+      if (f.tags.includes('judea')) return '#B45309';
+      return '#1D8348';
+    }
+
+
+    function matchesFilter(f) {
+      if (activeFilter === 'all') return true;
+      if (activeFilter === 'harasha') return f.distHarasha <= 16 || f.tags.includes('anchor');
+      return f.tags.includes(activeFilter);
+    }
+
+
+    function drawMap() {
+      ctx.clearRect(0, 0, width, height);
+
+
+      // 1. Bright Sunlit Apple Maps Terrain Base
+      const bgGrad = ctx.createLinearGradient(0, 0, width, height);
+      bgGrad.addColorStop(0, '#EBF3E8');   // Coastal lush lowland
+      bgGrad.addColorStop(0.48, '#F6F3EB'); // Warm limestone central ridge
+      bgGrad.addColorStop(0.78, '#EFE6D5'); // Judean desert slopes
+      bgGrad.addColorStop(1, '#E6EFE4');    // Jordan valley floor
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
+
+
+      // 2. Mediterranean Sea (West) & Dead Sea + Jordan River (East)
+      ctx.save();
+      const coastPts = [[32.6,34.89],[32.3,34.84],[32.08,34.76],[31.80,34.63],[31.50,34.50],[31.20,34.35],[31.20,33.8],[32.6,33.8]];
+      ctx.beginPath();
+      coastPts.forEach((pt, i) => {
+        const p = project(pt[0], pt[1]);
+        if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      });
+      ctx.closePath();
+      ctx.fillStyle = '#CBE6F6';
+      ctx.fill();
+      ctx.strokeStyle = '#9BC8E6';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+
+      // Dead Sea
+      const deadSeaPts = [[31.76,35.48],[31.76,35.57],[31.45,35.56],[31.15,35.48],[31.15,35.39],[31.45,35.40],[31.62,35.45]];
+      ctx.beginPath();
+      deadSeaPts.forEach((pt, i) => {
+        const p = project(pt[0], pt[1]);
+        if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      });
+      ctx.closePath();
+      ctx.fillStyle = '#B7DDF2';
+      ctx.fill();
+      ctx.strokeStyle = '#8CC2E3';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+
+
+      // Jordan River line
+      const jordanPts = [[32.55,35.57],[32.30,35.56],[32.10,35.54],[31.90,35.51],[31.76,35.50]];
+      ctx.beginPath();
+      jordanPts.forEach((pt, i) => {
+        const p = project(pt[0], pt[1]);
+        if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      });
+      ctx.strokeStyle = '#8CC2E3';
+      ctx.lineWidth = 2.2;
+      ctx.stroke();
+      ctx.restore();
+
+
+      drawLiveTopoTiles();
+
+
+      // 3. Topographic Hypsometric Ridge Shading & Contour Lines (קווי גובה טופוגרפיים)
+      if (showContours) {
+        ctx.save();
+        // Central Mountain Spine (גב ההר) soft relief glow
+        TOPO_PEAKS.forEach(pk => {
+          const center = project(pk.lat, pk.lon);
+          const edge = project(pk.lat + pk.ry, pk.lon + pk.rx);
+          const rx = Math.abs(edge.x - center.x);
+          const ry = Math.abs(edge.y - center.y);
+          const maxR = Math.max(rx, ry, 18);
+
+
+          const grad = ctx.createRadialGradient(center.x - maxR*0.12, center.y - maxR*0.12, maxR*0.05, center.x, center.y, maxR);
+          grad.addColorStop(0, 'rgba(214, 190, 152, 0.34)');
+          grad.addColorStop(0.55, 'rgba(225, 208, 178, 0.18)');
+          grad.addColorStop(1, 'rgba(244, 241, 234, 0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.ellipse(center.x, center.y, rx, ry, -0.18, 0, Math.PI * 2);
+          ctx.fill();
+
+
+          // Concentric topographic contour rings (5 levels per massif)
+          const levels = [0.95, 0.76, 0.58, 0.40, 0.23];
+          levels.forEach((lvl, idx) => {
+            ctx.beginPath();
+            ctx.ellipse(center.x, center.y, rx * lvl, ry * lvl, -0.18, 0, Math.PI * 2);
+            ctx.strokeStyle = idx % 2 === 0 ? 'rgba(161, 136, 102, 0.32)' : 'rgba(161, 136, 102, 0.18)';
+            ctx.lineWidth = idx === 2 ? 1.2 : 0.75;
+            ctx.stroke();
+          });
+
+
+          // Peak triangle & elevation label
+          if (cam.scale >= 0.85) {
+            ctx.fillStyle = '#7C6546';
+            ctx.font = '600 10px -apple-system, Heebo, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`▲ ${pk.name} (${pk.elev}m)`, center.x, center.y - 6);
+          }
+        });
+
+
+        // Wadis / Stream Valleys
+        WADIS.forEach(w => {
+          ctx.beginPath();
+          w.pts.forEach((pt, i) => {
+            const p = project(pt[0], pt[1]);
+            if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+          });
+          ctx.strokeStyle = 'rgba(116, 180, 218, 0.55)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([4, 3]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        });
+        ctx.restore();
+      }
+
+
+      // 4. Harasha Base Operational Radius Rings (10km, 25km, 45km)
+      if (showRings) {
+        const hp = project(HARASHA.lat, HARASHA.lon);
+        [10, 25, 45].forEach(km => {
+          const edge = project(HARASHA.lat + (km / 111.32), HARASHA.lon);
+          const rPx = Math.abs(hp.y - edge.y);
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(hp.x, hp.y, rPx, 0, Math.PI * 2);
+          ctx.strokeStyle = km === 10 ? 'rgba(0, 113, 227, 0.35)' : 'rgba(0, 113, 227, 0.18)';
+          ctx.lineWidth = km === 10 ? 1.6 : 1.1;
+          ctx.setLineDash([6, 5]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+          ctx.strokeStyle = 'rgba(0, 113, 227, 0.25)';
+          const tagW = 84, tagH = 18;
+          ctx.beginPath();
+          ctx.roundRect(hp.x - tagW/2, hp.y - rPx - 9, tagW, tagH, 9);
+          ctx.fill();
+          ctx.stroke();
+
+
+          ctx.fillStyle = '#0071E3';
+          ctx.font = '700 10px -apple-system, Heebo, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(`רדיוס ${km} ק״מ מחרשה`, hp.x, hp.y - rPx + 3.5);
+          ctx.restore();
+        });
+      }
+
+
+      // 5. Apple Maps-Style Highways (Cased Ribbons + Route Shields)
+      HIGHWAYS.forEach(hw => {
+        ctx.save();
+        ctx.beginPath();
+        hw.pts.forEach((pt, i) => {
+          const p = project(pt[0], pt[1]);
+          if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+        });
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        // Outer white casing
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.lineWidth = 4.5;
+        ctx.stroke();
+        // Inner route color
+        ctx.strokeStyle = hw.color;
+        ctx.lineWidth = 2.4;
+        ctx.globalAlpha = 0.72;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+
+        // Highway shield badge at midpoint
+        const mid = hw.pts[Math.floor(hw.pts.length / 2)];
+        const mp = project(mid[0], mid[1]);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = hw.color;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.roundRect(mp.x - 13, mp.y - 8, 26, 16, 5);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = '#1D1D1F';
+        ctx.font = '800 9.5px -apple-system, Heebo, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(hw.name, mp.x, mp.y + 3.5);
+        ctx.restore();
+      });
+
+
+      // 6. Reference Cities
+      CITIES.forEach(c => {
+        const p = project(c.lat, c.lon);
+        ctx.save();
+        ctx.fillStyle = c.major ? '#1D1D1F' : '#6E6E73';
+        ctx.font = c.major ? '700 11.5px -apple-system, Heebo, sans-serif' : '600 10.5px -apple-system, Heebo, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.92)';
+        ctx.lineWidth = 3;
+        ctx.strokeText(c.name, p.x, p.y + 14);
+        ctx.fillText(c.name, p.x, p.y + 14);
+        ctx.restore();
+      });
+
+
+      // 7. Farm Pins & Smart Apple Pill Labels (No Overlap)
+      const placedLabels = [];
+      const visibleFarms = FARMS.filter(matchesFilter);
+
+
+      visibleFarms.forEach(f => {
+        const p = project(f.lat, f.lon);
+        if (p.x < -40 || p.x > width + 40 || p.y < -40 || p.y > height + 40) return;
+
+
+        const isSel = selectedFarm && selectedFarm.id === f.id;
+        const isAnchor = f.tags.includes('anchor');
+        const col = getCategoryColor(f);
+
+
+        ctx.save();
+        // Selection halo
+        if (isSel || isAnchor) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, isSel ? 17 : 13, 0, Math.PI * 2);
+          ctx.fillStyle = isSel ? 'rgba(0, 113, 227, 0.22)' : 'rgba(0, 113, 227, 0.14)';
+          ctx.fill();
+        }
+
+
+        // Apple Maps Pin Circle with White Rim & Drop Shadow
+        const r = isSel ? 8.5 : (isAnchor ? 7.5 : 6);
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.22)';
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetY = 2;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = col;
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+        ctx.lineWidth = 2.2;
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.stroke();
+
+
+        // Smart Collision-Free Pill Label
+        const cleanName = f.name.split('–')[0].split('(')[0].trim();
+        const labelText = cam.scale >= 1.5 ? `${cleanName} · ${f.elev > 0 ? '+'+f.elev : f.elev}m` : cleanName;
+        ctx.font = (isSel || isAnchor) ? '700 11.5px -apple-system, Heebo, sans-serif' : '600 10.5px -apple-system, Heebo, sans-serif';
+        const tw = ctx.measureText(labelText).width + 12;
+        const th = 19;
+        const lx = p.x - tw / 2;
+        const ly = p.y - r - th - 4;
+
+
+        let collides = false;
+        if (!isSel && !isAnchor) {
+          for (const b of placedLabels) {
+            if (lx < b.x + b.w + 4 && lx + tw + 4 > b.x && ly < b.y + b.h + 2 && ly + th + 2 > b.y) {
+              collides = true;
+              break;
+            }
+          }
+        }
+
+
+        if (!collides || isSel || isAnchor) {
+          placedLabels.push({ x: lx, y: ly, w: tw, h: th });
+          ctx.fillStyle = isSel ? '#1D1D1F' : 'rgba(255, 255, 255, 0.92)';
+          ctx.strokeStyle = isSel ? '#1D1D1F' : 'rgba(0, 0, 0, 0.1)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.roundRect(lx, ly, tw, th, 9);
+          ctx.fill();
+          ctx.stroke();
+
+
+          ctx.fillStyle = isSel ? '#FFFFFF' : '#1D1D1F';
+          ctx.textAlign = 'center';
+          ctx.fillText(labelText, p.x, ly + 13);
+        }
+        ctx.restore();
+      });
+    }
+
+
+    // Touch & Mouse Gestures (Pan, Pinch-to-Zoom, Tap Pin)
+    let isDragging = false;
+    let dragStart = { x: 0, y: 0 };
+    let camStart = { lat: 0, lon: 0 };
+    let pinchDist0 = 0;
+    let scale0 = 1;
+
+
+    function handleTap(x, y) {
+      let closest = null;
+      let minDist = 28;
+      FARMS.filter(matchesFilter).forEach(f => {
+        const p = project(f.lat, f.lon);
+        const d = Math.hypot(p.x - x, p.y - y);
+        if (d < minDist) {
+          minDist = d;
+          closest = f;
+        }
+      });
+      if (closest) {
+        selectFarm(closest, true);
+      }
+    }
+
+
+    canvas.addEventListener('mousedown', e => {
+      isDragging = true;
+      dragStart = { x: e.clientX, y: e.clientY };
+      camStart = { lat: cam.lat, lon: cam.lon };
+    });
+
+
+    window.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      const dx = e.clientX - dragStart.x;
+      const dy = e.clientY - dragStart.y;
+      const baseScale = Math.min(width, height) * 0.78 * cam.scale;
+      const cosLat = Math.cos(31.95 * Math.PI / 180);
+      cam.lon = camStart.lon - dx / (cosLat * baseScale);
+      cam.lat = camStart.lat + dy / baseScale;
+      drawMap();
+    });
+
+
+    window.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      if (Math.hypot(e.clientX - dragStart.x, e.clientY - dragStart.y) < 6) {
+        handleTap(e.clientX, e.clientY);
+      }
+    });
+
+
+    canvas.addEventListener('wheel', e => {
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? 1.14 : 0.88;
+      cam.scale = Math.max(0.55, Math.min(8, cam.scale * factor));
+      drawMap();
+    }, { passive: false });
+
+
+    canvas.addEventListener('touchstart', e => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        dragStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        camStart = { lat: cam.lat, lon: cam.lon };
+      } else if (e.touches.length === 2) {
+        isDragging = false;
+        pinchDist0 = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        scale0 = cam.scale;
+      }
+    }, { passive: true });
+
+
+    canvas.addEventListener('touchmove', e => {
+      if (e.touches.length === 1 && isDragging) {
+        const dx = e.touches[0].clientX - dragStart.x;
+        const dy = e.touches[0].clientY - dragStart.y;
+        const baseScale = Math.min(width, height) * 0.78 * cam.scale;
+        const cosLat = Math.cos(31.95 * Math.PI / 180);
+        cam.lon = camStart.lon - dx / (cosLat * baseScale);
+        cam.lat = camStart.lat + dy / baseScale;
+        drawMap();
+      } else if (e.touches.length === 2 && pinchDist0 > 0) {
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        cam.scale = Math.max(0.55, Math.min(8, scale0 * (dist / pinchDist0)));
+        drawMap();
+      }
+    }, { passive: true });
+
+
+    canvas.addEventListener('touchend', e => {
+      if (e.changedTouches.length === 1 && isDragging) {
+        const t = e.changedTouches[0];
+        if (Math.hypot(t.clientX - dragStart.x, t.clientY - dragStart.y) < 8) {
+          handleTap(t.clientX, t.clientY);
+        }
+      }
+      isDragging = false;
+    });
+
+
+    function animateCamera(targetLat, targetLon, targetScale) {
+      const sLat = cam.lat, sLon = cam.lon, sScale = cam.scale;
+      const t0 = performance.now();
+      const dur = 420;
+      function step(now) {
+        const p = Math.min(1, (now - t0) / dur);
+        const ease = 1 - Math.pow(1 - p, 3);
+        cam.lat = sLat + (targetLat - sLat) * ease;
+        cam.lon = sLon + (targetLon - sLon) * ease;
+        cam.scale = sScale + (targetScale - sScale) * ease;
+        drawMap();
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+
+    function zoomBy(factor) {
+      animateCamera(cam.lat, cam.lon, Math.max(0.55, Math.min(8, cam.scale * factor)));
+    }
+
+
+    function toggleContours() {
+      showContours = !showContours;
+      document.getElementById('btn-contours').classList.toggle('active-toggle', showContours);
+      drawMap();
+    }
+
+
+    function toggleRings() {
+      showRings = !showRings;
+      document.getElementById('btn-rings').classList.toggle('active-toggle', showRings);
+      drawMap();
+    }
+
+
+    function focusHarasha() {
+      selectFarm(FARMS[0], true);
+      animateCamera(HARASHA.lat, HARASHA.lon, 2.8);
+    }
+
+
+    function setFilter(tag, btnEl) {
+      activeFilter = tag;
+      document.querySelectorAll('#map-filters .chip').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderFarmCarousel();
+      drawMap();
+    }
+
+
+    function selectFarm(f, openCard = true) {
+      selectedFarm = f;
+      drawMap();
+      renderFarmCarousel();
+      if (openCard) {
+        document.getElementById('pc-cat').textContent = `${f.region} · ${f.cat}`;
+        const elevStr = f.elev > 0 ? `+${f.elev}m` : `${f.elev}m`;
+        document.getElementById('pc-elev').textContent = `⛰️ גובה טופוגרפי: ${elevStr}`;
+        document.getElementById('pc-dist').textContent = `📍 ${f.distHarasha} ק״מ מחרשה`;
+        document.getElementById('pc-title').textContent = f.name;
+        document.getElementById('pc-owners').textContent = f.owners;
+        document.getElementById('pc-opp').textContent = f.opp;
+        document.getElementById('pc-waze').href = `https://waze.com/ul?ll=${f.lat},${f.lon}&navigate=yes`;
+        document.getElementById('pc-gmaps').href = `https://www.google.com/maps/search/?api=1&query=${f.lat},${f.lon}`;
+        document.getElementById('pc-source').href = f.url || 'https://docs.google.com/spreadsheets/d/1V5Vja7y6kSDdbnosWbQR6tHxItICeR5rK07MI8OGptk/edit';
+        // Render West-to-East Topographic Cross-Section SVG
+        const normX = Math.max(8, Math.min(232, ((f.lon - 34.60) / (35.56 - 34.60)) * 224 + 8));
+        const normY = Math.max(4, Math.min(30, 26 - ((f.elev + 400) / 1450) * 22));
+        document.getElementById('pc-topo-svg').innerHTML = `
+          <defs>
+            <linearGradient id="topoFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#D4B88C" stop-opacity="0.65"/>
+              <stop offset="100%" stop-color="#EBF3E8" stop-opacity="0.2"/>
+            </linearGradient>
+          </defs>
+          <path d="M 4 25 Q 45 23, 85 12 T 145 5 Q 185 8, 210 26 L 236 30 L 236 33 L 4 33 Z" fill="url(#topoFill)" stroke="#9C825B" stroke-width="1.4"/>
+          <line x1="${normX}" y1="2" x2="${normX}" y2="32" stroke="#0071E3" stroke-width="1.2" stroke-dasharray="2,2"/>
+          <circle cx="${normX}" cy="${normY}" r="4.2" fill="#0071E3" stroke="#FFFFFF" stroke-width="1.6"/>
+          <text x="6" y="32" font-size="7.5" fill="#6E6E73">הים (0m)</text>
+          <text x="115" y="13" font-size="7.5" fill="#5C5346" text-anchor="middle">גב ההר (+1016m)</text>
+          <text x="234" y="24" font-size="7.5" fill="#6E6E73" text-anchor="end">הבקעה (-350m)</text>
+        `;
+        document.getElementById('place-card').style.display = 'block';
+      }
+    }
+
+
+    function closePlaceCard() {
+      document.getElementById('place-card').style.display = 'none';
+    }
+
+
+    function renderFarmCarousel() {
+      const q = (document.getElementById('map-search').value || '').trim().toLowerCase();
+      const row = document.getElementById('farm-carousel');
+      const filtered = FARMS.filter(f => {
+        if (!matchesFilter(f)) return false;
+        if (!q) return true;
+        return f.name.toLowerCase().includes(q) || f.region.toLowerCase().includes(q) || f.owners.toLowerCase().includes(q) || f.opp.toLowerCase().includes(q);
+      });
+      document.getElementById('visible-count').textContent = `${filtered.length} מוקדים`;
+
+
+      row.innerHTML = filtered.map(f => {
+        const isSel = selectedFarm && selectedFarm.id === f.id;
+        const elevStr = f.elev > 0 ? `+${f.elev}m` : `${f.elev}m`;
+        return `
+          <div class="mini-card ${isSel ? 'selected' : ''}" onclick="focusOnFarm(${f.id})">
+            <div class="mc-top">
+              <span class="mc-cat">${f.region}</span>
+              <span class="mc-elev">⛰️ ${elevStr}</span>
+            </div>
+            <div class="mc-title">${f.name}</div>
+            <div class="mc-sub">
+              <span>מרחק מחרשה: ${f.distHarasha} ק״מ</span>
+              <span style="color:var(--apple-blue);font-weight:700;">פרטים ←</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+
+    function focusOnFarm(id) {
+      const f = FARMS.find(x => x.id === id);
+      if (!f) return;
+      selectFarm(f, true);
+      animateCamera(f.lat, f.lon, Math.max(cam.scale, 2.3));
+    }
+
+
+    // Guided 5-Step Presentation for Sean
+    function toggleSeanTour() {
+      const banner = document.getElementById('sean-banner');
+      if (banner.style.display === 'block') {
+        closeSeanTour();
+      } else {
+        switchView('map');
+        seanIdx = 0;
+        banner.style.display = 'block';
+        applySeanStep();
+      }
+    }
+
+
+    function closeSeanTour() {
+      document.getElementById('sean-banner').style.display = 'none';
+      seanIdx = -1;
+    }
+
+
+    function applySeanStep() {
+      const s = SEAN_STEPS[seanIdx];
+      document.getElementById('sean-step-badge').textContent = `מצגת לשון · שלב ${seanIdx + 1} מתוך ${SEAN_STEPS.length}`;
+      document.getElementById('sean-step-title').textContent = s.title;
+      document.getElementById('sean-step-desc').textContent = s.desc;
+      const f = FARMS.find(x => x.id === s.farmId);
+      if (f) selectFarm(f, true);
+      animateCamera(s.lat, s.lon, s.scale);
+    }
+
+
+    function nextSeanStep() {
+      seanIdx = (seanIdx + 1) % SEAN_STEPS.length;
+      applySeanStep();
+    }
+
+
+    function prevSeanStep() {
+      seanIdx = (seanIdx - 1 + SEAN_STEPS.length) % SEAN_STEPS.length;
+      applySeanStep();
+    }
+
+
+    // View Switcher (Map / 100 OSINT / 100 CRM)
+    function switchView(view) {
+      currentView = view;
+      document.getElementById('tab-map').classList.toggle('active', view === 'map');
+      document.getElementById('tab-osint').classList.toggle('active', view === 'osint');
+      document.getElementById('tab-crm').classList.toggle('active', view === 'crm');
+
+
+      const isMap = view === 'map';
+      document.getElementById('map-filters').style.display = isMap ? 'flex' : 'none';
+      document.getElementById('map-side-controls').style.display = isMap ? 'flex' : 'none';
+      document.getElementById('map-bottom-sheet').style.display = isMap ? 'flex' : 'none';
+      document.getElementById('data-modal').style.display = isMap ? 'none' : 'block';
+
+
+      if (!isMap) {
+        closeSeanTour();
+        document.getElementById('dm-search').value = '';
+        renderDataCards();
+      }
+    }
+
+
+    function renderDataCards() {
+      const q = (document.getElementById('dm-search').value || '').trim().toLowerCase();
+      const grid = document.getElementById('dm-grid');
+
+
+      if (currentView === 'osint') {
+        document.getElementById('dm-title').textContent = '📡 100 פריטי מודיעין גלוי (OSINT) – חוות יו״ש והבקעה';
+        document.getElementById('dm-sub').textContent = 'נתוני קרקעות, תקציבים, מכרזי מועצות, תיירות, סולארי וחקלאות מתוך תיק המודיעין של ESH27';
+        const items = INTEL_DB.osint.filter(x => !q || x.title.toLowerCase().includes(q) || x.desc.toLowerCase().includes(q) || x.cat.toLowerCase().includes(q));
+        grid.innerHTML = items.map(x => `
+          <div class="apple-card">
+            <div>
+              <div class="ac-top">
+                <span class="ac-num">#${x.id}</span>
+                <span class="ac-cat">${x.cat}</span>
+              </div>
+              <div class="ac-title" style="margin:6px 0 4px;">${x.title}</div>
+              <div class="ac-desc">${x.desc}</div>
+            </div>
+            <div class="ac-foot">
+              <span style="color:var(--text-muted)">מקור: ${x.src}</span>
+              <a class="ac-link" href="${x.url}" target="_blank" rel="noopener">פתיחת מקור ↗</a>
+            </div>
+          </div>
+        `).join('');
+      } else if (currentView === 'crm') {
+        document.getElementById('dm-title').textContent = '🤝 100 אנשי קשר, בעלי חוות, אדריכלים ומקבלי החלטות (CRM)';
+        document.getElementById('dm-sub').textContent = 'רשימת 100 מוקדי הכוח להרחבת המעגל העסקי של אריאל, שון ורועי ל-100 פרויקטים';
+        const items = INTEL_DB.crm.filter(x => !q || x.name.toLowerCase().includes(q) || x.role.toLowerCase().includes(q) || x.org.toLowerCase().includes(q) || x.angle.toLowerCase().includes(q));
+        grid.innerHTML = items.map(x => `
+          <div class="apple-card">
+            <div>
+              <div class="ac-top">
+                <span class="ac-num">איש קשר #${x.id}</span>
+                <span class="ac-cat">${x.cat}</span>
+              </div>
+              <div class="ac-title" style="margin:6px 0 2px;">${x.name}</div>
+              <div style="font-size:12px;font-weight:600;color:var(--apple-blue);margin-bottom:6px;">${x.role} · ${x.org}</div>
+              <div class="ac-desc"><strong>זווית כניסה ESH27:</strong> ${x.angle}</div>
+            </div>
+            <div class="ac-foot">
+              <span style="font-weight:700;color:var(--text-primary);direction:ltr;">${x.contact}</span>
+              <a class="ac-link" href="${x.url}" target="_blank" rel="noopener">אסמכתא / קישור ↗</a>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+
+    function shareWhatsApp() {
+      const shareUrl = 'https://farms.esh27.com';
+      const msg = `שון אחי, הנה מפת השליטה הטופוגרפית של ESH27 לכל 130+ החוות ביו״ש והבקעה (כולל 100 פריטי OSINT ו-100 אנשי קשר מתוך בסיס האם שלנו בעין חרשה): ${shareUrl}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+
+    // Initialize
+    resize();
+    renderFarmCarousel();
+  </script>
+</body>
+</html>
