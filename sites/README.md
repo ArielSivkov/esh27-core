@@ -1,11 +1,11 @@
 # sites/
 
-Static sites deployed to Firebase Hosting (project `esh27-unicorn-core`).
-One folder per site; the folder name is the hosting target in `firebase.json` / `.firebaserc`.
+Static sites. One folder per site; the folder name is the site name (`<name>.esh27.com`).
 
-- Only folders that contain an `index.html` are deployed. Empty targets are skipped.
-- Pull requests get a 7-day preview URL; pushes to `main` go live on `esh27-<name>.web.app`.
-- Custom domains (`<name>.esh27.com`) are connected per site in the Firebase console,
-  and DNS is moved one subdomain at a time. Until then Hostinger stays live and untouched.
+- **Cloudflare Pages (chosen 30.10.2026):** `.github/workflows/deploy-pages.yml` deploys every folder that has an
+  `index.html` to the Pages project `esh27-<name>` (`esh27-<name>.pages.dev`). Steps, DNS and mail: `CLOUDFLARE_MIGRATION.md`.
+- `scripts/import-hostinger-backup.sh <backup_dir>` copies the live sites from the Hostinger backup into these folders
+  (static files only; PHP and secrets stay out).
+- Earlier draft: Firebase Hosting (`firebase.json`, `.firebaserc`, `deploy-hosting.yml`). Remove it before merging if Cloudflare stays the choice.
 
-`status/` is the pilot. The live content of the other sites is in `esh27-portal` (local) and is copied here per site.
+`status/` is the pilot.

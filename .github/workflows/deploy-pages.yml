@@ -1,0 +1,45 @@
+name: Deploy sites to Cloudflare Pages
+
+# One Pages project per folder in sites/ (esh27-<name>), deployed only when the folder has an index.html.
+# Needs repository secrets CLOUDFLARE_API_TOKEN (permission: Cloudflare Pages: Edit) and CLOUDFLARE_ACCOUNT_ID.
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'sites/**' ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Deploy each site
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set; nothing deployed."; exit 1
+          fi
+          npm i -g wrangler@4.150.0
+          for d in sites/*/; do
+            name=$(basename "$d")
+            [ -f "$d/index.html" ] || { echo "skip $name (no index.html)"; continue; }
+            project="esh27-$name"
+            # Creating an existing project fails harmlessly.
+            wrangler pages project create "$project" --production-branch main >/dev/null 2>&1 || true
+            echo "deploy $d -> $project"
+            wrangler pages deploy "$d" --project-name "$project" --branch main --commit-dirty=true
+          done
