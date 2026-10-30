@@ -1,0 +1,16 @@
+{
+  "hosting": [
+    { "target": "portal",   "public": "sites/portal",   "cleanUrls": true },
+    { "target": "farms",    "public": "sites/farms",    "cleanUrls": true },
+    { "target": "neomi",    "public": "sites/neomi",    "cleanUrls": true },
+    { "target": "jaale",    "public": "sites/jaale",    "cleanUrls": true },
+    { "target": "danda",    "public": "sites/danda",    "cleanUrls": true },
+    { "target": "game",     "public": "sites/game",     "cleanUrls": true },
+    { "target": "academy",  "public": "sites/academy",  "cleanUrls": true },
+    { "target": "status",   "public": "sites/status",   "cleanUrls": true },
+    { "target": "books",    "public": "sites/books",    "cleanUrls": true },
+    { "target": "news",     "public": "sites/news",     "cleanUrls": true },
+    { "target": "security", "public": "sites/security", "cleanUrls": true },
+    { "target": "shuru",    "public": "sites/shuru",    "cleanUrls": true }
+  ]
+}

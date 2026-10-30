@@ -1,0 +1,56 @@
+name: Deploy sites to Firebase Hosting (Keyless WIF)
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'sites/**', 'firebase.json', '.firebaserc' ]
+  pull_request:
+    paths: [ 'sites/**', 'firebase.json', '.firebaserc' ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  PROJECT_ID: esh27-unicorn-core
+  WIF_PROVIDER: projects/252873823435/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+  WIF_SA: github-actions-sa@esh27-unicorn-core.iam.gserviceaccount.com
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via WIF
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.WIF_SA }}
+          create_credentials_file: true
+
+      - name: Collect sites that have content
+        id: sites
+        run: |
+          names=""
+          for d in sites/*/; do
+            name=$(basename "$d")
+            [ -f "$d/index.html" ] && names="${names:+$names,}$name"
+          done
+          echo "names=$names" >> "$GITHUB_OUTPUT"
+          echo "targets=$(echo "$names" | sed -E 's/([^,]+)/hosting:\1/g')" >> "$GITHUB_OUTPUT"
+          echo "Deploying: ${names:-nothing}"
+
+      - name: Deploy preview channel (pull request)
+        if: github.event_name == 'pull_request' && steps.sites.outputs.targets != ''
+        run: |
+          npx --yes firebase-tools@13 hosting:channel:deploy "pr-${{ github.event.number }}" \
+            --project "$PROJECT_ID" --only "${{ steps.sites.outputs.names }}" --expires 7d
+
+      - name: Deploy live (main)
+        if: github.event_name != 'pull_request' && steps.sites.outputs.targets != ''
+        run: |
+          npx --yes firebase-tools@13 deploy --project "$PROJECT_ID" \
+            --only "${{ steps.sites.outputs.targets }}" --non-interactive

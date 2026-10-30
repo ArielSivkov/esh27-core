@@ -1,0 +1,47 @@
+{
+  "projects": {
+    "default": "esh27-unicorn-core"
+  },
+  "targets": {
+    "esh27-unicorn-core": {
+      "hosting": {
+        "portal": [
+          "esh27-portal"
+        ],
+        "farms": [
+          "esh27-farms"
+        ],
+        "neomi": [
+          "esh27-neomi"
+        ],
+        "jaale": [
+          "esh27-jaale"
+        ],
+        "danda": [
+          "esh27-danda"
+        ],
+        "game": [
+          "esh27-game"
+        ],
+        "academy": [
+          "esh27-academy"
+        ],
+        "status": [
+          "esh27-status"
+        ],
+        "books": [
+          "esh27-books"
+        ],
+        "news": [
+          "esh27-news"
+        ],
+        "security": [
+          "esh27-security"
+        ],
+        "shuru": [
+          "esh27-shuru"
+        ]
+      }
+    }
+  }
+}

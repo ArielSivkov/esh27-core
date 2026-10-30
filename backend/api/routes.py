@@ -11,9 +11,12 @@ This module maps endpoints from openapi.yaml:
 - GET /health -> service health
 """
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Security, status
 from fastapi.responses import JSONResponse
+from fastapi.security import APIKeyHeader
 from typing import Optional, List, Dict, Any
+import hmac
+import os
 import time
 
 from pydantic import BaseModel, Field
@@ -26,7 +29,26 @@ from backend.models.vertex_llm import (
     VertexLLM,
 )
 
+# API key auth (X-API-Key, as declared in openapi.yaml).
+# Keys come from ESH27_API_KEYS (comma-separated). Fails closed: if no keys are configured,
+# every /v1 endpoint returns 503 instead of running unauthenticated.
+_api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+
+def _configured_keys() -> List[str]:
+    return [k.strip() for k in os.getenv("ESH27_API_KEYS", "").split(",") if k.strip()]
+
+
+async def require_api_key(api_key: Optional[str] = Security(_api_key_header)) -> None:
+    keys = _configured_keys()
+    if not keys:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="API keys not configured")
+    if not api_key or not any(hmac.compare_digest(api_key, k) for k in keys):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or missing API key")
+
+
 router = APIRouter()
+v1 = APIRouter(dependencies=[Depends(require_api_key)])
 
 # Lightweight models for the other endpoints (these mirror openapi.yaml)
 class CitationVerifyRequest(BaseModel):
@@ -79,11 +101,11 @@ def get_llm() -> VertexLLM:
     return get_default_llm()
 
 
-@router.post("/v1/generate", response_model=GenerateResponse, tags=["generation"])
+@v1.post("/v1/generate", response_model=GenerateResponse, tags=["generation"])
 async def generate_endpoint(request: GenerateRequest, llm: VertexLLM = Depends(get_llm)):
     """
     Generate text using VertexLLM.generate_async.
-    Security (Bearer/API Key) should be enforced by upstream middleware / dependencies.
+    Requires X-API-Key (enforced by the v1 router dependency).
     """
     try:
         response = await llm.generate_async(request)
@@ -93,7 +115,7 @@ async def generate_endpoint(request: GenerateRequest, llm: VertexLLM = Depends(g
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
 
 
-@router.post("/v1/citation/verify", response_model=CitationVerifyResponse, tags=["verification"])
+@v1.post("/v1/citation/verify", response_model=CitationVerifyResponse, tags=["verification"])
 async def citation_verify(req: CitationVerifyRequest):
     """
     Basic placeholder: in production, implement citation resolution and verification logic.
@@ -112,7 +134,7 @@ async def citation_verify(req: CitationVerifyRequest):
     return CitationVerifyResponse(verified=verified, details=details)
 
 
-@router.post("/v1/plagiarism/check", response_model=PlagiarismCheckResponse, tags=["verification"])
+@v1.post("/v1/plagiarism/check", response_model=PlagiarismCheckResponse, tags=["verification"])
 async def plagiarism_check(req: PlagiarismCheckRequest):
     """
     Placeholder plagiarism checker. Integrate with a real plagiarism detection service for production.
@@ -126,7 +148,7 @@ async def plagiarism_check(req: PlagiarismCheckRequest):
     return PlagiarismCheckResponse(plagiarism_score=score, matches=matches)
 
 
-@router.post("/v1/embeddings", response_model=EmbeddingsResponse, tags=["embeddings"])
+@v1.post("/v1/embeddings", response_model=EmbeddingsResponse, tags=["embeddings"])
 async def embeddings(req: EmbeddingsRequest):
     """
     Placeholder embeddings endpoint. Replace with Vertex Embeddings or external vectorizer in production.
@@ -140,7 +162,7 @@ async def embeddings(req: EmbeddingsRequest):
     return EmbeddingsResponse(embeddings=embeddings_out)
 
 
-@router.post("/v1/memory/query", response_model=MemoryQueryResponse, tags=["embeddings", "memory"])
+@v1.post("/v1/memory/query", response_model=MemoryQueryResponse, tags=["embeddings", "memory"])
 async def memory_query(req: MemoryQueryRequest, conversation_id: Optional[str] = None, llm: VertexLLM = Depends(get_llm)):
     """
     Query the in-memory TTL conversation cache. If conversation_id is provided and context exists,
@@ -165,3 +187,6 @@ async def memory_query(req: MemoryQueryRequest, conversation_id: Optional[str] =
         except Exception:
             pass
     return MemoryQueryResponse(results=results)
+
+
+router.include_router(v1)

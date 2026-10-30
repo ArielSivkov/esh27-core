@@ -43,18 +43,18 @@ app = FastAPI(
 )
 
 # CORS configuration
-_cors_origins_env = os.getenv("CORS_ORIGINS", "*")  # comma-separated or '*' (not recommended for prod)
-if _cors_origins_env.strip() == "*" or _cors_origins_env.strip() == "":
-    origins: List[str] = ["*"]
-else:
-    origins = [o.strip() for o in _cors_origins_env.split(",") if o.strip()]
+# Default: esh27.com, its subdomains and Firebase Hosting domains. Override with CORS_ORIGINS (comma-separated).
+DEFAULT_CORS_ORIGIN_REGEX = r"https://(([a-z0-9-]+\.)?esh27\.com|[a-z0-9-]+\.(web\.app|firebaseapp\.com))"
+_cors_origins_env = os.getenv("CORS_ORIGINS", "").strip()
+origins: List[str] = [o.strip() for o in _cors_origins_env.split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origin_regex=None if origins else DEFAULT_CORS_ORIGIN_REGEX,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "X-API-Key", "Authorization"],
 )
 
 # Include API routes

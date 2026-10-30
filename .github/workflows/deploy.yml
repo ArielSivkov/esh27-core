@@ -33,6 +33,8 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      # Public ingress is intentional (browsers call it); the app itself rejects /v1 calls
+      # without a valid X-API-Key. Keys live in Secret Manager, never in the workflow.
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE_NAME }} \
@@ -41,5 +43,6 @@ jobs:
             --region ${{ env.REGION }} \
             --allow-unauthenticated \
             --port 8080 \
-            --set-env-vars "NODE_ENV=production,GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" \
+            --set-env-vars "GCP_PROJECT=${{ env.PROJECT_ID }},GCP_REGION=${{ env.REGION }}" \
+            --set-secrets "ESH27_API_KEYS=esh27-api-keys:latest" \
             --quiet
