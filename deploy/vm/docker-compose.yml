@@ -1,0 +1,23 @@
+# CrownBot stack on the VM (plan phase 2-3). The voice bridge and the Claude worker join in phases 5-6.
+services:
+  control:
+    build: ../..
+    env_file: .env
+    environment:
+      CONTROL_TICK_SECONDS: "60"
+      CONTROL_DB: /data/control.db
+    volumes:
+      - control-data:/data
+    restart: unless-stopped
+    # No ports: only cloudflared reaches it, over the compose network.
+
+  cloudflared:
+    image: cloudflare/cloudflared:2026.10.1
+    command: tunnel --no-autoupdate run
+    env_file: .env  # TUNNEL_TOKEN
+    depends_on:
+      - control
+    restart: unless-stopped
+
+volumes:
+  control-data:
