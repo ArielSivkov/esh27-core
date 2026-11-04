@@ -37,6 +37,9 @@
 
 ## מקור האמת
 
+מעקב חי ב-Google Sheets (תצוגה מקוצרת של בנק המטרות):
+https://docs.google.com/spreadsheets/d/1V9coJlUiul7Z8uRsovujRcw9KB6DWcYMtOQhWudvhNo/edit
+
 קובצי ה-CSV ב-`data/` הם מקור האמת. האקסל, ה-Google Sheet והאתר הם **תצוגות** שנבנות מהם:
 
 ```bash
