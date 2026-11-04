@@ -55,11 +55,46 @@
   function tierName(raw) { var k = tierKey(raw); var s = t('tier.' + k); return s === 'tier.' + k ? raw : s; }
   function statusClass(s) {
     s = String(s || '').toLowerCase();
+    if (/(disput|block|stuck|abandon|fail|refut)/.test(s)) return 'st-blocked';
+    if (/(partial|progress|active|attack|working|running|literature|survey)/.test(s)) return 'st-active';
+    if (/(elsewhere|formaliz)/.test(s)) return 'st-formal';
     if (/(done|proved|verified|complete|closed|solved)/.test(s)) return 'st-done';
-    if (/(block|stuck|abandon|fail)/.test(s)) return 'st-blocked';
-    if (/(progress|active|attack|working|running|formaliz|literature|survey)/.test(s)) return 'st-active';
     return 'st-wait';
   }
+  function statusName(s) { var k = 'status.' + s; var v = t(k); return v === k ? s : v; }
+  /* 1–5 scale rendered as dots; any other value shown as text */
+  function scale(v) {
+    var n = parseInt(v, 10);
+    if (!(n >= 1 && n <= 5) || String(n) !== String(v).trim()) return esc(v);
+    var dots = '';
+    for (var i = 1; i <= 5; i++) dots += '<i class="' + (i <= n ? 'on' : '') + '"></i>';
+    return '<span class="dots" role="img" aria-label="' + esc(t('scale.of', { v: n })) + '">' + dots + '</span>';
+  }
+  /* "c. 300 BC", "1976–1977", "1946 (puzzle)" -> sortable number */
+  function yearNum(y) {
+    var m = String(y || '').match(/(\d{1,4})/);
+    if (!m) return 99999;
+    var n = parseInt(m[1], 10);
+    return /\bB\.?C|BCE|^-/i.test(String(y)) ? -n : n;
+  }
+  function yearLabel(y) {
+    y = String(y || '');
+    if (lang !== 'he') return y.replace(/^-(\d+)$/, '$1 BCE');
+    return y.replace(/^-(\d+)$/, '$1 לפנה״ס').replace(/^c\.\s*(\d+)\s*BC$/i, 'בערך $1 לפנה״ס');
+  }
+  /* claim level per goal = max over ledger attempts that are not dry runs and not superseded */
+  var goalLevel = {};
+  (function () {
+    var superseded = {};
+    ledger.forEach(function (e) { if (e.supersedes) superseded[e.supersedes] = true; });
+    ledger.forEach(function (e) {
+      if (e.dry_run === true || superseded[e.attempt_id]) return;
+      var l = levelOf(e.claim_level); if (!l) return;
+      if (l >= 'L3' && !(e.certificate && e.certificate.verified === true)) l = 'L2'; // L3+ needs a verified certificate
+      var g = e.goal_id; if (!g) return;
+      if (!goalLevel[g] || l > goalLevel[g]) goalLevel[g] = l;
+    });
+  })();
   function levelOf(v) {
     var m = String(v == null ? '' : v).toUpperCase().match(/L?\s*([0-4])/);
     return m ? 'L' + m[1] : '';
@@ -106,7 +141,7 @@
   /* ---------- stats ---------- */
   function renderStats() {
     var avg = goals.length ? goals.reduce(function (s, g) { return s + clamp(num(g.progress_pct)); }, 0) / goals.length : 0;
-    var verified = ledger.filter(function (e) { var l = levelOf(e.claim_level || e.level); return l === 'L3' || l === 'L4'; }).length;
+    var verified = Object.keys(goalLevel).filter(function (g) { return goalLevel[g] >= 'L3'; }).length;
     var items = [
       ['stat.goals', goals.length, ''],
       ['stat.progress', Math.round(avg) + '%', ''],
@@ -114,7 +149,7 @@
       ['stat.verified', verified, verified ? 'good' : '']
     ];
     $('stats').innerHTML = items.map(function (it) {
-      return '<div class="stat ' + it[2] + '"><dt>' + esc(t(it[0])) + '</dt><dd>' + esc(it[1]) + '</dd></div>';
+      return '<div class="stat ' + it[2] + '"><dt>' + esc(t(it[0])) + '</dt><dd dir="auto">' + esc(it[1]) + '</dd></div>';
     }).join('');
   }
 
@@ -140,7 +175,7 @@
     var tiers = uniq(goals.map(function (g) { return tierKey(g.tier); }));
     fillSelect($('fTier'), tiers, tierName, gs.tier);
     fillSelect($('fField'), uniq(goals.map(function (g) { return g.field; })), null, gs.field);
-    fillSelect($('fStatus'), uniq(goals.map(function (g) { return g.status; })), null, gs.status);
+    fillSelect($('fStatus'), uniq(goals.map(function (g) { return g.status; })), statusName, gs.status);
     $('q').value = gs.q;
   }
   function renderTiers() {
@@ -161,7 +196,7 @@
     if (gs.field && g.field !== gs.field) return false;
     if (gs.status && g.status !== gs.status) return false;
     if (gs.q) {
-      var hay = [g.id, g.title, g.title_he, g.field, g.tier, g.status, g.statement_short, g.why_it_matters, g.suggested_attack, g.owner_agent].join(' ').toLowerCase();
+      var hay = [g.id, g.title, g.title_he, g.field, g.tier, tierName(g.tier), g.status, statusName(g.status), g.statement_short, g.why_it_matters, g.suggested_attack, g.owner_agent].join(' ').toLowerCase();
       var words = gs.q.toLowerCase().split(/\s+/).filter(Boolean);
       for (var i = 0; i < words.length; i++) if (hay.indexOf(words[i]) < 0) return false;
     }
@@ -182,13 +217,14 @@
     }).join('');
   }
   function detailHtml(g) {
-    function blk(label, val, cls) { return val ? '<div class="' + (cls || '') + '"><h4>' + esc(t(label)) + '</h4><p>' + linkify(val) + '</p></div>' : ''; }
+    function blk(label, val, cls) { return val ? '<div class="' + (cls || '') + '"><h4>' + esc(t(label)) + '</h4><p dir="auto">' + linkify(val) + '</p></div>' : ''; }
     var chips = [];
-    if (g.ai_tractability) chips.push('<span class="badge">' + esc(t('goal.ai')) + ': ' + esc(g.ai_tractability) + '</span>');
-    if (g.formalization_readiness) chips.push('<span class="badge">' + esc(t('goal.formal')) + ': ' + esc(g.formalization_readiness) + '</span>');
-    if (g.owner_agent) chips.push('<span class="badge" dir="ltr">' + esc(t('goal.owner')) + ': ' + esc(g.owner_agent) + '</span>');
+    if (g.ai_tractability) chips.push('<span class="badge nodot">' + esc(t('goal.ai')) + ' ' + scale(g.ai_tractability) + '</span>');
+    if (g.formalization_readiness) chips.push('<span class="badge nodot">' + esc(t('goal.formal')) + ' ' + scale(g.formalization_readiness) + '</span>');
+    if (goalLevel[g.id]) chips.push('<span class="badge nodot">' + esc(t('goal.level')) + ' <span class="lvl lvl-' + goalLevel[g.id] + '">' + goalLevel[g.id] + '</span></span>');
+    if (g.owner_agent) chips.push('<span class="badge nodot">' + esc(t('goal.owner')) + ': <span dir="ltr">' + esc(g.owner_agent) + '</span></span>');
     return '<div class="detail-grid">' +
-      '<div class="full"><h4>' + esc(t('goal.statement')) + '</h4><p class="statement">' + esc(g.statement_short || '—') + '</p></div>' +
+      '<div class="full"><h4>' + esc(t('goal.statement')) + '</h4><p class="statement" dir="auto">' + esc(g.statement_short || '—') + '</p></div>' +
       blk('goal.why', g.why_it_matters) + blk('goal.partial', g.known_partial_results) +
       blk('goal.attack', g.suggested_attack) + blk('goal.refs', g.references, 'ref-block') +
       (chips.length ? '<div class="full meta-row">' + chips.join('') + '</div>' : '') + '</div>';
@@ -216,9 +252,10 @@
         '<td class="c-id">' + esc(g.id) + '</td>' +
         '<td class="c-title"><button type="button" class="g-title" data-goal="' + esc(g.id) + '" aria-expanded="' + open + '" aria-controls="' + did + '">' +
           '<span class="chev" aria-hidden="true">▶</span><span>' + esc(gTitle(g)) + (alt ? '<span class="g-sub" lang="' + (lang === 'he' ? 'en' : 'he') + '">' + esc(alt) + '</span>' : '') + '</span></button></td>' +
-        '<td class="c-field" data-label="' + esc(t('col.field')) + '">' + esc(g.field) + '</td>' +
+        '<td class="c-field" dir="auto" data-label="' + esc(t('col.field')) + '">' + esc(g.field) + '</td>' +
         '<td class="c-tier" data-label="' + esc(t('col.tier')) + '"><span class="badge ' + tierClass(g.tier) + '">' + esc(tierName(g.tier)) + '</span></td>' +
-        '<td class="c-status" data-label="' + esc(t('col.status')) + '"><span class="badge ' + statusClass(g.status) + '">' + esc(g.status || '—') + '</span></td>' +
+        '<td class="c-status" data-label="' + esc(t('col.status')) + '"><span class="badge ' + statusClass(g.status) + '">' + esc(statusName(g.status) || '—') + '</span>' +
+          (goalLevel[g.id] ? ' <span class="lvl lvl-' + goalLevel[g.id] + '">' + goalLevel[g.id] + '</span>' : '') + '</td>' +
         '<td class="c-prog" data-label="' + esc(t('col.progress')) + '">' + bar(g.progress_pct) + '</td>' +
         '<td class="c-upd" data-label="' + esc(t('col.updated')) + '">' + esc(g.last_update) + '</td></tr>';
       if (open) r += '<tr class="g-detail" id="' + did + '"><td colspan="7">' + detailHtml(g) + '</td></tr>';
@@ -255,70 +292,101 @@
     });
   }
 
+  /* ---------- shared: chips + "show more" ---------- */
+  function chipsHtml(values, current, allLabel, attr) {
+    return '<button type="button" class="chip" ' + attr + '="" aria-pressed="' + (!current) + '">' + esc(allLabel) + '</button>' +
+      values.map(function (v) {
+        return '<button type="button" class="chip" ' + attr + '="' + esc(v[0]) + '" aria-pressed="' + (current === v[0]) + '">' + esc(v[0]) +
+          ' <span class="chip-n">' + v[1] + '</span></button>';
+      }).join('');
+  }
+  function counts(list, key) {
+    var c = {};
+    list.forEach(function (x) { var k = x[key] || '—'; c[k] = (c[k] || 0) + 1; });
+    return Object.keys(c).sort(function (a, b) { return c[b] - c[a] || a.localeCompare(b); }).map(function (k) { return [k, c[k]]; });
+  }
+  function moreBtn(btn, total, limit, expanded) {
+    btn.hidden = total <= limit;
+    btn.textContent = expanded ? t('ui.less') : t('ui.more', { n: total });
+    btn.setAttribute('aria-expanded', String(!!expanded));
+  }
+
   /* ---------- tools ---------- */
+  var ts = { cat: '', all: false, LIMIT: 12 };
+  function toolCard(x) {
+    var url = safeUrl(x.url);
+    return '<article class="card tool"><div class="tool-top"><h4 dir="auto">' + esc(x.name) + '</h4>' +
+      (x.maturity ? '<span class="mat" title="' + esc(t('tools.maturity')) + '">' + scale(x.maturity) + '</span>' : '') + '</div>' +
+      '<span class="area">' + esc(x.category) + '</span>' +
+      '<p dir="auto">' + esc(x.what_it_does) + '</p>' +
+      (x.use_in_lab ? '<p class="use" dir="auto">' + esc(x.use_in_lab) + '</p>' : '') +
+      '<div class="card-foot">' + (x.license_or_cost ? '<span class="lic">' + esc(x.license_or_cost) + '</span>' : '') +
+      (url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(t('tools.open')) + ' ↗</a>' : '') + '</div></article>';
+  }
   function renderTools() {
-    var el = $('toolsList');
-    if (!tools.length) { el.innerHTML = '<p class="placeholder">' + esc(t('tools.none')) + '</p>'; return; }
-    var cats = uniq(tools.map(function (x) { return x.category || '—'; }));
-    el.innerHTML = cats.map(function (c) {
-      var items = tools.filter(function (x) { return (x.category || '—') === c; });
-      return '<div class="tool-cat"><h3>' + esc(c) + ' <span class="muted">· ' + items.length + '</span></h3><div class="tool-grid">' +
-        items.map(function (x) {
-          var url = safeUrl(x.url);
-          var mat = String(x.maturity || '').toLowerCase().replace(/[^a-z]/g, '');
-          return '<article class="card"><h4 dir="auto">' + esc(x.name) + '</h4><p>' + esc(x.what_it_does) + '</p>' +
-            (x.use_in_lab ? '<p class="use">' + esc(x.use_in_lab) + '</p>' : '') +
-            '<div class="card-foot">' + (x.maturity ? '<span class="badge mat-' + esc(mat) + '">' + esc(x.maturity) + '</span>' : '') +
-            (x.license_or_cost ? '<span class="badge">' + esc(x.license_or_cost) + '</span>' : '') +
-            (url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(t('tools.open')) + ' ↗</a>' : '') + '</div></article>';
-        }).join('') + '</div></div>';
-    }).join('');
+    var el = $('toolsList'), chips = $('toolChips'), btn = $('toolsMore');
+    if (!tools.length) { chips.innerHTML = ''; btn.hidden = true; el.innerHTML = '<p class="placeholder">' + esc(t('tools.none')) + '</p>'; return; }
+    chips.setAttribute('aria-label', t('tools.all'));
+    chips.innerHTML = chipsHtml(counts(tools, 'category'), ts.cat, t('tools.all'), 'data-cat');
+    var list = tools.filter(function (x) { return !ts.cat || (x.category || '—') === ts.cat; })
+      .sort(function (a, b) { return num(b.maturity) - num(a.maturity); });
+    var shown = ts.all || ts.cat ? list : list.slice(0, ts.LIMIT);
+    el.innerHTML = '<div class="tool-grid">' + shown.map(toolCard).join('') + '</div>';
+    if (ts.cat) btn.hidden = true; else moreBtn(btn, list.length, ts.LIMIT, ts.all);
+  }
+  function bindTools() {
+    $('toolChips').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-cat]'); if (!b) return;
+      ts.cat = b.getAttribute('data-cat'); renderTools();
+      var nb = $('toolChips').querySelector('[data-cat="' + ts.cat.replace(/"/g, '\\"') + '"]'); if (nb) nb.focus();
+    });
+    $('toolsMore').addEventListener('click', function () { ts.all = !ts.all; renderTools(); if (!ts.all) $('tools').scrollIntoView(); });
   }
 
   /* ---------- creative proofs ---------- */
-  var pf = '';
+  var ps = { fam: '', all: false, LIMIT: 9 };
   function renderProofs() {
-    var el = $('proofsList'), chips = $('proofChips');
-    if (!proofs.length) { chips.innerHTML = ''; el.innerHTML = '<p class="placeholder">' + esc(t('proofs.none')) + '</p>'; return; }
-    var fams = uniq(proofs.map(function (p) { return p.technique_family; }));
+    var el = $('proofsList'), chips = $('proofChips'), btn = $('proofsMore');
+    if (!proofs.length) { chips.innerHTML = ''; btn.hidden = true; el.innerHTML = '<p class="placeholder">' + esc(t('proofs.none')) + '</p>'; return; }
     chips.setAttribute('aria-label', t('proofs.all'));
-    chips.innerHTML = '<button type="button" class="chip" data-fam="" aria-pressed="' + (!pf) + '">' + esc(t('proofs.all')) + '</button>' +
-      fams.map(function (f) { return '<button type="button" class="chip" data-fam="' + esc(f) + '" aria-pressed="' + (pf === f) + '">' + esc(f) + '</button>'; }).join('');
-    var list = proofs.filter(function (p) { return !pf || p.technique_family === pf; })
-      .sort(function (a, b) { return num(a.year) - num(b.year); });
-    el.innerHTML = list.map(function (p) {
-      var y = String(p.year || '');
-      if (/^-\d+$/.test(y)) y = y.slice(1) + (lang === 'he' ? ' לפנה״ס' : ' BCE');
-      return '<article class="card proof"><div class="year">' + esc(y) + '</div><h4 dir="auto">' + esc(p.name) + '</h4>' +
+    chips.innerHTML = chipsHtml(counts(proofs, 'technique_family'), ps.fam, t('proofs.all'), 'data-fam');
+    var list = proofs.filter(function (p) { return !ps.fam || (p.technique_family || '—') === ps.fam; })
+      .sort(function (a, b) { return yearNum(a.year) - yearNum(b.year); });
+    var shown = ps.all || ps.fam ? list : list.slice(0, ps.LIMIT);
+    el.innerHTML = shown.map(function (p) {
+      return '<article class="card proof"><div class="year">' + esc(yearLabel(p.year)) + '</div><h4 dir="auto">' + esc(p.name) + '</h4>' +
         '<div class="who" dir="auto">' + esc(p.people) + '</div>' +
         '<div class="meta-row">' + (p.field ? '<span class="badge">' + esc(p.field) + '</span>' : '') +
           (p.technique_family ? '<span class="badge tier-A">' + esc(p.technique_family) + '</span>' : '') + '</div>' +
-        '<dl>' + (p.what_was_creative ? '<div><dt>' + esc(t('proofs.creative')) + '</dt><dd>' + esc(p.what_was_creative) + '</dd></div>' : '') +
-        (p.reusable_lesson ? '<div><dt>' + esc(t('proofs.lesson')) + '</dt><dd class="lesson">' + esc(p.reusable_lesson) + '</dd></div>' : '') +
-        (p.ai_relevance ? '<div><dt>' + esc(t('proofs.ai')) + '</dt><dd>' + esc(p.ai_relevance) + '</dd></div>' : '') + '</dl>' +
+        '<dl>' + (p.what_was_creative ? '<div><dt>' + esc(t('proofs.creative')) + '</dt><dd dir="auto">' + esc(p.what_was_creative) + '</dd></div>' : '') +
+        (p.reusable_lesson ? '<div><dt>' + esc(t('proofs.lesson')) + '</dt><dd class="lesson" dir="auto">' + esc(p.reusable_lesson) + '</dd></div>' : '') +
+        (p.ai_relevance ? '<div><dt>' + esc(t('proofs.ai')) + '</dt><dd dir="auto">' + esc(p.ai_relevance) + '</dd></div>' : '') + '</dl>' +
         (p.reference ? '<div class="ref">' + linkify(p.reference) + '</div>' : '') + '</article>';
     }).join('');
+    if (ps.fam) btn.hidden = true; else moreBtn(btn, list.length, ps.LIMIT, ps.all);
     typeset(el);
   }
   function bindProofs() {
     $('proofChips').addEventListener('click', function (e) {
       var b = e.target.closest('[data-fam]'); if (!b) return;
-      pf = b.getAttribute('data-fam'); renderProofs();
-      var nb = $('proofChips').querySelector('[data-fam="' + pf.replace(/"/g, '\\"') + '"]'); if (nb) nb.focus();
+      ps.fam = b.getAttribute('data-fam'); renderProofs();
+      var nb = $('proofChips').querySelector('[data-fam="' + ps.fam.replace(/"/g, '\\"') + '"]'); if (nb) nb.focus();
     });
+    $('proofsMore').addEventListener('click', function () { ps.all = !ps.all; renderProofs(); if (!ps.all) $('proofs').scrollIntoView(); });
   }
 
   /* ---------- wisdom ---------- */
   function renderWisdom() {
     var el = $('wisdomList');
     if (!wisdom.length) { el.innerHTML = '<p class="placeholder">' + esc(t('wisdom.none')) + '</p>'; return; }
-    var trads = uniq(wisdom.map(function (w) { return w.tradition; }));
+    function fam(w) { return String(w.tradition || '').split(/\s*[\/(]\s*/)[0]; }
+    var trads = uniq(wisdom.map(fam));
     el.innerHTML = wisdom.map(function (w) {
-      return '<article class="card bridge trad-' + (trads.indexOf(w.tradition) % 5) + '"><span class="trad" dir="auto">' + esc(w.tradition) + '</span>' +
+      return '<article class="card bridge trad-' + (trads.indexOf(fam(w)) % 5) + '"><span class="trad" dir="auto">' + esc(w.tradition) + '</span>' +
         '<h4 dir="auto">' + esc(w.title) + '</h4>' + (w.math_area ? '<span class="area">' + esc(w.math_area) + '</span>' : '') +
-        '<p>' + esc(w.description) + '</p>' +
+        '<p dir="auto">' + esc(w.description) + '</p>' +
         (w.deliverable ? '<p class="use"><strong>' + esc(t('wisdom.deliverable')) + ':</strong> ' + esc(w.deliverable) + '</p>' : '') +
-        '<div class="card-foot">' + (w.feasibility ? '<span class="badge">' + esc(t('wisdom.feasibility')) + ': ' + esc(w.feasibility) + '</span>' : '') + '</div></article>';
+        '<div class="card-foot">' + (w.feasibility ? '<span class="badge nodot">' + esc(t('wisdom.feasibility')) + ' ' + scale(w.feasibility) + '</span>' : '') + '</div></article>';
     }).join('');
     typeset(el);
   }
@@ -345,14 +413,23 @@
     }).slice(0, 40);
     ll.innerHTML = entries.length ? '<ol class="timeline">' + entries.map(function (e) {
       var lv = levelOf(pick(e, ['claim_level', 'level', 'claim']));
+      var unverified = lv >= 'L3' && !(e.certificate && e.certificate.verified === true);
+      if (unverified) lv = 'L2';
       var when = String(pick(e, ['ts', 'timestamp', 'date', 'time'])).replace('T', ' ').slice(0, 16);
       var goal = pick(e, ['goal_id', 'goal', 'target']);
       var agent = pick(e, ['agent', 'owner_agent', 'by']);
-      var text = pick(e, ['summary', 'note', 'notes', 'result', 'description', 'message', 'outcome']);
+      var text = pick(e, ['summary', 'note', 'notes', 'result', 'description', 'message']);
       var link = safeUrl(pick(e, ['url', 'link', 'artifact_url']));
+      var outc = String(pick(e, ['outcome', 'status']));
+      var oName = outc ? (t('outcome.' + outc) === 'outcome.' + outc ? outc : t('outcome.' + outc)) : '';
+      var method = pick(e, ['method']);
       return '<li style="--c: var(--' + (lv ? 'l' + lv.charAt(1) : 'line-2') + ')"><div class="t-meta"><time>' + esc(when) + '</time>' +
         (lv ? '<span class="lvl lvl-' + lv + '">' + lv + '</span>' : '') +
-        (goal ? '<span dir="ltr">' + esc(goal) + '</span>' : '') + (agent ? '<span dir="ltr">· ' + esc(agent) + '</span>' : '') + '</div>' +
+        (goal ? '<span dir="ltr">' + esc(goal) + '</span>' : '') + (agent ? '<span dir="ltr">· ' + esc(agent) + '</span>' : '') +
+        (oName ? '<span class="badge ' + statusClass(outc === 'success' ? 'done' : outc) + '">' + esc(oName) + '</span>' : '') +
+        (e.dry_run === true ? '<span class="badge">' + esc(t('log.dry')) + '</span>' : '') +
+        (unverified ? '<span class="badge st-blocked">' + esc(t('log.unverified')) + '</span>' : '') +
+        (method ? '<span dir="ltr">' + esc(method) + '</span>' : '') + '</div>' +
         (text ? '<p dir="auto">' + esc(text) + (link ? ' <a href="' + esc(link) + '" target="_blank" rel="noopener">↗</a>' : '') + '</p>' : '') + '</li>';
     }).join('') + '</ol>' : '<p class="placeholder">' + esc(t('log.ledger.none')) + '</p>';
     typeset(nl); typeset(ll);
@@ -399,7 +476,7 @@
     typeset(document.querySelector('.hero'));
   }
 
-  bindChrome(); bindGoals(); bindProofs(); renderAll();
+  bindChrome(); bindGoals(); bindTools(); bindProofs(); renderAll();
   // KaTeX scripts are deferred: typeset once they are available.
   function lateTypeset() { typeset(document.body); }
   if (document.readyState === 'complete') lateTypeset();

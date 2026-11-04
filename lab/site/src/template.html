@@ -10,12 +10,11 @@
 <meta property="og:description" content="{{t:meta.description}}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1220'/%3E%3Cpath d='M18 46 L32 16 L46 46' fill='none' stroke='%23e3b65c' stroke-width='5' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='38' r='4' fill='%2366d2c8'/%3E%3C/svg%3E">
 <script>
-  /* apply saved theme/lang before paint */
+  /* dark by default; apply a saved theme before first paint */
   (function () {
     try {
       var th = localStorage.getItem('esh27.theme');
       if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th);
-      else if (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) document.documentElement.setAttribute('data-theme', 'light');
     } catch (e) {}
   })();
 </script>
@@ -142,9 +141,13 @@
       </ol>
 
       <div class="claims">
+        <div class="claims-side">
         <div class="claims-head">
           <h3 data-i18n="claims.title">{{t:claims.title}}</h3>
           <p data-i18n="claims.lead">{{t:claims.lead}}</p>
+        </div>
+        <p class="claims-rule" data-i18n="claims.rule">{{t:claims.rule}}</p>
+        <p class="claims-note" data-i18n="claims.partial">{{t:claims.partial}}</p>
         </div>
         <ol class="ladder" id="ladder">
           <li class="rung lv0"><span class="lvl lvl-L0">L0</span><div><h4 data-i18n="L0.t">{{t:L0.t}}</h4><p data-i18n="L0.d">{{t:L0.d}}</p></div></li>
@@ -153,7 +156,6 @@
           <li class="rung lv3 proved"><span class="lvl lvl-L3">L3</span><div><h4 data-i18n="L3.t">{{t:L3.t}}</h4><p data-i18n="L3.d">{{t:L3.d}}</p></div></li>
           <li class="rung lv4 proved"><span class="lvl lvl-L4">L4</span><div><h4 data-i18n="L4.t">{{t:L4.t}}</h4><p data-i18n="L4.d">{{t:L4.d}}</p></div></li>
         </ol>
-        <p class="claims-rule" data-i18n="claims.rule">{{t:claims.rule}}</p>
       </div>
     </div>
   </section>
@@ -166,7 +168,9 @@
         <h2 id="tools-h" data-i18n="tools.title">{{t:tools.title}}</h2>
         <p data-i18n="tools.lead">{{t:tools.lead}}</p>
       </header>
+      <div class="chips" id="toolChips" role="group"></div>
       <div id="toolsList"></div>
+      <div class="more-wrap"><button type="button" class="btn-ghost" id="toolsMore" hidden></button></div>
     </div>
   </section>
 
@@ -180,6 +184,7 @@
       </header>
       <div class="chips" id="proofChips" role="group"></div>
       <div class="gallery" id="proofsList"></div>
+      <div class="more-wrap"><button type="button" class="btn-ghost" id="proofsMore" hidden></button></div>
     </div>
   </section>
 

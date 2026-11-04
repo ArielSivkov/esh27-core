@@ -297,7 +297,7 @@ def main(argv=None):
     shutil.copyfile(os.path.join(args.out, "index.html"), os.path.join(args.out, "404.html"))
 
     counts = ", ".join(f"{k}={len(data[k])}({sources[k]})" for k in list(DATASETS) + ["ledger", "news"])
-    print(f"[build] wrote {os.path.relpath(os.path.join(args.out, 'index.html'), os.getcwd())} "
+    print(f"[build] wrote {os.path.join(args.out, 'index.html')} "
           f"({len(page) // 1024} KB) · {counts}")
     return 0
 
