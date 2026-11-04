@@ -44,9 +44,9 @@ def norm01(value: str | None, default: float = 0.3) -> float:
         x = float(s)
     except ValueError:
         return default
-    if x <= 1:
-        return max(0.0, x)
-    if x <= 5:
+    if x < 1 and not s.isdigit():
+        return max(0.0, x)  # already a fraction, e.g. "0.7"
+    if x <= 5:  # the goal bank uses integer 1-5 scales
         return x / 5
     if x <= 10:
         return x / 10
@@ -59,7 +59,11 @@ def tier_weight(tier: str | None) -> float:
     We slightly prefer lower tiers (more tractable, faster feedback) but never zero
     out the flagship tier.
     """
-    s = (tier or "").strip().lower().lstrip("t")
+    s = (tier or "").strip().lower()
+    letter = {"a": 0.6, "b": 0.8, "c": 1.1, "d": 1.0, "p": 0.9}  # goal-bank tiers
+    if s[:2] in {"a-", "b-", "c-", "d-", "p-"}:
+        return letter[s[0]]
+    s = s.lstrip("t")
     try:
         t = int(float(s))
     except ValueError:
