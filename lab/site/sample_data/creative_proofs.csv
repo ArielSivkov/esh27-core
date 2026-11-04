@@ -1,0 +1,4 @@
+id,name,year,people,field,technique_family,what_was_creative,reusable_lesson,ai_relevance,reference
+CP-S1,Infinitude of primes,-300,Euclid,Number theory,Construction,Builds a number no finite list can account for.,"Assume finiteness, construct a witness that breaks it.",Template for witness-construction search.,Elements IX.20
+CP-S2,Cap set via polynomial method,2016,"Croot, Lev, Pach; Ellenberg, Gijswijt",Combinatorics,Polynomial method,Slice rank of a cleverly chosen tensor gives an exponential bound.,Linear algebra over finite fields can bound combinatorial objects.,Short proofs are within reach of formalization.,Annals 2017
+CP-S3,Sensitivity conjecture,2019,Hao Huang,Combinatorics,Spectral,A signed adjacency matrix of the hypercube settles a 30-year problem in two pages.,Try signing matrices; spectra encode structure.,"Short, checkable, and a model for search over signings.",Annals 2019

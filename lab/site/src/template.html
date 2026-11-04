@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="he" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{t:meta.title}}</title>
+<meta name="description" content="{{t:meta.description}}">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="ESH27 Lab">
+<meta property="og:description" content="{{t:meta.description}}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1220'/%3E%3Cpath d='M18 46 L32 16 L46 46' fill='none' stroke='%23e3b65c' stroke-width='5' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='38' r='4' fill='%2366d2c8'/%3E%3C/svg%3E">
+<script>
+  /* apply saved theme/lang before paint */
+  (function () {
+    try {
+      var th = localStorage.getItem('esh27.theme');
+      if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th);
+      else if (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) document.documentElement.setAttribute('data-theme', 'light');
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+<style>
+{{STYLES}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">{{t:skip}}</a>
+
+<header class="topbar" id="top">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#top" aria-label="ESH27 Lab">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 L32 12 L50 50" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><path d="M21 36 H43" stroke="currentColor" stroke-width="3" opacity=".5"/><circle cx="32" cy="42" r="4.5" class="brand-dot"/></svg>
+      <span class="brand-text"><b>ESH27</b><span>Lab</span></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="ניווט ראשי">
+      <a href="#goals" data-i18n="nav.goals">{{t:nav.goals}}</a>
+      <a href="#method" data-i18n="nav.method">{{t:nav.method}}</a>
+      <a href="#tools" data-i18n="nav.tools">{{t:nav.tools}}</a>
+      <a href="#proofs" data-i18n="nav.proofs">{{t:nav.proofs}}</a>
+      <a href="#wisdom" data-i18n="nav.wisdom">{{t:nav.wisdom}}</a>
+      <a href="#log" data-i18n="nav.log">{{t:nav.log}}</a>
+    </nav>
+    <div class="actions">
+      <button type="button" class="btn-ghost" id="langBtn" data-i18n="ui.lang" data-i18n-aria="ui.lang.aria" aria-label="{{t:ui.lang.aria}}" lang="en">{{t:ui.lang}}</button>
+      <button type="button" class="btn-icon" id="themeBtn" data-i18n-aria="ui.theme.aria" aria-label="{{t:ui.theme.aria}}">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+      </button>
+      <button type="button" class="btn-icon menu-btn" id="menuBtn" aria-controls="nav" aria-expanded="false" data-i18n-aria="nav.menu" aria-label="{{t:nav.menu}}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="sample-banner" id="sampleBanner" hidden><div class="wrap" data-i18n="ui.sample">{{t:ui.sample}}</div></div>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="kicker" data-i18n="hero.kicker">{{t:hero.kicker}}</p>
+        <h1 data-i18n="hero.title">{{t:hero.title}}</h1>
+        <p class="lead" data-i18n="hero.lead">{{t:hero.lead}}</p>
+        <div class="cta">
+          <a class="btn" href="#goals" data-i18n="hero.cta.goals">{{t:hero.cta.goals}}</a>
+          <a class="btn btn-outline" href="#method" data-i18n="hero.cta.method">{{t:hero.cta.method}}</a>
+        </div>
+        <p class="rule" data-i18n="hero.rule">{{t:hero.rule}}</p>
+      </div>
+      <figure class="hero-panel" dir="ltr">
+        <div class="panel-head"><span></span><span></span><span></span><code>Lab/Policy.lean</code></div>
+<pre class="lean"><code><span class="k">inductive</span> <span class="ty">Level</span> | L0 | L1 | L2 | L3 | L4
+
+<span class="k">def</span> <span class="fn">Claim.proved</span> (c : <span class="ty">Claim</span>) : <span class="ty">Prop</span> :=
+  c.level ≥ .L3 ∧ c.kernelChecked ∧ c.noSorry
+
+<span class="k">theorem</span> <span class="fn">honesty</span> (c : <span class="ty">Claim</span>)
+    (h : c.level ≤ .L2) : ¬ c.proved := <span class="k">by</span>
+  <span class="tac">intro</span> ⟨hl, -, -⟩
+  <span class="tac">exact</span> absurd (le_trans hl h) (<span class="k">by</span> <span class="tac">decide</span>)</code></pre>
+        <div class="panel-math">$$\text{proved}(c) \iff \mathrm{level}(c) \ge L_3$$</div>
+        <figcaption data-i18n="hero.panel.caption">{{t:hero.panel.caption}}</figcaption>
+      </figure>
+    </div>
+    <div class="wrap">
+      <dl class="stats" id="stats"></dl>
+    </div>
+  </section>
+
+  <!-- GOALS -->
+  <section class="section" id="goals" aria-labelledby="goals-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 id="goals-h" data-i18n="goals.title">{{t:goals.title}}</h2>
+        <p data-i18n="goals.lead">{{t:goals.lead}}</p>
+      </header>
+      <div class="tiers" id="tiers"></div>
+      <div class="filters" role="search">
+        <label class="f-search">
+          <span class="sr" data-i18n="goals.search">{{t:goals.search}}</span>
+          <input type="search" id="q" data-i18n-ph="goals.search" placeholder="{{t:goals.search}}" autocomplete="off">
+        </label>
+        <label><span data-i18n="goals.filter.tier">{{t:goals.filter.tier}}</span><select id="fTier"></select></label>
+        <label><span data-i18n="goals.filter.field">{{t:goals.filter.field}}</span><select id="fField"></select></label>
+        <label><span data-i18n="goals.filter.status">{{t:goals.filter.status}}</span><select id="fStatus"></select></label>
+        <button type="button" class="btn-ghost" id="fReset" data-i18n="goals.reset">{{t:goals.reset}}</button>
+      </div>
+      <p class="count" id="goalCount" aria-live="polite"></p>
+      <div class="table-wrap">
+        <table class="goals" id="goalsTable">
+          <thead><tr id="goalsHead"></tr></thead>
+          <tbody id="goalsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section class="section alt" id="method" aria-labelledby="method-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 id="method-h" data-i18n="method.title">{{t:method.title}}</h2>
+        <p data-i18n="method.lead">{{t:method.lead}}</p>
+      </header>
+      <ol class="pipeline">
+        <li><span class="p-ico" aria-hidden="true">∑</span><h3 data-i18n="step1.t">{{t:step1.t}}</h3><p data-i18n="step1.d">{{t:step1.d}}</p></li>
+        <li><span class="p-ico" aria-hidden="true">⊢</span><h3 data-i18n="step2.t">{{t:step2.t}}</h3><p data-i18n="step2.d">{{t:step2.d}}</p></li>
+        <li><span class="p-ico" aria-hidden="true">⚡</span><h3 data-i18n="step3.t">{{t:step3.t}}</h3><p data-i18n="step3.d">{{t:step3.d}}</p></li>
+        <li><span class="p-ico" aria-hidden="true">✓</span><h3 data-i18n="step4.t">{{t:step4.t}}</h3><p data-i18n="step4.d">{{t:step4.d}}</p></li>
+        <li><span class="p-ico" aria-hidden="true">◎</span><h3 data-i18n="step5.t">{{t:step5.t}}</h3><p data-i18n="step5.d">{{t:step5.d}}</p></li>
+      </ol>
+
+      <div class="claims">
+        <div class="claims-head">
+          <h3 data-i18n="claims.title">{{t:claims.title}}</h3>
+          <p data-i18n="claims.lead">{{t:claims.lead}}</p>
+        </div>
+        <ol class="ladder" id="ladder">
+          <li class="rung lv0"><span class="lvl lvl-L0">L0</span><div><h4 data-i18n="L0.t">{{t:L0.t}}</h4><p data-i18n="L0.d">{{t:L0.d}}</p></div></li>
+          <li class="rung lv1"><span class="lvl lvl-L1">L1</span><div><h4 data-i18n="L1.t">{{t:L1.t}}</h4><p data-i18n="L1.d">{{t:L1.d}}</p></div></li>
+          <li class="rung lv2"><span class="lvl lvl-L2">L2</span><div><h4 data-i18n="L2.t">{{t:L2.t}}</h4><p data-i18n="L2.d">{{t:L2.d}}</p></div></li>
+          <li class="rung lv3 proved"><span class="lvl lvl-L3">L3</span><div><h4 data-i18n="L3.t">{{t:L3.t}}</h4><p data-i18n="L3.d">{{t:L3.d}}</p></div></li>
+          <li class="rung lv4 proved"><span class="lvl lvl-L4">L4</span><div><h4 data-i18n="L4.t">{{t:L4.t}}</h4><p data-i18n="L4.d">{{t:L4.d}}</p></div></li>
+        </ol>
+        <p class="claims-rule" data-i18n="claims.rule">{{t:claims.rule}}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="section" id="tools" aria-labelledby="tools-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 id="tools-h" data-i18n="tools.title">{{t:tools.title}}</h2>
+        <p data-i18n="tools.lead">{{t:tools.lead}}</p>
+      </header>
+      <div id="toolsList"></div>
+    </div>
+  </section>
+
+  <!-- CREATIVE PROOFS -->
+  <section class="section alt" id="proofs" aria-labelledby="proofs-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 id="proofs-h" data-i18n="proofs.title">{{t:proofs.title}}</h2>
+        <p data-i18n="proofs.lead">{{t:proofs.lead}}</p>
+      </header>
+      <div class="chips" id="proofChips" role="group"></div>
+      <div class="gallery" id="proofsList"></div>
+    </div>
+  </section>
+
+  <!-- WISDOM -->
+  <section class="section wisdom" id="wisdom" aria-labelledby="wisdom-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <h2 id="wisdom-h" data-i18n="wisdom.title">{{t:wisdom.title}}</h2>
+        <p data-i18n="wisdom.lead">{{t:wisdom.lead}}</p>
+      </header>
+      <p class="note" data-i18n="wisdom.note">{{t:wisdom.note}}</p>
+      <div class="bridges" id="wisdomList"></div>
+    </div>
+  </section>
+
+  <!-- LOG -->
+  <section class="section alt" id="log" aria-labelledby="log-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-num" aria-hidden="true">06</span>
+        <h2 id="log-h" data-i18n="log.title">{{t:log.title}}</h2>
+        <p data-i18n="log.lead">{{t:log.lead}}</p>
+      </header>
+      <div class="log-grid">
+        <div>
+          <h3 class="sub" data-i18n="log.news">{{t:log.news}}</h3>
+          <div id="newsList"></div>
+        </div>
+        <div>
+          <h3 class="sub" data-i18n="log.ledger">{{t:log.ledger}}</h3>
+          <div id="ledgerList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-in">
+    <p><strong data-i18n="footer.text">{{t:footer.text}}</strong></p>
+    <p data-i18n="footer.honesty">{{t:footer.honesty}}</p>
+    <p class="muted" id="builtAt"></p>
+  </div>
+</footer>
+
+<noscript><p class="wrap">JavaScript is required to display the goal bank and data tables.</p></noscript>
+<script type="application/json" id="lab-data">{{DATA_JSON}}</script>
+<script>
+{{SCRIPT}}
+</script>
+</body>
+</html>
