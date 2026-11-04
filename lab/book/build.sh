@@ -7,7 +7,7 @@ mapfile -t CH < <(ls chapters/*.md | sort)
 META=(--metadata title="המעבדה" --metadata subtitle="מתמטיקה, פיזיקה ובינה מלאכותית — ספר התיעוד של ESH27 Lab" \
       --metadata lang=he --metadata dir=rtl --metadata date="$(date +%Y-%m-%d)")
 pandoc "${CH[@]}" "${META[@]}" -f markdown+tex_math_dollars+footnotes -s --toc --toc-depth=2 \
-  --katex=https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/ --css assets/book.css --embed-resources=false \
+  --katex=https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/ --css book.css \
   -o dist/book.html
 cp assets/book.css dist/
 pandoc "${CH[@]}" "${META[@]}" -f markdown+tex_math_dollars+footnotes --toc --toc-depth=2 \
