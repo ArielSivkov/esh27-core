@@ -1118,17 +1118,17 @@
   },
   {
    "id": "G063",
-   "title": "Contribute to the FLT formalization project",
-   "title_he": "תרומה לפרויקט פורמליזציית משפט פרמה",
+   "title": "Study & extend the completed FLT formalization",
+   "title_he": "לימוד והרחבה של פורמליזציית משפט פרמה שהושלמה",
    "field": "formalization / number theory",
    "tier": "D-Formalization",
-   "status": "solved-elsewhere (formalize)",
+   "status": "formalized-elsewhere (study)",
    "statement_short": "Take open blueprint nodes in Kevin Buzzard's Lean FLT project.",
    "why_it_matters": "Long-term flagship; blueprint nodes are well-scoped units of work.",
    "ai_tractability": "2",
    "formalization_readiness": "4",
-   "known_partial_results": "Project ongoing since 2024; many nodes completed; check the blueprint for open tasks.",
-   "suggested_attack": "lean-agent claims small nodes via Zulip; good apprenticeship.",
+   "known_partial_results": "Imperial FLT project (Buzzard, since 2024); on 2026-09-04 Anthropic announced a complete Lean formalization of FLT produced by Claude agents (~13M lines, reviewed by Buzzard; Anthropic's own account, no independent replication yet).",
+   "suggested_attack": "Study the proof's architecture and agent workflow as a template for our pipeline; look for cleanup/upstreaming of lemmas into mathlib.",
    "references": "https://github.com/ImperialCollegeLondon/FLT;https://imperialcollegelondon.github.io/FLT/blueprint/",
    "owner_agent": "lean-agent",
    "progress_pct": 0.0,
@@ -3749,7 +3749,7 @@
   }
  ],
  "meta": {
-  "built_at": "2026-11-04 23:26 UTC",
+  "built_at": "2026-11-04 23:51 UTC",
   "sources": {
    "goals": "data",
    "creative_proofs": "data",

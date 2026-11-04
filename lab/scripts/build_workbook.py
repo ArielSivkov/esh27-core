@@ -89,7 +89,7 @@ def main():
         r = dash.max_row + 1
         dash.append(["Total", f"=COUNTA(Goals!A2:A{n})", f"=IFERROR(AVERAGE(Goals!{prog}2:{prog}{n}),0)"])
         dash.append([])
-        dash.append(["Open goals", f'=COUNTIF(Goals!{status}2:{status}{n},"open*")'])
+        dash.append(["Status = open (exact)", f'=COUNTIF(Goals!{status}2:{status}{n},"open*")'])
         dash.column_dimensions["A"].width = 22
         dash.column_dimensions["B"].width = 12
         dash.column_dimensions["C"].width = 16

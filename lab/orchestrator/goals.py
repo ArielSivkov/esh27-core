@@ -91,13 +91,13 @@ class Goal:
 
     @property
     def progress(self) -> float:
-        """progress_pct is a percentage (0-100); a value <= 1 is read as a fraction."""
+        """progress_pct is always a percentage 0-100 (same as the site and workbook)."""
         s = (self.raw.get("progress_pct") or "").strip().rstrip("%")
         try:
             x = float(s)
         except ValueError:
             return 0.0
-        return max(0.0, min(1.0, x if x <= 1 else x / 100))
+        return max(0.0, min(1.0, x / 100))
 
     @property
     def is_open(self) -> bool:

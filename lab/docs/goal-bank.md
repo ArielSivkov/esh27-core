@@ -25,9 +25,9 @@
 
 - **`ai_tractability` (1–5):** הסיכוי של צוות קטן עם כלי AI (חיפוש, LLM, SAT, אופטימיזציה) להגיע לתוצאה **חדשה** בטווח של חודשים. 5 פירושו שכבר היו הצלחות דומות והתוצאה ניתנת לבדיקה אוטומטית. 1 פירושו שאין שום מסלול נראה לעין.
 - **`formalization_readiness` (1–5):** עד כמה התשתית ב-Lean/mathlib מוכנה לניסוח ולהוכחה. 5 פירושו שכל ההגדרות קיימות והפורמליזציה עבודה שגרתית. 1 פירושו שחסרות תיאוריות שלמות (לדוגמה, QFT קונסטרוקטיבית).
-- **ציון עדיפות מוצע**, לשימוש הסוכנים במיון:
-  `priority = 2·ai_tractability + formalization_readiness + bonus`.
-  ה-bonus הוא +2 ל-Tier C/D ו-−3 ל-Tier A. כך לבעיה כמו "Formalize recently AI-solved Erdős problems" (5,4) תהיה עדיפות גבוהה בהרבה מלהשערת רימן (1,3).
+- **ציון עדיפות** (כפי שהוא ממומש ב-`orchestrator/goals.py`):
+  `score = (ai_tractability/5) · (formalization_readiness/5) · tier_weight · (1 − progress_pct/100)`,
+  עם `tier_weight`: A=0.6, B=0.8, C=1.1, D=1.0, P=0.9. השאריות קטנות מ-0.05 לא מאפסות את הציון. כך לבעיה כמו "Formalize recently AI-solved Erdős problems" (5,4) תהיה עדיפות גבוהה בהרבה מלהשערת רימן (1,3).
 - **`status`:** `open`, `partially-solved`, `solved-elsewhere (formalize)`, `disputed`. כשהמצב לא ודאי (טענה טרייה, preprint שעוד לא נבדק) הדבר נאמר במפורש ב-`known_partial_results` במילים "verify" או "reported". **לפני שמתחילים לעבוד על שורה, literature-agent חייב לאמת את המצב.**
 - **`owner_agent`:** הסוכן שאחראי על השורה: search-agent, lean-agent, literature-agent, construction-agent, physics-agent, analogy-agent.
 - **`progress_pct` / `last_update`:** כרגע 0 בכל השורות. מעדכנים בכל פעם שמשהו זז.
