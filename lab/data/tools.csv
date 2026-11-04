@@ -1,0 +1,141 @@
+id,name,category,what_it_does,use_in_lab,license_or_cost,maturity,url
+T001,Lean 4,proof-assistant,Dependently typed functional language and interactive theorem prover,Primary formal verification target for every lab result,"Apache-2.0, free",5,https://lean-lang.org
+T002,elan,proof-assistant,Lean toolchain version manager (rustup-style),Pin Lean versions per project via lean-toolchain,"Apache-2.0, free",5,https://github.com/leanprover/elan
+T003,Lake,proof-assistant,Lean 4 build system and package manager,"Build lab Lean packages, fetch mathlib cache","Apache-2.0, free",5,https://github.com/leanprover/lean4/tree/master/src/lake
+T004,Isabelle/HOL + Sledgehammer,proof-assistant,Classical HOL prover; Sledgehammer calls external ATPs/SMT to find proofs,Cross-check statements; Archive of Formal Proofs as reference,"BSD, free",5,https://isabelle.in.tum.de
+T005,Rocq (formerly Coq),proof-assistant,Calculus of inductive constructions prover with large ecosystem,"Read existing formalizations (e.g., Four Color, Feit-Thompson)","LGPL-2.1, free",5,https://rocq-prover.org
+T006,Agda,proof-assistant,Dependently typed language / proof assistant,Reference for type-theoretic and HoTT-style formalizations,"BSD-like, free",4,https://github.com/agda/agda
+T007,HOL Light,proof-assistant,Small-kernel HOL prover (Flyspeck/Kepler),Reference for analysis/geometry formalizations,"BSD-style, free",4,https://github.com/jrh13/hol-light
+T008,Metamath,proof-assistant,Minimal proof language with tiny verifiers; set.mm database,Ultra-trustable cross-check; benchmark data,"Public domain/CC0, free",4,https://us.metamath.org
+T009,mathlib4,lean-library,Community library of formalized mathematics for Lean 4,Foundation for all lab formalizations,"Apache-2.0, free",5,https://github.com/leanprover-community/mathlib4
+T010,Aesop,lean-library,White-box best-first proof search tactic for Lean 4,Automate routine goals; configurable rule sets,"Apache-2.0, free",4,https://github.com/leanprover-community/aesop
+T011,Duper,lean-library,Superposition-based automatic prover tactic for Lean 4,Close first-order goals inside Lean,"Apache-2.0, free",3,https://github.com/leanprover-community/duper
+T012,polyrith,lean-library,mathlib tactic that finds linear_combination certificates via Gröbner bases,Close polynomial-identity goals,"Apache-2.0, free (part of mathlib)",4,https://leanprover-community.github.io/mathlib4_docs/Mathlib/Tactic/Polyrith.html
+T013,grind / omega / decide / norm_num,lean-library,Built-in Lean/mathlib decision procedures and SMT-style automation,First line of automation before calling AI provers,"Apache-2.0, free",4,https://lean-lang.org/doc/reference/latest/
+T014,LeanDojo,lean-library,Toolkit for extracting data from Lean repos and interacting programmatically with proofs,Data extraction and RL/agent environment,"MIT, free",4,https://github.com/lean-dojo/LeanDojo
+T015,Lean Copilot,lean-library,LLM-powered tactic suggestion and proof search inside Lean,Interactive suggestions while formalizing,"MIT, free",3,https://github.com/lean-dojo/LeanCopilot
+T016,LeanSearch,lean-library,Natural-language semantic search over mathlib,Find the right lemma from an informal description,Free web service,4,https://leansearch.net
+T017,Moogle,lean-library,Semantic search engine for mathlib theorems,Alternative lemma search,Free web service,3,https://www.moogle.ai
+T018,Loogle,lean-library,Type-signature/pattern search for Lean + mathlib,"Find lemmas by shape (e.g., _ * _ = _ * _)",Free web service; Apache-2.0 code,4,https://loogle.lean-lang.org
+T019,Lean blueprint (leanblueprint),lean-library,plasTeX plugin producing a dependency graph linking informal proof to Lean declarations,Plan and track every large formalization project,"Apache-2.0, free",4,https://github.com/PatrickMassot/leanblueprint
+T020,Lean REPL,lean-library,JSON read-eval-print interface for Lean 4,Back-end for AI agents checking proofs,"Apache-2.0, free",4,https://github.com/leanprover-community/repl
+T021,Kimina Lean Server,lean-library,Fast batched Lean 4 verification server,Parallel proof checking for AI prover sweeps,"MIT, free",3,https://github.com/project-numina/kimina-lean-server
+T022,PhysLean (formerly HepLean),lean-library,"Lean 4 library formalizing physics (index notation, SM, QFT bits)",Starting point for formal physics work,"Apache-2.0, free",2,https://github.com/HEPLean/PhysLean
+T023,DeepSeek-Prover-V2,ai-prover,Open-weights LLM for Lean 4 proof generation with subgoal decomposition,Local whole-proof generation for competition-style lemmas,"Open weights (DeepSeek license), free",4,https://github.com/deepseek-ai/DeepSeek-Prover-V2
+T024,Kimina-Prover,ai-prover,RL-trained Lean 4 prover (Numina + Kimi); distilled open models,Second open prover for ensembling,"Open weights, free",3,https://github.com/MoonshotAI/Kimina-Prover-Preview
+T025,Goedel-Prover-V2,ai-prover,Open Lean 4 prover with scaffolded data synthesis and self-correction,Strong open prover; run on lab GPUs,"Open weights/code, free",4,https://github.com/Goedel-LM/Goedel-Prover-V2
+T026,Aristotle (Harmonic),ai-prover,"Hosted Lean 4 prover API; fills sorries, finds counterexamples, accepts informal input",Hard lemma attempts via aristotlelib; note server Lean version may lag,Freemium / API (check terms),4,https://aristotle.harmonic.fun
+T027,AlphaProof (Google DeepMind),ai-prover,RL + Lean prover (IMO 2024 silver). NOT publicly available,Literature reference only; cannot be used,Not public,2,https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/
+T028,AlphaGeometry,ai-prover,Neuro-symbolic Euclidean geometry prover (DeepMind) with open code,Olympiad-style geometry experiments,"Apache-2.0, free",3,https://github.com/google-deepmind/alphageometry
+T029,Claude API (Anthropic),llm-api,"Frontier LLM API: reasoning, tool use, long context",Main reasoning/agent model for research loops,Paid per token,5,https://docs.anthropic.com
+T030,Claude Agent SDK,llm-api,SDK to build autonomous agents on Claude Code's harness,"Orchestrate lab agents (prover loops, lit review)",Free SDK + API costs,4,https://docs.anthropic.com/en/docs/claude-code/sdk
+T031,Claude Code,llm-api,Agentic coding CLI,"Write Lean/Python, run experiments, maintain repo",Subscription / API,5,https://docs.anthropic.com/en/docs/claude-code/overview
+T032,Model Context Protocol (MCP),llm-api,Open protocol connecting LLM agents to tools/data,"Expose Lean REPL, OEIS, arXiv, SAT solvers as agent tools","Open spec, free",4,https://modelcontextprotocol.io
+T033,lean-lsp-mcp,llm-api,"MCP server exposing Lean language server (goals, diagnostics, search)",Let agents see Lean goal state live,"MIT, free",3,https://github.com/oOo0oOo/lean-lsp-mcp
+T034,OpenAI API,llm-api,GPT/o-series model API,Second-opinion model; ensemble diversity,Paid per token,5,https://platform.openai.com/docs
+T035,Google Gemini API,llm-api,Gemini model API,Ensemble diversity; long-context reading,Free tier + paid,5,https://ai.google.dev
+T036,vLLM,llm-api,High-throughput open-model inference server,Serve open provers (DeepSeek/Goedel/Kimina) on own GPUs,"Apache-2.0, free",5,https://github.com/vllm-project/vllm
+T037,Hugging Face Hub,llm-api,Model/dataset hosting and transformers library,Download prover weights and datasets,Free + paid tiers,5,https://huggingface.co
+T038,OpenEvolve,search/evolution,Open-source AlphaEvolve-style LLM-driven program evolution,"Evolve constructions / bounds (packings, extremal objects)","Apache-2.0, free",3,https://github.com/codelion/openevolve
+T039,ShinkaEvolve (Sakana AI),search/evolution,Sample-efficient open-ended LLM program evolution framework,Alternative evolver; cheaper runs,"Apache-2.0, free",3,https://github.com/SakanaAI/ShinkaEvolve
+T040,FunSearch (DeepMind code),search/evolution,"Reference implementation of LLM-guided function search (cap sets, bin packing)",Template for evaluator design,"Apache-2.0, free",3,https://github.com/google-deepmind/funsearch
+T041,AlphaEvolve results repo,search/evolution,DeepMind's published mathematical results/constructions from AlphaEvolve,Baseline bounds to beat; problem list,Apache-2.0 (code) / CC (data),3,https://github.com/google-deepmind/alphaevolve_results
+T042,Google OR-Tools (CP-SAT),search/evolution,"Constraint programming, MIP and routing solvers",Exact search for small combinatorial instances,"Apache-2.0, free",5,https://developers.google.com/optimization
+T043,Gurobi,search/evolution,Commercial MILP/MIQP solver,Large integer programs for extremal constructions,Commercial; free academic license,5,https://www.gurobi.com
+T044,Kissat,SAT/SMT,State-of-the-art CDCL SAT solver,Main SAT engine for combinatorial encodings,"MIT, free",5,https://github.com/arminbiere/kissat
+T045,CaDiCaL,SAT/SMT,Incremental CDCL SAT solver with proof output,Incremental solving; LRAT/DRAT proofs,"MIT, free",5,https://github.com/arminbiere/cadical
+T046,CryptoMiniSat,SAT/SMT,SAT solver with native XOR reasoning,Problems with parity constraints,"MIT, free",4,https://github.com/msoos/cryptominisat
+T047,PySAT,SAT/SMT,Python toolkit wrapping many SAT solvers + cardinality encodings,Fast prototyping of encodings,"MIT, free",4,https://pysathq.github.io
+T048,Z3,SAT/SMT,SMT solver (Microsoft Research),Arithmetic/bit-vector constraints; quick checks,"MIT, free",5,https://github.com/Z3Prover/z3
+T049,cvc5,SAT/SMT,SMT solver with proof production,SMT with certificates; lean-smt backend,"BSD-3, free",5,https://cvc5.github.io
+T050,DRAT-trim,SAT/SMT,Checker for DRAT unsatisfiability proofs,Validate UNSAT claims,"MIT, free",5,https://github.com/marijnheule/drat-trim
+T051,cake_lpr,SAT/SMT,Formally verified (CakeML) LPR/LRAT proof checker,Highest-assurance check of UNSAT certificates,Free (CakeML license),4,https://github.com/tanyongkiam/cake_lpr
+T052,SageMath,CAS,Open-source math system unifying many libraries,"General computation; graphs, number fields, combinatorics","GPL, free",5,https://www.sagemath.org
+T053,PARI/GP,CAS,Fast number-theory CAS,"Number fields, L-functions, elliptic curves","GPL, free",5,https://pari.math.u-bordeaux.fr
+T054,FLINT,CAS,"Fast Library for Number Theory (C), now includes Arb","Fast arithmetic, polynomials, ball arithmetic","LGPL, free",5,https://flintlib.org
+T055,GAP,CAS,"Computational discrete algebra, group theory","Groups, representations, small group library","GPL, free",5,https://www.gap-system.org
+T056,Magma,CAS,Commercial algebra system (Sydney),Algebraic geometry/number theory when needed,Commercial; institutional license,5,https://magma.maths.usyd.edu.au
+T057,Macaulay2,CAS,Commutative algebra and algebraic geometry system,"Gröbner bases, ideals, syzygies","GPL, free",5,https://macaulay2.com
+T058,Singular,CAS,Polynomial computation CAS,"Gröbner bases, singularities","GPL, free",5,https://www.singular.uni-kl.de
+T059,SymPy,CAS,Python symbolic mathematics library,Symbolic glue code in agent pipelines,"BSD, free",5,https://www.sympy.org
+T060,Mathematica / Wolfram Language,CAS,Commercial general CAS,"Symbolic integration, special functions, physics packages",Commercial; free Wolfram Engine for developers,5,https://www.wolfram.com/mathematica/
+T061,Maple,CAS,Commercial CAS,Alternative symbolic engine; ODE/PDE,Commercial,5,https://www.maplesoft.com
+T062,OSCAR (Julia),CAS,"Julia computer algebra system combining GAP, Singular, Polymake, Antic",Modern CAS in Julia ecosystem,"GPL, free",4,https://www.oscar-system.org
+T063,Julia,numerics,High-performance scientific language,Fast numerics and search loops,"MIT, free",5,https://julialang.org
+T064,mpmath,numerics,Arbitrary-precision floating point in Python,High-precision constant evaluation,"BSD, free",5,https://mpmath.org
+T065,Arb (now in FLINT),numerics,Rigorous ball arithmetic,Certified numerics for proofs,"LGPL, free",5,https://arblib.org
+T066,NumPy,numerics,Array computing for Python,Default numerics,"BSD, free",5,https://numpy.org
+T067,SciPy,numerics,"Scientific algorithms (optimization, linalg, special functions)","Optimization, ODEs, sparse linear algebra","BSD, free",5,https://scipy.org
+T068,JAX,numerics,Autodiff + XLA-compiled numerics on GPU/TPU,Gradient-based search for constructions; physics sims,"Apache-2.0, free",5,https://github.com/jax-ml/jax
+T069,pandas,numerics,Tabular data library,Experiment logs and catalogs,"BSD, free",5,https://pandas.pydata.org
+T070,CVXPY,numerics,Convex optimization modeling in Python,"SDP/LP relaxations, flag-algebra style bounds","Apache-2.0, free",5,https://www.cvxpy.org
+T071,MOSEK,numerics,Commercial conic/SDP solver,"High-accuracy SDPs (bootstrap, flag algebras)",Commercial; free academic license,5,https://www.mosek.com
+T072,SDPA (incl. SDPA-GMP),numerics,SDP solver family incl. multiple-precision variants,High-precision SDP for bounds,"GPL, free",4,https://sdpa.sourceforge.net
+T073,nauty and Traces,combinatorics,Graph canonical labeling and automorphism groups; geng generator,Isomorph-free enumeration of graphs,"Apache-2.0, free",5,https://pallini.di.uniroma1.it
+T074,NetworkX,combinatorics,Python graph library,Graph prototyping and invariants,"BSD, free",5,https://networkx.org
+T075,House of Graphs,combinatorics,Database of interesting graphs with invariants,Look up extremal/counterexample graphs,Free web database,4,https://houseofgraphs.org
+T076,FindStat,combinatorics,Database of combinatorial statistics and maps,Identify statistics found in experiments,"Free, CC-BY-SA",4,https://www.findstat.org
+T077,Erdős Problems database,combinatorics,erdosproblems.com (T. Bloom) + community YAML data (teorth/erdosproblems),Source of open targets; track status,Free web; data on GitHub,4,https://www.erdosproblems.com
+T078,OEIS,number-theory,On-Line Encyclopedia of Integer Sequences,Identify sequences produced by experiments,"Free, CC-BY-SA",5,https://oeis.org
+T079,LMFDB,number-theory,L-functions and Modular Forms Database,"Look up curves, forms, number fields, L-functions","Free, open data",5,https://www.lmfdb.org
+T080,SnapPy,geometry/topology,Hyperbolic 3-manifold and knot computation,"Volumes, invariants, census lookups","GPL, free",5,https://snappy.computop.org
+T081,Regina,geometry/topology,"Low-dimensional topology software (triangulations, normal surfaces)",3-/4-manifold recognition and census,"GPL, free",5,https://regina-normal.github.io
+T082,KnotInfo / LinkInfo,geometry/topology,Database of knot and link invariants,Look up invariants for conjecture testing,Free web,5,https://knotinfo.math.indiana.edu
+T083,Knot Atlas,geometry/topology,Wiki of knots and invariants with KnotTheory` package,Invariants and diagrams,Free wiki,4,http://katlas.org
+T084,polymake,geometry/topology,"Polytopes, fans, tropical geometry",Polyhedral computations,"GPL, free",5,https://polymake.org
+T085,FORM,physics,Symbolic manipulation system for huge expressions (QFT),Large loop-calculation algebra,"GPL, free",5,https://github.com/vermaseren/form
+T086,Cadabra,physics,"Field-theory oriented CAS (tensor, index notation)",Tensor/field-theory symbolic work,"GPL, free",4,https://cadabra.science
+T087,xAct,physics,Mathematica tensor-algebra suite (GR),Tensor computations in general relativity,GPL (needs Mathematica),5,https://www.xact.es
+T088,FeynCalc,physics,Mathematica package for QFT/Feynman diagram calculations,"One-loop calculations, Dirac algebra",GPL (needs Mathematica),5,https://feyncalc.github.io
+T089,HEPMath,physics,"Mathematica package for semi-automatic HEP computations (tensors, codegen)","Index tensor manipulations, numerical code generation",Free (needs Mathematica),2,https://hepmath.hepforge.org
+T090,SDPB,physics,Arbitrary-precision SDP solver for the conformal bootstrap,Numerical bootstrap bounds on CFT data,"MIT, free",5,https://github.com/davidsd/sdpb
+T091,Grid (lattice QCD),physics,Data-parallel C++ lattice field theory library,Lattice gauge theory simulations,"GPL, free",4,https://github.com/paboyle/Grid
+T092,PySR,physics,High-performance symbolic regression (Julia backend),Discover closed forms from numeric data,"Apache-2.0, free",4,https://github.com/MilesCranmer/PySR
+T093,AI Feynman,physics,Physics-inspired symbolic regression,Alternative symbolic regression baseline,"MIT, free",3,https://github.com/SJ001/AI-Feynman
+T094,QuTiP,physics,Quantum Toolbox in Python,Open quantum systems simulation,"BSD, free",5,https://qutip.org
+T095,INSPIRE-HEP,physics,High-energy physics literature database + API,HEP literature and citation search,Free,5,https://inspirehep.net
+T096,arXiv API,literature-search,Programmatic search/metadata for arXiv,Daily scans of math/hep-th listings for agents,Free,5,https://info.arxiv.org/help/api/index.html
+T097,Semantic Scholar API,literature-search,Paper graph with citations and embeddings,Citation chasing; related work,Free (API key for higher rate),5,https://www.semanticscholar.org/product/api
+T098,zbMATH Open,literature-search,Open math reviews database + API,Authoritative math literature search,"Free, open",5,https://zbmath.org
+T099,MathSciNet,literature-search,AMS reviews database,Literature + reviews where institutionally available,Subscription,5,https://mathscinet.ams.org
+T100,Google Scholar,literature-search,General academic search,Broad search; forward citations,Free,5,https://scholar.google.com
+T101,Connected Papers,literature-search,Visual graphs of related papers,Map a subfield quickly,Freemium,4,https://www.connectedpapers.com
+T102,Elicit,literature-search,AI research assistant over papers,Rapid literature screening,Freemium,3,https://elicit.com
+T103,Consensus,literature-search,AI search engine over research papers,Quick evidence summaries,Freemium,3,https://consensus.app
+T104,MathOverflow / Math StackExchange,literature-search,Q&A sites for research and general math,Check whether problems are known/solved,"Free, CC-BY-SA",5,https://mathoverflow.net
+T105,miniF2F,datasets/benchmarks,Olympiad-level formal problems (Lean and others),Prover regression benchmark,"MIT/Apache, free",4,https://github.com/openai/miniF2F
+T106,PutnamBench,datasets/benchmarks,"Putnam problems formalized in Lean 4, Isabelle, Coq",Hard benchmark for prover pipeline,"Apache-2.0/MIT, free",4,https://github.com/trishullab/PutnamBench
+T107,ProofNet,datasets/benchmarks,Undergraduate math autoformalization/proving benchmark,Autoformalization evaluation,"MIT, free",3,https://github.com/zhangir-azerbayev/ProofNet
+T108,FrontierMath (Epoch AI),datasets/benchmarks,Hard research-level math benchmark (mostly private),Context on AI math capability; not runnable by us,Mostly private,3,https://epoch.ai/frontiermath
+T109,Formal Conjectures (DeepMind),datasets/benchmarks,Lean 4 formalizations of open conjectures (incl. Erdős problems),Pick open targets already stated in Lean,"Apache-2.0, free",3,https://github.com/google-deepmind/formal-conjectures
+T110,Pandoc,notation/translation,Universal document converter (Markdown/LaTeX/HTML/docx),Convert notes between formats,"GPL, free",5,https://pandoc.org
+T111,MathJax,notation/translation,LaTeX math rendering in browsers,Render math on lab website,"Apache-2.0, free",5,https://www.mathjax.org
+T112,KaTeX,notation/translation,Fast LaTeX math rendering,Lightweight math rendering for site,"MIT, free",5,https://katex.org
+T113,Mathpix,notation/translation,OCR of math images/PDFs to LaTeX,Digitize papers/handwritten notes,Freemium,4,https://mathpix.com
+T114,arXiv,collaboration/publishing,Preprint server,Publish lab preprints,Free,5,https://arxiv.org
+T115,Zenodo,collaboration/publishing,Research artifact archive with DOIs,Archive code/data/proof certificates,Free,5,https://zenodo.org
+T116,GitHub,collaboration/publishing,"Code hosting, issues, PRs",All lab repos,Free + paid,5,https://github.com
+T117,GitHub Pages,collaboration/publishing,Static site hosting,Lab website and blueprints,Free,5,https://pages.github.com
+T118,Quarto,collaboration/publishing,Scientific publishing system (notebooks to sites/papers),Reproducible write-ups,"MIT, free",5,https://quarto.org
+T119,Jupyter,collaboration/publishing,Interactive notebooks,Exploratory computation,"BSD, free",5,https://jupyter.org
+T120,Overleaf,collaboration/publishing,Collaborative LaTeX editor,Paper writing with collaborators,Freemium,5,https://www.overleaf.com
+T121,Lean Zulip,collaboration/publishing,Lean community chat (leanprover.zulipchat.com),Ask experts; announce formalizations,Free,5,https://leanprover.zulipchat.com
+T122,GitHub Actions,infra/compute,CI/CD runners,"Build Lean projects, check proofs on every PR",Free tier + paid,5,https://github.com/features/actions
+T123,lean-action,infra/compute,Official GitHub Action for Lean projects,Drop-in Lean CI,"Apache-2.0, free",4,https://github.com/leanprover/lean-action
+T124,Modal,infra/compute,Serverless GPU/CPU compute in Python,Burst prover inference and evolution evaluators,Pay-per-use,4,https://modal.com
+T125,Lambda Cloud,infra/compute,GPU cloud instances,Host open provers with vLLM,Pay-per-use,4,https://lambda.ai
+T126,RunPod,infra/compute,GPU cloud / serverless GPUs,Cheap GPU sweeps,Pay-per-use,4,https://www.runpod.io
+T127,Google Cloud Run,infra/compute,Serverless containers,Host Lean REPL / MCP servers,Pay-per-use,5,https://cloud.google.com/run
+T128,Docker,infra/compute,Containers,Reproducible Lean + Python environments,Free (Docker Desktop has paid tiers),5,https://www.docker.com
+T129,uv,infra/compute,Fast Python package/venv manager,Fast reproducible Python envs,"MIT/Apache-2.0, free",5,https://github.com/astral-sh/uv
+T130,Matplotlib,visualization,Plotting library for Python,Standard plots,"PSF-style, free",5,https://matplotlib.org
+T131,Graphviz,visualization,Graph layout and rendering,"Dependency graphs, blueprint graphs","EPL, free",5,https://graphviz.org
+T132,ProofWidgets4,visualization,Interactive widgets inside Lean infoview,"Visualize Lean objects (graphs, diagrams) in proofs","Apache-2.0, free",3,https://github.com/leanprover-community/ProofWidgets4
+T133,Sefaria API,hebrew/jewish-texts,"Open API to Jewish texts (Tanakh, Talmud, commentaries) with links",Source texts for Torah-and-math explorations,Free; texts mostly CC/public domain,5,https://developers.sefaria.org
+T134,Sefaria-Export,hebrew/jewish-texts,Bulk export of the Sefaria library (JSON/text),Offline corpus for computational analysis,Free; per-text licenses,4,https://github.com/Sefaria/Sefaria-Export
+T135,Dicta,hebrew/jewish-texts,"Hebrew NLP tools: nakdan (vocalization), source finder, morphology",Hebrew text processing and source identification,Free web tools,4,https://dicta.org.il
+T136,Otzar HaChochma,hebrew/jewish-texts,Large scanned Judaica library (tens of thousands of books),Find sources in rabbinic literature,Subscription,5,https://www.otzar.org
+T137,Bar-Ilan Responsa Project,hebrew/jewish-texts,"Searchable corpus of Tanakh, Talmud, responsa and more",Authoritative full-text search of halachic literature,Subscription,5,https://www.responsa.co.il
+T138,HebrewBooks.org,hebrew/jewish-texts,Free scanned Hebrew seforim,Free access to rabbinic sources,Free,4,https://hebrewbooks.org
+T139,hebrew (Python package),hebrew/jewish-texts,Python Hebrew text toolkit incl. gematria in many variants,Gematria computations in pipelines,"MIT, free",3,https://pypi.org/project/hebrew/
+T140,python-hebrew-numbers,hebrew/jewish-texts,Convert integers to/from Hebrew numerals (gematria),Hebrew numeral formatting,Free (open source),3,https://pypi.org/project/python-hebrew-numbers/
