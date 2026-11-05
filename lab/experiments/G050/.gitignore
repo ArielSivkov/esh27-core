@@ -3,3 +3,5 @@ proofs/*.drat
 proofs/*.lrat
 *.pyc
 __pycache__/
+proofs/
+tools/
