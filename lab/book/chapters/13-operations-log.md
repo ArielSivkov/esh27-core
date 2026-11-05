@@ -136,3 +136,15 @@ status: draft
 4. **"ledger מול יומן": פוסט טכני.** למה למעבדה יש שתי רשומות, ואיך hash chain מונע שכתוב של ההיסטוריה. קהל יעד: מהנדסי תוכנה, חוקרים שמתעניינים ברפרודוקטיביות.
 
 [^g050]: `data/goals.csv`, שורה G050; https://en.wikipedia.org/wiki/Schur_number ; https://en.wikipedia.org/wiki/Van_der_Waerden_number ; B. Subercaseaux, W. Nawrocki, J. Gallicchio, C. Codel, M. Carneiro, M. Heule, ITP 2024 (empty hexagon ב-Lean).
+
+### עדכון 2026-11-05: G050, תוצאות ראשונות
+
+**רמת טענה:** L3, פורמליזציה של תוצאות ידועות. אין כאן מתמטיקה חדשה.
+
+- **נבדקו ב-kernel של Lean בלבד** (האקסיומות היחידות: `propext`, `Classical.choice`, `Quot.sound`): $S(1)=1$, $S(2)=4$, $S(3)=13$, $W(2,3)=9$, וגם החסמים התחתונים $S(4)\ge 44$, $W(3,3)>26$ ו-$W(2,4)>34$.
+- **בדרגת אמון חלשה יותר** (`native_decide`, עם האקסיומה `Lean.ofReduceBool`): $W(3,3)=27$ ו-$W(2,4)=35$. הוכחת ה-UNSAT של CaDiCaL בפורמט LRAT נבדקה ב-checker ה-LRAT המאומת של Lean, ונכונות המקודד הוכחה ב-Lean.
+- **עדיין פתוח ב-Lean:** החסם העליון $S(4)\le 44$. תעודת ה-LRAT שלו היא כ-520MB, והיא נבדקה רק בכלים חיצוניים (DRAT-trim).
+- **בנייה:** `cd lab/lean/G050 && lake build` עובר בכ-43 שניות מאפס, בלי תלות ב-mathlib. אומת שוב באופן עצמאי.
+- **פרטים:** `experiments/G050/REPORT.md`, `data/ledger.jsonl`.
+
+**שיעור:** הצינור SAT → LRAT → Lean עובד מקצה לקצה. צוואר הבקבוק הוא גודל התעודה, ולא הלוגיקה.
