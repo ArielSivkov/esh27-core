@@ -21,3 +21,6 @@
 {"method": "sat-direct", "r": 4, "k": 4, "n": 1049, "refl": null, "fix": ["certificates/reproduced/W4_4_gt1048_rabung_p349.txt", 400], "status": "UNSAT", "t": 0.2, "nclauses": 739096, "timestamp": "2026-11-07T02:25:50Z"}
 {"method": "sat-direct", "r": 4, "k": 4, "n": 1049, "refl": null, "fix": ["certificates/reproduced/W4_4_gt1048_rabung_p349.txt", 450], "status": "UNSAT", "t": 0.2, "nclauses": 738996, "timestamp": "2026-11-07T02:25:52Z"}
 {"method": "sat-direct", "r": 4, "k": 4, "n": 1049, "refl": null, "fix": ["certificates/reproduced/W4_4_gt1048_rabung_p349.txt", 500], "status": "UNKNOWN", "t": 300.0, "nclauses": 738896, "timestamp": "2026-11-07T02:30:53Z"}
+{"method": "sat-direct", "r": 5, "k": 4, "n": 2255, "refl": null, "fix": ["certificates/reproduced/W5_4_gt2254_rabung_p751.txt", 600], "status": "UNSAT", "t": 1.5, "nclauses": 4257745, "timestamp": "2026-11-07T02:31:01Z"}
+{"method": "sat-direct", "r": 2, "k": 7, "n": 3704, "refl": null, "fix": ["certificates/reproduced/W2_7_gt3703_rabung_p617.txt", 1000], "status": "UNSAT", "t": 1.1, "nclauses": 2292012, "timestamp": "2026-11-07T02:31:09Z"}
+{"method": "sat-direct", "r": 3, "k": 5, "n": 2174, "refl": null, "fix": ["certificates/reproduced/W3_5_gt2173_orbit_p181_z3_R3.txt", 600], "status": "UNSAT", "t": 0.7, "nclauses": 1778764, "timestamp": "2026-11-07T02:31:15Z"}
