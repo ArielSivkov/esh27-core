@@ -88,6 +88,7 @@ class Network:
         self.bytes = 0
         self.mempool = Mempool()
         self.included_evidence = set()
+        self.side = {}  # node index -> partition side; messages across sides are dropped
         self._mu = math.log(cfg.latency_median)
 
     def latency(self, a, b):
@@ -98,6 +99,10 @@ class Network:
     def send(self, src, dst, msg, size=150, extra=0.0):
         if src.crashed or dst.crashed:
             return
+        if self.side:
+            a, b = self.side.get(src.i), self.side.get(dst.i)
+            if a and b and a != b:
+                return
         if self.cfg.drop and self.sim.rng.random() < self.cfg.drop:
             return
         self.msgs += 1

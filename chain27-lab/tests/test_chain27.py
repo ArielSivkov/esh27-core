@@ -51,6 +51,18 @@ def test_recovers_after_restore():
     assert s["forks"] == 0
 
 
+def test_ten_colluders_cannot_fork_even_with_network_control():
+    _, s = run(duration=30.0, partition=True, behaviors={i: "collude" for i in range(1, 11)})
+    assert s["fork_events"] == 0
+
+
+def test_eleven_colluders_fork_and_are_all_exposed():
+    _, s = run(duration=30.0, partition=True, behaviors={i: "collude" for i in range(1, 12)})
+    assert s["fork_events"] == 1
+    assert s["culprits_proven"] >= 11
+    assert s["honest_blamed"] == 0
+
+
 def test_deterministic():
     _, a = run(seed=5)
     _, b = run(seed=5)

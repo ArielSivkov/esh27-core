@@ -33,7 +33,8 @@ class Config:
     timeout_commit: float = 0.25
     max_block_txs: int = 4000
     rebroadcast: float = 1.0  # stuck-height re-gossip interval (s)
-    jail_blocks: int = 0  # 0 = plain round-robin proposer rotation
+    jail_blocks: int = 0
+    partition: bool = False  # colluders also cut the network between the two honest halves  # 0 = plain round-robin proposer rotation
     # economics
     base_fee: float = 0.01
     min_fee: float = 0.001
@@ -62,6 +63,13 @@ class World:
         self.forks = []
         self.tx_latency = []
         self.next_tx = 0
+        self.committer = {}  # height -> honest node that committed it first
+        self.fork_events = []  # (height, time, culprits, honest_blamed)
+        self.adversary = None
+        colluders = [i for i, b in cfg.behaviors.items() if b == "collude"]
+        if colluders:
+            from .attack import Adversary
+            self.adversary = Adversary(self, colluders, cfg.partition)
         self.timeline = []  # per block: height, t, round, ntx, base_fee, burned, charity
 
     # ---------- load ----------
@@ -88,11 +96,14 @@ class World:
         if h in self.canonical:
             if self.canonical[h][0] != block.hash and node.behavior == "honest":
                 self.forks.append((h, node.i))
+                if not any(e[0] == h for e in self.fork_events):
+                    self._forensics(h, node, block)
             return
         if node.behavior != "honest":
             return  # canonical history is what honest nodes commit
         t = self.sim.t
         self.canonical[h] = (block.hash, t, block.round, len(block.txs))
+        self.committer[h] = node.i
         committed = self.net.mempool.committed
         for tx in block.txs:
             committed.add(tx.id)
@@ -100,6 +111,20 @@ class World:
         self.ledger.apply_block(block)
         self.timeline.append((h, t, block.round, len(block.txs), self.ledger.base_fee,
                               self.ledger.burned, self.ledger.charity))
+
+    def _forensics(self, h, node, block):
+        """Accountability: compare the two commit certificates. A validator
+        that precommitted both conflicting blocks signed two votes for the same
+        height, which is provable misbehaviour. Honest nodes never do that."""
+        first = self.nodes[self.committer[h]]
+        hash_a, _t, round_a, _n = self.canonical[h]
+        box_a = first.votes[(h, round_a, "pc")]
+        box_b = node.votes[(h, block.round, "pc")]
+        signed_a = {s for s, v in box_a.items() if v == hash_a}
+        signed_b = {s for s, v in box_b.items() if v == block.hash}
+        culprits = signed_a & signed_b
+        honest_blamed = {c for c in culprits if self.nodes[c].behavior == "honest"}
+        self.fork_events.append((h, self.sim.t, len(culprits), len(honest_blamed)))
 
     # ---------- run ----------
     def run(self):
@@ -110,6 +135,8 @@ class World:
             if not n.crashed:
                 n.start()
         self._schedule_tx()
+        if self.adversary:
+            self.adversary.start()
         self.sim.run(self.cfg.duration)
         self.check_safety()
         return self.summary()
@@ -157,4 +184,9 @@ class World:
             "charity": self.ledger.charity,
             "supply_check_ok": abs(self.ledger.accounted() - 270_000_000.0) < 1e-3,
             "sim_events": self.sim.events,
+            "fork_events": len(self.fork_events),
+            "first_fork_t": self.fork_events[0][1] if self.fork_events else None,
+            "culprits_proven": self.fork_events[0][2] if self.fork_events else None,
+            "honest_blamed": self.fork_events[0][3] if self.fork_events else None,
+            "attack_rounds": self.adversary.attacks if self.adversary else 0,
         }

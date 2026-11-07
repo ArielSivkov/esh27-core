@@ -119,6 +119,8 @@ class Node:
 
     # ---------- lifecycle ----------
     def start(self):
+        if self.behavior == "collude":
+            return  # driven by the coordinated Adversary (attack.py)
         self.enter_height(1)
 
     def crash(self):
@@ -251,7 +253,7 @@ class Node:
 
     # ---------- receiving ----------
     def receive(self, msg):
-        if self.crashed:
+        if self.crashed or self.behavior == "collude":
             return
         if isinstance(msg, Vote):
             self.on_vote(msg)
