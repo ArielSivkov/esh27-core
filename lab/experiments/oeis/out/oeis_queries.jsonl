@@ -62,3 +62,20 @@
 {"utc": "2026-11-07T03:06:03+00:00", "query": "3,9,24,66,162,378,816,1740,3150,5520", "raw_null": true, "hits": []}
 {"utc": "2026-11-07T03:06:04+00:00", "query": "9,24,66,162,378,816,1740", "raw_null": true, "hits": []}
 {"utc": "2026-11-07T03:06:06+00:00", "query": "1,6,21,58,133,289,525,920,1438", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:05+00:00", "query": "1,12,91,470,2519,9875,43880,156607", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:07+00:00", "query": "1,11,34,91,178,343,563,918,1364", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:08+00:00", "query": "1,1,0,1,2,0,1,4,1,0,1,8,11,0,0,1,12,34,20", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:10+00:00", "query": "1,1,3,5,11,20,43,48,91,50,31,19,3,0", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:12+00:00", "query": "1,1,3,6,19,54,181,426,1395,2964,8326,18539,48987,95311,247147,408642,920149", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:13+00:00", "query": "1,1,3,6,19,54,181,426", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:15+00:00", "query": "1,2,4,11,27,63,136,290", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:17+00:00", "query": "3,9,24,66,162", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:18+00:00", "query": "1,1,2,1,0", "raw_null": false, "hits": [["A033461", "Number of partitions of n into distinct squares."], ["A116861", "Triangle read by rows: T(n,k) is the number of partitions of n such that the sum of the parts, counted without"], ["A035468", "Number of partitions of n into parts 8k+6 or 8k+7."], ["A050326", "Number of factorizations of n into distinct squarefree numbers > 1."], ["A249223", "Triangle read by rows: row n gives partial alternating sums of row n of A237048."], ["A257992", "Number of even parts in the partition having Heinz number n."], ["A125184", "Triangle read by rows: T(n,k) is the coefficient of t^k in the Stern polynomial B(n,t) (n>=0, k>=0)."], ["A335452", "Number of separations (Carlitz compositions or anti-runs) of the prime indices of n."], ["A344606", "Number of alternating permutations of the prime factors of n, counting multiplicity, including twins (x,x)."], ["A333382", "Number of adjacent unequal parts in the n-th composition in standard-order."]]}
+{"utc": "2026-11-07T03:16:20+00:00", "query": "1,2,3,5,6,5,3,1,0", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:22+00:00", "query": "48,91,50", "raw_null": false, "hits": [["A373390", "a(n) = n for n <= 3; for n > 3, a(n) is the smallest unused positive number that is coprime to a(n-1) but has "], ["A340807", "a(n) = n if n <= 3; for n > 3, a(n) is the closest number to a(n-2) that has not occurred earlier and has at l"]]}
+{"utc": "2026-11-07T03:16:29+00:00", "query": "\"sum-free\" keyword:fini", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:31+00:00", "query": "\"sum-free\" keyword:full", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:33+00:00", "query": "\"Schur\" keyword:fini", "raw_null": false, "hits": [["A391540", "Terms of A055932 that are products of the three composite integers in prime gaps of size 4."]]}
+{"utc": "2026-11-07T03:16:35+00:00", "query": "ref:A045652", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:36+00:00", "query": "ref:A288817", "raw_null": true, "hits": []}
+{"utc": "2026-11-07T03:16:38+00:00", "query": "ref:A297023", "raw_null": true, "hits": []}
