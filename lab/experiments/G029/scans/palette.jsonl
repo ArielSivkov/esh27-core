@@ -1,0 +1,652 @@
+{"r": 5, "s": 2, "k": 3, "q": 22, "status": "UNSAT", "t": 0.01, "n": 8, "bound": 176, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 23, "status": "UNSAT", "t": 0.17, "n": 8, "bound": 184, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 24, "status": "UNSAT", "t": 0.0, "n": 8, "bound": 192, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 25, "status": "UNSAT", "t": 0.1, "n": 8, "bound": 200, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 26, "status": "UNSAT", "t": 0.01, "n": 8, "bound": 208, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 27, "status": "UNSAT", "t": 0.22, "n": 8, "bound": 216, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 28, "status": "UNSAT", "t": 0.0, "n": 8, "bound": 224, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 29, "status": "UNSAT", "t": 0.21, "n": 8, "bound": 232, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 30, "status": "UNSAT", "t": 0.01, "n": 8, "bound": 240, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 31, "status": "UNSAT", "t": 0.31, "n": 8, "bound": 248, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 32, "status": "UNSAT", "t": 0.0, "n": 8, "bound": 256, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 33, "status": "UNSAT", "t": 0.04, "n": 8, "bound": 264, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 34, "status": "UNSAT", "t": 0.01, "n": 8, "bound": 272, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 35, "status": "UNSAT", "t": 0.33, "n": 8, "bound": 280, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 36, "status": "UNSAT", "t": 0.01, "n": 8, "bound": 288, "record": 170}
+{"r": 5, "s": 2, "k": 3, "q": 37, "status": "UNSAT", "t": 0.33, "n": 8, "bound": 296, "record": 170}
+{"r": 5, "s": 3, "k": 3, "q": 7, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 182, "record": 170}
+{"r": 5, "s": 3, "k": 3, "q": 8, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 208, "record": 170}
+{"r": 5, "s": 3, "k": 3, "q": 9, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 234, "record": 170}
+{"r": 5, "s": 3, "k": 3, "q": 10, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 260, "record": 170}
+{"r": 5, "s": 3, "k": 3, "q": 11, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 286, "record": 170}
+{"r": 5, "s": 3, "k": 3, "q": 12, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 312, "record": 170}
+{"r": 5, "s": 3, "k": 3, "q": 13, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 338, "record": 170}
+{"r": 5, "s": 4, "k": 3, "q": 3, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 225, "record": 170}
+{"r": 5, "s": 4, "k": 3, "q": 4, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 300, "record": 170}
+{"r": 6, "s": 2, "k": 3, "q": 29, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 232, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 30, "status": "UNSAT", "t": 3.47, "n": 8, "bound": 240, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 31, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 248, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 32, "status": "UNSAT", "t": 0.23, "n": 8, "bound": 256, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 33, "status": "UNKNOWN", "t": 30.01, "n": 8, "bound": 264, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 34, "status": "UNSAT", "t": 16.6, "n": 8, "bound": 272, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 35, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 280, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 36, "status": "UNSAT", "t": 0.73, "n": 8, "bound": 288, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 37, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 296, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 38, "status": "UNSAT", "t": 29.57, "n": 8, "bound": 304, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 39, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 312, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 40, "status": "UNSAT", "t": 0.22, "n": 8, "bound": 320, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 41, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 328, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 42, "status": "UNSAT", "t": 26.16, "n": 8, "bound": 336, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 43, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 344, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 44, "status": "UNSAT", "t": 2.71, "n": 8, "bound": 352, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 45, "status": "UNSAT", "t": 22.21, "n": 8, "bound": 360, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 46, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 368, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 47, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 376, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 48, "status": "UNSAT", "t": 2.83, "n": 8, "bound": 384, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 49, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 392, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 50, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 400, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 51, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 408, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 52, "status": "UNSAT", "t": 3.39, "n": 8, "bound": 416, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 53, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 424, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 54, "status": "UNSAT", "t": 1.01, "n": 8, "bound": 432, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 55, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 440, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 56, "status": "UNSAT", "t": 0.7, "n": 8, "bound": 448, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 57, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 456, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 58, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 464, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 59, "status": "UNKNOWN", "t": 30.0, "n": 8, "bound": 472, "record": 225}
+{"r": 6, "s": 2, "k": 3, "q": 60, "status": "UNSAT", "t": 3.55, "n": 8, "bound": 480, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 9, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 234, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 10, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 260, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 11, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 286, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 12, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 312, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 13, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 338, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 14, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 364, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 15, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 390, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 16, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 416, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 17, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 442, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 18, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 468, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 19, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 494, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 20, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 520, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 21, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 546, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 22, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 572, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 23, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 598, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 24, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 624, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 25, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 650, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 26, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 676, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 27, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 702, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 28, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 728, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 29, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 754, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 30, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 780, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 31, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 806, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 32, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 832, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 33, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 858, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 34, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 884, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 35, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 910, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 36, "status": "UNSAT", "t": 0.0, "n": 26, "bound": 936, "record": 225}
+{"r": 6, "s": 3, "k": 3, "q": 37, "status": "UNSAT", "t": 0.01, "n": 26, "bound": 962, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 4, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 300, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 5, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 375, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 6, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 450, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 7, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 525, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 8, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 600, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 9, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 675, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 10, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 750, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 11, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 825, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 12, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 900, "record": 225}
+{"r": 6, "s": 4, "k": 3, "q": 13, "status": "UNSAT", "t": 0.0, "n": 75, "bound": 975, "record": 225}
+{"r": 6, "s": 5, "k": 3, "q": 2, "status": "UNSAT", "t": 0.0, "n": 170, "bound": 340, "record": 225}
+{"r": 6, "s": 5, "k": 3, "q": 3, "status": "UNSAT", "t": 0.0, "n": 170, "bound": 510, "record": 225}
+{"r": 6, "s": 5, "k": 3, "q": 4, "status": "UNSAT", "t": 0.0, "n": 170, "bound": 680, "record": 225}
+{"r": 4, "s": 2, "k": 4, "q": 31, "status": "UNSAT", "t": 6.39, "n": 34, "bound": 1054, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 32, "status": "UNSAT", "t": 0.0, "n": 34, "bound": 1088, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 33, "status": "UNSAT", "t": 0.86, "n": 34, "bound": 1122, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 34, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1156, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 35, "status": "UNSAT", "t": 9.39, "n": 34, "bound": 1190, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 36, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1224, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 37, "status": "UNSAT", "t": 12.66, "n": 34, "bound": 1258, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 38, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1292, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 39, "status": "UNSAT", "t": 1.03, "n": 34, "bound": 1326, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 40, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1360, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 41, "status": "UNSAT", "t": 25.59, "n": 34, "bound": 1394, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 42, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1428, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 43, "status": "UNKNOWN", "t": 30.0, "n": 34, "bound": 1462, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 44, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1496, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 45, "status": "UNSAT", "t": 0.07, "n": 34, "bound": 1530, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 46, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1564, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 47, "status": "UNKNOWN", "t": 30.0, "n": 34, "bound": 1598, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 48, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1632, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 49, "status": "UNKNOWN", "t": 30.0, "n": 34, "bound": 1666, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 50, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1700, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 51, "status": "UNSAT", "t": 8.11, "n": 34, "bound": 1734, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 52, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1768, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 53, "status": "UNKNOWN", "t": 30.0, "n": 34, "bound": 1802, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 54, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1836, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 55, "status": "UNKNOWN", "t": 30.0, "n": 34, "bound": 1870, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 56, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1904, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 57, "status": "UNSAT", "t": 0.24, "n": 34, "bound": 1938, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 58, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 1972, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 59, "status": "UNKNOWN", "t": 30.0, "n": 34, "bound": 2006, "record": 1048}
+{"r": 4, "s": 2, "k": 4, "q": 60, "status": "UNSAT", "t": 0.01, "n": 34, "bound": 2040, "record": 1048}
+{"r": 4, "s": 3, "k": 4, "q": 4, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 1168, "record": 1048}
+{"r": 4, "s": 3, "k": 4, "q": 5, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 1460, "record": 1048}
+{"r": 4, "s": 3, "k": 4, "q": 6, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 1752, "record": 1048}
+{"r": 4, "s": 3, "k": 4, "q": 7, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 2044, "record": 1048}
+{"r": 4, "s": 3, "k": 4, "q": 8, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 2336, "record": 1048}
+{"r": 4, "s": 3, "k": 4, "q": 9, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 2628, "record": 1048}
+{"r": 4, "s": 3, "k": 4, "q": 10, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 2920, "record": 1048}
+{"r": 4, "s": 3, "k": 4, "q": 11, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 3212, "record": 1048}
+{"r": 5, "s": 3, "k": 4, "q": 8, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 2336, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 9, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 2628, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 10, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 2920, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 11, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 3212, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 12, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 3504, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 13, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 3796, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 14, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 4088, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 15, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 4380, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 16, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 4672, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 17, "status": "UNSAT", "t": 0.02, "n": 292, "bound": 4964, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 18, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 5256, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 19, "status": "UNSAT", "t": 0.04, "n": 292, "bound": 5548, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 20, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 5840, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 21, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 6132, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 22, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 6424, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 23, "status": "UNSAT", "t": 0.05, "n": 292, "bound": 6716, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 24, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 7008, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 25, "status": "UNSAT", "t": 0.06, "n": 292, "bound": 7300, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 26, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 7592, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 27, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 7884, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 28, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 8176, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 29, "status": "UNSAT", "t": 0.13, "n": 292, "bound": 8468, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 30, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 8760, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 31, "status": "UNSAT", "t": 0.22, "n": 292, "bound": 9052, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 32, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 9344, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 33, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 9636, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 34, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 9928, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 35, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 10220, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 36, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 10512, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 37, "status": "UNSAT", "t": 0.33, "n": 292, "bound": 10804, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 38, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 11096, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 39, "status": "UNSAT", "t": 0.12, "n": 292, "bound": 11388, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 40, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 11680, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 41, "status": "UNSAT", "t": 0.67, "n": 292, "bound": 11972, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 42, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 12264, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 43, "status": "UNSAT", "t": 0.55, "n": 292, "bound": 12556, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 44, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 12848, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 45, "status": "UNSAT", "t": 0.03, "n": 292, "bound": 13140, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 46, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 13432, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 47, "status": "UNSAT", "t": 0.37, "n": 292, "bound": 13724, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 48, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 14016, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 49, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 14308, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 50, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 14600, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 51, "status": "UNSAT", "t": 0.04, "n": 292, "bound": 14892, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 52, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 15184, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 53, "status": "UNSAT", "t": 0.19, "n": 292, "bound": 15476, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 54, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 15768, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 55, "status": "UNSAT", "t": 0.14, "n": 292, "bound": 16060, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 56, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 16352, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 57, "status": "UNSAT", "t": 0.06, "n": 292, "bound": 16644, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 58, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 16936, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 59, "status": "UNSAT", "t": 0.28, "n": 292, "bound": 17228, "record": 2254}
+{"r": 5, "s": 3, "k": 4, "q": 60, "status": "UNSAT", "t": 0.0, "n": 292, "bound": 17520, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 3, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 3144, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 4, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 4192, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 5, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 5240, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 6, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 6288, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 7, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 7336, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 8, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 8384, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 9, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 9432, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 10, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 10480, "record": 2254}
+{"r": 5, "s": 4, "k": 4, "q": 11, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 11528, "record": 2254}
+{"r": 6, "s": 3, "k": 4, "q": 34, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 9928, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 35, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 10220, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 36, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 10512, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 37, "status": "UNKNOWN", "t": 30.0, "n": 292, "bound": 10804, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 38, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 11096, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 39, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 11388, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 40, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 11680, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 41, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 11972, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 42, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 12264, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 43, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 12556, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 44, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 12848, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 45, "status": "UNKNOWN", "t": 30.0, "n": 292, "bound": 13140, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 46, "status": "UNSAT", "t": 0.02, "n": 292, "bound": 13432, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 47, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 13724, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 48, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 14016, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 49, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 14308, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 50, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 14600, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 51, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 14892, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 52, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 15184, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 53, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 15476, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 54, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 15768, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 55, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 16060, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 56, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 16352, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 57, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 16644, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 58, "status": "UNSAT", "t": 0.02, "n": 292, "bound": 16936, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 59, "status": "UNKNOWN", "t": 30.01, "n": 292, "bound": 17228, "record": 9778}
+{"r": 6, "s": 3, "k": 4, "q": 60, "status": "UNSAT", "t": 0.01, "n": 292, "bound": 17520, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 10, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 10480, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 11, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 11528, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 12, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 12576, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 13, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 13624, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 14, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 14672, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 15, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 15720, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 16, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 16768, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 17, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 17816, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 18, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 18864, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 19, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 19912, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 20, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 20960, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 21, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 22008, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 22, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 23056, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 23, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 24104, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 24, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 25152, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 25, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 26200, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 26, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 27248, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 27, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 28296, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 28, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 29344, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 29, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 30392, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 30, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 31440, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 31, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 32488, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 32, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 33536, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 33, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 34584, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 34, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 35632, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 35, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 36680, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 36, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 37728, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 37, "status": "UNSAT", "t": 0.03, "n": 1048, "bound": 38776, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 38, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 39824, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 39, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 40872, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 40, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 41920, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 41, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 42968, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 42, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 44016, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 43, "status": "UNSAT", "t": 0.03, "n": 1048, "bound": 45064, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 44, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 46112, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 45, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 47160, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 46, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 48208, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 47, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 49256, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 48, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 50304, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 49, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 51352, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 50, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 52400, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 51, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 53448, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 52, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 54496, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 53, "status": "UNSAT", "t": 0.03, "n": 1048, "bound": 55544, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 54, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 56592, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 55, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 57640, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 56, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 58688, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 57, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 59736, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 58, "status": "UNSAT", "t": 0.0, "n": 1048, "bound": 60784, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 59, "status": "UNSAT", "t": 0.02, "n": 1048, "bound": 61832, "record": 9778}
+{"r": 6, "s": 4, "k": 4, "q": 60, "status": "UNSAT", "t": 0.01, "n": 1048, "bound": 62880, "record": 9778}
+{"r": 6, "s": 5, "k": 4, "q": 5, "status": "UNSAT", "t": 0.0, "n": 2254, "bound": 11270, "record": 9778}
+{"r": 6, "s": 5, "k": 4, "q": 6, "status": "UNSAT", "t": 0.0, "n": 2254, "bound": 13524, "record": 9778}
+{"r": 6, "s": 5, "k": 4, "q": 7, "status": "UNSAT", "t": 0.0, "n": 2254, "bound": 15778, "record": 9778}
+{"r": 6, "s": 5, "k": 4, "q": 8, "status": "UNSAT", "t": 0.0, "n": 2254, "bound": 18032, "record": 9778}
+{"r": 6, "s": 5, "k": 4, "q": 9, "status": "UNSAT", "t": 0.0, "n": 2254, "bound": 20286, "record": 9778}
+{"r": 6, "s": 5, "k": 4, "q": 10, "status": "UNSAT", "t": 0.0, "n": 2254, "bound": 22540, "record": 9778}
+{"r": 6, "s": 5, "k": 4, "q": 11, "status": "UNSAT", "t": 0.0, "n": 2254, "bound": 24794, "record": 9778}
+{"r": 3, "s": 2, "k": 5, "q": 13, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 2301, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 14, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 2478, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 15, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 2655, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 16, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 2832, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 17, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 3009, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 18, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 3186, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 19, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 3363, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 20, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 3540, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 21, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 3717, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 22, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 3894, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 23, "status": "UNSAT", "t": 0.01, "n": 177, "bound": 4071, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 24, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 4248, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 25, "status": "UNSAT", "t": 0.01, "n": 177, "bound": 4425, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 26, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 4602, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 27, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 4779, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 28, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 4956, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 29, "status": "UNSAT", "t": 0.01, "n": 177, "bound": 5133, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 30, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 5310, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 31, "status": "UNSAT", "t": 0.01, "n": 177, "bound": 5487, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 32, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 5664, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 33, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 5841, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 34, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 6018, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 35, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 6195, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 36, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 6372, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 37, "status": "UNSAT", "t": 0.01, "n": 177, "bound": 6549, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 38, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 6726, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 39, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 6903, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 40, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 7080, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 41, "status": "UNSAT", "t": 0.01, "n": 177, "bound": 7257, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 42, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 7434, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 43, "status": "UNSAT", "t": 0.02, "n": 177, "bound": 7611, "record": 2173}
+{"r": 3, "s": 2, "k": 5, "q": 44, "status": "UNSAT", "t": 0.0, "n": 177, "bound": 7788, "record": 2173}
+{"r": 4, "s": 3, "k": 5, "q": 9, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 19557, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 10, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 21730, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 11, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 23903, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 12, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 26076, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 13, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 28249, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 14, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 30422, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 15, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 32595, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 16, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 34768, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 17, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 36941, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 18, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 39114, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 19, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 41287, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 20, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 43460, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 21, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 45633, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 22, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 47806, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 23, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 49979, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 24, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 52152, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 25, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 54325, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 26, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 56498, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 27, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 58671, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 28, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 60844, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 29, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 63017, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 30, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 65190, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 31, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 67363, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 32, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 69536, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 33, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 71709, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 34, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 73882, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 35, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 76055, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 36, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 78228, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 37, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 80401, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 38, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 82574, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 39, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 84747, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 40, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 86920, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 41, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 89093, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 42, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 91266, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 43, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 93439, "record": 17705}
+{"r": 4, "s": 3, "k": 5, "q": 44, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 95612, "record": 17705}
+{"r": 5, "s": 3, "k": 5, "q": 46, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 99958, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 47, "status": "UNKNOWN", "t": 30.01, "n": 2173, "bound": 102131, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 48, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 104304, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 49, "status": "UNSAT", "t": 0.03, "n": 2173, "bound": 106477, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 50, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 108650, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 51, "status": "UNKNOWN", "t": 30.0, "n": 2173, "bound": 110823, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 52, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 112996, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 53, "status": "UNKNOWN", "t": 30.01, "n": 2173, "bound": 115169, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 54, "status": "UNSAT", "t": 0.0, "n": 2173, "bound": 117342, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 55, "status": "UNKNOWN", "t": 30.0, "n": 2173, "bound": 119515, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 56, "status": "UNSAT", "t": 0.01, "n": 2173, "bound": 121688, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 57, "status": "UNKNOWN", "t": 30.0, "n": 2173, "bound": 123861, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 58, "status": "UNSAT", "t": 0.01, "n": 2173, "bound": 126034, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 59, "status": "UNKNOWN", "t": 30.01, "n": 2173, "bound": 128207, "record": 98741}
+{"r": 5, "s": 3, "k": 5, "q": 60, "status": "UNSAT", "t": 0.01, "n": 2173, "bound": 130380, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 6, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 106230, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 7, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 123935, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 8, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 141640, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 9, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 159345, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 10, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 177050, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 11, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 194755, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 12, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 212460, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 13, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 230165, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 14, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 247870, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 15, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 265575, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 16, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 283280, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 17, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 300985, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 18, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 318690, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 19, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 336395, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 20, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 354100, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 21, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 371805, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 22, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 389510, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 23, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 407215, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 24, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 424920, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 25, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 442625, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 26, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 460330, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 27, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 478035, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 28, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 495740, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 29, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 513445, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 30, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 531150, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 31, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 548855, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 32, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 566560, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 33, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 584265, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 34, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 601970, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 35, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 619675, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 36, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 637380, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 37, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 655085, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 38, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 672790, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 39, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 690495, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 40, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 708200, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 41, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 725905, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 42, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 743610, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 43, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 761315, "record": 98741}
+{"r": 5, "s": 4, "k": 5, "q": 44, "status": "UNSAT", "t": 0.0, "n": 17705, "bound": 779020, "record": 98741}
+{"r": 6, "s": 3, "k": 5, "q": 46, "status": "UNSAT", "t": 0.02, "n": 2173, "bound": 99958, "record": 98748}
+{"r": 3, "s": 2, "k": 8, "q": 21, "status": "SAT", "t": 0.0, "S": [[0, 1], [0, 2], [0, 1], [1, 2], [0, 1], [0, 1], [0, 1], [1, 2], [1, 2], [0, 2], [0, 1], [0, 2], [0, 2], [0, 2], [0, 2], [0, 1], [1, 2], [0, 2], [1, 2], [1, 2], [1, 2]]}
+{"r": 3, "s": 2, "k": 8, "q": 22, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 14, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 15, "status": "SAT", "t": 0.01, "S": [[0, 1], [0, 1], [0, 1], [1, 2], [0, 1], [0, 2], [0, 2], [0, 2], [0, 1], [0, 2], [1, 2], [1, 2], [1, 2], [0, 2], [1, 2]]}
+{"r": 3, "s": 2, "k": 7, "q": 16, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 17, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 6, "q": 18, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 19, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 6, "q": 20, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 21, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 22, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 23, "status": "UNSAT", "t": 0.06}
+{"r": 3, "s": 2, "k": 6, "q": 24, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 25, "status": "UNSAT", "t": 0.11}
+{"r": 3, "s": 2, "k": 7, "q": 17, "status": "UNSAT", "t": 0.22}
+{"r": 3, "s": 2, "k": 6, "q": 26, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 18, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 27, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 19, "status": "SAT", "t": 0.01, "S": [[0, 1], [0, 2], [0, 1], [1, 2], [0, 1], [0, 1], [0, 2], [1, 2], [0, 1], [0, 2], [1, 2], [0, 2], [0, 2], [0, 2], [0, 1], [1, 2], [1, 2], [1, 2], [1, 2]]}
+{"r": 3, "s": 2, "k": 6, "q": 28, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 20, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 21, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 22, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 29, "status": "UNSAT", "t": 0.42}
+{"r": 3, "s": 2, "k": 6, "q": 30, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 31, "status": "UNSAT", "t": 0.48}
+{"r": 3, "s": 2, "k": 6, "q": 32, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 33, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 34, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 35, "status": "UNSAT", "t": 0.21}
+{"r": 3, "s": 2, "k": 6, "q": 36, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 37, "status": "UNSAT", "t": 0.72}
+{"r": 3, "s": 2, "k": 6, "q": 38, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 39, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 40, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 41, "status": "UNSAT", "t": 0.66}
+{"r": 3, "s": 2, "k": 6, "q": 42, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 23, "status": "UNSAT", "t": 3.19}
+{"r": 3, "s": 2, "k": 7, "q": 24, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 43, "status": "UNSAT", "t": 2.17}
+{"r": 3, "s": 2, "k": 6, "q": 44, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 45, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 25, "status": "UNSAT", "t": 2.92}
+{"r": 3, "s": 2, "k": 7, "q": 26, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 27, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 28, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 41, "status": "UNSAT", "t": 12.37}
+{"r": 3, "s": 2, "k": 7, "q": 42, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 29, "status": "UNSAT", "t": 10.74}
+{"r": 3, "s": 2, "k": 7, "q": 30, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 43, "status": "UNSAT", "t": 16.31}
+{"r": 3, "s": 2, "k": 7, "q": 44, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 45, "status": "UNSAT", "t": 0.04}
+{"r": 3, "s": 2, "k": 7, "q": 46, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 23, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 8, "q": 24, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 25, "status": "SAT", "t": 0.0, "S": [[0, 1], [0, 2], [0, 2], [0, 1], [1, 2], [0, 1], [0, 1], [0, 1], [0, 2], [0, 1], [1, 2], [0, 1], [0, 2], [1, 2], [0, 2], [0, 2], [0, 1], [0, 2], [0, 1], [0, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2]]}
+{"r": 3, "s": 2, "k": 8, "q": 26, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 27, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 8, "q": 28, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 31, "status": "UNSAT", "t": 20.31}
+{"r": 3, "s": 2, "k": 7, "q": 32, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 33, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 34, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 35, "status": "UNSAT", "t": 15.41}
+{"r": 3, "s": 2, "k": 7, "q": 36, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 37, "status": "UNSAT", "t": 5.45}
+{"r": 3, "s": 2, "k": 7, "q": 38, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 39, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 7, "q": 40, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 47, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 7, "q": 48, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 29, "status": "UNKNOWN", "t": 30.01}
+{"r": 3, "s": 2, "k": 8, "q": 30, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 49, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 7, "q": 50, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 51, "status": "UNSAT", "t": 0.03}
+{"r": 3, "s": 2, "k": 7, "q": 52, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 31, "status": "UNKNOWN", "t": 30.01}
+{"r": 3, "s": 2, "k": 8, "q": 32, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 33, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 8, "q": 34, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 53, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 7, "q": 54, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 55, "status": "UNSAT", "t": 0.06}
+{"r": 3, "s": 2, "k": 7, "q": 56, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 57, "status": "UNSAT", "t": 0.07}
+{"r": 3, "s": 2, "k": 7, "q": 58, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 35, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 8, "q": 36, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 59, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 7, "q": 60, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 37, "status": "UNKNOWN", "t": 30.01}
+{"r": 3, "s": 2, "k": 8, "q": 38, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 39, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 8, "q": 40, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 61, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 7, "q": 62, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 63, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 64, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 41, "status": "UNKNOWN", "t": 30.01}
+{"r": 3, "s": 2, "k": 8, "q": 42, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 43, "status": "SAT", "t": 0.58, "S": [[0, 1], [1, 2], [0, 1], [0, 1], [0, 2], [0, 2], [1, 2], [0, 1], [1, 2], [0, 1], [0, 2], [1, 2], [0, 2], [0, 2], [0, 1], [0, 1], [0, 2], [0, 1], [1, 2], [0, 1], [0, 1], [0, 1], [1, 2], [0, 2], [1, 2], [0, 1], [0, 2], [1, 2], [0, 2], [0, 1], [1, 2], [1, 2], [1, 2], [1, 2], [0, 1], [1, 2], [0, 2], [1, 2], [0, 2], [0, 2], [0, 2], [0, 2], [0, 1]]}
+{"r": 3, "s": 2, "k": 8, "q": 44, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 45, "status": "UNSAT", "t": 0.03}
+{"r": 3, "s": 2, "k": 8, "q": 46, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 65, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 7, "q": 66, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 47, "status": "UNKNOWN", "t": 30.01}
+{"r": 3, "s": 2, "k": 8, "q": 48, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 7, "q": 67, "status": "UNKNOWN", "t": 30.01}
+{"r": 3, "s": 2, "k": 7, "q": 68, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 7, "q": 69, "status": "UNSAT", "t": 0.16}
+{"r": 3, "s": 2, "k": 7, "q": 70, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 49, "status": "UNKNOWN", "t": 30.0}
+{"r": 3, "s": 2, "k": 8, "q": 50, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 8, "q": 51, "status": "UNSAT", "t": 0.93}
+{"r": 3, "s": 2, "k": 8, "q": 52, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 6, "q": 10, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 11, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 12, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 13, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 6, "q": 14, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 15, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 6, "q": 16, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 17, "status": "UNSAT", "t": 0.04}
+{"r": 3, "s": 2, "k": 6, "q": 18, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 19, "status": "UNSAT", "t": 0.06}
+{"r": 3, "s": 2, "k": 6, "q": 20, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 21, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 22, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 23, "status": "UNSAT", "t": 0.1}
+{"r": 3, "s": 2, "k": 6, "q": 24, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 25, "status": "UNSAT", "t": 0.15}
+{"r": 3, "s": 2, "k": 6, "q": 26, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 27, "status": "UNSAT", "t": 0.0}
+{"r": 3, "s": 2, "k": 6, "q": 28, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 29, "status": "UNSAT", "t": 0.31}
+{"r": 3, "s": 2, "k": 6, "q": 30, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 31, "status": "UNSAT", "t": 0.46}
+{"r": 3, "s": 2, "k": 6, "q": 32, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 33, "status": "UNSAT", "t": 0.03}
+{"r": 3, "s": 2, "k": 6, "q": 34, "status": "UNSAT", "t": 0.05}
+{"r": 3, "s": 2, "k": 6, "q": 35, "status": "UNSAT", "t": 0.35}
+{"r": 3, "s": 2, "k": 6, "q": 36, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 37, "status": "UNSAT", "t": 0.81}
+{"r": 3, "s": 2, "k": 6, "q": 38, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 6, "q": 39, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 6, "q": 40, "status": "UNSAT", "t": 0.01}
+{"r": 5, "s": 4, "k": 7, "q": 10, "status": "UNSAT", "t": 0.02}
+{"r": 5, "s": 4, "k": 8, "q": 10, "status": "UNSAT", "t": 0.03}
+{"r": 4, "s": 3, "k": 7, "q": 33, "status": "UNSAT", "t": 0.03}
+{"r": 4, "s": 3, "k": 7, "q": 34, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 7, "q": 11, "status": "UNSAT", "t": 0.09}
+{"r": 5, "s": 4, "k": 7, "q": 12, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 8, "q": 11, "status": "UNSAT", "t": 0.19}
+{"r": 5, "s": 4, "k": 8, "q": 12, "status": "UNSAT", "t": 0.02}
+{"r": 5, "s": 4, "k": 7, "q": 13, "status": "UNSAT", "t": 0.14}
+{"r": 5, "s": 4, "k": 7, "q": 14, "status": "UNSAT", "t": 0.0}
+{"r": 5, "s": 4, "k": 7, "q": 15, "status": "UNSAT", "t": 0.02}
+{"r": 5, "s": 4, "k": 7, "q": 16, "status": "UNSAT", "t": 0.05}
+{"r": 5, "s": 4, "k": 8, "q": 13, "status": "UNSAT", "t": 0.15}
+{"r": 5, "s": 4, "k": 8, "q": 14, "status": "UNSAT", "t": 0.0}
+{"r": 5, "s": 4, "k": 8, "q": 15, "status": "UNSAT", "t": 0.0}
+{"r": 5, "s": 4, "k": 8, "q": 16, "status": "UNSAT", "t": 0.0}
+{"r": 5, "s": 4, "k": 7, "q": 17, "status": "UNSAT", "t": 0.35}
+{"r": 5, "s": 4, "k": 7, "q": 18, "status": "UNSAT", "t": 0.01}
+{"r": 5, "s": 4, "k": 7, "q": 19, "status": "UNSAT", "t": 0.35}
+{"r": 5, "s": 4, "k": 7, "q": 20, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 7, "q": 21, "status": "UNSAT", "t": 0.04}
+{"r": 5, "s": 4, "k": 7, "q": 22, "status": "UNSAT", "t": 0.04}
+{"r": 4, "s": 3, "k": 7, "q": 35, "status": "UNSAT", "t": 1.5}
+{"r": 4, "s": 3, "k": 7, "q": 36, "status": "UNSAT", "t": 0.04}
+{"r": 5, "s": 4, "k": 7, "q": 23, "status": "UNSAT", "t": 1.11}
+{"r": 5, "s": 4, "k": 7, "q": 24, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 7, "q": 25, "status": "UNSAT", "t": 0.41}
+{"r": 5, "s": 4, "k": 7, "q": 26, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 8, "q": 17, "status": "UNSAT", "t": 2.38}
+{"r": 5, "s": 4, "k": 7, "q": 27, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 7, "q": 28, "status": "UNSAT", "t": 0.02}
+{"r": 5, "s": 4, "k": 8, "q": 18, "status": "UNSAT", "t": 0.05}
+{"r": 4, "s": 3, "k": 8, "q": 25, "status": "UNSAT", "t": 2.93}
+{"r": 4, "s": 3, "k": 8, "q": 26, "status": "UNSAT", "t": 0.01}
+{"r": 4, "s": 3, "k": 8, "q": 27, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 8, "q": 28, "status": "UNSAT", "t": 0.01}
+{"r": 5, "s": 4, "k": 7, "q": 29, "status": "UNSAT", "t": 1.49}
+{"r": 5, "s": 4, "k": 7, "q": 30, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 8, "q": 19, "status": "UNSAT", "t": 9.1}
+{"r": 5, "s": 4, "k": 8, "q": 20, "status": "UNSAT", "t": 0.01}
+{"r": 5, "s": 4, "k": 8, "q": 21, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 8, "q": 22, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 7, "q": 37, "status": "UNSAT", "t": 17.56}
+{"r": 4, "s": 3, "k": 7, "q": 38, "status": "UNSAT", "t": 0.03}
+{"r": 4, "s": 3, "k": 7, "q": 39, "status": "UNSAT", "t": 0.03}
+{"r": 4, "s": 3, "k": 7, "q": 40, "status": "UNSAT", "t": 0.02}
+{"r": 3, "s": 2, "k": 7, "q": 71, "status": "UNKNOWN", "t": 120.06}
+{"r": 3, "s": 2, "k": 7, "q": 72, "status": "UNSAT", "t": 0.03}
+{"r": 4, "s": 3, "k": 7, "q": 41, "status": "UNSAT", "t": 28.05}
+{"r": 4, "s": 3, "k": 7, "q": 42, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 8, "q": 23, "status": "UNSAT", "t": 46.08}
+{"r": 5, "s": 4, "k": 8, "q": 24, "status": "UNSAT", "t": 0.02}
+{"r": 5, "s": 4, "k": 8, "q": 25, "status": "UNSAT", "t": 0.24}
+{"r": 5, "s": 4, "k": 8, "q": 26, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 8, "q": 27, "status": "UNSAT", "t": 0.03}
+{"r": 5, "s": 4, "k": 8, "q": 28, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 8, "q": 29, "status": "UNKNOWN", "t": 60.04}
+{"r": 4, "s": 3, "k": 8, "q": 30, "status": "UNSAT", "t": 0.03}
+{"r": 4, "s": 3, "k": 7, "q": 43, "status": "UNSAT", "t": 17.21}
+{"r": 4, "s": 3, "k": 7, "q": 44, "status": "UNSAT", "t": 0.04}
+{"r": 4, "s": 3, "k": 7, "q": 45, "status": "UNSAT", "t": 0.05}
+{"r": 4, "s": 3, "k": 7, "q": 46, "status": "UNSAT", "t": 0.05}
+{"r": 4, "s": 3, "k": 7, "q": 47, "status": "UNSAT", "t": 48.79}
+{"r": 4, "s": 3, "k": 7, "q": 48, "status": "UNSAT", "t": 0.02}
+{"r": 5, "s": 4, "k": 8, "q": 29, "status": "UNKNOWN", "t": 60.02}
+{"r": 5, "s": 4, "k": 8, "q": 30, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 8, "q": 31, "status": "UNKNOWN", "t": 60.02}
+{"r": 4, "s": 3, "k": 8, "q": 32, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 8, "q": 33, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 8, "q": 34, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 8, "q": 35, "status": "UNSAT", "t": 2.66}
+{"r": 4, "s": 3, "k": 8, "q": 36, "status": "UNSAT", "t": 0.01}
+{"r": 3, "s": 2, "k": 8, "q": 23, "status": "UNKNOWN", "t": 240.03}
+{"r": 3, "s": 2, "k": 7, "q": 47, "status": "UNKNOWN", "t": 240.06}
+{"r": 3, "s": 2, "k": 7, "q": 73, "status": "UNKNOWN", "t": 120.03}
+{"r": 3, "s": 2, "k": 7, "q": 74, "status": "UNSAT", "t": 0.04}
+{"r": 3, "s": 2, "k": 8, "q": 53, "status": "UNKNOWN", "t": 240.06}
+{"r": 3, "s": 2, "k": 8, "q": 54, "status": "UNSAT", "t": 0.03}
+{"r": 3, "s": 2, "k": 7, "q": 75, "status": "UNSAT", "t": 1.65}
+{"r": 3, "s": 2, "k": 7, "q": 76, "status": "UNSAT", "t": 0.1}
+{"r": 3, "s": 2, "k": 7, "q": 77, "status": "UNSAT", "t": 0.38}
+{"r": 3, "s": 2, "k": 7, "q": 78, "status": "UNSAT", "t": 0.03}
+{"r": 4, "s": 3, "k": 7, "q": 49, "status": "UNKNOWN", "t": 60.01}
+{"r": 4, "s": 3, "k": 7, "q": 50, "status": "UNSAT", "t": 0.01}
+{"r": 4, "s": 3, "k": 7, "q": 51, "status": "UNSAT", "t": 0.01}
+{"r": 4, "s": 3, "k": 7, "q": 52, "status": "UNSAT", "t": 0.01}
+{"r": 4, "s": 3, "k": 8, "q": 37, "status": "UNKNOWN", "t": 60.02}
+{"r": 4, "s": 3, "k": 8, "q": 38, "status": "UNSAT", "t": 0.01}
+{"r": 4, "s": 3, "k": 8, "q": 39, "status": "UNSAT", "t": 0.01}
+{"r": 4, "s": 3, "k": 8, "q": 40, "status": "UNSAT", "t": 0.01}
+{"r": 4, "s": 3, "k": 7, "q": 53, "status": "UNSAT", "t": 17.99}
+{"r": 4, "s": 3, "k": 7, "q": 54, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 7, "q": 55, "status": "UNSAT", "t": 0.16}
+{"r": 4, "s": 3, "k": 7, "q": 56, "status": "UNSAT", "t": 0.02}
+{"r": 4, "s": 3, "k": 7, "q": 57, "status": "UNSAT", "t": 0.01}
+{"r": 4, "s": 3, "k": 7, "q": 58, "status": "UNSAT", "t": 0.01}

@@ -1,0 +1,22 @@
+# ESH27 Lab -- Lean 4 trust kernel.
+# Build:  lake exe cache get && lake build
+name = "EshLab"
+version = "0.1.0"
+defaultTargets = ["EshLab"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+# "master" is convenient for scaffolding. For reproducible certificates PIN this:
+# use the mathlib tag matching ../lean-toolchain (e.g. rev = "v4.24.0") or a commit SHA,
+# and commit lake-manifest.json. Every ledger entry records the manifest hash.
+rev = "v4.24.0"
+
+[[lean_lib]]
+name = "EshLab"
+# G050 (Schur / van der Waerden) is core-Lean-only and is ALSO a standalone Lake package
+# in ./G050 (no Mathlib):   cd G050 && lake build

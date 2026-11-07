@@ -1,0 +1,211 @@
+number,status,prize,tags,oeis,open_pr_title_mentions_number
+8,disproved (Lean),no,number theory;covering systems,N/A,True
+27,disproved,$100,number theory;covering systems,N/A,True
+37,disproved (Lean),no,number theory;additive combinatorics,N/A,True
+54,solved,$100,number theory;ramsey theory,N/A,True
+55,solved,$250,number theory;ramsey theory,N/A,True
+62,open,no,graph theory,N/A,True
+76,proved,no,graph theory;ramsey theory,A060407,True
+84,open,no,graph theory;cycles,A399654,True
+106,disproved (Lean),no,geometry,N/A,True
+112,open,no,graph theory;ramsey theory,possible,True
+117,open,no,group theory,possible,False
+122,open,no,number theory,N/A,True
+129,open,no,graph theory;ramsey theory,possible,True
+132,open,$100,distances,N/A,False
+135,disproved (Lean),$250,distances;geometry,possible,True
+140,proved (Lean),$500,additive combinatorics;arithmetic progressions,A003002,True
+144,proved (Lean),$250,number theory;divisors,A005279,True
+149,open,no,graph theory,N/A,True
+167,falsifiable,no,graph theory,N/A,True
+169,open,no,additive combinatorics;arithmetic progressions,A005346,True
+176,open,no,additive combinatorics;arithmetic progressions;discrepancy,A398541;possible,True
+177,open,no,discrepancy;arithmetic progressions,N/A,False
+179,proved,no,additive combinatorics;arithmetic progressions,possible,True
+182,proved,no,graph theory,possible,True
+187,open,no,additive combinatorics;ramsey theory;arithmetic progressions,N/A,True
+190,solved (Lean),no,additive combinatorics;arithmetic progressions,possible,True
+201,open,no,additive combinatorics;arithmetic progressions,A003002;A003003;A003004;A003005;possible,True
+216,disproved,no,geometry;convex,A381776,False
+222,open,no,number theory;squares,A001481;A256435,True
+223,solved,no,geometry;distances,A008811;possible,True
+227,disproved,no,analysis,N/A,True
+255,proved (Lean),no,discrepancy,N/A,True
+256,open,no,analysis,N/A,True
+262,solved (Lean),no,irrationality,N/A,True
+265,open,no,irrationality,N/A,True
+271,open,no,additive combinatorics;arithmetic progressions,A005487,True
+278,open,no,number theory;covering systems,N/A,True
+293,open,no,number theory;unit fractions,A400352,True
+297,solved,no,number theory;unit fractions,A092670,True
+301,open,no,number theory;unit fractions,A390394,True
+320,solved,no,number theory;unit fractions,A072207,False
+327,open,no,number theory;unit fractions,A384927,False
+334,open,no,number theory,A062241;A045535,False
+335,open,no,number theory;additive combinatorics,N/A,False
+336,open,no,number theory;additive basis,possible,False
+339,proved,no,number theory;additive basis,N/A,True
+343,proved (Lean),no,number theory;complete sequences,N/A,False
+356,proved (Lean),no,number theory,possible,True
+374,open,no,number theory,A388851;A387184;A389117;A389148,False
+378,proved,no,number theory;binomial coefficients,N/A,False
+380,proved,no,number theory,A070003;A388654;A387054;A389100,False
+381,disproved,no,number theory;divisors,A002182,False
+404,open,no,number theory;factorials,N/A,False
+411,open,no,number theory;iterated functions,A383044;possible,True
+415,open,no,number theory,possible,False
+432,open,no,number theory,N/A,False
+439,proved,no,number theory;ramsey theory,N/A,False
+446,solved,no,number theory;divisors,A074738;A399690;A399691;A399697;A399698,False
+449,disproved,no,number theory;divisors,A399440,False
+451,open,no,number theory,A386620,False
+460,open,no,number theory,N/A,False
+465,proved,no,number theory,N/A,True
+468,open,no,number theory;divisors,A167485;A387502;A387503,False
+471,proved,no,number theory,possible,False
+474,not provable,$100,set theory;ramsey theory,N/A,True
+475,decidable,no,number theory;additive combinatorics,N/A,True
+492,disproved,no,number theory,N/A,True
+496,proved,no,number theory;diophantine approximation,N/A,False
+511,disproved,no,analysis,N/A,True
+514,open,no,analysis,N/A,False
+515,proved,no,analysis,N/A,True
+518,proved,no,graph theory;ramsey theory,N/A,True
+523,proved,no,analysis;probability;polynomials,N/A,True
+524,open,no,analysis;probability;polynomials,N/A,True
+526,solved,no,probability;geometry,N/A,True
+527,proved,no,analysis;probability,N/A,True
+528,open,no,geometry,A387897;A156816,True
+529,open,no,geometry;probability,N/A,False
+530,open,no,number theory;sidon sets,A143824;possible,True
+531,open,no,number theory;ramsey theory,possible,False
+543,disproved,no,number theory;group theory,possible,True
+553,proved,no,graph theory;ramsey theory,A000791;possible,True
+558,open,no,graph theory;ramsey theory,possible,False
+565,proved,no,graph theory;ramsey theory,possible,True
+574,disproved,no,graph theory;turan number,possible,True
+575,disproved,no,graph theory;turan number,N/A,True
+576,open,no,graph theory;turan number,possible,False
+580,decidable,no,graph theory,N/A,True
+584,open,no,graph theory;cycles,N/A,False
+585,open,no,graph theory;cycles,possible,True
+589,open,no,geometry,possible,False
+605,proved,no,geometry;distances,possible,True
+606,solved,no,geometry,N/A,True
+607,proved,$250,geometry,possible,True
+608,disproved (Lean),no,graph theory,N/A,True
+610,proved (Lean),no,graph theory,possible,False
+612,open,no,graph theory,N/A,True
+620,open,no,graph theory,possible,True
+622,proved,no,graph theory,possible,False
+625,solved,$1000,graph theory;chromatic number,N/A,False
+630,proved (Lean),no,graph theory;chromatic number,N/A,False
+631,proved,no,graph theory;chromatic number,N/A,False
+632,disproved,no,graph theory;chromatic number,N/A,True
+634,open,$25,geometry,A005792;possible,False
+635,open,no,number theory,N/A,False
+637,proved,no,graph theory;ramsey theory,N/A,True
+638,open,no,graph theory;ramsey theory,N/A,False
+662,open,no,geometry;distances,N/A,True
+671,open,$250,analysis,N/A,False
+693,open,no,number theory;divisors,A391118;possible,False
+708,open,$100,number theory,possible,False
+715,proved,no,graph theory,N/A,True
+718,proved,no,graph theory,N/A,True
+736,not provable,no,graph theory;chromatic number,N/A,False
+738,open,no,graph theory;chromatic number,N/A,False
+739,not provable,no,graph theory;chromatic number,N/A,True
+744,disproved,no,graph theory;chromatic number,possible,True
+746,proved,no,graph theory,N/A,True
+752,proved,no,graph theory;cycles,N/A,True
+754,proved (Lean),no,geometry;distances,possible,True
+758,solved,no,graph theory;chromatic number,possible,True
+759,solved,no,graph theory;chromatic number,possible,False
+768,open,no,number theory,A001034;A352287,True
+776,open,no,combinatorics,possible,True
+778,open,no,graph theory,N/A,False
+783,solved,no,number theory,N/A,True
+784,solved,no,number theory,N/A,True
+788,open,no,additive combinatorics,possible,True
+790,open,no,additive combinatorics,possible,False
+791,open,no,additive combinatorics,A066063,True
+792,open,no,additive combinatorics,possible,True
+795,proved,no,number theory,possible,True
+797,proved,no,graph theory;chromatic number,possible,True
+799,proved,no,graph theory;chromatic number,N/A,True
+807,disproved,no,graph theory,N/A,True
+809,open,no,graph theory;ramsey theory,possible,False
+811,open,no,graph theory;ramsey theory,possible,False
+815,disproved,no,graph theory,N/A,True
+843,proved,no,number theory,N/A,True
+861,solved,no,number theory;sidon sets,A143824;A227590;A003022;A143823,True
+863,proved,no,number theory;sidon sets;additive combinatorics,N/A,True
+866,open,no,number theory;additive combinatorics,possible,False
+870,open,no,number theory;additive basis,N/A,False
+874,proved,no,number theory;additive combinatorics,possible,True
+879,open,no,number theory,A186736,True
+880,proved,no,number theory;additive basis,N/A,True
+892,open,no,number theory;primitive sets,N/A,False
+896,solved,no,number theory,A399711,True
+908,proved,no,analysis,N/A,False
+909,proved,no,analysis;topology,N/A,False
+916,proved,no,graph theory;cycles,N/A,False
+919,open,no,graph theory;chromatic number,N/A,True
+924,proved,no,graph theory;ramsey theory,N/A,True
+925,disproved,no,graph theory;ramsey theory,possible,True
+928,open,no,number theory,A006530,False
+941,proved,no,number theory;powerful,A056828,False
+953,open,no,geometry;distances,N/A,True
+956,open,no,geometry;distances;convex,possible,True
+960,disproved,no,geometry,possible,True
+984,proved,no,arithmetic progressions;additive combinatorics,N/A,True
+988,solved,no,discrepancy,possible,True
+989,solved,no,discrepancy,possible,False
+991,proved,no,discrepancy,N/A,True
+992,disproved,no,discrepancy,N/A,True
+993,falsifiable,no,graph theory,A000055;possible,True
+998,proved,no,analysis;diophantine approximation,N/A,True
+1006,disproved,no,graph theory;cycles,N/A,True
+1011,open,no,graph theory,possible,False
+1012,solved,no,graph theory,,True
+1015,solved,no,graph theory;ramsey theory,possible,False
+1016,open,no,graph theory;cycles,A105206,False
+1018,solved (Lean),no,graph theory;planar graphs,N/A,False
+1019,proved (Lean),no,graph theory;planar graphs,N/A,False
+1031,proved,no,graph theory,possible,True
+1039,open,no,analysis;polynomials,N/A,False
+1040,open,no,analysis,N/A,False
+1042,proved,no,analysis,N/A,True
+1045,open,no,analysis,N/A,False
+1076,proved,no,hypergraphs,possible,False
+1078,proved,no,graph theory,N/A,True
+1091,solved,no,chromatic number;graph theory,N/A,True
+1103,open,no,number theory,A392164,False
+1112,open (Lean),no,additive combinatorics,N/A,False
+1117,open,no,analysis,N/A,False
+1118,solved,no,analysis,N/A,True
+1120,open,no,analysis,N/A,False
+1123,independent,$100,algebra,N/A,False
+1124,proved,no,geometry,N/A,True
+1127,independent,no,geometry;distances;set theory,N/A,True
+1129,proved (Lean),no,analysis;polynomials,N/A,True
+1130,proved,no,analysis;polynomials,N/A,True
+1131,open,no,analysis;polynomials,N/A,True
+1132,open,no,analysis;polynomials,N/A,True
+1143,open,no,number theory;primes,N/A,False
+1144,open,no,number theory;probability,N/A,False
+1151,open,no,analysis;polynomials,N/A,True
+1153,proved,no,analysis;polynomials,N/A,False
+1155,open,no,graph theory,N/A,False
+1156,open,no,graph theory;chromatic number,N/A,False
+1163,open,no,group theory,N/A,False
+1170,open,no,set theory;ramsey theory,N/A,True
+1172,open,no,set theory;ramsey theory,N/A,True
+1181,open,no,number theory,A053669;A053670;A053671;A053672;A053673;A053674;possible,False
+1184,open,no,number theory;primes,possible,True
+1200,open,no,number theory;primes,possible,False
+1208,open,no,geometry;distances,A193838;A271490;possible,True
+1215,disproved,no,analysis,N/A,True
+1216,disproved,no,graph theory;ramsey theory,A122027;A122026,True
+1218,open,no,ramsey theory;set theory,N/A,False
+1220,open,no,ramsey theory;set theory,N/A,True

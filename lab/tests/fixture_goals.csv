@@ -1,0 +1,6 @@
+id,title,title_he,field,tier,status,statement_short,why_it_matters,ai_tractability,formalization_readiness,known_partial_results,suggested_attack,references,owner_agent,progress_pct,last_update
+G001,Collatz conjecture,השערת קולץ,number theory,1,open,Every positive integer reaches 1 under n->n/2 or 3n+1,Iconic,2,5,Verified to 2^71; Tao almost all,search + analogy,Tao 2019 arXiv:1909.03562,analogy-agent,0,2026-11-04
+G002,Ramsey R(5;5) upper bound,"רמזי R(5,5)",combinatorics,2,open,"Improve 43<=R(5,5)<=46",Classic,4,4,"R(5,5)<=46 (Angeltveit-McKay 2024)",SAT + flag algebras,arXiv:2409.15709,search-agent,10,2026-11-04
+G003,Cap set lower bound,קבוצות כובע,additive combinatorics,2,in-progress,Improve lower bound constant for cap sets in F_3^n,FunSearch precedent,high,medium,2.2202 (Romera-Paredes et al 2023),evolutionary search,Nature 2023,construction-agent,20,2026-11-04
+G004,Sum of odd numbers,סכום אי-זוגיים,warm-up,3,solved,1+3+...+(2n-1)=n^2,Pipeline smoke test,5,5,Classical,Lean,EshLab.Basic,lean-agent,100,2026-11-04
+G005,3D Ising critical exponents bounds,איזינג,physics,2,open,Rigorous bounds on Delta_sigma via bootstrap,Physics benchmark,3,2,Kos-Poland-Simmons-Duffin-Vichi 2016,SDP bootstrap,arXiv:1603.04436,physics-agent,0,2026-11-04
