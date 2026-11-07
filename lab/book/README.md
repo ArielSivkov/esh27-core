@@ -11,6 +11,7 @@
 | `chapters/04-ai-and-math.md` | AI ומתמטיקה 2019–2026 |
 | `chapters/05-lean-hands-on.md` | Lean 4 בידיים |
 | `chapters/06-architecture.md` | ארכיטקטורת המעבדה |
+| `chapters/06a-five-foundations.md` | חמשת היסודות |
 | `chapters/07-goal-bank.md` | בנק המטרות |
 | `chapters/08-toolbox.md` | ארגז הכלים |
 | `chapters/09-creative-proofs.md` | דפוסי הוכחה יצירתיים |

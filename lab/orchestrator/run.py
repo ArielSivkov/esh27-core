@@ -94,6 +94,25 @@ def cmd_run(goal, agent: str, ledger_path) -> int:
     return 0
 
 
+def cmd_audit(ledger_path) -> int:
+    """Report, per ledger entry, which of the five foundations it falls short of."""
+    from .foundations import FOUNDATIONS, audit_all
+    entries = ledger.read(ledger_path)
+    bad = audit_all(entries)
+    names = {f.key: f.he for f in FOUNDATIONS}
+    counts: dict[str, int] = {}
+    for aid, issues in bad.items():
+        e = next((x for x in entries if x.get("attempt_id") == aid), {})
+        print(f"{aid}  {e.get('goal_id', '?')}  L{e.get('claim_level', '?')}")
+        for key, msg in issues:
+            counts[key] = counts.get(key, 0) + 1
+            print(f"    [{names.get(key, key)}] {msg}")
+    print(f"\n{len(entries)} entries, {len(bad)} with findings.")
+    for f in FOUNDATIONS:
+        print(f"  {f.he:<28} {counts.get(f.key, 0)}")
+    return 0  # an audit reports; it does not block
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="orchestrator.run", description="ESH27 Lab orchestrator")
     act = p.add_mutually_exclusive_group(required=True)
@@ -102,6 +121,7 @@ def main(argv: list[str] | None = None) -> int:
     act.add_argument("--dry-run", metavar="GOAL_ID", help="print the attack plan, no API calls")
     act.add_argument("--run", metavar="GOAL_ID", help="call one agent on a goal (needs API key)")
     act.add_argument("--ledger-check", action="store_true", help="verify ledger hash chain")
+    act.add_argument("--audit", action="store_true", help="audit the ledger against the five foundations")
     p.add_argument("--agent", default="literature-agent", help="agent for --run")
     p.add_argument("--goals", default=str(config.GOALS_CSV), help="path to goals.csv")
     p.add_argument("--ledger", default=str(config.LEDGER_PATH), help="path to ledger.jsonl")
@@ -113,6 +133,9 @@ def main(argv: list[str] | None = None) -> int:
         ok = ledger.verify_chain(a.ledger)
         print("ledger chain OK" if ok else "LEDGER CHAIN BROKEN")
         return 0 if ok else 1
+
+    if a.audit:
+        return cmd_audit(a.ledger)
 
     try:
         goals = load_goals(a.goals)

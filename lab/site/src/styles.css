@@ -411,3 +411,17 @@ html[lang="en"] .prose { font-size: 17.5px; }
   .topbar, .filters, .chips, .hero-bg { display: none; }
   body { background: #fff; color: #000; }
 }
+
+/* ---------- five foundations ---------- */
+.foundations { margin-top: 56px; padding: 28px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.foundations h3 { margin: 0 0 6px; font-family: var(--f-serif); font-size: clamp(24px, 3vw, 32px); color: var(--accent); }
+.found-lead { margin: 0 0 22px; color: var(--ink-2); max-width: 70ch; }
+.found-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.found { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: var(--r-sm); background: var(--bg-2); border: 1px solid var(--line); }
+.f-num { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-family: var(--f-serif); font-weight: 700; font-size: 20px; }
+.found h4 { margin: 0; font-family: var(--f-serif); font-size: 19px; }
+.found cite { display: block; font-style: normal; font-size: 13px; color: var(--accent-2); margin: 2px 0 6px; }
+.found p { margin: 0; font-size: 15px; color: var(--ink-2); }
+
+/* long status labels must wrap on phones */
+.badge { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }

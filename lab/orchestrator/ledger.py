@@ -16,6 +16,8 @@ from datetime import datetime, timezone
 from enum import IntEnum
 from pathlib import Path
 
+from .foundations import OUTWARD_METHODS
+
 
 class ClaimLevel(IntEnum):
     L0_IDEA = 0             # conjecture / heuristic / analogy
@@ -42,12 +44,16 @@ class Attempt:
     method: str                       # e.g. "lit-review", "lean-proof-search", "sat", "evo-search"
     claim_level: int = ClaimLevel.L0_IDEA
     summary: str = ""
-    outcome: str = "pending"          # pending | success | partial | failed | refuted
+    outcome: str = "pending"          # pending | success | partial | failed | refuted | teiku (honestly unresolved)
     artifacts: list[str] = field(default_factory=list)
     certificate: dict | None = None
     model: str = ""
     dry_run: bool = False
     supersedes: str | None = None
+    # Five foundations (see foundations.py / docs/foundations.md):
+    sources: list[str] = field(default_factory=list)   # בשם אומרו: papers, DOIs, runs, files
+    review: dict | None = None        # או חברותא: {"makshan": who, "kushyot": [...], "answers": [...], "resolved": bool}
+    approved_by: str = ""             # עבד ולא אדון: human who approved an outward action
     attempt_id: str = field(default_factory=lambda: uuid.uuid4().hex[:12])
     timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat(timespec="seconds"))
 
@@ -68,7 +74,11 @@ def _last_line(path: Path) -> str | None:
 
 
 def validate(attempt: Attempt) -> None:
-    """Enforce the honesty rule: L3+ requires a verified certificate."""
+    """Hard rules (the rest of the foundations are audited, see foundations.audit):
+    לא בשמים היא — L3+ requires a verified certificate;
+    עבד ולא אדון — an outward action requires a named human approver."""
+    if attempt.method in OUTWARD_METHODS and not attempt.approved_by:
+        raise ValueError(f"outward action '{attempt.method}' requires approved_by (a human)")
     level = int(attempt.claim_level)
     if level >= ClaimLevel.L3_LEAN_VERIFIED:
         cert = attempt.certificate or {}

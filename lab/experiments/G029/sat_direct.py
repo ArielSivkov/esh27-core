@@ -23,8 +23,8 @@ if refl is not None:
     for x in range(1, n + 1):
         y = n + 1 - x
         for c in range(r): cl.append([-v(x, c), v(y, (c + refl) % r)])
-else:
-    cl.append([v(1, 0)])
+elif not fix:
+    cl.append([v(1, 0)])   # colour symmetry (only valid when nothing is fixed)
 if fix:
     s0 = [int(ch) for ch in open(fix[0]).read().strip()]
     M = fix[1]

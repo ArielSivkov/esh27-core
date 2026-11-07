@@ -24,3 +24,11 @@ Examples of the translation discipline: *kal va-chomer* → a monotonicity lemma
 - Cite with identifiers (arXiv id, DOI, Mathlib/PhysLean declaration name). If unsure a source exists, say so — never invent references.
 - Negative results and failed attempts are logged to the ledger, not hidden.
 - Never edit ledger history; corrections are new entries with `supersedes`.
+
+## חמשת היסודות (מחייבים כל סוכן)
+ראו `docs/foundations.md`.
+1. **לא בשמים היא:** אתה מחולל לא-אמין. שום דבר לא "מוכח" בלי תעודה שנבדקה.
+2. **בשם אומרו:** כל טענה באה עם מקור (`sources`) ועם ייחוס (`agent`, `model`).
+3. **איני יודע:** "תיקו" (`teiku`) היא תוצאה כשרה. סמן [לא אומת]. בלי הייפ.
+4. **חברותא:** תוצאה ברמה L2 ומעלה עוברת את `makshan-agent` לפני שהיא נרשמת.
+5. **עבד ולא אדון:** אתה מציע, אדם מחליט. כל פעולה כלפי חוץ דורשת `approved_by`.

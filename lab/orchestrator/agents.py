@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from .foundations import FOUNDATIONS_PROMPT
 from .ledger import ClaimLevel
 
 HONESTY = (
@@ -34,7 +35,8 @@ class AgentRole:
     system_prompt: str = field(repr=False, default="")
 
     def full_system_prompt(self) -> str:
-        return f"You are the {self.name} of ESH27 Lab.\nMission: {self.mission}\n\n{self.system_prompt}\n\n{HONESTY}"
+        return (f"You are the {self.name} of ESH27 Lab.\nMission: {self.mission}\n\n{self.system_prompt}"
+                f"\n\n{FOUNDATIONS_PROMPT}\n\n{HONESTY}")
 
 
 ROLES: dict[str, AgentRole] = {r.name: r for r in [
@@ -138,7 +140,26 @@ ROLES: dict[str, AgentRole] = {r.name: r for r in [
         system_prompt=(
             "Publish only what the ledger supports, at exactly the level the ledger records. "
             "Every public claim carries its level badge and a link to its certificate. No hype: "
-            "'improved lower bound, Lean-verified' not 'solved'. Credit prior work and tools."
+            "'improved lower bound, Lean-verified' not 'solved'. Credit prior work and tools. "
+            "You only DRAFT: nothing goes public until a named human approves it (approved_by)."
+        ),
+    ),
+    AgentRole(
+        name="makshan-agent",
+        mission="Be the chavruta: challenge every result before it is recorded at L2 or above.",
+        inputs=("claimed result", "formal statement", "certificate", "sources"),
+        outputs=("list of kushyot (objections), most serious first",
+                 "verdict per kushya: answered / open (teiku) / fatal",
+                 "statement-faithfulness check: does the Lean statement say what we claim?"),
+        tools=("Lean (read + #print axioms)", "independent re-computation", "literature search"),
+        max_self_claim=ClaimLevel.L0_IDEA,
+        system_prompt=(
+            "You are the makshan, not the defender. Attack: Is the formal statement the right one "
+            "(off-by-one, wrong quantifier, vacuous hypothesis)? Does the certificate check what is "
+            "claimed? Which axioms/trust assumptions (native_decide, external checkers) are used? "
+            "Is this already in the literature, so 'new' is false? Is any wording stronger than the "
+            "evidence? Record each kushya and whether it was answered. An unanswered kushya is teiku, "
+            "and the result stays at its lower level."
         ),
     ),
 ]}
@@ -160,7 +181,8 @@ def plan_for(goal) -> list[tuple[str, str]]:
             attack.append(default)
     attack.append("analogy-agent")
     plan += [("3-attack (parallel)", r) for r in attack]
-    plan.append(("5-publish", "publisher-agent"))
+    plan.append(("4-chavruta", "makshan-agent"))   # או חברותא או מיתותא
+    plan.append(("5-publish (human approval)", "publisher-agent"))  # עבד ולא אדון
     return plan
 
 

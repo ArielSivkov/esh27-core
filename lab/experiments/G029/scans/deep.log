@@ -1,0 +1,4 @@
+deep W(4,4): 5 jobs tlim=300.0
+deep W(3,5): 5 jobs tlim=300.0
+deep W(5,4): 5 jobs tlim=300.0
+deep W(2,7): 5 jobs tlim=300.0

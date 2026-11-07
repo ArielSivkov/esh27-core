@@ -29,3 +29,6 @@ cell W(4,5) record 17705: 4324 jobs, m in (4426, 8852]
 done W(6,4): 3289 jobs, 0 SAT, 104s
 done W(3,6): 2376 jobs, 0 SAT, 177s
 done W(4,5): 4324 jobs, 0 SAT, 344s
+done W(5,4): 169 jobs, 0 SAT, 1135s
+cell W(2,8) record 11495: 1810 jobs, m in (1642, 3284]
+done W(2,8): 1810 jobs, 0 SAT, 90s

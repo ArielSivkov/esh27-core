@@ -193,3 +193,12 @@ ESH_MODEL=claude-opus-5-5 python -m orchestrator.run --run G001 --agent literatu
 3. כל טענה נושאת רמה (L0–L4), וכל טענה ציבורית מקושרת לתעודה.
 4. כישלונות נרשמים. ההיסטוריה ב-ledger אינה נמחקת.
 5. גרסאות מוצמדות (lean-toolchain, lake-manifest, גרסאות solvers) — אחרת אין רפרודוקטיביות ואין תעודה.
+
+## חמשת היסודות
+
+כל הארכיטקטורה כפופה לחמשת היסודות שב-`docs/foundations.md`, ובקוד ל-`orchestrator/foundations.py`.
+
+- נוסף שלב `4-chavruta`: הסוכן `makshan-agent` מקשה על כל תוצאה לפני שהיא מתפרסמת.
+- נוספו לפנקס שני כללים חוסמים: L3 בלי תעודה, ופעולה חיצונית בלי `approved_by`.
+- נוספו לפנקס השדות `sources`, `review` ו-`approved_by`, ותוצאה מסוג `teiku`.
+- `--audit` מדווח על כל השאר.
