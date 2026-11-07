@@ -3,3 +3,6 @@ deep W(3,5): 5 jobs tlim=300.0
 deep W(5,4): 5 jobs tlim=300.0
 deep W(2,7): 5 jobs tlim=300.0
 {"p": 311, "z": 2, "R": 62, "m": 622, "len": 3733, "status": "UNSAT", "t": 37.48, "tlim": 300.0}
+{"p": 547, "z": 1, "R": 42, "m": 547, "len": 2189, "status": "UNSAT", "t": 85.01, "tlim": 300.0}
+{"p": 157, "z": 4, "R": 52, "m": 628, "len": 3769, "status": "UNSAT", "t": 64.91, "tlim": 300.0}
+{"p": 251, "z": 3, "R": 25, "m": 753, "len": 2260, "status": "UNSAT", "t": 191.27, "tlim": 300.0}
