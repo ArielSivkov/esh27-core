@@ -18,6 +18,7 @@ pip install -r requirements.txt
 python run_experiments.py           # כל הניסויים, בערך דקה
 python run_experiments.py --quick   # גרסה קצרה
 python tests/test_chain27.py        # בדיקות
+python exp_coin.py                  # ניסוי 01: כלכלת המטבע -> results/coin/
 ```
 
 התוצאות נכתבות ל-`results/`: הדוח ב-`REPORT.md`, גרפים ב-PNG, ונתונים גולמיים ב-CSV ו-`summary.json`. ה-seed קבוע, ולכן כל הרצה מחזירה את אותם מספרים.

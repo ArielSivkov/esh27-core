@@ -68,7 +68,9 @@ class Ledger:
     def end_block(self, height, proposer, used, evidence=()):
         reward = min(self.treasury, self.block_reward(height))
         self.treasury -= reward
-        self.validator_income[proposer] += reward
+        to_charity = reward * self.cfg.charity_reward_share
+        self.charity += to_charity
+        self.validator_income[proposer] += reward - to_charity
         self.rewards_total += reward
         for (validator, _h, _r) in evidence:
             if validator not in self.slashed:

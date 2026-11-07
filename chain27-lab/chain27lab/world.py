@@ -40,6 +40,7 @@ class Config:
     block_reward: float = 2.0
     halving_blocks: int = 10_000_000
     slash_fraction: float = 0.10
+    charity_reward_share: float = 0.0  # part of each block reward sent to the charity fund
     # faults: list of (time, action, [node indices]) with action crash|restore
     behaviors: dict = field(default_factory=dict)
     schedule: list = field(default_factory=list)
