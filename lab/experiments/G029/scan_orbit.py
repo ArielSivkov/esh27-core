@@ -33,7 +33,7 @@ print(f"cell W({r},{k}) record {record}: {len(jobs)} jobs, m in ({mrec:.0f}, {mm
 t0 = time.time(); nsat = 0
 with open(out, 'a') as fh:
     for (m, p, z, R) in jobs:
-        info, f = solve(r, k, p, z, R)
+        info, f = solve(r, k, p, z, R, 20)
         rec = {"p": p, "z": z, "R": R, "m": m, "len": info["len"], "status": info["status"], "t": info.get("t")}
         if f is not None:
             nsat += 1

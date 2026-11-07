@@ -27,8 +27,11 @@ def build(r, k, p, z, R, f):
         col.append(c)
     return col
 
-def run(r, k, p, z, R, record=None, save=False, tlim_ls=60):
-    info, f = solve(r, k, p, z, R)
+def run(r, k, p, z, R, record=None, save=False, tlim_ls=60, f=None, info=None):
+    if f is None:
+        info, f = solve(r, k, p, z, R)
+    else:
+        info = dict(info)
     info["method"] = "orbit-csp"
     if f is None:
         log(info); return info

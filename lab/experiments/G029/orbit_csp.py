@@ -14,7 +14,7 @@ APs through a wildcard slot impose 'not all equal' on their other elements.
 Usage: orbit_csp.py r k p z R [time_s]   -> prints JSON; writes f to stdout if SAT."""
 import sys, json, time
 import numpy as np
-from pysat.solvers import Cadical153
+CADICAL = '/home/user/esh27-core/lab/experiments/G050/tools/cadical/build/cadical'
 from construct import dlog_table
 
 def classes(p, z, R):
@@ -64,20 +64,32 @@ def solve(r, k, p, z, R, tlim=60):
     if trivial:
         info.update(status="UNSAT-trivial", t=round(time.time() - t0, 2)); return info, None
     V = z * R; var = lambda v, c: int(v) * r + c + 1
-    s = Cadical153()
-    for v in range(V): s.add_clause([var(v, c) for c in range(r)])
-    s.add_clause([var(cl[1], 0)])            # colour symmetry
+    clauses = [[var(v, c) for c in range(r)] for v in range(V)]
+    clauses.append([var(cl[1], 0)])            # colour symmetry
     for con in cons:
-        for c in range(r): s.add_clause([-var(v, c) for v in con])
-    import threading
-    timer = threading.Timer(tlim, s.interrupt); timer.start()
-    res = s.solve_limited(expect_interrupt=True); timer.cancel()
+        for c in range(r): clauses.append([-var(v, c) for v in con])
+    # external CaDiCaL binary with a hard time limit (pysat interrupts proved unreliable)
+    import subprocess, tempfile, os
+    fd, cnf = tempfile.mkstemp(suffix='.cnf', dir=os.environ.get('G029_SCRATCH', '/tmp')); os.close(fd)
+    with open(cnf, 'w') as fh:
+        fh.write(f"p cnf {V * r} {len(clauses)}\n")
+        for cla in clauses: fh.write(' '.join(map(str, cla)) + ' 0\n')
+    try:
+        pr = subprocess.run([CADICAL, '-q', '-t', str(int(tlim)), cnf], capture_output=True, text=True, timeout=tlim + 30)
+        outp = pr.stdout
+    except subprocess.TimeoutExpired:
+        outp = ''
+    os.unlink(cnf)
     info["t"] = round(time.time() - t0, 2)
-    if res is None:
+    if 's SATISFIABLE' in outp:
+        res = True
+    elif 's UNSATISFIABLE' in outp:
+        res = False
+    else:
         info["status"] = "UNKNOWN-timeout"; return info, None
     if not res:
         info["status"] = "UNSAT"; return info, None
-    model = set(x for x in s.get_model() if x > 0)
+    model = set(int(x) for line in outp.splitlines() if line.startswith('v') for x in line[1:].split() if int(x) > 0)
     f = [next(c for c in range(r) if var(v, c) in model) for v in range(V)]
     info["status"] = "SAT"; return info, f
 
