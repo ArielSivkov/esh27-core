@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install fastapi uvicorn pydantic cachetools tenacity pyyaml
+      - name: Compile
+        run: python -m compileall -q backend
+      - name: Docker build
+        run: docker build -t esh27-core:ci .
