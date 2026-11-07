@@ -1,0 +1,34 @@
+r,k,status,value,meaning,source,confidence,note
+2,3,exact,9,W=9,Chvatal 1970 / classical; also proved in Lean (G050),high,
+2,4,exact,35,W=35,Chvatal 1970; also G050 (LRAT+native_decide),high,
+2,5,exact,178,W=178,Stevens-Shantaram 1978,high,
+2,6,exact,1132,W=1132,Kouril-Paul 2008,high,confirmed in search (cs.umd.edu 1132.pdf)
+2,7,lower,3703,good colouring of [1..3703] exists (W>3703),Rabung-Lotts 2012 (EJC),high,confirmed in two search snippets; = 6*617+1 (prime 617; zip 0)
+2,8,lower,11495,W>11495,Rabung-Lotts 2012,high,confirmed (datagenetics table); = 7*(2*821)+1 (zip x2)
+2,9,lower,41265,W>41265,Rabung-Lotts 2012,medium,from memory of Wikipedia table; not re-confirmed in this session
+2,10,lower,103474,W>103474,Rabung-Lotts 2012,high,confirmed in search snippet
+2,11,lower,178631,W>178631,Rabung-Lotts 2012,medium,from memory; not re-confirmed
+3,3,exact,27,W=27,Chvatal 1970; also G050,high,
+3,4,exact,293,W=293,Kouril 2012,high,
+3,5,lower,2173,W>2173,Rabung-Lotts 2012,high,confirmed (datagenetics); = 4*543+1 with 543=3*181 (zipped)
+3,6,lower,11191,W>11191,Rabung-Lotts 2012,medium,from memory
+3,7,lower,48811,W>48811,Rabung-Lotts 2012,medium,from memory
+3,8,lower,238400,W>238400,Rabung-Lotts / Monroe,low,from memory
+3,9,lower,932745,W>932745 (published before Oct 2026),Rabung-Lotts/Monroe,high,confirmed as 'best previously published' in Kim 2610.32000 table
+3,9,claimed,4002705,W>4002705,Kim arXiv:2610.32000 (Oct 2026; unrefereed),medium,seen only via search-index snippets; paper not opened
+4,3,exact,76,W=76,Kouril 2012,high,
+4,4,lower,1048,W>1048,Rabung-Lotts 2012 (cyclic zipper table: p=349 zip 0),high,confirmed (two snippets); = 3*349+1
+4,5,lower,17705,W>17705,Rabung-Lotts 2012,high,confirmed in BCT 1705.09673 table; = 4*(2*2213)+1
+4,6,lower,91331,W>91331,Rabung-Lotts 2012,high,confirmed in BCT table
+4,7,lower,393469,W>393469,Rabung-Lotts/Monroe,low,from memory
+5,3,lower,170,W>170,Heule 2017 (J. Combinatorics 8(3)) SAT with symmetry,high,confirmed (>170; symmetric certificate m=85 p=17)
+5,4,lower,2254,W>2254,Rabung-Lotts 2012,high,confirmed (datagenetics); = 3*751+1
+5,5,lower,98740,W>98740,Rabung-Lotts/Monroe,low,from memory
+6,3,lower,223,W>223 (some tables say >225),Heule 2017,medium,discrepancy: BCT 1705.09673 table shows >225; Heule paper mentions certificate of length 223
+6,4,lower,9778,W>9778,Rabung-Lotts 2012,high,confirmed (datagenetics); = 3*3259+1
+6,5,lower,98748,W>98748,Rabung-Lotts/Monroe,low,from memory
+7,3,lower,343,W>343,Komkov arXiv:1701.05603 (2018),high,old >342 (Heule 2017)
+8,3,lower,515,W>515,Komkov 1701.05603,high,old >511
+10,3,lower,892,W>892,Komkov 1701.05603,high,old >889
+11,3,lower,1187,W>1187,Komkov 1701.05603,high,old >1183
+17,3,lower,3549,W>3549,Komkov 1701.05603,high,old >3546

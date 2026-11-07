@@ -117,7 +117,8 @@
           { left: '$', right: '$', display: false }
         ],
         ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option', 'input', 'select'],
-        throwOnError: false
+        throwOnError: false,
+        output: 'mathml' // native MathML: needs no external stylesheet
       });
     } catch (e) { /* math stays as source text */ }
   }
