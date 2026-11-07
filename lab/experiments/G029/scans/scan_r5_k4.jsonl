@@ -2217,3 +2217,14 @@
 {"p": 211, "z": 4, "R": 30, "m": 844, "len": 2533, "status": "UNKNOWN-timeout", "t": 20.35}
 {"p": 211, "z": 4, "R": 35, "m": 844, "len": 2533, "status": "UNKNOWN-timeout", "t": 20.53}
 {"p": 211, "z": 4, "R": 42, "m": 844, "len": 2533, "status": "UNKNOWN-timeout", "t": 20.53}
+{"p": 283, "z": 3, "R": 47, "m": 849, "len": 2548, "status": "UNKNOWN-timeout", "t": 20.43}
+{"p": 859, "z": 1, "R": 13, "m": 859, "len": 2578, "status": "UNSAT", "t": 0.02}
+{"p": 859, "z": 1, "R": 22, "m": 859, "len": 2578, "status": "UNSAT", "t": 0.06}
+{"p": 859, "z": 1, "R": 26, "m": 859, "len": 2578, "status": "UNSAT", "t": 2.18}
+{"p": 859, "z": 1, "R": 33, "m": 859, "len": 2578, "status": "UNSAT", "t": 0.27}
+{"p": 859, "z": 1, "R": 39, "m": 859, "len": 2578, "status": "UNSAT", "t": 0.34}
+{"p": 431, "z": 2, "R": 43, "m": 862, "len": 2587, "status": "UNKNOWN-timeout", "t": 20.23}
+{"p": 433, "z": 2, "R": 16, "m": 866, "len": 2599, "status": "UNSAT", "t": 0.08}
+{"p": 433, "z": 2, "R": 18, "m": 866, "len": 2599, "status": "UNSAT", "t": 0.09}
+{"p": 433, "z": 2, "R": 24, "m": 866, "len": 2599, "status": "UNSAT", "t": 0.17}
+{"p": 433, "z": 2, "R": 27, "m": 866, "len": 2599, "status": "UNSAT", "t": 0.35}
