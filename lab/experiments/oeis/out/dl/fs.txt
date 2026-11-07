@@ -1,0 +1,349 @@
+            Symmetric Sum-Free Partitions and
+             Lower Bounds for Schur Numbers
+        Harold Fredricksen                           Melvin M. Sweet
+       Naval Postgraduate School,                Institute for Defense Analyses,
+      Department of Mathematics,            Center for Communications Research,
+       Monterey, CA 93943, USA                       4320 Westerra Court,
+           halF@nps.navy.mil                      San Diego, CA 92121, USA
+                                                      sweet@ccrwest.org
+
+                    Submitted:May 9, 2000; Accepted:May 18, 2000
+
+
+                                         Abstract
+          We give new lower bounds for the Schur numbers S(6) and S(7). This
+      will imply new lower bounds for the Multicolor Ramsey Numbers R6 (3)
+      and R7 (3). We also make several observations concerning symmetric sum-
+      free partitions into 5 sets.
+
+
+
+Introduction
+A set of integers is said to be sum-free if for all i and j ≥ i in the set the
+sum i + j is not in the set. The Schur number S(k) is defined to be the max-
+imum integer n for which the interval [1, n] can be partitioned into k sum-free
+sets. 1 I. Schur [7] proved that S(k) is finite, and that
+
+                                 S(k) ≥ 3S(k − 1) + 1 .                                  (1)
+
+In the framework of Ramsey theory, Schur’s proof yields the inequality
+
+                                   S(k) ≤ Rk (3) − 2,                                    (2)
+
+where Rk (n) denotes the k-color Ramsey number, defined to be the smallest
+integer such that any k-color edge coloring of the complete graph on Rk (n)
+vertices has at least one complete subgraph all of whose edges have the same
+color.
+   1 Some authors define S(k) to be the smallest n for which there are no sum-free partitions
+
+into k sets.
+
+
+
+
+                                             1
+the electronic journal of combinatorics 7 (2000), #R32                          2
+
+
+   It is easily verified that S(1) = 1, S(2) = 4, and S(3) = 13; and L.D.
+Baumert [1] showed in 1961 with the aid of a computer that S(4) = 44. The
+best known bounds for S(5) are
+                               160 ≤ S(5) ≤ 315                               (3)
+The first inequality in (3) is due to G. Exoo [4], and the second follows from (2)
+and the bounds for R5 (3) given in S. Radziszowski’s survey paper [6]. For earlier
+work on lower bounds for S(k) see H. Fredricksen [5] and A. Beutelspacher and
+W. Brestovansky [2].
+    The best previously known lower bound S(6) ≥ 481 for S(6) follows from
+(1). At the end of this note we list constructions that show
+                                  S(6) ≥ 536
+                                  S(7) ≥1680.
+Using (2) we obtain the following lower bounds for the Ramsey numbers R6 (3)
+and R7 (3):
+                                  R6 (3) ≥ 538
+                                  R7 (3) ≥1682.
+This improves the bounds given in Radziszowski’s survey paper. Note that the
+bound for R7 (3) is better than the lower bound of 1662 that can be obtained
+by using F. Chung’s [3] inequality
+             Rk+1 (3) ≥ 3Rk (3) + Rk−2 (3) − 3,       for    k ≥ 3,
+with our new bound for R6 (3).
+    The constructions and results in this paper focus on symmetric partitions,
+where a sum-free partition P of the interval [1, n] is said to be symmetric if
+all symmetric pairs i and (n + 1) − i are in the same set; except in the case
+when n + 1 is divisible by 3, we must allow (n + 1)/3 and 2(n + 1)/3 to be in
+different sets. There are no real theorems in this note, only observations and
+conjectures based on a computer study of symmetric sum-free partitions. We
+have restricted our focus to such partitions because the search space is smaller,
+and the concepts of equivalence and depth which are explained below provide
+additional useful structure for restricting the search.
+    It is easy to see that if a symmetric sum-free partition P is multiplied
+mod(n + 1) by an integer m that is relatively prime to n + 1, then m P is also
+a symmetric sum-free partition. We will say two such partitions are equivalent.
+    Given a partition P of [1, n], we define the depth, denoted d(P ), to be the
+largest of the set minimums; and for a symmetric sum-free partition we define
+the e-depth, denoted D(P ), to be the maximum of d(P 0 ) over all partitions
+P 0 equivalent to P . We define Dk (n) to be the maximum of D(P ) over all
+symmetric sum-free partitions P of [1, n] into k sets. Note that we must have
+                             Dk (n) ≤ S(k − 1) + 1.
+the electronic journal of combinatorics 7 (2000), #R32                            3
+
+
+    In a later section we will give exact values of D5 (n) for many values of n.
+These values and other studies described later for partitions into 5 sets have led
+us to make the following conjectures:
+
+Conjecture 1 The largest integer for which there is a symmetric sum-free par-
+tition into 5 sets is 160; and perhaps S(5) = 160.
+
+Conjecture 2 All symmetric sum-free partitions of 160 into 5 sets have e-depth
+44.
+
+Conjecture 3 There are no symmetric sum-free partitions of 155 or 158 into
+5 sets.
+
+Note 155 and 158 are the special cases in the definition of symmetric, and that
+it is not obvious that a symmetric partition of n into k sets implies that there
+is a symmetric partition of m into k sets for m < n.
+
+
+The Search Algorithm
+The search algorithm we used is the obvious branching scheme modified with
+various heuristics. We successively place an integer that is “most blocked” (in
+set membership) by earlier placements, and then backtrack when a branch dies
+or an answer is found. The heuristic used to decide which of the most blocked
+integers to select was to choose the smallest. Choosing the correct heuristic can
+make a huge difference in search time. Using this algorithm with the condition
+d(P ) ≥ m, it is possible to completely exhaust the search tree in less than a
+minute for partitions of [1, n] into 5 sets with n near 160 and m near to 44 = S(4).
+For smaller depths the running time required to exhaust becomes excessive; but
+by limiting the total number of placements made beyond a certain level it is
+possible to probabilistically prune the search tree and have a good probability
+of finding an answer when one exists.
+   Our search algorithm and heuristics were motivated by the following three
+observations that evolved during the development of the algorithm:
+
+  1. It is easy to exhaustively find all (not necessarily symmetric) sum-free
+     partitions into 4 sets.
+  2. With high probability, it is easy to complete in a few steps a symmetric
+     sum-free partition if only about 20% of the elements are known.
+  3. Many partitions are equivalent to partitions with large depth which can
+     be build by first finding partitions in fewer sets.
+
+   The partitions P of k = 6 and 7 sets given at the end of this paper were
+found using a probabilistic algorithm starting with a partition P 0 of k − 1 sets
+with small d(P 0 ) and by restricting d(P ) to be near S(k − 1).
+the electronic journal of combinatorics 7 (2000), #R32                            4
+
+
+   We believe that it should be possible to find a larger lower bound for S(6) by
+looking for symmetric sum-free partitions that have large depth and have one
+other set with large e-depth. We currently have programs running to do this.
+
+
+Conjectures and Observations for 5 Sets
+This section describes observations and conjections resulting from a computer
+study of symmetric sum-free partitions into 5 sets.
+    By an exhaustive branching program, we were able to determine D5 (n) for all
+n ≤ 154. For 102 ≤ n ≤ 154, D5 (n) is always either 44 or 45; for 86 ≤ n ≤ 101,
+D5 (n) is between 41 and 45; and for 45 ≤ n ≤ 85, D5 (n) = [(n + 1)/2]. We
+were also able to determine that D5 (160) = D5 (157) = D5 (156) = 44, but that
+D5 (159) = 39. We were only able to show exhaustively that D5 (155) < 36 and
+that D5 (158) < 36. A probabilistic search for symmetric sum-free partitions of
+158 into 5 parts, leads us to conjecture that there may be no such partitions;
+it is not obvious that a symmetric partition of n into k sets implies that there
+is a symmetric partition of m into k sets for m < n. A similar statement may
+apply to 155, but we have not examined it as carefully. For 160 < n ≤ 315
+we exhaustively searched for symmetric partitions into 5 sets with depth ≥ 44
+and found that there are none. We did the same for other more relaxed depth
+restrictions, but for smaller n, with the same result; to summarize
+                 D5 (n) < 36                   for 161 ≤ n ≤ 190
+                 D5 (n) < 39                   for 191 ≤ n ≤ 210
+                 D5 (n) < 44                   for 211 ≤ n ≤ 315
+This, various probabilistic searches, and the upper bound in (3) leads us to
+conjecture that 160 is the largest integer for which there is a symmetric sum-
+free partition into 5 sets, and perhaps that S(5) = 160.
+    We found that there are symmetric sum-free partitions of 157 into 5 sets
+for each of the e-depths 44,31,and 26. For partitions of 159 into 5 sets, we
+found examples with D(P ) = 39 and examples with D(P ) = 26. The only
+e-depth found for partitions of 160 into 5 sets was 44. We conjecture that
+no other e-depths are possible for 160 into 5 sets. This would mean that all
+partitions of 160’s would be equivalent to the 5840 we found exhaustively for
+160 with d = 44; of these, 768 are equivalent to exactly one other partition
+with d(P ) = 44 (interestingly, the equivalence multiplier is always 30 or 59
+(= −1/30 mod 161)), the rest were equivalent to no others with d(P ) = 44. So
+we conjecture that there are (4304 + (768/2)) ∗ φ(161)/2 = 309, 408 symmetric
+sum-free partitions of 160 into 5 sets.
+    An interesting note for depth 44 symmetric sum-free partitions of 160 into
+5 sets is that the shortest distance between one and a multiple of another is
+small. Here the distance between partitions is defined as the smallest number
+of elements that are in different sets between the partitions, after a relabeling of
+the electronic journal of combinatorics 7 (2000), #R32                          5
+
+
+sets for one of the partitions. Considering only multiplication by 1, 30, and 59
+the maximum distance is 19. This means that there is essentially only one cluster
+of depth 44 partitions, and if our conjecture is correct, then every symmetric
+partition is equivalent to something in this cluster.
+    The situation in the last paragraph for 160 is similar to what happens for the
+largest partitions into 4 and 3 sets; further evidence that 160 may be maximal
+for 5 set partitions. For partitions of 44 into 4 sets all 24 = φ(45) symmetric
+sum-free partitions of the 273 sum-free partitions are equivalent (note that,
+since 3 divides 45, multiplying by 1 and -1 are not the same), and 6 of the 24
+have depth 13. For sum-free partitions of 13 into 3 sets all three partitions are
+symmetric and equivalent.
+    Another interesting aside, for depth 44 symmetric sum-free partitions of 160
+into 5 sets is that the sizes of the sets have the following properties:
+
+  1. There are 128 different set size configurations.
+  2. The largest set size is 44, and the smallest is 24.
+  3. The largest difference between smallest and largest set in a partition is 20,
+     and the smallest is 6. For the largest difference, the largest set is always
+     44. For the smallest difference, the largest set is always 34.
+  4. The most likely set size configuration is {26,28,32,34,40},
+the electronic journal of combinatorics 7 (2000), #R32                              6
+
+
+Constructions
+The constructions exhibited below are symmetric, and so we only list the small-
+est of a symmetric pair.
+
+
+
+
+Partition of 536 into 6 symmetric sumfree sets:
+
+ Set 1:    1   5   8 11 14 24 27 30 33 36 40 43 46 49
+  52 65 71 77 81 84 90 93 99 103 109 112 115 125 128 131
+ 134 137 144 147 150 153 160 163 166 169 172 181 185 188 191 194
+ 201 204 207 213 220 223 226 229 232 235 238 242 245 248 251 254
+ 264 267 358
+
+ Set 2:    2 12 19 25 26 34 41 57 58 63 72 79 85 86
+  95 96 102 118 123 124 140 141 145 146 155 156 162 173 183 193
+ 200 206 211 215 216 222 233 239 244 253 260 261 266
+
+ Set 3:    3 10 16 22 23 29 35 42 48 56 60 62 67 68
+  69 74 75 80 87 88 94 100 101 106 107 113 114 119 121 126
+ 133 139 151 152 158 159 164 165 171 178 184 192 197 198 203 205
+ 210 217 237 241 243 249 250 255 256
+
+ Set 4:    4 13 20 28 31 38 50 61 64 73 83 91 98 108
+ 110 117 120 132 135 142 143 154 161 168 177 179 187 195 209 212
+ 214 219 221 224 231 236 246 258 265
+
+ Set 5:    6   9 17 21 32 39 44 51 54 55 66 70 82 89
+  92 104 111 127 129 130 149 167 175 189 190 202 225 227 247 252
+ 262 263
+
+ Set 6:    7 15 18 37 45 47 53 59 76 78 97 105 116 122
+ 136 138 148 157 170 174 176 180 182 186 196 199 208 218 228 230
+ 234 240 257 259 268
+
+(D(P ) = 161)
+
+
+    We also have constructions of 6 set partitions for the following n and respec-
+tive e-depths D:
+
+n =499, 506, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 523, 525, 526, 531
+D =160, 161, 160, 161, 161, 161, 144, 147, 158, 144, 142, 161, 161, 161, 155, 160, 161.
+the electronic journal of combinatorics 7 (2000), #R32             7
+
+
+Partition of 1680 into 7 symmetric sumfree sets:
+
+ Set 1:    1 15 17 38 52 56 80 82 85 87 89 96 98 109
+ 129 133 135 140 142 149 151 153 158 182 184 186 190 200 206 208
+ 230 237 239 241 250 253 255 261 274 283 308 318 320 334 336 352
+ 371 373 389 391 415 424 428 444 446 470 477 479 486 488 493 499
+ 512 521 523 525 532 541 543 546 565 567 572 574 576 583 590 596
+ 627 629 643 664 666 682 684 708 717 737 750 759 761 768 770 779
+ 781 800 803 810 812 814 816 821 834
+
+ Set 2:    2 29 36 42 53 67 73 86 91 100 117 124 138 147
+ 155 171 188 202 209 235 240 268 280 290 291 299 306 311 317 324
+ 337 350 355 361 362 383 388 393 394 421 426 432 443 459 473 476
+ 481 490 506 514 528 537 544 555 561 575 588 594 599 621 626 658
+ 659 665 670 681 696 697 703 714 728 740 747 752 778 785 799 832
+
+ Set 3:    3   8 10 12 21 23 28 30 32 50 61 63 68 70
+  72 79 81 83 99 101 103 105 110 112 114 121 123 130 132 134
+ 141 143 150 152 154 156 161 163 165 174 176 183 185 194 196 201
+ 203 205 214 221 223 232 236 238 243 245 252 254 256 258 265 267
+ 272 276 278 285 287 294 296 303 305 307 314 323 325 327 329 338
+ 345 347 356 358 367 374 376 380 385 387 396 398 405 407 409 420
+ 427 431 438 440 447 449 456 458 460 465 467 469 471 478 480 487
+ 489 491 498 507 509 511 513 518 520 522 529 531 540 542 547 551
+ 558 560 562 569 573 578 580 582 591 593 600 602 609 611 613 620
+ 622 624 631 633 640 644 649 662 671 673 680 691 693 695 700 706
+ 711 713 715 726 731 733 735 744 746 753 757 762 773 775 777 782
+ 784 793 795 797 802 806 808 813 815 817 822 824 826 828 835 837
+
+ Set 4:    4 11 18 20 33 34 35 62 64 65 71 88 115 118
+ 120 167 168 170 173 217 218 220 227 242 249 270 271 273 295 297
+ 300 302 309 312 326 339 348 353 370 379 406 408 411 423 425 452
+ 455 461 503 505 508 533 550 564 577 605 608 617 632 646 647 661
+ 663 690 699 729 741 743 780 788 789 796 811
+
+ Set 5:    5 14 39 46 47 49 102 104 106 136 139 189 191 192
+ 199 224 233 259 262 277 284 288 315 321 340 341 342 343 344 359
+ 377 403 412 429 430 437 439 441 462 474 494 496 497 515 526 527
+ 538 549 556 559 579 581 597 612 614 615 623 641 650 667 668 675
+ 676 678 679 694 709 712 732 734 749 764 765 767 776 794 819 820
+ 829 831
+
+ Set 6:    6   9 24 25 26 27 41 43 44 45 55 57 58 59
+  74 76 77 92 94 95 97 108 111 126 127 144 145 146 159 162
+ 164 177 178 179 180 193 195 197 211 212 213 215 226 229 244 246
+ 247 263 264 279 282 293 330 332 333 335 346 349 364 365 366 368
+the electronic journal of combinatorics 7 (2000), #R32                      8
+
+
+ 382 384 397 399 400 402 414 416 417 418 433 434 435 448 450 451
+ 453 464 466 468 482 483 484 485 500 501 502 517 534 535 536 552
+ 553 568 570 571 584 585 587 603 606 618 619 634 635 637 638 652
+ 653 655 656 672 685 687 688 702 704 705 718 720 721 722 723 725
+ 738 755 756 758 771 772 774 787 790 791 805 809 823 825 838 840
+
+ Set 7:    7 13 16 19 22 31 37 40 48 51 54 60 66 69
+  75 78 84 90 93 107 113 116 119 122 125 128 131 137 148 157
+ 160 166 169 172 175 181 187 198 204 207 210 216 219 222 225 228
+ 231 234 248 251 257 260 266 269 275 281 286 289 292 298 301 304
+ 310 313 316 319 322 328 331 351 354 357 360 363 369 372 375 378
+ 381 386 390 392 395 401 404 410 413 419 422 436 442 445 454 457
+ 463 472 475 492 495 504 510 516 519 524 530 539 545 548 554 557
+ 563 566 586 589 592 595 598 601 604 607 610 616 625 628 630 636
+ 639 642 645 648 651 654 657 660 669 674 677 683 686 689 692 698
+ 701 707 710 716 719 724 727 730 736 739 742 745 748 751 754 760
+ 763 766 769 783 786 792 798 801 804 807 818 827 830 833 836 839
+
+(D(P ) = 537)
+
+
+   We also have constructions of 7 set partitions for
+
+    n=      1615,     1620,    1630,     1640,     1650,   1660,    1665
+    D=       532,      537,     536,      537,      537,    537,     537.
+
+
+References
+[1] L. D. Baumert and S.W. Golomb. Backtrack Programming. J. Ass. Comp.
+    Machinery, 12:516–524, 1965.
+[2] Albrecht Beutelspacher and Walter Brestovansky. Generalized Schur Num-
+    bers. In Combinatorial Theory, Proceedings of a Conference Held at Schloss
+    Rauischholzhausen, May 6-9, 1982, volume 969 of Lecture Notes in Mathe-
+    matics, pages 30–38. Springer-Verlag, Berlin-New York, 1982.
+[3] Fan Rong K. Chung. On the Ramsey Numbers N (3, 3, ...3; 2). Discrete
+    Mathematics, 5:317–321, 1973.
+[4] Geoffrey Exoo. A Lower Bound for Schur Numbers and Multicolor
+    Ramsey Numbers of K3 . The Electonic Journal of Combinatorics,
+    http://www.combinatorics.org/, #R8, 1: 3 pages, 1994.
+[5] Harold Fredricksen.            Schur Numbers and the Ramsey Numbers
+    N (3, 3, . . . , 3; 2). J. Combinatorial Theory Ser A, 27:371–379, 1979.
+the electronic journal of combinatorics 7 (2000), #R32                    9
+
+
+[6] Stainislaw P. Radziszowski. Small Ramsey Numbers. Dynamic Survey DS1.
+    Electronic J. Combinatorics, 1:35 pages, 1984 Revision #6 July 5, 1999.
+[7] I. Schur. Uber die Kongruenz xm + y m ≡ z m (mod p). Jahresber. Deutsch.
+    Math.-Verin., 25:114–116, 1916.
+

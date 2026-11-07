@@ -1,2 +1,5 @@
 {"p": 547, "z": 1, "R": 42, "m": 547, "len": 2189, "status": "UNSAT", "t": 85.01, "tlim": 300.0}
 {"p": 139, "z": 4, "R": 46, "m": 556, "len": 2225, "status": "UNKNOWN-timeout", "t": 300.37, "tlim": 300.0}
+{"p": 281, "z": 2, "R": 40, "m": 562, "len": 2249, "status": "UNKNOWN-timeout", "t": 300.15, "tlim": 300.0}
+{"p": 113, "z": 5, "R": 16, "m": 565, "len": 2261, "status": "UNKNOWN-timeout", "t": 300.26, "tlim": 300.0}
+{"p": 191, "z": 3, "R": 38, "m": 573, "len": 2293, "status": "UNKNOWN-timeout", "t": 300.45, "tlim": 300.0}

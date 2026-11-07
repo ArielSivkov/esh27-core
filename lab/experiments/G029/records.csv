@@ -1,34 +1,53 @@
-r,k,status,value,meaning,source,confidence,note
-2,3,exact,9,W=9,Chvatal 1970 / classical; also proved in Lean (G050),high,
-2,4,exact,35,W=35,Chvatal 1970; also G050 (LRAT+native_decide),high,
-2,5,exact,178,W=178,Stevens-Shantaram 1978,high,
-2,6,exact,1132,W=1132,Kouril-Paul 2008,high,confirmed in search (cs.umd.edu 1132.pdf)
-2,7,lower,3703,good colouring of [1..3703] exists (W>3703),Rabung-Lotts 2012 (EJC),high,confirmed in two search snippets; = 6*617+1 (prime 617; zip 0)
-2,8,lower,11495,W>11495,Rabung-Lotts 2012,high,confirmed (datagenetics table); = 7*(2*821)+1 (zip x2)
-2,9,lower,41265,W>41265,Rabung-Lotts 2012,medium,from memory of Wikipedia table; not re-confirmed in this session
-2,10,lower,103474,W>103474,Rabung-Lotts 2012,high,confirmed in search snippet
-2,11,lower,178631,W>178631,Rabung-Lotts 2012,medium,from memory; not re-confirmed
-3,3,exact,27,W=27,Chvatal 1970; also G050,high,
-3,4,exact,293,W=293,Kouril 2012,high,
-3,5,lower,2173,W>2173,Rabung-Lotts 2012,high,confirmed (datagenetics); = 4*543+1 with 543=3*181 (zipped)
-3,6,lower,11191,W>11191,Rabung-Lotts 2012,medium,from memory
-3,7,lower,48811,W>48811,Rabung-Lotts 2012,medium,from memory
-3,8,lower,238400,W>238400,Rabung-Lotts / Monroe,low,from memory
-3,9,lower,932745,W>932745 (published before Oct 2026),Rabung-Lotts/Monroe,high,confirmed as 'best previously published' in Kim 2610.32000 table
-3,9,claimed,4002705,W>4002705,Kim arXiv:2610.32000 (Oct 2026; unrefereed),medium,seen only via search-index snippets; paper not opened
-4,3,exact,76,W=76,Kouril 2012,high,
-4,4,lower,1048,W>1048,Rabung-Lotts 2012 (cyclic zipper table: p=349 zip 0),high,confirmed (two snippets); = 3*349+1
-4,5,lower,17705,W>17705,Rabung-Lotts 2012,high,confirmed in BCT 1705.09673 table; = 4*(2*2213)+1
-4,6,lower,91331,W>91331,Rabung-Lotts 2012,high,confirmed in BCT table
-4,7,lower,393469,W>393469,Rabung-Lotts/Monroe,low,from memory
-5,3,lower,170,W>170,Heule 2017 (J. Combinatorics 8(3)) SAT with symmetry,high,confirmed (>170; symmetric certificate m=85 p=17)
-5,4,lower,2254,W>2254,Rabung-Lotts 2012,high,confirmed (datagenetics); = 3*751+1
-5,5,lower,98740,W>98740,Rabung-Lotts/Monroe,low,from memory
-6,3,lower,223,W>223 (some tables say >225),Heule 2017,medium,discrepancy: BCT 1705.09673 table shows >225; Heule paper mentions certificate of length 223
-6,4,lower,9778,W>9778,Rabung-Lotts 2012,high,confirmed (datagenetics); = 3*3259+1
-6,5,lower,98748,W>98748,Rabung-Lotts/Monroe,low,from memory
-7,3,lower,343,W>343,Komkov arXiv:1701.05603 (2018),high,old >342 (Heule 2017)
-8,3,lower,515,W>515,Komkov 1701.05603,high,old >511
-10,3,lower,892,W>892,Komkov 1701.05603,high,old >889
-11,3,lower,1187,W>1187,Komkov 1701.05603,high,old >1183
-17,3,lower,3549,W>3549,Komkov 1701.05603,high,old >3546
+r,k,status,value,meaning,source,verified_from,note
+2,3,exact,9,W=9,Chvatal 1970,Wikipedia wikitext fetched 2026-11-07,
+3,3,exact,27,W=27,Chvatal 1970,Wikipedia wikitext fetched 2026-11-07,
+4,3,exact,76,W=76,Beeler-O'Neil 1979,Wikipedia wikitext fetched 2026-11-07,
+5,3,lower,170,W>170: an AP-free colouring of 170 consecutive integers is known,Heule 2017 J.Comb 8(3) (SAT with symmetry) per Wikipedia/literature,Wikipedia wikitext fetched 2026-11-07,
+6,3,lower,225,W>225: an AP-free colouring of 225 consecutive integers is known,Heule 2017 J.Comb 8(3) (SAT with symmetry) per Wikipedia/literature,Wikipedia wikitext fetched 2026-11-07,older sources give >223; Wikipedia now >225
+2,4,exact,35,W=35,Chvatal 1970,Wikipedia wikitext fetched 2026-11-07,
+3,4,exact,293,W=293,Kouril 2012,Wikipedia wikitext fetched 2026-11-07,
+4,4,lower,1048,W>1048: an AP-free colouring of 1048 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+5,4,lower,2254,W>2254: an AP-free colouring of 2254 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+6,4,lower,9778,W>9778: an AP-free colouring of 9778 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+2,5,exact,178,W=178,Stevens-Shantaram 1978,Wikipedia wikitext fetched 2026-11-07,
+3,5,lower,2173,W>2173: an AP-free colouring of 2173 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+4,5,lower,17705,W>17705: an AP-free colouring of 17705 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+5,5,lower,98741,W>98741: an AP-free colouring of 98741 consecutive integers is known,Heule 2017 (per Wikipedia ref),Wikipedia wikitext fetched 2026-11-07,
+6,5,lower,98748,W>98748: an AP-free colouring of 98748 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+2,6,exact,1132,W=1132,Kouril-Paul 2008,Wikipedia wikitext fetched 2026-11-07,
+3,6,lower,11191,W>11191: an AP-free colouring of 11191 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+4,6,lower,157209,W>157209: an AP-free colouring of 157209 consecutive integers is known,Monroe 2019/2026,Wikipedia wikitext fetched 2026-11-07,
+5,6,lower,786740,W>786740: an AP-free colouring of 786740 consecutive integers is known,Monroe,Wikipedia wikitext fetched 2026-11-07,
+6,6,lower,1555549,W>1555549: an AP-free colouring of 1555549 consecutive integers is known,Monroe,Wikipedia wikitext fetched 2026-11-07,
+2,7,lower,3703,W>3703: an AP-free colouring of 3703 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+3,7,lower,48811,W>48811: an AP-free colouring of 48811 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+4,7,lower,2284751,W>2284751: an AP-free colouring of 2284751 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,
+5,7,lower,15993257,W>15993257: an AP-free colouring of 15993257 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,
+6,7,lower,111952799,W>111952799: an AP-free colouring of 111952799 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,
+2,8,lower,11495,W>11495: an AP-free colouring of 11495 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+3,8,lower,238400,W>238400: an AP-free colouring of 238400 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+4,8,lower,12288155,W>12288155: an AP-free colouring of 12288155 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,
+5,8,lower,86017085,W>86017085: an AP-free colouring of 86017085 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,
+6,8,lower,602119595,W>602119595: an AP-free colouring of 602119595 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,
+2,9,lower,41265,W>41265: an AP-free colouring of 41265 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+3,9,lower,932745,W>932745: an AP-free colouring of 932745 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Table 1 gives W>4002705 (unrefereed preprint, Oct 2026)
+4,9,lower,139847085,W>139847085: an AP-free colouring of 139847085 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Tables 2-3 give W>2.13e8 (approx, as printed)
+5,9,lower,978929595,W>978929595: an AP-free colouring of 978929595 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Tables 2-3 give W>1.49e9 (approx, as printed)
+6,9,lower,6852507165,W>6852507165: an AP-free colouring of 6852507165 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Tables 2-3 give W>2.06e10 (approx, as printed)
+2,10,lower,103474,W>103474: an AP-free colouring of 103474 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+3,10,lower,4173724,W>4173724: an AP-free colouring of 4173724 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Table 1 gives W>10036978 (unrefereed preprint, Oct 2026)
+4,10,lower,1189640578,W>1189640578: an AP-free colouring of 1189640578 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,Kim 2610.32000: ties closure of published inputs (cell omitted from Kim tables)
+5,10,lower,8327484046,W>8327484046: an AP-free colouring of 8327484046 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,Kim 2610.32000: ties closure of published inputs (cell omitted from Kim tables)
+6,10,lower,58292388322,W>58292388322: an AP-free colouring of 58292388322 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Tables 2-3 give W>1.15e11 (approx, as printed)
+2,11,lower,193941,W>193941: an AP-free colouring of 193941 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,
+3,11,lower,18603731,W>18603731: an AP-free colouring of 18603731 consecutive integers is known,Rabung-Lotts 2012 EJC 19(2) P35 / Rabung 1979 (Wikipedia default attribution),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Table 1 gives W>210813867 (unrefereed preprint, Oct 2026)
+4,11,lower,3464368083,W>3464368083: an AP-free colouring of 3464368083 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Tables 2-3 give W>1.29e10 (approx, as printed)
+5,11,lower,38108048913,W>38108048913: an AP-free colouring of 38108048913 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Tables 2-3 give W>2.29e11 (approx, as printed)
+6,11,lower,419188538043,W>419188538043: an AP-free colouring of 419188538043 consecutive integers is known,Monroe 2019/2026 (arXiv:1603.03301),Wikipedia wikitext fetched 2026-11-07,SUPERSEDED: Kim arXiv:2610.32000 Tables 2-3 give W>1.40e13 (approx, as printed)
+7,3,lower,343,W>343,Komkov arXiv:1701.05603 (2018),search snippet,old >342 Heule 2017
+8,3,lower,515,W>515,Komkov 1701.05603,search snippet,
+10,3,lower,892,W>892,Komkov 1701.05603,search snippet,
+11,3,lower,1187,W>1187,Komkov 1701.05603,search snippet,
+17,3,lower,3549,W>3549,Komkov 1701.05603,search snippet,
+3,12..28,lower,see Kim Table 1,,Kim arXiv:2610.32000 (cubic polychromatic blocks); previous: Monroe 2026 J.CMCC 128 and Pouly 2026 Zenodo 10.5281/zenodo.23337824,arXiv PDF fetched 2026-11-07,e.g. W(3,28)>159594201561100726
+4..6,9..28,lower,see Kim Tables 2-3,,Kim arXiv:2610.32000 (77/80 cells strictly improve the closure of published inputs; (4,10) (4,13) (5,10) tie),arXiv PDF fetched 2026-11-07,
