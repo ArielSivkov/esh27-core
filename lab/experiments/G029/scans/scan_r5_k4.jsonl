@@ -2215,3 +2215,5 @@
 {"p": 211, "z": 4, "R": 15, "m": 844, "len": 2533, "status": "UNSAT", "t": 0.18}
 {"p": 211, "z": 4, "R": 21, "m": 844, "len": 2533, "status": "UNSAT", "t": 0.34}
 {"p": 211, "z": 4, "R": 30, "m": 844, "len": 2533, "status": "UNKNOWN-timeout", "t": 20.35}
+{"p": 211, "z": 4, "R": 35, "m": 844, "len": 2533, "status": "UNKNOWN-timeout", "t": 20.53}
+{"p": 211, "z": 4, "R": 42, "m": 844, "len": 2533, "status": "UNKNOWN-timeout", "t": 20.53}
