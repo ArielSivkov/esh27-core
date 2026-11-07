@@ -2,3 +2,4 @@ deep W(4,4): 5 jobs tlim=300.0
 deep W(3,5): 5 jobs tlim=300.0
 deep W(5,4): 5 jobs tlim=300.0
 deep W(2,7): 5 jobs tlim=300.0
+{"p": 311, "z": 2, "R": 62, "m": 622, "len": 3733, "status": "UNSAT", "t": 37.48, "tlim": 300.0}
