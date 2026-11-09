@@ -1,0 +1,12 @@
+name = "telegram-hub"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Drive folder: D&A (not a secret)
+DRIVE_FOLDER_ID = "1dO-WzLeE3Zfe-kGFU5p0x6IbArftm1yL"
+
+# Secrets (set with `wrangler secret put <NAME>`, never here):
+# TELEGRAM_BOT_TOKEN, WEBHOOK_SECRET, ALLOWED_CHAT_IDS, ALLOWED_USER_IDS,
+# GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET + GOOGLE_REFRESH_TOKEN   (option A, recommended)
+# GOOGLE_SERVICE_ACCOUNT_JSON                                     (option B, Shared Drive only)
