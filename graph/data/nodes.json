@@ -1,0 +1,6 @@
+[
+  {"id": "person:shemaya", "type": "person", "label_he": "שמעיה", "label_en": "Shemaya", "aliases": [], "layer": "torah", "cluster_id": "P15", "era": "zugot", "external": {"wikidata": null, "sefaria_topic": null}, "text_he": "נשיא, מן הזוג הרביעי; רבם של הלל ושמאי יחד עם אבטליון."},
+  {"id": "person:avtalyon", "type": "person", "label_he": "אבטליון", "label_en": "Avtalyon", "aliases": [], "layer": "torah", "cluster_id": "P15", "era": "zugot", "external": {"wikidata": null, "sefaria_topic": null}, "text_he": "אב בית דין, מן הזוג הרביעי; רבם של הלל ושמאי יחד עם שמעיה."},
+  {"id": "person:hillel", "type": "person", "label_he": "הלל הזקן", "label_en": "Hillel the Elder", "aliases": ["הלל"], "layer": "torah", "cluster_id": "P15", "era": "zugot", "external": {"wikidata": null, "sefaria_topic": null}, "text_he": "נשיא, מן הזוג החמישי; מייסד בית הלל."},
+  {"id": "person:shammai", "type": "person", "label_he": "שמאי הזקן", "label_en": "Shammai the Elder", "aliases": ["שמאי"], "layer": "torah", "cluster_id": "P16", "era": "zugot", "external": {"wikidata": null, "sefaria_topic": null}, "text_he": "אב בית דין, מן הזוג החמישי; מייסד בית שמאי."}
+]

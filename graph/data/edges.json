@@ -1,0 +1,7 @@
+[
+  {"id": "e:0001", "source": "person:shemaya", "target": "person:hillel", "type": "E1", "basis": "EXTRACTED", "claimed_by": null, "rank": "normal", "valid": {"from": null, "to": null}, "refs": [{"sefaria_ref": "Pirkei_Avot.1.12", "quote": "הלל ושמאי קבלו מהם"}], "disputes": [], "added_by": "claude"},
+  {"id": "e:0002", "source": "person:avtalyon", "target": "person:hillel", "type": "E1", "basis": "EXTRACTED", "claimed_by": null, "rank": "normal", "valid": {"from": null, "to": null}, "refs": [{"sefaria_ref": "Pirkei_Avot.1.12", "quote": "הלל ושמאי קבלו מהם"}], "disputes": [], "added_by": "claude"},
+  {"id": "e:0003", "source": "person:shemaya", "target": "person:shammai", "type": "E1", "basis": "EXTRACTED", "claimed_by": null, "rank": "normal", "valid": {"from": null, "to": null}, "refs": [{"sefaria_ref": "Pirkei_Avot.1.12", "quote": "הלל ושמאי קבלו מהם"}], "disputes": [], "added_by": "claude"},
+  {"id": "e:0004", "source": "person:avtalyon", "target": "person:shammai", "type": "E1", "basis": "EXTRACTED", "claimed_by": null, "rank": "normal", "valid": {"from": null, "to": null}, "refs": [{"sefaria_ref": "Pirkei_Avot.1.12", "quote": "הלל ושמאי קבלו מהם"}], "disputes": [], "added_by": "claude"},
+  {"id": "e:0005", "source": "person:hillel", "target": "person:shammai", "type": "E3", "basis": "EXTRACTED", "claimed_by": null, "rank": "normal", "valid": {"from": null, "to": null}, "refs": [{"sefaria_ref": "Pirkei_Avot.5.17", "quote": "זו מחלוקת הלל ושמאי"}], "disputes": [], "added_by": "claude"}
+]

@@ -1,0 +1,20 @@
+{
+  "@context": {
+    "esh": "https://esh27.com/graph/",
+    "schema": "https://schema.org/",
+    "wd": "http://www.wikidata.org/entity/",
+    "id": "@id",
+    "type": "@type",
+    "label_he": {"@id": "schema:name", "@language": "he"},
+    "label_en": {"@id": "schema:name", "@language": "en"},
+    "aliases": "schema:alternateName",
+    "text_he": {"@id": "schema:description", "@language": "he"},
+    "source": {"@id": "esh:source", "@type": "@id"},
+    "target": {"@id": "esh:target", "@type": "@id"},
+    "claimed_by": {"@id": "esh:claimedBy", "@type": "@id"},
+    "basis": "esh:basis",
+    "rank": "esh:rank",
+    "refs": "schema:citation",
+    "cluster_id": "esh:cluster"
+  }
+}
