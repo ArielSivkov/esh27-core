@@ -87,44 +87,104 @@ theorem molad_add_cycle (y : Nat) (hy : 1 ≤ y) : molad (y + 19) = molad y + 23
 theorem cycle_remainder : (235 * lunation) % partsPerWeek = 2 * partsPerDay + 16 * partsPerHour + 595 := by
   decide
 
-/-! ## Lemmas for an arbitrary molad -/
+/-! ## Reduction to the molad's weekday and time
+
+`fixRH t` depends on `t` only through its day `t / 25920` and its time `t % 25920`, and
+the dechiyot only through the weekday `t / 25920 % 7`. We factor the delay (0, 1 or 2
+days) out as `delay w h`, and the keviyah of a year as `kevOf w h`, a function of the
+weekday index `w < 7` and time `h < 25920` of the molad plus three leap flags. The
+"for all years" theorems then follow from a statement over `w < 7` (7 cases) and
+`h` (linear inequalities, `omega`). -/
+
+/-- Delay of Rosh Hashana after the molad day, from the molad's weekday index
+`w = d % 7` (0 = Sunday) and time `h` (parts from nightfall): the four dechiyot of 7:1–6. -/
+def delay (w h : Nat) (leap prevLeap : Bool) : Nat :=
+  let d1 := if 18 * 1080 ≤ h ∨ (leap = false ∧ w = 2 ∧ 9 * 1080 + 204 ≤ h) ∨
+               (prevLeap = true ∧ w = 1 ∧ 15 * 1080 + 589 ≤ h) then 1 else 0
+  if (w + d1) % 7 = 0 ∨ (w + d1) % 7 = 3 ∨ (w + d1) % 7 = 5 then d1 + 1 else d1
+
+theorem fixRH_eq_delay (t : Nat) (l p : Bool) :
+    fixRH t l p = t / partsPerDay + delay (t / partsPerDay % 7) (t % partsPerDay) l p := by
+  cases l <;> cases p <;> hebsimp <;> unfold delay <;>
+    simp only [Bool.false_eq_true, Bool.true_eq_false, true_and, false_and, and_false, and_true,
+      or_false, false_or, true_or, or_true] <;>
+    split <;> split <;> split <;> split <;> omega
 
 /-- 7:3: Rosh Hashana is the day of the molad, or at most "בִּשְׁלִישִׁי מִיּוֹם הַמּוֹלָד". -/
+theorem delay_le (w h : Nat) (l p : Bool) : delay w h l p ≤ 2 := by
+  unfold delay; split <;> split <;> omega
+
 theorem fixRH_bounds (t : Nat) (l p : Bool) :
     t / partsPerDay ≤ fixRH t l p ∧ fixRH t l p ≤ t / partsPerDay + 2 := by
-  hebsimp
-  split <;> split <;> omega
+  rw [fixRH_eq_delay]; have := delay_le (t / partsPerDay % 7) (t % partsPerDay) l p; omega
+
+theorem delay_not_adu (w h : Nat) (l p : Bool) (hw : w < 7) :
+    (w + delay w h l p) % 7 ≠ 0 ∧ (w + delay w h l p) % 7 ≠ 3 ∧ (w + delay w h l p) % 7 ≠ 5 := by
+  unfold delay; split <;> split <;> omega
 
 theorem fixRH_not_adu (t : Nat) (l p : Bool) : ¬ isADU (fixRH t l p) := by
-  hebsimp
-  split <;> split <;> omega
+  rw [fixRH_eq_delay]
+  have := delay_not_adu (t / partsPerDay % 7) (t % partsPerDay) l p (Nat.mod_lt _ (by decide))
+  simp only [isADU, weekday]; omega
 
 /-- Shifting the molad by whole weeks shifts Rosh Hashana by the same number of days. -/
 theorem fixRH_add_weeks (t c : Nat) (l p : Bool) :
     fixRH (t + partsPerWeek * c) l p = fixRH t l p + 7 * c := by
-  have h1 : (t + partsPerWeek * c) / 25920 = t / 25920 + 7 * c := by simp only [partsPerWeek]; omega
-  have h2 : (t + partsPerWeek * c) % 25920 = t % 25920 := by simp only [partsPerWeek]; omega
-  cases l <;> cases p <;> hebsimp <;> rw [h1, h2] <;> split <;> split <;> split <;> split <;> omega
+  rw [fixRH_eq_delay, fixRH_eq_delay]
+  have h1 : (t + partsPerWeek * c) / partsPerDay = t / partsPerDay + 7 * c := by
+    simp only [partsPerWeek, partsPerDay]; omega
+  have h2 : (t + partsPerWeek * c) % partsPerDay = t % partsPerDay := by
+    simp only [partsPerWeek, partsPerDay]; omega
+  have h3 : (t / partsPerDay + 7 * c) % 7 = t / partsPerDay % 7 := by omega
+  rw [h1, h2, h3]; omega
 
-set_option maxHeartbeats 4000000 in
-/-- A common year (whatever the neighbouring flags): the seven common keviyot. -/
-theorem fixRH_common (t : Nat) (pl nl : Bool) :
-    let a := fixRH t false pl
-    let n := fixRH (t + 12 * lunation) nl false - a
-    (weekday a = 2 ∧ n = 353) ∨ (weekday a = 2 ∧ n = 355) ∨ (weekday a = 3 ∧ n = 354) ∨
-    (weekday a = 5 ∧ n = 354) ∨ (weekday a = 5 ∧ n = 355) ∨ (weekday a = 7 ∧ n = 353) ∨
-    (weekday a = 7 ∧ n = 355) := by
-  cases pl <;> cases nl <;> hebsimp <;> split <;> split <;> split <;> split <;> omega
+/-- 12 lunations = 354 d 8 h 876 p; 13 lunations = 383 d 21 h 589 p (6:4). -/
+theorem twelve_lunations : 12 * lunation = 354 * partsPerDay + 9516 := by decide
+theorem thirteen_lunations : 13 * lunation = 383 * partsPerDay + 23269 := by decide
 
-set_option maxHeartbeats 4000000 in
-/-- A leap year (followed by a common year): the seven leap keviyot. -/
-theorem fixRH_leap (t : Nat) (pl : Bool) :
-    let a := fixRH t true pl
-    let n := fixRH (t + 13 * lunation) false true - a
-    (weekday a = 2 ∧ n = 383) ∨ (weekday a = 2 ∧ n = 385) ∨ (weekday a = 3 ∧ n = 384) ∨
-    (weekday a = 5 ∧ n = 383) ∨ (weekday a = 5 ∧ n = 385) ∨ (weekday a = 7 ∧ n = 383) ∨
-    (weekday a = 7 ∧ n = 385) := by
-  cases pl <;> hebsimp <;> split <;> split <;> split <;> split <;> omega
+/-- The keviyah determined by the molad's weekday `w`, time `h`, the leap flags of this
+year (`l`), the previous (`pl`) and the next (`nl`) year. -/
+def kevOf (w h : Nat) (l pl nl : Bool) : Nat × Nat :=
+  let a := delay w h l pl
+  let k := if l then 383 else 354
+  let r := if l then 23269 else 9516
+  let c := if 25920 ≤ h + r then 1 else 0
+  let b := delay ((w + k + c) % 7) (h + r - 25920 * c) nl l
+  ((w + a) % 7 + 1, k + c + b - a)
+
+theorem keviyah_eq_kevOf (y : Nat) (hy : 1 ≤ y) :
+    keviyah y = kevOf (molad y / partsPerDay % 7) (molad y % partsPerDay)
+      (isLeap y) (isLeap (y - 1)) (isLeap (y + 1)) := by
+  unfold keviyah yearLength roshHashanah
+  rw [molad_succ y hy, show y + 1 - 1 = y by omega, fixRH_eq_delay, fixRH_eq_delay]
+  unfold kevOf
+  generalize molad y = t
+  cases isLeap y <;> simp only [Bool.false_eq_true, ↓reduceIte, twelve_lunations, thirteen_lunations] <;>
+  · have hc : ∀ k r, (t + (k * partsPerDay + r)) / partsPerDay = t / partsPerDay + k + (if 25920 ≤ t % partsPerDay + r then 1 else 0) ∧
+        (t + (k * partsPerDay + r)) % partsPerDay = t % partsPerDay + r - 25920 * (if 25920 ≤ t % partsPerDay + r then 1 else 0) := by
+      intro k r; simp only [partsPerDay]; split <;> omega
+    rw [(hc _ _).1, (hc _ _).2]
+    have hm : ∀ k c, (t / partsPerDay + k + c) % 7 = (t / partsPerDay % 7 + k + c) % 7 := by intro k c; omega
+    rw [hm]
+    simp only [weekday, Prod.mk.injEq]
+    constructor
+    · omega
+    · have := delay_le (t / partsPerDay % 7) (t % partsPerDay)
+      split <;> omega
+
+/-- Over the 7 weekdays and all times, the keviyah is one of the 14 (common years with
+any neighbours; leap years followed by a common year). -/
+theorem kevOf_mem (w h : Nat) (hw : w < 7) (hh : h < 25920) (pl nl : Bool) :
+    kevOf w h false pl nl ∈ keviyot14 ∧ kevOf w h true pl false ∈ keviyot14 := by
+  have h7 : w = 0 ∨ w = 1 ∨ w = 2 ∨ w = 3 ∨ w = 4 ∨ w = 5 ∨ w = 6 := by omega
+  simp only [kevOf, delay, keviyot14, List.mem_cons, List.not_mem_nil, Prod.mk.injEq, or_false,
+    Bool.false_eq_true, Bool.true_eq_false, true_and, false_and, and_false, and_true,
+    or_false, false_or, ↓reduceIte]
+  cases pl <;> cases nl <;>
+    simp only [Bool.false_eq_true, Bool.true_eq_false, true_and, false_and, and_false, and_true,
+      or_false, false_or, true_or, or_true] <;>
+    rcases h7 with rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
+    (repeat' split) <;> omega
 
 /-! ## Main theorems -/
 
@@ -143,40 +203,61 @@ theorem rh_weekday (y : Nat) :
     weekday (roshHashanah y) = 5 ∨ weekday (roshHashanah y) = 7 := by
   have := lo_adu y; simp only [weekday] at *; omega
 
-/-- The keviyah of year `y ≥ 1` as a statement about the two fixRH calls. -/
-theorem keviyah_cases (y : Nat) (hy : 1 ≤ y) :
-    (isLeap y = false ∧
-      ((weekday (roshHashanah y) = 2 ∧ yearLength y = 353) ∨ (weekday (roshHashanah y) = 2 ∧ yearLength y = 355) ∨
-       (weekday (roshHashanah y) = 3 ∧ yearLength y = 354) ∨ (weekday (roshHashanah y) = 5 ∧ yearLength y = 354) ∨
-       (weekday (roshHashanah y) = 5 ∧ yearLength y = 355) ∨ (weekday (roshHashanah y) = 7 ∧ yearLength y = 353) ∨
-       (weekday (roshHashanah y) = 7 ∧ yearLength y = 355))) ∨
-    (isLeap y = true ∧
-      ((weekday (roshHashanah y) = 2 ∧ yearLength y = 383) ∨ (weekday (roshHashanah y) = 2 ∧ yearLength y = 385) ∨
-       (weekday (roshHashanah y) = 3 ∧ yearLength y = 384) ∨ (weekday (roshHashanah y) = 5 ∧ yearLength y = 383) ∨
-       (weekday (roshHashanah y) = 5 ∧ yearLength y = 385) ∨ (weekday (roshHashanah y) = 7 ∧ yearLength y = 383) ∨
-       (weekday (roshHashanah y) = 7 ∧ yearLength y = 385))) := by
-  unfold yearLength roshHashanah
-  rw [molad_succ y hy, show y + 1 - 1 = y by omega]
+/-- **(c₁) At most 14 keviyot**: every year's keviyah is one of the 14 listed. -/
+theorem keviyah_mem_keviyot14 (y : Nat) (hy : 1 ≤ y) : keviyah y ∈ keviyot14 := by
+  rw [keviyah_eq_kevOf y hy]
+  have hw : molad y / partsPerDay % 7 < 7 := Nat.mod_lt _ (by decide)
+  have hh : molad y % partsPerDay < 25920 := Nat.mod_lt _ (by decide)
   cases hl : isLeap y
-  · left; exact ⟨rfl, by simpa using fixRH_common (molad y) (isLeap (y - 1)) (isLeap (y + 1))⟩
+  · exact (kevOf_mem _ _ hw hh _ _).1
   · have hn : isLeap (y + 1) = false := by
       have := not_leap_and_leap_succ y; cases h : isLeap (y + 1) <;> simp_all
-    right; refine ⟨rfl, ?_⟩
-    rw [hn]; simpa using fixRH_leap (molad y) (isLeap (y - 1))
+    rw [hn]; exact (kevOf_mem _ _ hw hh _ false).2
+
+/-- The keviyah of year `y ≥ 1`, spelled out. -/
+theorem keviyah_cases (y : Nat) (hy : 1 ≤ y) :
+    (weekday (roshHashanah y) = 2 ∧ yearLength y = 353) ∨ (weekday (roshHashanah y) = 2 ∧ yearLength y = 355) ∨
+    (weekday (roshHashanah y) = 3 ∧ yearLength y = 354) ∨ (weekday (roshHashanah y) = 5 ∧ yearLength y = 354) ∨
+    (weekday (roshHashanah y) = 5 ∧ yearLength y = 355) ∨ (weekday (roshHashanah y) = 7 ∧ yearLength y = 353) ∨
+    (weekday (roshHashanah y) = 7 ∧ yearLength y = 355) ∨
+    (weekday (roshHashanah y) = 2 ∧ yearLength y = 383) ∨ (weekday (roshHashanah y) = 2 ∧ yearLength y = 385) ∨
+    (weekday (roshHashanah y) = 3 ∧ yearLength y = 384) ∨ (weekday (roshHashanah y) = 5 ∧ yearLength y = 383) ∨
+    (weekday (roshHashanah y) = 5 ∧ yearLength y = 385) ∨ (weekday (roshHashanah y) = 7 ∧ yearLength y = 383) ∨
+    (weekday (roshHashanah y) = 7 ∧ yearLength y = 385) := by
+  have := keviyah_mem_keviyot14 y hy
+  simpa only [keviyah, keviyot14, List.mem_cons, List.not_mem_nil, Prod.mk.injEq, or_false] using this
+
+/-- Common years have 353–355 days, leap years 383–385 (in both directions). -/
+theorem yearLength_leap_iff (y : Nat) (hy : 1 ≤ y) :
+    (isLeap y = false ↔ yearLength y = 353 ∨ yearLength y = 354 ∨ yearLength y = 355) ∧
+    (isLeap y = true ↔ yearLength y = 383 ∨ yearLength y = 384 ∨ yearLength y = 385) := by
+  have hk := keviyah_eq_kevOf y hy
+  have hw : molad y / partsPerDay % 7 < 7 := Nat.mod_lt _ (by decide)
+  have hh : molad y % partsPerDay < 25920 := Nat.mod_lt _ (by decide)
+  have hc := keviyah_cases y hy
+  unfold keviyah at hk
+  have hd := delay_le (molad y / partsPerDay % 7) (molad y % partsPerDay) (isLeap y) (isLeap (y - 1))
+  -- the length is ≥ 383 iff the year is leap: read off `kevOf`
+  cases hl : isLeap y <;> rw [hl] at hk <;> simp only [kevOf, Prod.mk.injEq, ↓reduceIte, Bool.false_eq_true] at hk <;>
+    rw [hl] at hd <;>
+    (have hb := delay_le ((molad y / partsPerDay % 7 + (if (false:Bool) then 383 else 354) + (if 25920 ≤ molad y % partsPerDay + 9516 then 1 else 0)) % 7) (molad y % partsPerDay + 9516 - 25920 * (if 25920 ≤ molad y % partsPerDay + 9516 then 1 else 0)) (isLeap (y+1)) false) <;>
+    (have hb' := delay_le ((molad y / partsPerDay % 7 + 383 + (if 25920 ≤ molad y % partsPerDay + 23269 then 1 else 0)) % 7) (molad y % partsPerDay + 23269 - 25920 * (if 25920 ≤ molad y % partsPerDay + 23269 then 1 else 0)) (isLeap (y+1)) true) <;>
+    simp only [Bool.false_eq_true, ↓reduceIte] at hb hb' <;> constructor <;> constructor <;> intro h <;>
+    (try simp at h) <;> (try simp) <;> split at hk <;> omega
 
 /-- **(b) Legal year lengths** (cf. Russinoff's ACL2 `legal-year-lengths`): a common year
 has 353, 354 or 355 days and a leap year 383, 384 or 385 — the "חסרה / כסדרה / שלמה" of
 8:6–8 ("אִם תִּמְצָא בֵּינֵיהֶן שְׁנֵי יָמִים … שְׁלֹשָׁה … אַרְבָּעָה"). -/
 theorem yearLength_legal (y : Nat) (hy : 1 ≤ y) :
     (isLeap y = false → yearLength y = 353 ∨ yearLength y = 354 ∨ yearLength y = 355) ∧
-    (isLeap y = true → yearLength y = 383 ∨ yearLength y = 384 ∨ yearLength y = 385) := by
-  rcases keviyah_cases y hy with ⟨h, hk⟩ | ⟨h, hk⟩ <;> constructor <;> intro h' <;>
-    simp_all <;> omega
+    (isLeap y = true → yearLength y = 383 ∨ yearLength y = 384 ∨ yearLength y = 385) :=
+  ⟨(yearLength_leap_iff y hy).1.mp, (yearLength_leap_iff y hy).2.mp⟩
 
 /-- (b') Year lengths lie in {353, 354, 355, 383, 384, 385}. -/
 theorem yearLength_mem (y : Nat) (hy : 1 ≤ y) :
     yearLength y ∈ [353, 354, 355, 383, 384, 385] := by
-  rcases keviyah_cases y hy with ⟨_, hk⟩ | ⟨_, hk⟩ <;> simp only [List.mem_cons, List.not_mem_nil] <;> omega
+  have := keviyah_cases y hy
+  simp only [List.mem_cons, List.not_mem_nil]; omega
 
 /-- **Rambam 8:10, formalized**: "כָּל שָׁנָה שֶׁיִּהְיֶה רֹאשׁ הַשָּׁנָה בָּהּ בַּשְּׁלִישִׁי תִּהְיֶה
 לְעוֹלָם כְּסִדְרָן … בֵּין פְּשׁוּטָה בֵּין מְעֻבֶּרֶת. וְאִם יִהְיֶה רֹאשׁ הַשָּׁנָה בְּשַׁבָּת אוֹ בְּשֵׁנִי לֹא
@@ -192,14 +273,10 @@ theorem rambam_8_10 (y : Nat) (hy : 1 ≤ y) :
     (weekday (roshHashanah y) = 7 ∨ weekday (roshHashanah y) = 2 → yearKind y ≠ 1) ∧
     (weekday (roshHashanah y) = 5 → isLeap y = false → yearKind y ≠ 0) ∧
     (weekday (roshHashanah y) = 5 → isLeap y = true → yearKind y ≠ 1) := by
+  have hc := keviyah_cases y hy
+  have hl := yearLength_leap_iff y hy
   unfold yearKind
-  rcases keviyah_cases y hy with ⟨h, hk⟩ | ⟨h, hk⟩ <;> simp only [h] <;> simp <;> omega
-
-/-- **(c₁) At most 14 keviyot**: every year's keviyah is one of the 14 listed. -/
-theorem keviyah_mem_keviyot14 (y : Nat) (hy : 1 ≤ y) : keviyah y ∈ keviyot14 := by
-  unfold keviyah keviyot14
-  rcases keviyah_cases y hy with ⟨_, hk⟩ | ⟨_, hk⟩ <;>
-    simp only [List.mem_cons, List.not_mem_nil, Prod.mk.injEq, or_false] <;> omega
+  cases isLeap y <;> simp only [Bool.false_eq_true, ↓reduceIte, true_iff, false_iff] at hl ⊢ <;> omega
 
 theorem keviyot14_length : keviyot14.length = 14 := rfl
 
