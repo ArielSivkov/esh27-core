@@ -7867,6 +7867,68 @@ class="math inline">S(4)\le 44</span>. תעודת ה-LRAT שלו היא כ-520MB
 <li><strong>ממתין לאריאל:</strong> פנייה ל-Kim או ל-Monroe, הערה קצרה
 ב-arXiv, עדכון ויקיפדיה. כולם פעולות כלפי חוץ.</li>
 </ul>
+<h3 id="עדכון-2026-11-11-הלוח-העברי-של-הרמבם-ב-lean-מאומת-בקרנל">עדכון
+2026-11-11: הלוח העברי של הרמב”ם ב-Lean, מאומת בקרנל</h3>
+<p><strong>רמת טענה:</strong> L3 (אומת ב-kernel של Lean, בלי
+<code>native_decide</code>, בלי <code>sorry</code>; האקסיומות:
+<code>propext</code>, <code>Classical.choice</code>,
+<code>Quot.sound</code> בלבד). בנייה נקייה שוחזרה בסשן הראשי (5.5 דקות).
+<strong>עדיין בלי ביקורת מקשן.</strong></p>
+<p>חבילה: <code>lean/Hebrew/</code>. ההגדרות עוקבות אחרי הלכות קידוש
+החודש (פרקים ו–ח) עם ציטוט ההלכה ליד כל הגדרה
+(<code>experiments/hebrew-calendar/SOURCES.md</code>).</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>משפט</th>
+<th>מה הוא אומר</th>
+<th>מצב בספרות</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lo_adu</code></td>
+<td>ראש השנה לעולם לא ביום א’, ד’, ו’</td>
+<td>הוכח ב-ACL2 (Russinoff 2022); <strong>ראשון ב-Lean</strong></td>
+</tr>
+<tr class="even">
+<td><code>yearLength_legal</code></td>
+<td>אורך שנה ∈ {353,354,355,383,384,385}</td>
+<td>כנ”ל</td>
+</tr>
+<tr class="odd">
+<td><code>exactly_14_keviyot</code></td>
+<td><strong>לכל היותר</strong> 14 קביעות, <strong>וכל אחת מהן
+מתרחשת</strong> (שנת עדות לכל אחת)</td>
+<td>ה”מתרחשת” <strong>חדש</strong>: ב-ACL2 רק “לכל היותר”</td>
+</tr>
+<tr class="even">
+<td><code>keviyah_period</code></td>
+<td>הקביעה חוזרת אחרי 689,472 שנה</td>
+<td>הוכח ב-ACL2 לאורכי שנים</td>
+</tr>
+<tr class="odd">
+<td><code>greatPeriod_minimal</code></td>
+<td><strong>אין מחזור קצר יותר</strong></td>
+<td><strong>לא נמצאה הוכחה פורמלית בשום מקום</strong></td>
+</tr>
+<tr class="even">
+<td><code>rambam_eq_dr'</code></td>
+<td>הנוהל של הרמב”ם שקול לנוסחה של Dershowitz–Reingold</td>
+<td>חדש</td>
+</tr>
+</tbody>
+</table>
+<p><strong>שיטה:</strong> בלי מעבר על 689,472 שנים. מצמצמים ליום המולד
+בשבוע ולשעה, 7 מקרים, ו-<code>omega</code>. בדיקה צולבת מול Python
+ב-10,001 שנים (L1).</p>
+<p><strong>תיקו:</strong> משפט לנדאו על המולד החודשי; מינימליות לאורכי
+שנים בלבד; AFP לא היה נגיש.</p>
 <h1 id="נספח-א-מילון-מונחים">נספח א: מילון מונחים</h1>
 <p>הספר הזה נע בין לוגיקה, תורת המספרים, מדעי המחשב, למידת מכונה ופיזיקה
 תיאורטית, ולכל תחום יש שפה משלו. המילון מרכז כ-120 מונחים שמופיעים לאורך

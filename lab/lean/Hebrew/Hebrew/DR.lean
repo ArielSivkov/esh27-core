@@ -74,7 +74,7 @@ theorem dr_abstract (wm hm : Nat) (hw : wm < 7) (hh : hm < 25920) (l0 l1 : Bool)
   cases l0 <;> cases l1 <;> simp at h01 <;>
     rcases h7 with rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     simp only [kd, kr, dr1, delay, Bool.false_eq_true, Bool.true_eq_false, true_and, false_and,
-      ↓reduceIte] <;> dr_check
+      false_or, or_false, ↓reduceIte] <;> dr_check
 
 /-- Division/modulus of a molad shifted by `k` days and `r < 25920` parts. -/
 theorem shift_div_mod (t k r : Nat) (hr : r < 25920) :
