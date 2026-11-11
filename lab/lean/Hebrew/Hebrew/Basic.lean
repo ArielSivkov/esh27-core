@@ -174,10 +174,14 @@ def drNewYear (y : Nat) : Nat :=
   else if a - drDelay1 (y - 1) = 382 then a + 1
   else a
 
+/-- The 7 keviyot of common years (פשוטות), as (weekday of RH, length). -/
+def keviyotCommon : List (Nat × Nat) :=
+  [(2, 353), (2, 355), (3, 354), (5, 354), (5, 355), (7, 353), (7, 355)]
+/-- The 7 keviyot of leap years (מעוברות). -/
+def keviyotLeap : List (Nat × Nat) :=
+  [(2, 383), (2, 385), (3, 384), (5, 383), (5, 385), (7, 383), (7, 385)]
 /-- The 14 keviyot, as (weekday of RH, length): 7 common + 7 leap. -/
-def keviyot14 : List (Nat × Nat) :=
-  [(2, 353), (2, 355), (3, 354), (5, 354), (5, 355), (7, 353), (7, 355),
-   (2, 383), (2, 385), (3, 384), (5, 383), (5, 385), (7, 383), (7, 385)]
+def keviyot14 : List (Nat × Nat) := keviyotCommon ++ keviyotLeap
 
 /-- `p` is a period of the keviyah sequence (on years ≥ 1). -/
 def IsPeriod (p : Nat) : Prop := ∀ y, 1 ≤ y → keviyah (y + p) = keviyah y

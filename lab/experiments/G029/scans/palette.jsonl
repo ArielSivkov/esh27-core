@@ -711,3 +711,12 @@
 {"r": 3, "s": 2, "k": 7, "q": 99, "status": "UNSAT", "t": 0.02}
 {"r": 3, "s": 2, "k": 7, "q": 100, "status": "UNSAT", "t": 0.01}
 {"r": 3, "s": 2, "k": 7, "q": 47, "status": "UNSAT", "t": 95.83}
+{"r": 3, "s": 2, "k": 8, "q": 55, "status": "UNKNOWN", "t": 500.88}
+{"r": 3, "s": 2, "k": 8, "q": 47, "status": "UNKNOWN", "t": 500.88}
+{"r": 3, "s": 2, "k": 7, "q": 59, "status": "UNKNOWN", "t": 500.87}
+{"r": 3, "s": 2, "k": 7, "q": 49, "status": "UNKNOWN", "t": 500.02}
+{"r": 3, "s": 2, "k": 7, "q": 53, "status": "UNSAT", "t": 396.48}
+{"r": 3, "s": 2, "k": 8, "q": 49, "status": "UNKNOWN", "t": 500.02}
+{"r": 3, "s": 2, "k": 7, "q": 61, "status": "UNKNOWN", "t": 500.01}
+{"r": 3, "s": 2, "k": 8, "q": 59, "status": "UNKNOWN", "t": 500.02}
+{"r": 3, "s": 2, "k": 7, "q": 65, "status": "UNSAT", "t": 61.98}
