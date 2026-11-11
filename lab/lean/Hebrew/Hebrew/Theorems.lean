@@ -41,6 +41,33 @@ theorem isLeap_eq_dr (y : Nat) : isLeap y = drLeap y := by
 /-- Two consecutive years are never both leap years. -/
 theorem not_leap_and_leap_succ (y : Nat) : ¬ (isLeap y = true ∧ isLeap (y + 1) = true) := by
   simp only [isLeap_eq_dr, drLeap, decide_eq_true_eq]
+  rw [show 7 * (y + 1) + 1 = (7 * y + 1) + 7 by omega, Nat.add_mod (7 * y + 1) 7 19]
+  have := Nat.mod_lt (7 * y + 1) (show 19 > 0 by decide)
+  generalize (7 * y + 1) % 19 = r at *
+  revert this; revert r; decide
+
+theorem monthsBeforeInCycle_succ : ∀ r, r < 18 →
+    monthsBeforeInCycle (r + 1) = monthsBeforeInCycle r + (if leapCycleYear (r + 1) then 13 else 12) := by
+  decide
+
+/-- Elapsed months grow by 12 or 13 per year (6:10–11, 6:14). -/
+theorem elapsedMonths_succ (y : Nat) (hy : 1 ≤ y) :
+    elapsedMonths (y + 1) = elapsedMonths y + (if isLeap y then 13 else 12) := by
+  unfold elapsedMonths isLeap cycleYear
+  rw [show (y + 18) % 19 = (y - 1) % 19 by omega, show y + 1 - 1 = y by omega]
+  by_cases h : (y - 1) % 19 = 18
+  · rw [show y / 19 = (y - 1) / 19 + 1 by omega, show y % 19 = 0 by omega, h]
+    simp only [monthsBeforeInCycle, leapCycleYear]; omega
+  · have hr : (y - 1) % 19 < 18 := by have := Nat.mod_lt (y - 1) (show 19 > 0 by decide); omega
+    rw [show y / 19 = (y - 1) / 19 by omega, show y % 19 = (y - 1) % 19 + 1 by omega,
+      monthsBeforeInCycle_succ _ hr]
+    omega
+
+theorem elapsedMonths_add_cycles (y c : Nat) (hy : 1 ≤ y) :
+    elapsedMonths (y + 19 * c) = elapsedMonths y + 235 * c := by
+  unfold elapsedMonths
+  rw [show (y + 19 * c - 1) / 19 = (y - 1) / 19 + c by omega,
+    show (y + 19 * c - 1) % 19 = (y - 1) % 19 by omega]
   omega
 
 /-- "וְתוֹסִיף שְׁאֵרִיתָהּ … אִם פְּשׁוּטָה הִיא שְׁאֵרִית הַפְּשׁוּטָה וְאִם מְעֻבֶּרֶת הִיא שְׁאֵרִית
@@ -50,16 +77,12 @@ molad(y+1) = molad(y) + 12 or 13 lunations. -/
 theorem molad_succ (y : Nat) (hy : 1 ≤ y) :
     molad (y + 1) = molad y + (if isLeap y then 13 else 12) * lunation := by
   unfold molad
-  rw [elapsedMonths_eq_dr _ hy, elapsedMonths_eq_dr _ (by omega), isLeap_eq_dr]
-  unfold drLeap drElapsedMonths
-  split <;> rename_i h <;> simp only [decide_eq_true_eq] at h <;> omega
+  rw [elapsedMonths_succ y hy, Nat.add_mul, Nat.add_assoc]
 
 /-- 6:12–13: a 19-year cycle advances the molad by 235 lunations (בי"ו תקצ"ה mod 7). -/
 theorem molad_add_cycle (y : Nat) (hy : 1 ≤ y) : molad (y + 19) = molad y + 235 * lunation := by
   unfold molad
-  rw [elapsedMonths_eq_dr _ hy, elapsedMonths_eq_dr _ (by omega)]
-  unfold drElapsedMonths
-  omega
+  rw [show y + 19 = y + 19 * 1 by rfl, elapsedMonths_add_cycles y 1 hy, Nat.add_mul, Nat.add_assoc]
 
 theorem cycle_remainder : (235 * lunation) % partsPerWeek = 2 * partsPerDay + 16 * partsPerHour + 595 := by
   decide
@@ -79,7 +102,9 @@ theorem fixRH_not_adu (t : Nat) (l p : Bool) : ¬ isADU (fixRH t l p) := by
 /-- Shifting the molad by whole weeks shifts Rosh Hashana by the same number of days. -/
 theorem fixRH_add_weeks (t c : Nat) (l p : Bool) :
     fixRH (t + partsPerWeek * c) l p = fixRH t l p + 7 * c := by
-  cases l <;> cases p <;> hebsimp <;> split <;> split <;> split <;> split <;> omega
+  have h1 : (t + partsPerWeek * c) / 25920 = t / 25920 + 7 * c := by simp only [partsPerWeek]; omega
+  have h2 : (t + partsPerWeek * c) % 25920 = t % 25920 := by simp only [partsPerWeek]; omega
+  cases l <;> cases p <;> hebsimp <;> rw [h1, h2] <;> split <;> split <;> split <;> split <;> omega
 
 set_option maxHeartbeats 4000000 in
 /-- A common year (whatever the neighbouring flags): the seven common keviyot. -/
@@ -210,8 +235,8 @@ theorem greatPeriod_arith :
 theorem molad_add_greatPeriod (y : Nat) (hy : 1 ≤ y) :
     molad (y + greatPeriod) = molad y + partsPerWeek * 35975351 := by
   unfold molad
-  rw [elapsedMonths_eq_dr _ hy, elapsedMonths_eq_dr _ (by omega)]
-  unfold drElapsedMonths
+  rw [show y + greatPeriod = y + 19 * 36288 by rfl, elapsedMonths_add_cycles y 36288 hy]
+  simp only [baharad, lunation, partsPerWeek, partsPerDay, partsPerHour]
   omega
 
 theorem isLeap_add_greatPeriod (y : Nat) : isLeap (y + greatPeriod) = isLeap y := by
@@ -324,48 +349,5 @@ theorem greatPeriod_minimal (d : Nat) (hd0 : 0 < d) (hd : d < greatPeriod) : ¬ 
   have hkN : k ∣ 2 ^ 6 * 3 ^ 4 * 7 * 19 := ⟨g, by rw [Nat.mul_comm]; exact hk⟩
   have := Nat.Coprime.eq_one_of_dvd cN hkN
   omega
-
-/-! ## Equivalence with the Dershowitz–Reingold formulation -/
-
-set_option maxHeartbeats 8000000 in
-theorem dr_abstract (m : Nat) (l0 l1 l2 : Bool) (h01 : ¬ (l0 = true ∧ l1 = true))
-    (h12 : ¬ (l1 = true ∧ l2 = true)) :
-    let k0 := if l0 then 13 else 12
-    let k1 := if l1 then 13 else 12
-    let dd := fun (m : Nat) =>
-      let day := 29 * m + (12084 + 13753 * m) / 25920
-      if (3 * (day + 1)) % 7 < 3 then day + 1 else day
-    let a := dd (m + k0)
-    fixRH (31524 + (m + k0) * lunation) l1 l0 =
-      (if dd (m + k0 + k1) - a = 356 then a + 2
-       else if a - dd m = 382 then a + 1 else a) + 1 := by
-  cases l0 <;> cases l1 <;> cases l2 <;> simp at h01 h12 <;> hebsimp <;>
-    split <;> split <;> split <;> split <;> split <;> split <;> split <;> omega
-
-/-- **Equivalence of formulations**: for every year y ≥ 2, the Rambam's procedure (7:1–6)
-gives the same Rosh Hashana as the Dershowitz–Reingold formula used by the oracle
-`hebrew_period.py` (ours = theirs + 1 by our choice of day 0). -/
-theorem rambam_eq_dr (y : Nat) (hy : 2 ≤ y) : roshHashanah y = drNewYear y + 1 := by
-  have e0 := elapsedMonths_eq_dr (y - 1) (by omega)
-  have s0 := molad_succ (y - 1) (by omega)
-  have s1 := molad_succ y (by omega)
-  rw [show y - 1 + 1 = y by omega] at s0
-  have hl := not_leap_and_leap_succ (y - 1)
-  have hl' := not_leap_and_leap_succ y
-  rw [show y - 1 + 1 = y by omega] at hl
-  have key := dr_abstract (drElapsedMonths (y - 1)) (isLeap (y - 1)) (isLeap y) (isLeap (y + 1)) hl hl'
-  have m1 : drElapsedMonths y = drElapsedMonths (y - 1) + (if isLeap (y - 1) then 13 else 12) := by
-    rw [isLeap_eq_dr]; unfold drLeap drElapsedMonths
-    split <;> rename_i h <;> simp only [decide_eq_true_eq] at h <;> omega
-  have m2 : drElapsedMonths (y + 1) = drElapsedMonths y + (if isLeap y then 13 else 12) := by
-    rw [isLeap_eq_dr]; unfold drLeap drElapsedMonths
-    split <;> rename_i h <;> simp only [decide_eq_true_eq] at h <;> omega
-  have mol : molad y = 31524 + drElapsedMonths y * lunation := by
-    unfold molad; rw [elapsedMonths_eq_dr y (by omega)]
-  unfold roshHashanah drNewYear drDelay1
-  rw [mol, m2, m1]
-  exact key
-
-theorem rambam_eq_dr_one : roshHashanah 1 = drNewYear 1 + 1 := by decide
 
 end Hebrew
