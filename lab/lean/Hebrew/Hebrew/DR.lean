@@ -23,16 +23,30 @@ def dr1 (w h : Nat) : Nat :=
 theorem partsPerDay_le_molad (y : Nat) : partsPerDay ≤ molad y := by
   unfold molad; simp only [baharad, partsPerDay, partsPerHour]; omega
 
+theorem mod7_three (x : Nat) : (3 * x) % 7 < 3 ↔ (x % 7 = 0 ∨ x % 7 = 3 ∨ x % 7 = 5) := by
+  rw [Nat.mul_mod]
+  have := Nat.mod_lt x (show 7 > 0 by decide)
+  generalize x % 7 = s at *
+  revert this; revert s; decide
+
 /-- `drDelay1` is "day of the molad − 1 + dr1". -/
 theorem drDelay1_eq (y : Nat) (hy : 1 ≤ y) :
     drDelay1 y = molad y / partsPerDay - 1 + dr1 (molad y / partsPerDay % 7) (molad y % partsPerDay) := by
   have hm : molad y = 31524 + drElapsedMonths y * 765433 := by
     unfold molad; rw [elapsedMonths_eq_dr y hy]; rfl
-  unfold drDelay1 dr1
+  unfold drDelay1
   rw [hm]
   generalize drElapsedMonths y = m
-  simp only [partsPerDay]
-  (repeat' split) <;> omega
+  obtain ⟨q, r, hr, hqr⟩ : ∃ q r, r < 25920 ∧ 5604 + 13753 * m = 25920 * q + r :=
+    ⟨_, _, Nat.mod_lt _ (by decide), (Nat.div_add_mod _ _).symm⟩
+  have hD : (31524 + m * 765433) / partsPerDay = 29 * m + 1 + q := by simp only [partsPerDay]; omega
+  have hH : (31524 + m * 765433) % partsPerDay = r := by simp only [partsPerDay]; omega
+  have hd : (12084 + 13753 * m) / 25920 = q + (if 19440 ≤ r then 1 else 0) := by split <;> omega
+  dsimp only
+  rw [hD, hH, hd]
+  unfold dr1
+  simp only [mod7_three]
+  split <;> split <;> split <;> omega
 
 /-- Days and leftover parts of 12 / 13 lunations. -/
 def kd (l : Bool) : Nat := if l then 383 else 354
@@ -60,7 +74,7 @@ theorem dr_abstract (wm hm : Nat) (hw : wm < 7) (hh : hm < 25920) (l0 l1 : Bool)
   cases l0 <;> cases l1 <;> simp at h01 <;>
     rcases h7 with rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     simp only [kd, kr, dr1, delay, Bool.false_eq_true, Bool.true_eq_false, true_and, false_and,
-      false_or, or_false, ↓reduceIte] <;> dr_check
+      ↓reduceIte] <;> dr_check
 
 /-- Division/modulus of a molad shifted by `k` days and `r < 25920` parts. -/
 theorem shift_div_mod (t k r : Nat) (hr : r < 25920) :
@@ -90,9 +104,9 @@ theorem rambam_eq_dr (y : Nat) (hy : 2 ≤ y) : roshHashanah y = drNewYear y + 1
   generalize isLeap y = l1 at hl01 hl12
   have hr0 : kr l0 < 25920 := by cases l0 <;> decide
   have hr1 : kr l1 < 25920 := by cases l1 <;> decide
-  rw [(shift_div_mod t _ _ hr0).1, (shift_div_mod t _ _ hr0).2]
-  rw [← Nat.add_assoc, (shift_div_mod _ _ _ hr1).1, (shift_div_mod _ _ _ hr1).2]
-  rw [(shift_div_mod t _ _ hr0).1, (shift_div_mod t _ _ hr0).2]
+  dsimp only
+  rw [(shift_div_mod _ _ _ hr1).1,
+    (shift_div_mod _ _ _ hr1).2, (shift_div_mod t _ _ hr0).1, (shift_div_mod t _ _ hr0).2]
   have key := dr_abstract (t / partsPerDay % 7) (t % partsPerDay) (Nat.mod_lt _ (by decide))
     (Nat.mod_lt _ (by decide)) l0 l1 hl01
   simp only [] at key
@@ -102,7 +116,7 @@ theorem rambam_eq_dr (y : Nat) (hy : 2 ≤ y) : roshHashanah y = drNewYear y + 1
       ((t / partsPerDay % 7 + k + c) % 7 + k' + c') % 7 := by intro k c k' c'; omega
   rw [e1, e2, key]
   have hD : 1 ≤ t / partsPerDay := by simp only [partsPerDay] at ht ⊢; omega
-  split <;> split <;> omega
+  (repeat' split) <;> omega
 
 theorem rambam_eq_dr_one : roshHashanah 1 = drNewYear 1 + 1 := by decide
 

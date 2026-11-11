@@ -515,12 +515,12 @@
    "why_it_matters": "Constructions are checkable certificates; prior records came from structured search (Rabung, cyclic zipping).",
    "ai_tractability": "4",
    "formalization_readiness": "4",
-   "known_partial_results": "Exact values known only for few cases (e.g. W(2,6)=1132, Kouril-Paul 2008); tables of lower bounds by Rabung-Lotts, Herwig et al., Monroe.",
+   "known_partial_results": "ESH27 Lab 2026-11-11 (L1, makshan-reviewed): 3-colourings certifying W(3,7)>70357 (table: 48811) and W(3,8)>494285 (table: 238400), via Kim's Thm 2.1 (arXiv:2610.32000) with SAT-found polychromatic blocks q=19/43 on Rabung bases; verified by 3 independent checkers. Not found in any accessible source; residual teiku: Xiu-Li-Liang-Xu 2014 unread. Negative results on W(4,4),W(5,4),W(3,5),W(2,7) and 4 more cells. No Lean certificate (size). Prior: exact values known only for few cases; tables by Rabung-Lotts, Monroe, Kim 2026.",
    "suggested_attack": "construction-agent: cyclic/power-residue colourings + local search; any new record is publishable as a short note with certificate.",
    "references": "https://en.wikipedia.org/wiki/Van_der_Waerden_number;https://www.st.ewi.tudelft.nl/sat/waerden.php",
    "owner_agent": "construction-agent",
-   "progress_pct": 0.0,
-   "last_update": "2026-11-04"
+   "progress_pct": 40.0,
+   "last_update": "2026-11-11"
   },
   {
    "id": "G030",
@@ -3925,6 +3925,312 @@
    "summary": "FAILED attempt: W(2,4) <= 35 via kernel exhaustive search (`decide +kernel` on layer (apOk 4) 2 35 = [], about 20k nodes). Result: the Lean process was OOM-killed (exit 137) after about 4 min at more than 14 GB RAM, on 4 cores / 15 GB. Kept the LRAT+native_decide route instead.",
    "supersedes": null,
    "timestamp": "2026-11-05T00:24:32+00:00"
+  },
+  {
+   "agent": "construction-agent+literature-agent",
+   "approved_by": "",
+   "artifacts": [
+    "lab/experiments/G029/records.csv",
+    "lab/experiments/G029/REPORT.md"
+   ],
+   "attempt_id": "df3da9314f0d",
+   "certificate": null,
+   "claim_level": 0,
+   "dry_run": false,
+   "goal_id": "G029",
+   "method": "lit-review",
+   "model": "claude-opus-5-5 / claude-fable-5-1",
+   "outcome": "success",
+   "prev_sha256": "c9f9bab5c00b34cbd4d52a8a2509963abd394a6a145f001b043a87144f6b21e2",
+   "review": null,
+   "sources": [
+    "arXiv:2610.32000",
+    "arXiv:1603.03301 (Monroe; JCMCC 128, 2026)",
+    "Rabung-Lotts, EJC 19(2) P35 (2012)",
+    "arXiv:1705.09673 (Blankenship-Cummings-Taranchuk)",
+    "arXiv:1701.05603 (Komkov)",
+    "Heule, J. Combinatorics 8(3) 2017",
+    "https://en.wikipedia.org/wiki/Van_der_Waerden_number (raw wikitext, 2026-11-07)",
+    "https://github.com/Vulkin-prog/rabung-atlas32",
+    "https://github.com/marijnheule/vdWaerden"
+   ],
+   "summary": "arXiv:2610.32000 (Seonbin Kim, 22 Oct 2026, 'Polychromatic blocks and explicit lower bounds for multicolour van der Waerden numbers') VERIFIED to exist: PDF downloaded from arxiv.org and read in full. It covers r=3..6, 9<=k<=28 only (77/80 cells improve, 3 tie); nothing for k<=8 or r=2. Records table for 2<=r<=6, 3<=k<=11 rebuilt from the Wikipedia wikitext (fetched 2026-11-07), Monroe arXiv:1603.03301v7 PDF, and Kim; saved as experiments/G029/records.csv with a source per cell. Kim's values are from an unrefereed preprint [not independently verified].",
+   "supersedes": null,
+   "timestamp": "2026-11-11T17:05:02+00:00"
+  },
+  {
+   "agent": "construction-agent+literature-agent",
+   "approved_by": "",
+   "artifacts": [
+    "lab/experiments/G029/certificates/reproduced/",
+    "lab/experiments/G029/verify.py",
+    "lab/experiments/G029/verify2.c",
+    "lab/experiments/G029/construct.py",
+    "lab/experiments/G029/orbit_csp.py"
+   ],
+   "attempt_id": "34d21a88576f",
+   "certificate": null,
+   "claim_level": 1,
+   "dry_run": false,
+   "goal_id": "G029",
+   "method": "construction-reproduce",
+   "model": "claude-opus-5-5 / claude-fable-5-1",
+   "outcome": "success",
+   "prev_sha256": "4aaeed4dbd29620ec5d3baf1af6891a6f45531fd9ced5caf6fde4cb6d81db5ac",
+   "review": null,
+   "sources": [
+    "Rabung-Lotts 2012",
+    "arXiv:1603.03301",
+    "https://github.com/marijnheule/vdWaerden"
+   ],
+   "summary": "Reproduced 8 published lower-bound colourings exactly (W(2,7)>3703, W(2,8)>11495, W(3,4)>292, W(3,5)>2173, W(4,4)>1048, W(4,5)>17705, W(5,4)>2254, W(6,4)>9778) with Rabung power-residue / Rabung-Lotts zipper constructions, each checked by two independent verifiers (pure Python and C; the verifiers were cross-checked exhaustively on n<=9 and on 600 random colourings). Also re-verified Heule's W(2,6) certificate (1131).",
+   "supersedes": null,
+   "timestamp": "2026-11-11T17:05:02+00:00"
+  },
+  {
+   "agent": "construction-agent+literature-agent",
+   "approved_by": "",
+   "artifacts": [
+    "lab/experiments/G029/runs.jsonl",
+    "lab/experiments/G029/scans/",
+    "lab/experiments/G029/REPORT.md"
+   ],
+   "attempt_id": "db4b4e314225",
+   "certificate": null,
+   "claim_level": 1,
+   "dry_run": false,
+   "goal_id": "G029",
+   "method": "orbit-csp+sat+local-search",
+   "model": "claude-opus-5-5 / claude-fable-5-1",
+   "outcome": "failed",
+   "prev_sha256": "ce3a7befec88c02ff697f89d697346b3cb35b28527c9c5b1d7b0e7c9c7038eca",
+   "review": null,
+   "sources": [
+    "Rabung-Lotts 2012",
+    "arXiv:2610.32000 (Thm 2.1, Prop 6.1)",
+    "CaDiCaL 3.0.1 (lab/experiments/G050/tools)"
+   ],
+   "summary": "NO improvement found for W(4,4), W(5,4), W(3,5), W(2,7), W(6,4), W(3,6), W(4,5), W(2,8): exhaustive scan of the generalised power-residue/zipper family (Z_{zp}, z<=8, R<=48, moduli up to 2-4x the record modulus; ~20,000 small SAT instances, 0 SAT, ~130 timeouts left as teiku), direct SAT extend-and-repair (UNSAT within 2s for +1 with up to 300-1000 free positions at each end), tabu local search (does not even reach W(3,4)=292 from random). Kim-style palette blocks for k<=5: UNSAT for every q up to Kim's Prop. 6.1 bound (some timeouts). Rabung-Lotts 2012 records are maximal within their family at these sizes. Details in REPORT.md sections 4 and scans/.",
+   "supersedes": null,
+   "timestamp": "2026-11-11T17:05:02+00:00"
+  },
+  {
+   "agent": "construction-agent+literature-agent",
+   "approved_by": "",
+   "artifacts": [
+    "lab/experiments/G029/certificates/W3_7_gt70357_kimpalette_q19_x_W2_7.txt",
+    "lab/experiments/G029/certificates/W3_7_gt70357_kimpalette_q19_x_W2_7.json",
+    "lab/experiments/G029/kim_product.py",
+    "lab/experiments/G029/palette_sat.py"
+   ],
+   "attempt_id": "c46175e07c86",
+   "certificate": {
+    "checker": "verify.py + verify2.c + verify_np.py (Python/C/numpy, not Lean)",
+    "checker_version": "G029 2026-11-07",
+    "kind": "none",
+    "path": "lab/experiments/G029/certificates/W3_7_gt70357_kimpalette_q19_x_W2_7.txt",
+    "sha256": "3f6bf830b77fa5c711c3c637717f690854cbecea8bc31c19758722ccda78d4fd",
+    "verified": false
+   },
+   "claim_level": 1,
+   "dry_run": false,
+   "goal_id": "G029",
+   "method": "kim-palette-sat-product",
+   "model": "claude-opus-5-5 / claude-fable-5-1",
+   "outcome": "partial",
+   "prev_sha256": "36f807792e535f1e830fdb59040297f5971cab2f6ba1fdb05642b161b2ba58fe",
+   "review": null,
+   "sources": [
+    "arXiv:2610.32000 Thm 2.1",
+    "Rabung-Lotts 2012 (W(2,7)>3703 base)",
+    "arXiv:1603.03301 Table (W(3,7)>48,811)",
+    "Wikipedia 2026-11-07"
+   ],
+   "summary": "CANDIDATE (not a claimed record; awaits makshan review and a further literature check): explicit 3-colouring of 70,357 consecutive integers with no monochromatic 7-AP, i.e. W(3,7) > 70,357, versus the published table value > 48,811 (Rabung-Lotts 2012 / Monroe 2026). Construction: Kim's Theorem 2.1 (arXiv:2610.32000) with a SAT-found 3-polychromatic block of modulus q=19 (palette S: Z_19 -> 2-subsets of {0,1,2}) times the W(2,7) Rabung colouring of length 3703. Kim's tables start at k=9 and his cubic-residue blocks do not exist for k=7, so this cell is not in his paper. Verified by three independent verifiers (C, pure Python, numpy) plus a direct check of Kim's condition (*) on the block. Certificate sha256 3f6bf830b77fa5c711c3c637717f690854cbecea8bc31c19758722ccda78d4fd. No Lean proof (kernel decide infeasible at this size; native_decide not attempted). SAT at q=47,53,65 is UNSAT; q=49,59,61 undecided at 500s.",
+   "supersedes": null,
+   "timestamp": "2026-11-11T17:05:02+00:00"
+  },
+  {
+   "agent": "construction-agent+literature-agent",
+   "approved_by": "",
+   "artifacts": [
+    "lab/experiments/G029/certificates/W3_8_gt494285_kimpalette_q43_x_W2_8.txt",
+    "lab/experiments/G029/certificates/W3_8_gt494285_kimpalette_q43_x_W2_8.json"
+   ],
+   "attempt_id": "847a7b9f40e7",
+   "certificate": {
+    "checker": "verify2.c + verify_np.py (C/numpy, not Lean)",
+    "checker_version": "G029 2026-11-07",
+    "kind": "none",
+    "path": "lab/experiments/G029/certificates/W3_8_gt494285_kimpalette_q43_x_W2_8.txt",
+    "sha256": "ce42fac832c579ca0d31164853dd814342c6020b99c549c403ee309f2426ad62",
+    "verified": false
+   },
+   "claim_level": 1,
+   "dry_run": false,
+   "goal_id": "G029",
+   "method": "kim-palette-sat-product",
+   "model": "claude-opus-5-5 / claude-fable-5-1",
+   "outcome": "partial",
+   "prev_sha256": "e0bbf68075b6f868e6c10d245618172b81e98458e1b5ada7b05f345259bb2739",
+   "review": null,
+   "sources": [
+    "arXiv:2610.32000 Thm 2.1",
+    "Rabung-Lotts 2012 (W(2,8)>11495 base)",
+    "arXiv:1603.03301 Table (W(3,8)>238,400)",
+    "Wikipedia 2026-11-07"
+   ],
+   "summary": "CANDIDATE (not a claimed record; awaits makshan review): explicit 3-colouring of 494,285 consecutive integers with no monochromatic 8-AP, i.e. W(3,8) > 494,285, versus the published table value > 238,400 (Rabung-Lotts 2012 / Monroe 2026). Construction: Kim's Theorem 2.1 with a SAT-found 3-polychromatic block q=43 times the W(2,8) zipper colouring of length 11,495 (Kim's cubic-residue block for k=8 is only q=13; his tables start at k=9). Verified by the C verifier (120 s) and the numpy verifier, plus a direct check of condition (*) on the block; the pure-Python verifier is slow at this size and was still running at write-up (scans/verifypy_W3_8.log). Certificate sha256 ce42fac832c579ca0d31164853dd814342c6020b99c549c403ee309f2426ad62. No Lean proof. q=47..61 undecided at 500 s (teiku).",
+   "supersedes": null,
+   "timestamp": "2026-11-11T17:05:02+00:00"
+  },
+  {
+   "agent": "construction-agent+literature-agent",
+   "approved_by": "",
+   "artifacts": [
+    "lab/experiments/G029/REPORT.md"
+   ],
+   "attempt_id": "52dc2f7c7954",
+   "certificate": null,
+   "claim_level": 0,
+   "dry_run": false,
+   "goal_id": "G029",
+   "method": "lean-proof",
+   "model": "claude-opus-5-5 / claude-fable-5-1",
+   "outcome": "teiku",
+   "prev_sha256": "d2e419418f4df16eac02d58568d0d5ca5ddcd242baa3416b93fd6b9341cd8e34",
+   "review": null,
+   "sources": [
+    "lab/lean/EshLab/Targets/G050/Defs.lean",
+    "arXiv:2610.32000 Thm 2.1"
+   ],
+   "summary": "Lean statement `∃ c, APFree 3 7 70357 c` (G050 Defs) NOT attempted: kernel `decide` on a 70k-element witness is far beyond what G050 managed (kernel OOM at ~20k search nodes); native_decide not tried for lack of time. Suggested route: formalise Kim's Theorem 2.1 and decide only the block (q=19/43) and the base (3703/11495).",
+   "supersedes": null,
+   "timestamp": "2026-11-11T17:05:02+00:00"
+  },
+  {
+   "agent": "makshan-agent",
+   "approved_by": "",
+   "artifacts": [
+    "lab/experiments/G029/review/MAKSHAN.md"
+   ],
+   "attempt_id": "b63f32dfa5b7",
+   "certificate": {
+    "checker": "apcheck_independent.c (main session) + makshan blocks.py (block polychromaticity, product structure); not Lean",
+    "checker_version": "G029 review 2026-11-11",
+    "kind": "none",
+    "path": "lab/experiments/G029/certificates/W3_7_gt70357_kimpalette_q19_x_W2_7.txt",
+    "sha256": "3f6bf830b77fa5c711c3c637717f690854cbecea8bc31c19758722ccda78d4fd",
+    "verified": false
+   },
+   "claim_level": 1,
+   "dry_run": false,
+   "goal_id": "G029",
+   "method": "makshan-review",
+   "model": "claude-fable-5-1",
+   "outcome": "partial",
+   "prev_sha256": "73d045bd158cd92673d783cfea0e84ae2ad0095a97edf9284551f024b9c5dc34",
+   "review": {
+    "answers": [
+     "K1 ANSWERED for all accessible sources, residual TEIKU: no source gives more than 48,811 / 238,400 — Rabung-Lotts EJC 19(2) P35 (2012) Table 1 (both listed as previously known; 238,400 is Rabung 1979 per Herwig et al. EJC 14 (2007) R6 Table 1, which still had 43,855 for W(3,7)), BCT arXiv:1705.09673 Fig. 1, Monroe arXiv:1603.03301v7 Table 1, Wikipedia wikitext 2026-11-11, Kim arXiv:2610.32000 (tables start at k=9, no remark on k<=8 beyond 'We do not claim any new two-colour records'), Pouly rabung-atlas32 paper source v2.0 (scope 12<=k<=28, 3-colour table from k=17), Komkov arXiv:1701.05603 (only W(r,3), W(7,4), W(6,5), W(5,6)), Green arXiv:2102.01543 / Hunter 2111.01099, 2301.06212 / Fox-Hunter 2606.02541 / Campos-Fox-Schildkraut 2608.20824 / Cao 2609.31798 / Liber 2509.07926 (all asymptotic or tiny), arXiv search listing (38 hits, 2023-2026 scanned) and Semantic Scholar 2023-2026. Recurrences computed from the exact statements: BCT Thm 2.1 + remark (primes p with p-floor(p/3)<k => p=7 for k=7,8) gives W(3,7)>7*3703=25,921 and W(3,8)>7*11495=80,465; Xu's product for r=3 reduces to (s,t)=(3,1), i.e. the Rabung/zipper cyclic colourings that give 48,811/238,400; Kim Cor 2.2 with his own cubic-residue blocks (independently rescanned, q<400, q=1 mod 3): only q=7 for k=7 and q=7,13 for k=8 => 25,921 and 149,435. None reaches 70,357 / 494,285. NOT verified: Pouly Zenodo 10.5281/zenodo.23337824 (zenodo.org 403; GitHub source read instead), zbMATH (403), Xiu-Li-Liang-Xu JCTN 11 (2014) doi:10.1166/jctn.2014.3658 (paywalled; the set-colouring paper behind Thm 2.1 — low but nonzero risk), hmonroe/vdw and marijnheule/vdWaerden file listings (GitHub API blocked). Identifier correction: 1701.05603 is Komkov, BCT is 1705.09673, 2102.01543 is Green (asymptotic).",
+     "K2 ANSWERED: W3_7 file = 70,357 symbols over {0,1,2}, W3_8 file = 494,285 symbols; position x = colour of x (1-indexed; AP-freeness is shift-invariant). Wikipedia: 'smallest N such that every r-colouring of {1..N} has a monochromatic k-AP', so a good colouring of n points gives W>n; same convention in Kim ('W(r,k)>N means an explicit r-colouring of N consecutive integers'), Rabung-Lotts (certificate length (l-1)p+1, bound '> length'; Monroe Table 2: 7*34057+1=238,400), BCT, Komkov ('N+1 will be the lower bound'). records.csv uses the same convention. Base colourings re-checked with the makshan's own numpy AP checker: W2_7 (n=3703,k=7) and W2_8 (n=11495,k=8) both 0 monochromatic APs. No off-by-one.",
+     "K3 ANSWERED: Thm 2.1 read (arXiv:2610.32000 pp. 2-3). Independent check (scratchpad chk/blocks.py): the missing-colour map m(u)={0,1,2}\\S(u) is 3-polychromatic on Z_19 for k=7 (all 18*19 APs with d!=0 meet all three colours) and on Z_43 for k=8, which is exactly Cor 2.2 with h=3 (equivalently condition (*) with r=3,s=2); the certificate equals S(u)[beta(t)] at every position q*t+u for both files, length q*n. The blocks are NOT cubic-residue colourings (checked), so they lie outside Kim's own family; the method generalises directly (any 3-polychromatic block x any 2-colour base; Kim Prop 6.1 caps q<=617 for k=7 and q<=1642 for k=8, far beyond the q<=70/75 scanned). Kim himself states Thm 2.1 'is not new' (BCT, Xu, Fox-Hunter Lemma 4.3 eps=0); REPORT.md says so too. Secondary to the direct verification (INDEPENDENT_CHECK.md: 0 APs in both files).",
+     "K4 ANSWERED with two corrections required: no 'proved', 'new record', 'first' anywhere; ledger entries say 'CANDIDATE (not a claimed record)'; foundations._OVERCLAIM regex matches nothing. Offenders: (1) REPORT.md S1.1 'בלוקים של שאריות קוביות לא קיימים כלל ב-k=7' and S4(4) 'אין בלוק ל-k=4,5,7' — FALSE for k=7: the trivial cubic block q=7 exists (=BCT p=7, gives 25,921); should read 'only the trivial q=7'. (2) REPORT.md line 1 and records.csv attribute 48,811 / 238,400 to 'Rabung-Lotts 2012' — that is Wikipedia's default table attribution, not the origin: 238,400 is Rabung 1979 (per Herwig et al. 2007), 48,811 predates 2012 (listed as known in Rabung-Lotts Table 1; discoverer not verified). (3) runs.jsonl 'beats_record_candidate: true' is internal and hedged — acceptable. Corrections not applied by the makshan.",
+     "K5 VERDICT (iii): apparently new improvement of the tabulated bound (x1.44 for k=7, x2.07 for k=8), obtained from a published theorem plus a NEW hypothesis (SAT-found 3-polychromatic blocks q=19, q=43) that no published recurrence supplies; not (i) in any accessible source, not (ii) since the published recurrences max out at 25,921 / 149,435. Modest and same technique as Kim => an addendum, not a paper. To reach L4 (only after a named human approves, foundation 5): (a) write to S. Kim (and Monroe / Pouly) with the two certificates + JSON palettes + a short C checker; (b) a 2-3 page arXiv math.CO note with the blocks, bases, lengths, sha256 and a public certificate repository — Wikipedia needs a citable source; (c) only then edit the Wikipedia table; (d) before (b): decide the open q values (k=7: 49,59,61; k=8: 47..61 and up to 1642) and ideally Lean: Thm 2.1 + decide on block and base (L3). Level stays L1."
+    ],
+    "kushyot": [
+     "K1 literature: is W(3,7)>70357 / W(3,8)>494285 already published or implied by a published recurrence?",
+     "K2 statement: do the files certify a 3-colouring of {1..n} with no monochromatic k-AP, under the standard W(r,k) convention (good colouring of n points => W>n)? off-by-one vs Wikipedia/Monroe/BCT/Rabung-Lotts?",
+     "K3 construction: does the use of Kim Thm 2.1 / Cor 2.2 match its hypotheses (condition (*) / 3-polychromatic block), and is the certificate really the product chi(qt+u)=phi_u(beta(t))?",
+     "K4 wording: any phrase in REPORT.md / ledger / runs.jsonl stronger than the evidence?",
+     "K5 novelty verdict: (i) published, (ii) implied by published theorem/recurrence, (iii) apparently new improvement of the tabulated bound?"
+    ],
+    "makshan": "makshan-agent (claude-fable-5-1), 2026-11-11, lab/experiments/G029/review/MAKSHAN.md",
+    "resolved": false,
+    "verdict": "(iii) apparently new improvement of the tabulated bound; L1 stays L1; residual teiku: Xiu-Li-Liang-Xu 2014 unread, Zenodo/zbMATH unreachable; two wording fixes pending in REPORT.md/records.csv"
+   },
+   "sources": [
+    "arXiv:2610.32000v1 (Kim, 22 Oct 2026; pdf md5 66e0894149c0b6b09b7c1042b17bc5b4)",
+    "arXiv:1705.09673v3 (Blankenship-Cummings-Taranchuk; EJC 69 (2018) 163-168) Thm 2.1 + remark + Fig. 1",
+    "arXiv:1603.03301v7 (Monroe; JCMCC 128 (2026) 305-315) Tables 1-2",
+    "arXiv:1701.05603 (Komkov 2020)",
+    "arXiv:2102.01543v2 (Green 2022)",
+    "Rabung-Lotts, EJC 19(2) (2012) P35 Table 1 (combinatorics.org pdf)",
+    "Herwig-Heule-van Lambalgen-van Maaren, EJC 14 (2007) R6 Table 1 (combinatorics.org pdf)",
+    "Rabung, Canad. Math. Bull. 22 (1979) 87-91 [not read; cited via Herwig 2007 and Rabung-Lotts 2012]",
+    "https://en.wikipedia.org/wiki/Van_der_Waerden_number raw wikitext 2026-11-11",
+    "arxiv.org/search '\"van der Waerden\" AND \"lower bound\"' 2026-11-11 (38 hits)",
+    "api.semanticscholar.org search 2023-2026",
+    "https://raw.githubusercontent.com/Vulkin-prog/rabung-atlas32/main/paper/RABUNG_BOUNDS_EN.tex (v2.0, 12 Oct 2026)",
+    "arXiv:2606.02541, 2301.06212, 2111.01099, 2608.20824, 2609.31798, 2509.07926 (abstracts/pdf)",
+    "lab/experiments/G029/review/INDEPENDENT_CHECK.md",
+    "scratchpad chk/blocks.py (makshan's own checks)"
+   ],
+   "summary": "MAKSHAN REVIEW of W(3,7) > 70,357 (supersedes c46175e07c86). K1 literature: not published anywhere accessible (Rabung-Lotts 2012, BCT 2018, Monroe 2026, Wikipedia 2026-11-11, Kim Oct 2026, Pouly Oct 2026 all stop at 48,811; value is pre-2012, origin not verified) and not implied by any published recurrence: BCT Thm 2.1 + remark gives 7*3703 = 25,921, Xu reduces to the cyclic Rabung family (48,811), Kim Cor 2.2 with cubic blocks gives only q=7 at k=7 (same 25,921). K2 statement/off-by-one: correct under the standard convention. K3: block q=19 independently confirmed 3-polychromatic for k=7, certificate confirmed equal to the palette product of the Rabung p=617 base (base re-checked AP-free). K4 wording: no overclaim; two factual slips to fix (REPORT says cubic blocks 'do not exist at all' for k=7 — trivial q=7 exists; attribution of 48,811 to Rabung-Lotts 2012 is Wikipedia's default, not the origin). K5 verdict: (iii) apparently new improvement (x1.44) via published theorem + new SAT block; addendum-level, not a paper. Residual teiku: Xiu-Li-Liang-Xu 2014 (paywalled), Zenodo/zbMATH unreachable. Level stays L1; any outward step needs a named human approver.",
+   "supersedes": "c46175e07c86",
+   "timestamp": "2026-11-11T17:19:22+00:00"
+  },
+  {
+   "agent": "makshan-agent",
+   "approved_by": "",
+   "artifacts": [
+    "lab/experiments/G029/review/MAKSHAN.md"
+   ],
+   "attempt_id": "abafa46f43bd",
+   "certificate": {
+    "checker": "apcheck_independent.c (main session) + makshan blocks.py (block polychromaticity, product structure); not Lean",
+    "checker_version": "G029 review 2026-11-11",
+    "kind": "none",
+    "path": "lab/experiments/G029/certificates/W3_8_gt494285_kimpalette_q43_x_W2_8.txt",
+    "sha256": "ce42fac832c579ca0d31164853dd814342c6020b99c549c403ee309f2426ad62",
+    "verified": false
+   },
+   "claim_level": 1,
+   "dry_run": false,
+   "goal_id": "G029",
+   "method": "makshan-review",
+   "model": "claude-fable-5-1",
+   "outcome": "partial",
+   "prev_sha256": "46abb79b36285d6d6e99d0cf8c92f410c7542c9075d2f18609823e7de9f8aaa4",
+   "review": {
+    "answers": [
+     "K1 ANSWERED for all accessible sources, residual TEIKU: no source gives more than 48,811 / 238,400 — Rabung-Lotts EJC 19(2) P35 (2012) Table 1 (both listed as previously known; 238,400 is Rabung 1979 per Herwig et al. EJC 14 (2007) R6 Table 1, which still had 43,855 for W(3,7)), BCT arXiv:1705.09673 Fig. 1, Monroe arXiv:1603.03301v7 Table 1, Wikipedia wikitext 2026-11-11, Kim arXiv:2610.32000 (tables start at k=9, no remark on k<=8 beyond 'We do not claim any new two-colour records'), Pouly rabung-atlas32 paper source v2.0 (scope 12<=k<=28, 3-colour table from k=17), Komkov arXiv:1701.05603 (only W(r,3), W(7,4), W(6,5), W(5,6)), Green arXiv:2102.01543 / Hunter 2111.01099, 2301.06212 / Fox-Hunter 2606.02541 / Campos-Fox-Schildkraut 2608.20824 / Cao 2609.31798 / Liber 2509.07926 (all asymptotic or tiny), arXiv search listing (38 hits, 2023-2026 scanned) and Semantic Scholar 2023-2026. Recurrences computed from the exact statements: BCT Thm 2.1 + remark (primes p with p-floor(p/3)<k => p=7 for k=7,8) gives W(3,7)>7*3703=25,921 and W(3,8)>7*11495=80,465; Xu's product for r=3 reduces to (s,t)=(3,1), i.e. the Rabung/zipper cyclic colourings that give 48,811/238,400; Kim Cor 2.2 with his own cubic-residue blocks (independently rescanned, q<400, q=1 mod 3): only q=7 for k=7 and q=7,13 for k=8 => 25,921 and 149,435. None reaches 70,357 / 494,285. NOT verified: Pouly Zenodo 10.5281/zenodo.23337824 (zenodo.org 403; GitHub source read instead), zbMATH (403), Xiu-Li-Liang-Xu JCTN 11 (2014) doi:10.1166/jctn.2014.3658 (paywalled; the set-colouring paper behind Thm 2.1 — low but nonzero risk), hmonroe/vdw and marijnheule/vdWaerden file listings (GitHub API blocked). Identifier correction: 1701.05603 is Komkov, BCT is 1705.09673, 2102.01543 is Green (asymptotic).",
+     "K2 ANSWERED: W3_7 file = 70,357 symbols over {0,1,2}, W3_8 file = 494,285 symbols; position x = colour of x (1-indexed; AP-freeness is shift-invariant). Wikipedia: 'smallest N such that every r-colouring of {1..N} has a monochromatic k-AP', so a good colouring of n points gives W>n; same convention in Kim ('W(r,k)>N means an explicit r-colouring of N consecutive integers'), Rabung-Lotts (certificate length (l-1)p+1, bound '> length'; Monroe Table 2: 7*34057+1=238,400), BCT, Komkov ('N+1 will be the lower bound'). records.csv uses the same convention. Base colourings re-checked with the makshan's own numpy AP checker: W2_7 (n=3703,k=7) and W2_8 (n=11495,k=8) both 0 monochromatic APs. No off-by-one.",
+     "K3 ANSWERED: Thm 2.1 read (arXiv:2610.32000 pp. 2-3). Independent check (scratchpad chk/blocks.py): the missing-colour map m(u)={0,1,2}\\S(u) is 3-polychromatic on Z_19 for k=7 (all 18*19 APs with d!=0 meet all three colours) and on Z_43 for k=8, which is exactly Cor 2.2 with h=3 (equivalently condition (*) with r=3,s=2); the certificate equals S(u)[beta(t)] at every position q*t+u for both files, length q*n. The blocks are NOT cubic-residue colourings (checked), so they lie outside Kim's own family; the method generalises directly (any 3-polychromatic block x any 2-colour base; Kim Prop 6.1 caps q<=617 for k=7 and q<=1642 for k=8, far beyond the q<=70/75 scanned). Kim himself states Thm 2.1 'is not new' (BCT, Xu, Fox-Hunter Lemma 4.3 eps=0); REPORT.md says so too. Secondary to the direct verification (INDEPENDENT_CHECK.md: 0 APs in both files).",
+     "K4 ANSWERED with two corrections required: no 'proved', 'new record', 'first' anywhere; ledger entries say 'CANDIDATE (not a claimed record)'; foundations._OVERCLAIM regex matches nothing. Offenders: (1) REPORT.md S1.1 'בלוקים של שאריות קוביות לא קיימים כלל ב-k=7' and S4(4) 'אין בלוק ל-k=4,5,7' — FALSE for k=7: the trivial cubic block q=7 exists (=BCT p=7, gives 25,921); should read 'only the trivial q=7'. (2) REPORT.md line 1 and records.csv attribute 48,811 / 238,400 to 'Rabung-Lotts 2012' — that is Wikipedia's default table attribution, not the origin: 238,400 is Rabung 1979 (per Herwig et al. 2007), 48,811 predates 2012 (listed as known in Rabung-Lotts Table 1; discoverer not verified). (3) runs.jsonl 'beats_record_candidate: true' is internal and hedged — acceptable. Corrections not applied by the makshan.",
+     "K5 VERDICT (iii): apparently new improvement of the tabulated bound (x1.44 for k=7, x2.07 for k=8), obtained from a published theorem plus a NEW hypothesis (SAT-found 3-polychromatic blocks q=19, q=43) that no published recurrence supplies; not (i) in any accessible source, not (ii) since the published recurrences max out at 25,921 / 149,435. Modest and same technique as Kim => an addendum, not a paper. To reach L4 (only after a named human approves, foundation 5): (a) write to S. Kim (and Monroe / Pouly) with the two certificates + JSON palettes + a short C checker; (b) a 2-3 page arXiv math.CO note with the blocks, bases, lengths, sha256 and a public certificate repository — Wikipedia needs a citable source; (c) only then edit the Wikipedia table; (d) before (b): decide the open q values (k=7: 49,59,61; k=8: 47..61 and up to 1642) and ideally Lean: Thm 2.1 + decide on block and base (L3). Level stays L1."
+    ],
+    "kushyot": [
+     "K1 literature: is W(3,7)>70357 / W(3,8)>494285 already published or implied by a published recurrence?",
+     "K2 statement: do the files certify a 3-colouring of {1..n} with no monochromatic k-AP, under the standard W(r,k) convention (good colouring of n points => W>n)? off-by-one vs Wikipedia/Monroe/BCT/Rabung-Lotts?",
+     "K3 construction: does the use of Kim Thm 2.1 / Cor 2.2 match its hypotheses (condition (*) / 3-polychromatic block), and is the certificate really the product chi(qt+u)=phi_u(beta(t))?",
+     "K4 wording: any phrase in REPORT.md / ledger / runs.jsonl stronger than the evidence?",
+     "K5 novelty verdict: (i) published, (ii) implied by published theorem/recurrence, (iii) apparently new improvement of the tabulated bound?"
+    ],
+    "makshan": "makshan-agent (claude-fable-5-1), 2026-11-11, lab/experiments/G029/review/MAKSHAN.md",
+    "resolved": false,
+    "verdict": "(iii) apparently new improvement of the tabulated bound; L1 stays L1; residual teiku: Xiu-Li-Liang-Xu 2014 unread, Zenodo/zbMATH unreachable; two wording fixes pending in REPORT.md/records.csv"
+   },
+   "sources": [
+    "arXiv:2610.32000v1 (Kim, 22 Oct 2026; pdf md5 66e0894149c0b6b09b7c1042b17bc5b4)",
+    "arXiv:1705.09673v3 (Blankenship-Cummings-Taranchuk; EJC 69 (2018) 163-168) Thm 2.1 + remark + Fig. 1",
+    "arXiv:1603.03301v7 (Monroe; JCMCC 128 (2026) 305-315) Tables 1-2",
+    "arXiv:1701.05603 (Komkov 2020)",
+    "arXiv:2102.01543v2 (Green 2022)",
+    "Rabung-Lotts, EJC 19(2) (2012) P35 Table 1 (combinatorics.org pdf)",
+    "Herwig-Heule-van Lambalgen-van Maaren, EJC 14 (2007) R6 Table 1 (combinatorics.org pdf)",
+    "Rabung, Canad. Math. Bull. 22 (1979) 87-91 [not read; cited via Herwig 2007 and Rabung-Lotts 2012]",
+    "https://en.wikipedia.org/wiki/Van_der_Waerden_number raw wikitext 2026-11-11",
+    "arxiv.org/search '\"van der Waerden\" AND \"lower bound\"' 2026-11-11 (38 hits)",
+    "api.semanticscholar.org search 2023-2026",
+    "https://raw.githubusercontent.com/Vulkin-prog/rabung-atlas32/main/paper/RABUNG_BOUNDS_EN.tex (v2.0, 12 Oct 2026)",
+    "arXiv:2606.02541, 2301.06212, 2111.01099, 2608.20824, 2609.31798, 2509.07926 (abstracts/pdf)",
+    "lab/experiments/G029/review/INDEPENDENT_CHECK.md",
+    "scratchpad chk/blocks.py (makshan's own checks)"
+   ],
+   "summary": "MAKSHAN REVIEW of W(3,8) > 494,285 (supersedes 847a7b9f40e7). K1 literature: not published anywhere accessible (238,400 is Rabung 1979 per Herwig et al. 2007; repeated unchanged in Rabung-Lotts 2012, BCT 2018, Monroe 2026 (prime 34,057), Wikipedia 2026-11-11; absent from Kim Oct 2026 and Pouly Oct 2026) and not implied by any published recurrence: BCT gives 7*11495 = 80,465 (p=11 fails 11-3<8), Xu reduces to the cyclic family (238,400), Kim Cor 2.2 with his cubic blocks (q=7,13 for k=8, independently rescanned) gives at most 13*11495 = 149,435. K2: convention/off-by-one correct. K3: block q=43 independently confirmed 3-polychromatic for k=8 (not a cubic-residue colouring), certificate confirmed equal to the palette product of the zipper p=821 base (base re-checked AP-free, n=11495). K4: same two wording fixes as for W(3,7). K5 verdict: (iii) apparently new improvement (x2.07) via published theorem + new SAT block; addendum-level. Residual teiku: Xiu-Li-Liang-Xu 2014 unread, Zenodo/zbMATH unreachable; open q values 47..61 and up to Kim's cap 1642 unexplored. Level stays L1.",
+   "supersedes": "847a7b9f40e7",
+   "timestamp": "2026-11-11T17:19:22+00:00"
   }
  ],
  "news": [
@@ -3946,7 +4252,7 @@
   }
  ],
  "meta": {
-  "built_at": "2026-11-07 02:25 UTC",
+  "built_at": "2026-11-11 17:19 UTC",
   "sources": {
    "goals": "data",
    "creative_proofs": "data",
