@@ -1,0 +1,26 @@
+%S A?????? 1,1,3,273
+%N A?????? Number of partitions of {1,...,S(n)} into n sum-free sets, where S(n) = A045652(n) is the n-th Schur number.
+%C A?????? A set is sum-free if it contains no x, y, z (x = y allowed) with x + y = z. Partitions are unordered (equivalently, n-colorings up to permutation of colors); for n >= 2 every such partition has n nonempty parts.
+%C A?????? Analog of A297023 for (non-weak) Schur numbers.
+%C A?????? a(3) = 3 and a(4) = 273 agree with Fredricksen and Sweet (2000, p. 5); a(4) = 273 is also stated by Heule (2017). a(5), the number of sum-free partitions of {1,...,160} into 5 sets, is not known to the author; Heule (2017) reports 334752 palindromic ones, Fredricksen and Sweet had conjectured 309408.
+%H A?????? H. Fredricksen and M. M. Sweet, <a href="https://doi.org/10.37236/1510">Symmetric Sum-Free Partitions and Lower Bounds for Schur Numbers</a>, Electron. J. Combin. 7 (2000), #R32.
+%H A?????? Marijn J. H. Heule, <a href="https://arxiv.org/abs/1711.08076">Schur Number Five</a>, arXiv:1711.08076 [cs.LO], 2017; Proc. AAAI Conf. Artif. Intel. 32(1) (2018), 6598-6606.
+%e A?????? a(2) = 1: the only partition of {1,2,3,4} into 2 sum-free sets is {1,4},{2,3}.
+%o A?????? (Python)
+%o A?????? def a_schur(n, k=3, weak=False):
+%o A??????     # partitions of {1..n} into at most k sum-free sets (= k-colourings with no
+%o A??????     # monochromatic x+y=z, up to permuting colours); weak=True: only x != y forbidden
+%o A??????     col = [0]*(n+1)
+%o A??????     def rec(i, used):
+%o A??????         if i > n: return 1
+%o A??????         s = 0
+%o A??????         for c in range(min(used+1, k)):
+%o A??????             if all(col[x] != c or col[i-x] != c for x in range(1, (i+1)//2 if weak else i//2+1)):
+%o A??????                 col[i] = c; s += rec(i+1, max(used, c+1))
+%o A??????         return s
+%o A??????     return rec(1, 0)
+%o A?????? # [a_schur(s, n) for n, s in [(1,1),(2,4),(3,13)]] gives [1, 1, 3]; a(4) = a_schur(44, 4) (C program recommended)
+%Y A?????? Cf. A045652, A030126, A297023, A072842.
+%K A?????? nonn,hard,more
+%O A?????? 1,3
+%A A?????? _Ariel Sivkov_, Nov 2026

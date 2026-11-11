@@ -1,0 +1,52 @@
+✔ [2/16] Built EshLab.Targets.G050.Witnesses (1.5s)
+✔ [3/16] Built EshLab.Targets.G050.Certs.Schur3 (1.5s)
+✔ [4/16] Built EshLab.Targets.G050.Certs.VdW23 (1.5s)
+✔ [5/16] Built EshLab.Targets.G050.Defs (1.6s)
+✔ [6/16] Built EshLab.Targets.G050.Certs.Schur2 (371ms)
+✔ [7/16] Built EshLab.Targets.G050.Certs.VdW24 (501ms)
+✔ [8/16] Built EshLab.Targets.G050.Certs.VdW33 (514ms)
+✔ [9/16] Built EshLab.Targets.G050.LRAT (1.1s)
+✔ [10/16] Built EshLab.Targets.G050.Search (2.2s)
+✔ [11/16] Built EshLab.Targets.G050.Lower (4.6s)
+✔ [12/16] Built EshLab.Targets.G050.UpperLRAT (380ms)
+✔ [13/16] Built EshLab.Targets.G050.Upper (32s)
+ℹ [14/16] Built EshLab.Targets.G050.Axioms (1.9s)
+info: ../EshLab/Targets/G050/Axioms.lean:13:0: 'EshLab.G050.schur_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:14:0: 'EshLab.G050.schur_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:15:0: 'EshLab.G050.schur_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:16:0: 'EshLab.G050.vdw_two_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:17:0: 'EshLab.G050.schur4_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:18:0: 'EshLab.G050.vdw3_3_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:19:0: 'EshLab.G050.vdw2_4_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:21:0: 'EshLab.G050.ViaLRAT.schur2_upper' depends on axioms: [propext,
+ Classical.choice,
+ Lean.ofReduceBool,
+ Lean.trustCompiler,
+ Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:22:0: 'EshLab.G050.ViaLRAT.schur3_upper' depends on axioms: [propext,
+ Classical.choice,
+ Lean.ofReduceBool,
+ Lean.trustCompiler,
+ Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:23:0: 'EshLab.G050.ViaLRAT.vdw2_3_upper' depends on axioms: [propext,
+ Classical.choice,
+ Lean.ofReduceBool,
+ Lean.trustCompiler,
+ Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:24:0: 'EshLab.G050.ViaLRAT.vdw_two_four' depends on axioms: [propext,
+ Classical.choice,
+ Lean.ofReduceBool,
+ Lean.trustCompiler,
+ Quot.sound]
+info: ../EshLab/Targets/G050/Axioms.lean:25:0: 'EshLab.G050.ViaLRAT.vdw_three_three' depends on axioms: [propext,
+ Classical.choice,
+ Lean.ofReduceBool,
+ Lean.trustCompiler,
+ Quot.sound]
+✔ [15/16] Built EshLab.Targets.G050 (249ms)
+Build completed successfully (16 jobs).
+
+real	0m43.465s
+user	0m34.371s
+sys	0m14.867s
+exit=0

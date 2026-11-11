@@ -1,0 +1,23 @@
+:root{--bg:#fbfaf7;--fg:#1d1d1f;--muted:#5b5b66;--accent:#b7791f;--code:#f1efe9;--rule:#e2ded4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11131a;--fg:#e8e6e1;--muted:#a0a0ab;--accent:#e8b04a;--code:#1b1e28;--rule:#2a2e3a}}
+html{direction:rtl}
+body{overflow-wrap:anywhere;background:var(--bg);color:var(--fg);font-family:"Frank Ruhl Libre","David Libre","DejaVu Serif",serif;font-size:19px;line-height:1.75;max-width:46rem;margin:0 auto;padding:2rem 16px 6rem}
+h1,h2,h3,h4{font-family:"Heebo","DejaVu Sans",sans-serif;line-height:1.3}
+h1{font-size:2.1rem;margin-top:4rem;border-bottom:2px solid var(--accent);padding-bottom:.4rem;page-break-before:always}
+h2{font-size:1.45rem;margin-top:2.5rem;color:var(--accent)}
+a{color:var(--accent)}
+code,pre{font-family:"JetBrains Mono","DejaVu Sans Mono",monospace;font-size:.85em;direction:ltr;text-align:left}
+pre{background:var(--code);padding:1rem;border-radius:8px;overflow-x:auto;unicode-bidi:isolate}
+:not(pre)>code{background:var(--code);padding:.1em .3em;border-radius:4px;unicode-bidi:isolate}
+blockquote{border-inline-start:4px solid var(--accent);margin:1.5rem 0;padding:.3rem 1rem;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:.9em;display:block;overflow-x:auto}
+th,td{border:1px solid var(--rule);padding:.4rem .6rem;text-align:start}
+#TOC{border:1px solid var(--rule);border-radius:10px;padding:1rem 1.5rem;margin:2rem 0}
+#TOC ul{padding-inline-start:1.2rem}
+.title-block{text-align:center;margin:4rem 0}
+.title{font-size:2.6rem;border:none;margin:0;page-break-before:avoid}
+.subtitle{color:var(--muted);font-size:1.2rem}
+.katex{direction:ltr;unicode-bidi:isolate}
+section.footnotes{font-size:.85em;color:var(--muted)}
+@media print{body{max-width:none;font-size:12pt}a{color:inherit}}
+.katex-display{overflow-x:auto;overflow-y:hidden}

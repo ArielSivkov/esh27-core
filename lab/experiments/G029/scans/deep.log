@@ -1,0 +1,24 @@
+deep W(4,4): 5 jobs tlim=300.0
+deep W(3,5): 5 jobs tlim=300.0
+deep W(5,4): 5 jobs tlim=300.0
+deep W(2,7): 5 jobs tlim=300.0
+{"p": 311, "z": 2, "R": 62, "m": 622, "len": 3733, "status": "UNSAT", "t": 37.48, "tlim": 300.0}
+{"p": 547, "z": 1, "R": 42, "m": 547, "len": 2189, "status": "UNSAT", "t": 85.01, "tlim": 300.0}
+{"p": 157, "z": 4, "R": 52, "m": 628, "len": 3769, "status": "UNSAT", "t": 64.91, "tlim": 300.0}
+{"p": 251, "z": 3, "R": 25, "m": 753, "len": 2260, "status": "UNSAT", "t": 191.27, "tlim": 300.0}
+{"p": 71, "z": 5, "R": 14, "m": 355, "len": 1066, "status": "UNKNOWN-timeout", "t": 300.2, "tlim": 300.0}
+{"p": 757, "z": 1, "R": 36, "m": 757, "len": 2272, "status": "UNSAT", "t": 147.68, "tlim": 300.0}
+{"p": 139, "z": 4, "R": 46, "m": 556, "len": 2225, "status": "UNKNOWN-timeout", "t": 300.37, "tlim": 300.0}
+{"p": 631, "z": 1, "R": 70, "m": 631, "len": 3787, "status": "UNKNOWN-timeout", "t": 300.13, "tlim": 300.0}
+{"p": 181, "z": 2, "R": 36, "m": 362, "len": 1087, "status": "UNKNOWN-timeout", "t": 300.08, "tlim": 300.0}
+{"p": 379, "z": 2, "R": 42, "m": 758, "len": 2275, "status": "UNKNOWN-timeout", "t": 300.22, "tlim": 300.0}
+{"p": 281, "z": 2, "R": 40, "m": 562, "len": 2249, "status": "UNKNOWN-timeout", "t": 300.15, "tlim": 300.0}
+{"p": 631, "z": 1, "R": 90, "m": 631, "len": 3787, "status": "UNKNOWN-timeout", "t": 300.19, "tlim": 300.0}
+{"p": 73, "z": 5, "R": 24, "m": 365, "len": 1096, "status": "UNKNOWN-timeout", "t": 300.14, "tlim": 300.0}
+{"p": 761, "z": 1, "R": 40, "m": 761, "len": 2284, "status": "UNKNOWN-timeout", "t": 300.11, "tlim": 300.0}
+{"p": 113, "z": 5, "R": 16, "m": 565, "len": 2261, "status": "UNKNOWN-timeout", "t": 300.26, "tlim": 300.0}
+{"p": 211, "z": 3, "R": 70, "m": 633, "len": 3799, "status": "UNKNOWN-timeout", "t": 300.83, "tlim": 300.0}
+{"p": 379, "z": 1, "R": 42, "m": 379, "len": 1138, "status": "UNSAT", "t": 151.12, "tlim": 300.0}
+{"p": 127, "z": 6, "R": 18, "m": 762, "len": 2287, "status": "UNKNOWN-timeout", "t": 300.47, "tlim": 300.0}
+{"p": 191, "z": 3, "R": 38, "m": 573, "len": 2293, "status": "UNKNOWN-timeout", "t": 300.45, "tlim": 300.0}
+{"p": 127, "z": 3, "R": 42, "m": 381, "len": 1144, "status": "UNKNOWN-timeout", "t": 300.16, "tlim": 300.0}

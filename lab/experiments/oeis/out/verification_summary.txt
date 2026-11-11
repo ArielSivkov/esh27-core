@@ -1,0 +1,20 @@
+k=2 labelled: A(canon) vs B(bits)             n in 1..14 (14 terms): AGREE
+k=3 labelled: A(canon) vs B(bits)             n in 1..14 (14 terms): AGREE
+k=4 labelled: A(canon) vs B(bits)             n in 1..45 (45 terms): AGREE
+weak k=2 labelled: A vs B                     n in 1..25 (25 terms): AGREE
+weak k=3 labelled: A vs B                     n in 1..25 (25 terms): AGREE
+k=3 unordered: A vs C(SAT)                    n in 1..14 (14 terms): AGREE
+k=3 labelled: A vs C(SAT)                     n in 1..14 (14 terms): AGREE
+k=3 labelled: A vs brute force                n in 1..13 (13 terms): AGREE
+k=4 unordered: A vs C(SAT)                    n in 1..45 (19 terms): AGREE
+k=4 labelled: A vs C(SAT)                     n in 1..9 (9 terms): AGREE
+k=4 labelled: A vs brute force                n in 1..9 (9 terms): AGREE
+weak k=3 unordered: A vs C(SAT)               n in 1..24 (24 terms): AGREE
+weak k=3 labelled: A vs brute                 n in 1..12 (12 terms): AGREE
+weak k=2 unordered: A vs C(SAT)               n in 1..9 (9 terms): AGREE
+k=3 unordered: A vs D(blockwise)              n in 1..14 (14 terms): AGREE
+weak k=3 unordered: A vs D(blockwise)         n in 1..24 (24 terms): AGREE
+triangle T(n,k): A vs D(blockwise)            n in (1, 1)..(16, 16) (136 terms): AGREE
+triangle row sums vs OEIS A288817 (external)  n in 1..17 (17 terms): AGREE
+ALL AGREE
+[rerun 2026-11-11] triangle rows 1..17 (153 terms) A(canon, 7m41s) vs D(blockwise, 10m32s for rows 15-17): AGREE

@@ -1,0 +1,33 @@
+[
+	{
+		"number": 365191,
+		"data": "24,94,259,593",
+		"name": "The weak Schur numbers for 3-coloring.",
+		"comment": [
+			"a(6) \u003e= 1146 and a(7) \u003e= 2005 (see Ahmed et al., Table 6).",
+			"From _Alper Ferudun_, Jul 28 2026: (Start)",
+			"a(k) = WS_k(3), the least N such that every 3-coloring of [1,N] has distinct same-colored x_1,...,x_k whose sum has the same color.",
+			"a(5) = 593: the coloring of [1,592] in Ahmed et al. gives the lower bound, and an exhaustive SAT computation modulo permutations of the three colors gives the upper bound. (End)"
+		],
+		"link": [
+			"T. Ahmed, L. Boza, M. P. Revuelta, and M. I. Sanz, \u003ca href=\"https://doi.org/10.1007/s11139-023-00760-y\"\u003eExact values and lower bounds on the n-color weak Schur numbers for n=2,3\u003c/a\u003e. Ramanujan J (2023). See Table 6 at p. 8 and Sections 4.3 and 4.4 at pp. 13-16.",
+			"Alper Ferudun, \u003ca href=\"/A365191/a365191_1.cpp.txt\"\u003eSelf-contained C++20 program for a(5)\u003c/a\u003e"
+		],
+		"program": [
+			"(C++) // See Links."
+		],
+		"xref": [
+			"Cf. A030126, A045652, A072842, A118771, A365190 (similar for 2-coloring)."
+		],
+		"keyword": "nonn,hard,more",
+		"offset": "2,1",
+		"author": "_Stefano Spezia_, Aug 25 2023",
+		"ext": [
+			"a(5) added by _Alper Ferudun_, Jul 28 2026"
+		],
+		"references": 2,
+		"revision": 24,
+		"time": "2026-08-04T17:12:04-04:00",
+		"created": "2023-08-27T10:30:30-04:00"
+	}
+]

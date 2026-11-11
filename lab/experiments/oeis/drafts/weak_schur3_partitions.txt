@@ -1,0 +1,28 @@
+%S A?????? 1,2,4,11,27,63,136,290,525,920,1438,2009,2603,2856,2929,2452,2010,1176,710,357,151,32,3
+%N A?????? Number of partitions of {1,...,n} into at most 3 weakly sum-free sets (no x + y = z with x, y, z distinct elements of the same set).
+%C A?????? Equivalently, the number of 3-colorings of {1,...,n} with no monochromatic solution of x + y = z with x != y, counted up to permutation of the colors.
+%C A?????? Here x + x = 2x within a set is allowed (weak Schur numbers); compare the draft "schur3_partitions" where it is forbidden.
+%C A?????? The sequence is finite: a(n) = 0 for n > 23 = A072842(3) (weak Schur number WS(3) = 23). a(23) = 3 = A297023(3).
+%C A?????? The number of labeled colorings (maps to {1,2,3}) is 6*a(n) for n >= 3; for n = 1..2 it is 3, 9.
+%H A?????? Peter F. Blanchard, Frank Harary, and Rogério Reis, <a href="https://math.colgate.edu/~integers/g7/g7.Abstract.html">Partitions into sum-free sets</a>, Integers 6 (2006), Article A7.
+%e A?????? a(2) = 2: {1,2} (1 + 1 = 2 is allowed here); {1},{2}.
+%e A?????? a(3) = 4: {1,2},{3}; {1,3},{2}; {1},{2,3}; {1},{2},{3}. The single set {1,2,3} is excluded because 1 + 2 = 3.
+%o A?????? (Python)
+%o A?????? def a_schur(n, k=3, weak=False):
+%o A??????     # partitions of {1..n} into at most k sum-free sets (= k-colourings with no
+%o A??????     # monochromatic x+y=z, up to permuting colours); weak=True: only x != y forbidden
+%o A??????     col = [0]*(n+1)
+%o A??????     def rec(i, used):
+%o A??????         if i > n: return 1
+%o A??????         s = 0
+%o A??????         for c in range(min(used+1, k)):
+%o A??????             if all(col[x] != c or col[i-x] != c for x in range(1, (i+1)//2 if weak else i//2+1)):
+%o A??????                 col[i] = c; s += rec(i+1, max(used, c+1))
+%o A??????         return s
+%o A??????     return rec(1, 0)
+%o A?????? # a(n) = a_schur(n, 3, weak=True), n = 1..23
+%Y A?????? Cf. A072842, A297023, A118771, A045652, A288817.
+%Y A?????? Cf. draft "schur3_partitions".
+%K A?????? nonn,fini,full
+%O A?????? 1,2
+%A A?????? _Ariel Sivkov_, Nov 2026

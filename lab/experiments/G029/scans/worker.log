@@ -1,0 +1,34 @@
+cell W(3,5) record 2173: 2364 jobs, m in (543, 1629]
+cell W(4,4) record 1048: 2310 jobs, m in (349, 1396]
+cell W(2,7) record 3703: 2624 jobs, m in (617, 1851]
+cell W(5,4) record 2254: 2793 jobs, m in (751, 2253]
+=== restart Sat Nov  7 02:02:08 UTC 2026
+cell W(2,7) record 3703: 331 jobs, m in (617, 1851]
+cell W(5,4) record 2254: 2753 jobs, m in (751, 2253]
+cell W(3,5) record 2173: 2316 jobs, m in (543, 1629]
+cell W(4,4) record 1048: 2302 jobs, m in (349, 1396]
+=== restart2 Sat Nov  7 02:02:53 UTC 2026
+cell W(2,7) record 3703: 55 jobs, m in (617, 1851]
+cell W(4,4) record 1048: 1710 jobs, m in (349, 1396]
+cell W(3,5) record 2173: 1726 jobs, m in (543, 1629]
+cell W(5,4) record 2254: 2079 jobs, m in (751, 2253]
+done W(2,7): 55 jobs, 0 SAT, 13s
+cell W(2,7) record 3703: 151 jobs, m in (617, 802]
+done W(4,4): 1710 jobs, 0 SAT, 111s
+cell W(4,4) record 1048: 96 jobs, m in (349, 453]
+done W(3,5): 1726 jobs, 0 SAT, 135s
+cell W(3,5) record 2173: 128 jobs, m in (543, 705]
+done W(5,4): 2079 jobs, 0 SAT, 175s
+cell W(5,4) record 2254: 169 jobs, m in (751, 976]
+done W(4,4): 96 jobs, 0 SAT, 341s
+cell W(6,4) record 9778: 3289 jobs, m in (3259, 6518]
+done W(3,5): 128 jobs, 0 SAT, 318s
+cell W(3,6) record 11191: 2376 jobs, m in (2238, 4476]
+done W(2,7): 151 jobs, 0 SAT, 504s
+cell W(4,5) record 17705: 4324 jobs, m in (4426, 8852]
+done W(6,4): 3289 jobs, 0 SAT, 104s
+done W(3,6): 2376 jobs, 0 SAT, 177s
+done W(4,5): 4324 jobs, 0 SAT, 344s
+done W(5,4): 169 jobs, 0 SAT, 1135s
+cell W(2,8) record 11495: 1810 jobs, m in (1642, 3284]
+done W(2,8): 1810 jobs, 0 SAT, 90s

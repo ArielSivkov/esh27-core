@@ -1,0 +1,4 @@
+id,name,category,what_it_does,use_in_lab,license_or_cost,maturity,url
+T-S1,Lean 4,Proof assistant,Dependently typed language and theorem prover.,Ground truth for L3+ claims.,Apache-2.0,production,https://lean-lang.org
+T-S2,Mathlib,Library,Community library of formalized mathematics.,Statements and lemmas we build on.,Apache-2.0,production,https://github.com/leanprover-community/mathlib4
+T-S3,SageMath,Computation,Computer algebra system.,Experiments and L1 numerical evidence.,GPL,production,https://www.sagemath.org

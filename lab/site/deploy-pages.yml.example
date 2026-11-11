@@ -1,0 +1,70 @@
+# ESH27 Lab — build & deploy the static site to GitHub Pages.
+#
+# Placement: copy to <repo>/.github/workflows/site.yml and adjust LAB_DIR if the
+# lab is not at "lab/" relative to the repository root.
+# Then: repo Settings → Pages → Source: "GitHub Actions".
+#
+# Triggers: any change to data/*.csv, data/ledger.jsonl, news/*.md or site/**,
+# a manual run, and a nightly rebuild (so "built at" stays fresh).
+
+name: site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "lab/data/**"
+      - "lab/news/**"
+      - "lab/site/**"
+      - ".github/workflows/site.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  LAB_DIR: lab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # stdlib only — no pip install needed.
+      # --no-sample: never publish placeholder data from site/sample_data.
+      - name: Build site
+        run: python3 "$LAB_DIR/site/build.py" --no-sample
+
+      - name: Sanity check
+        run: |
+          test -s "$LAB_DIR/site/dist/index.html"
+          grep -q 'id="lab-data"' "$LAB_DIR/site/dist/index.html"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.LAB_DIR }}/site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

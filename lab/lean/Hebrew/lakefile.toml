@@ -1,0 +1,13 @@
+# Standalone, Mathlib-free Lake package: the fixed Hebrew calendar after the Rambam
+# (Hilchot Kiddush HaChodesh 6-8). See lab/experiments/hebrew-calendar/REPORT.md.
+# Build:  cd lab/lean/Hebrew && lake build
+name = "Hebrew"
+version = "0.1.0"
+defaultTargets = ["Hebrew"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[lean_lib]]
+name = "Hebrew"

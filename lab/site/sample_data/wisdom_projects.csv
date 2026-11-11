@@ -1,0 +1,4 @@
+id,title,tradition,math_area,description,deliverable,feasibility
+W-S1,Talmudic argument as proof search,Gemara,Logic,Read the back-and-forth (shakla ve-tarya) as a model of conjecture and refutation.,An essay plus a small dataset of argument structures.,high
+W-S2,Sefer Yetzirah combinatorics,Kabbalah,Combinatorics,The 231 gates as pairs from 22 letters: $\binom{22}{2}=231$.,Illustrated explainer with Lean-checked counts.,high
+W-S3,Babylonian tablet Plimpton 322,Ancient Mesopotamia,Number theory,"Pythagorean triples on clay, 3,800 years ago.",Interactive page reconstructing the table.,medium

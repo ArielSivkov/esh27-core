@@ -1,0 +1,23 @@
+✔ [2/9] Built Hebrew.Basic (592ms)
+✔ [3/9] Built Hebrew.Oracle (9.1s)
+✔ [4/9] Built Hebrew.CrossCheck (452ms)
+✔ [5/9] Built Hebrew.Theorems (71s)
+⚠ [6/9] Built Hebrew.DR (248s)
+ℹ [7/9] Built Hebrew.Axioms (1.7s)
+info: Hebrew/Axioms.lean:8:0: 'Hebrew.lo_adu' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:9:0: 'Hebrew.rh_weekday' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:10:0: 'Hebrew.yearLength_legal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:11:0: 'Hebrew.yearLength_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:12:0: 'Hebrew.rambam_8_10' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:13:0: 'Hebrew.keviyah_mem_keviyot14' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:14:0: 'Hebrew.keviyot14_occur' depends on axioms: [propext, Quot.sound]
+info: Hebrew/Axioms.lean:15:0: 'Hebrew.exactly_14_keviyot' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:16:0: 'Hebrew.keviyah_period' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:17:0: 'Hebrew.greatPeriod_minimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Hebrew/Axioms.lean:18:0: 'Hebrew.rambam_eq_dr'' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [8/9] Built Hebrew (210ms)
+Build completed successfully (9 jobs).
+
+real	5m22.325s
+user	6m31.009s
+sys	0m4.399s

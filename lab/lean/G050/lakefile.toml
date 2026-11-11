@@ -1,0 +1,15 @@
+# Standalone, Mathlib-free Lake package for goal G050 (Schur / van der Waerden numbers).
+# Sources live in ../EshLab/Targets/G050*.lean (shared with the main EshLab library).
+# Build:  cd lab/lean/G050 && lake build
+name = "G050"
+version = "0.1.0"
+defaultTargets = ["G050"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[lean_lib]]
+name = "G050"
+srcDir = ".."
+roots = ["EshLab.Targets.G050"]
