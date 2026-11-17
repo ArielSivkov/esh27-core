@@ -36,6 +36,11 @@ KINDS = {
     "psak_draft": "טיוטת פסק",
     "psak_review": "הערת עיון לטיוטה",
     "psak_sign": "חתימת דיין",
+    "report": "דיווח לפיקוח",
+    "follow": "מעקב",
+    "unfollow": "ביטול מעקב",
+    "sheet": "דף מקורות",
+    "edit": "עריכה",
 }
 
 
@@ -73,7 +78,7 @@ def check_event(ev: dict) -> None:
     if not verify(ev["author"], data, ev["sig"]):
         raise LedgerError("bad signature")
     b, kind = ev["body"], ev["kind"]
-    need_target = {"reply", "endorse", "hide", "unhide", "psak_review", "psak_sign"}
+    need_target = {"reply", "endorse", "hide", "unhide", "psak_review", "psak_sign", "report", "edit"}
     if kind in need_target and not ev.get("target"):
         raise LedgerError(f"{kind} requires target")
     if kind in ("commentary",) and not ev.get("ref"):
@@ -89,6 +94,12 @@ def check_event(ev: dict) -> None:
             raise LedgerError("draft requires question and answer")
         if not b.get("sources"):
             raise LedgerError("draft requires at least one source")
+    if kind in ("follow", "unfollow") and not b.get("subject"):
+        raise LedgerError(f"{kind} requires subject (author public key)")
+    if kind == "sheet" and (not str(b.get("title", "")).strip() or not isinstance(b.get("items"), list) or not b["items"]):
+        raise LedgerError("sheet requires title and a non-empty items list")
+    if kind == "edit" and not str(b.get("text", "")).strip():
+        raise LedgerError("edit requires the new text")
     if kind == "psak_sign" and b.get("decision") not in ("approved", "rejected"):
         raise LedgerError("psak_sign decision must be approved/rejected")
 

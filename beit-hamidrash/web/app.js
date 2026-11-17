@@ -10,6 +10,7 @@ const CAT = { Tanakh: 'תנ"ך', Mishnah: 'משנה', Talmud: 'תלמוד', Tose
 const he = (c) => CAT[c] || c;
 const TIER = { certain: ['a', 'נחלת הכלל'], conditional: ['b', 'מותר בייחוס'] };
 let META = null, books = null;
+const REG = {};
 
 function postHTML(e, opts = {}) {
   const roles = e.author_roles.map(r => `<span class="tag b">${esc(META.roles[r] || r)}</span>`).join('');
@@ -156,7 +157,8 @@ async function route() {
   const parts = location.hash.slice(2).split('/').map(decodeURIComponent);
   document.querySelectorAll('.top nav a').forEach(a => a.classList.toggle('on', a.getAttribute('href').slice(2) === parts[0]));
   try {
-    if (!parts[0]) await pageHome();
+    if (REG[parts[0]]) await REG[parts[0]](parts);
+    else if (!parts[0]) await pageHome();
     else if (parts[0] === 'library') await pageLibrary(parts[1]);
     else if (parts[0] === 'book') await pageBook(parts[1]);
     else if (parts[0] === 'read') await pageRead(parts[1], parts[2], parts[3]);
@@ -175,6 +177,15 @@ async function route() {
   const firstUser = us.find(u => u.user !== 'authority'); if (firstUser) $me.value = firstUser.user;
   try { const saved = localStorage.getItem('bhm-me'); if (saved && us.some(u => u.user === saved)) $me.value = saved; } catch { }
   $me.onchange = () => { try { localStorage.setItem('bhm-me', $me.value); } catch { } route(); };
+  window.BHM = { api, post, esc, enc, postHTML, wirePosts, META, $app, he, register: (name, fn) => { REG[name] = fn; } };
+  try {
+    const feats = await api('/api/features');
+    const nav = document.querySelector('.top nav');
+    for (const f of feats) {
+      if (f.nav) { const a = document.createElement('a'); a.href = f.nav.href; a.textContent = f.nav.label; nav.appendChild(a); }
+      if (f.js) await new Promise(res => { const sc = document.createElement('script'); sc.src = f.js; sc.onload = res; sc.onerror = res; document.body.appendChild(sc); });
+    }
+  } catch (e) { console.error('features', e); }
   window.addEventListener('hashchange', route);
   route();
 })();

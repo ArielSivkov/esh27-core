@@ -133,6 +133,16 @@ def create_app(node: Node | None = None) -> FastAPI:
     def meta():
         return {"kinds": ledger.KINDS, "roles": ledger.ROLES, "draft_notice": beitdin.DRAFT_NOTICE}
 
+    # ---- feature plugins: every bhm/features/<name>.py with make_router(node) is mounted
+    from .features import load_features
+    FEATURES = load_features()
+    for f in FEATURES:
+        app.include_router(f.module.make_router(node))
+
+    @app.get("/api/features")
+    def features():
+        return [{"name": f.name, "nav": f.nav, "js": f.js} for f in FEATURES]
+
     app.mount("/static", StaticFiles(directory=WEB), name="static")
 
     @app.get("/")
