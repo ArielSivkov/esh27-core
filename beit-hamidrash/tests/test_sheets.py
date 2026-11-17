@@ -22,3 +22,12 @@ def test_publish_list_get(client):
 def test_missing_and_invalid(client):
     assert client.get("/api/sheets/nope").status_code == 404
     assert _post(client, {"title": "x", "items": []}).status_code == 400
+
+
+def test_malformed_items_and_cap(client):
+    items = [5, None, {"ref": 7}, {"ref": ["a"]}, {"ref": "%"}, {"text": None}] + [{"text": "t"}] * 150
+    e = _post(client, {"title": "x", "items": items}).json()
+    r = client.get(f"/api/sheets/{e['id']}")
+    assert r.status_code == 200 and len(r.json()["items"]) == 100
+    assert r.json()["items"][4]["ok"] is False
+    assert client.get("/api/sheets").status_code == 200

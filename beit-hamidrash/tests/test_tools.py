@@ -32,3 +32,21 @@ def test_api(client):
     s = client.get("/api/tools/same", params={"value": 913, "book": "Genesis"}).json()
     assert s["matches"][0]["word"] == "בראשית"
     assert client.get("/api/tools/same", params={"value": 1, "book": "Zzz"}).status_code == 404
+
+
+def test_english_version_ignored(fnode, client):
+    from bhm import library
+    library.import_version(fnode.con, {
+        "title": "Genesis", "heTitle": "בראשית", "versionTitle": "Eng", "language": "en",
+        "license": "Public Domain", "categories": ["Tanakh", "Torah"], "sectionNames": ["Chapter", "Verse"],
+        "text": [["In the beginning God created", "And the earth"]]}, "test", "h")
+    d = client.get("/api/tools/gematria", params={"ref": "Genesis 1:1"}).json()
+    assert d["segments"][0]["words"][0]["word"] == "בראשית"
+    s = client.get("/api/tools/same", params={"value": 913, "book": "Genesis"}).json()
+    assert s["matches"][0]["word"] == "בראשית" and s["truncated"] is False
+
+
+def test_same_truncates(client, monkeypatch):
+    monkeypatch.setattr(T, "MAX_SCAN_WORDS", 1)
+    s = client.get("/api/tools/same", params={"value": 99999, "book": "Genesis"}).json()
+    assert s["truncated"] is True

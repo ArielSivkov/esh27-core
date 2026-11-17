@@ -25,9 +25,9 @@ def _follow_graph(con, hidden: set[str]) -> dict[tuple[str, str], bool]:
             continue
         try:
             subj = json.loads(r["body"]).get("subject")
-        except ValueError:
+        except (ValueError, AttributeError):
             continue
-        if subj and subj != r["author"]:
+        if isinstance(subj, str) and 1 <= len(subj) <= 128 and subj != r["author"]:
             state[(r["author"], subj)] = r["kind"] == "follow"
     return state
 
@@ -84,6 +84,13 @@ def make_router(node) -> APIRouter:
         c, hidden, R, N = ctx()
         limit = max(1, min(limit, 200))
         _, following = brief_lists(c, hidden, pubkey)
+        if following:
+            known = set()
+            for i in range(0, len(following), 500):
+                ch = following[i:i + 500]
+                known.update(x["author"] for x in c.execute(
+                    f"SELECT DISTINCT author FROM events WHERE author IN ({','.join('?' * len(ch))})", ch))
+            following = [f for f in following if f in known][:500]
         if not following:
             return []
         ends: dict[str, set[str]] = {}

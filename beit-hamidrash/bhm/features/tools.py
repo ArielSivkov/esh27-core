@@ -23,6 +23,7 @@ NAMES = {"א": "אלף", "ב": "בית", "ג": "גימל", "ד": "דלת", "ה":
 # The four fillings of the Name (yod always spelled יוד)
 NAME_FILLINGS = {'ע"ב': {"ה": "הי", "ו": "ויו"}, 'ס"ג': {"ה": "הי", "ו": "ואו"},
                  'מ"ה': {"ה": "הא", "ו": "ואו"}, 'ב"ן': {"ה": "הה", "ו": "וו"}}
+MAX_SCAN_WORDS = 200_000
 METHODS = ("standard", "big", "small", "ordinal", "kolel", "milui")
 _NON = re.compile(r"[^א-ת]")
 _WORD = re.compile(r"[א-ת]+")
@@ -112,11 +113,11 @@ def make_router(node) -> APIRouter:
             raise HTTPException(400, "unknown method")
         con = node.con
         segs = []
-        row = con.execute("SELECT version_id FROM segments WHERE ref=? ORDER BY version_id LIMIT 1", (ref,)).fetchone()
+        row = con.execute("SELECT s.version_id FROM segments s JOIN versions v ON v.id=s.version_id WHERE s.ref=? AND v.language='he' ORDER BY s.version_id LIMIT 1", (ref,)).fetchone()
         if row:
             segs = con.execute("SELECT ref,text FROM segments WHERE version_id=? AND ref=?", (row["version_id"], ref)).fetchall()
         else:
-            row = con.execute("SELECT version_id FROM segments WHERE ref LIKE ? ORDER BY version_id LIMIT 1", (ref + ":%",)).fetchone()
+            row = con.execute("SELECT s.version_id FROM segments s JOIN versions v ON v.id=s.version_id WHERE s.ref LIKE ? AND v.language='he' ORDER BY s.version_id LIMIT 1", (ref + ":%",)).fetchone()
             if row:
                 segs = con.execute("SELECT ref,text FROM segments WHERE version_id=? AND ref LIKE ? ORDER BY seq LIMIT 100",
                                    (row["version_id"], ref + ":%")).fetchall()
@@ -136,18 +137,23 @@ def make_router(node) -> APIRouter:
             raise HTTPException(400, "unknown method")
         limit = max(1, min(limit, 500))
         con = node.con
-        v = con.execute("SELECT id FROM versions WHERE title=? OR he_title=? ORDER BY id LIMIT 1", (book, book)).fetchone()
+        v = con.execute("SELECT id FROM versions WHERE (title=? OR he_title=?) AND language='he' ORDER BY id LIMIT 1", (book, book)).fetchone()
         if not v:
             raise HTTPException(404, "book not found")
-        found, distinct = [], set()
+        found, distinct, scanned, truncated = [], set(), 0, False
         for s in con.execute("SELECT ref,text FROM segments WHERE version_id=? ORDER BY seq", (v["id"],)):
+            if scanned >= MAX_SCAN_WORDS:
+                truncated = True
+                break
             for w in words(s["text"]):
+                scanned += 1
                 if gematria(w, method) == value:
                     distinct.add(w)
                     if len(found) < limit:
                         found.append({"word": w, "ref": s["ref"]})
             if len(found) >= limit:
                 break
-        return {"value": value, "book": book, "method": method, "matches": found, "distinct": sorted(distinct)}
+        return {"value": value, "book": book, "method": method, "matches": found, "distinct": sorted(distinct),
+                "truncated": truncated, "scanned": scanned}
 
     return r

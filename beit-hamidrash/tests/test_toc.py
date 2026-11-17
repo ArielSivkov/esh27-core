@@ -36,18 +36,34 @@ def test_cache_restricted_to_library(client, fnode):
     assert d["tree"][0]["he"] == "תנ\"ך"
 
 
-def test_refresh_uses_fetch_and_offline_ok(client, fnode, monkeypatch):
+def test_refresh_post_only_local_and_rate_limited(client, fnode, monkeypatch):
+    toc._last_refresh.clear()
     monkeypatch.setattr(toc, "fetch_toc", lambda node, url=None: (_ for _ in ()).throw(OSError("offline")))
     assert client.post("/api/toc/refresh").status_code == 502
-    d = client.get("/api/toc?refresh=1").json()
-    assert d["source"] == "fallback" and d["warning"]
+    assert client.post("/api/toc/refresh").status_code == 429  # within 10 minutes
 
+    # GET no longer refreshes
+    called = []
+    monkeypatch.setattr(toc, "fetch_toc", lambda node, url=None: called.append(1) or FAKE)
+    d = client.get("/api/toc?refresh=1").json()
+    assert not called and d["source"] == "fallback"
+
+    toc._last_refresh.clear()
     def ok(node, url=None):
         (node.home / "toc_cache.json").write_text(json.dumps(FAKE))
         return FAKE
     monkeypatch.setattr(toc, "fetch_toc", ok)
-    d = client.get("/api/toc?refresh=1").json()
-    assert d["source"] == "cache" and d["warning"] is None
+    assert client.post("/api/toc/refresh").status_code == 200
+    assert client.get("/api/toc").json()["source"] == "cache"
+
+
+def test_refresh_rejects_remote(fnode, monkeypatch):
+    from fastapi.testclient import TestClient
+    from bhm.api import create_app
+    toc._last_refresh.clear()
+    monkeypatch.setattr(toc, "fetch_toc", lambda node, url=None: FAKE)
+    c = TestClient(create_app(fnode), client=("203.0.113.9", 5000))
+    assert c.post("/api/toc/refresh").status_code == 403
 
 
 def test_corrupt_cache_falls_back(client, fnode):

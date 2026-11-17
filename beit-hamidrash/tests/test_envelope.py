@@ -149,3 +149,40 @@ def test_only_info_route():
 
 def test_feature_loaded():
     assert "envelope" in [f.name for f in load_features()]
+
+
+@pytest.mark.parametrize("kind", ["reply", "endorse", "hide", "unhide", "psak_review", "psak_sign", "report", "edit"])
+def test_v2_target_required(ident, kind):
+    ev = E.make_event_v2(ident, kind, {"text": "x", "decision": "approved"})
+    with pytest.raises(LedgerError):
+        E.check_event_v2(ev)
+    assert not E.verify_v2(ev)
+
+
+def test_v2_commentary_requires_ref(ident):
+    ev = E.make_event_v2(ident, "commentary", {"text": "x"})
+    assert not E.verify_v2(ev)
+    assert E.verify_v2(E.make_event_v2(ident, "commentary", {"text": "x"}, ref="r"), {"text": "x"})
+
+
+def test_v2_body_rules_with_blob(ident):
+    ev = E.make_event_v2(ident, "article", {"title": "", "text": "x"})
+    assert E.verify_v2(ev)  # envelope alone
+    assert not E.verify_v2(ev, ev["body"])
+    ev = E.make_event_v2(ident, "follow", {})
+    assert not E.verify_v2(ev, {})
+    ev = E.make_event_v2(ident, "psak_sign", {"decision": "maybe"}, target="t")
+    assert not E.verify_v2(ev, ev["body"])
+    ev = E.make_event_v2(ident, "article", {"title": "t", "text": "x"})
+    assert E.verify_v2(ev, ev["body"])
+
+
+def test_blobstore_put_enforces_max_size():
+    import sqlite3
+    from bhm.ledger import MAX_BODY_BYTES
+    st = E.BlobStore(sqlite3.connect(":memory:"))
+    with pytest.raises(LedgerError):
+        st.put({"text": "x" * (MAX_BODY_BYTES + 1)})
+    with pytest.raises(LedgerError):
+        st.put("notadict")
+    assert st.stats()["blobs"] == 0

@@ -58,3 +58,31 @@ def test_fts_path(fnode, client):
     fnode.con.commit()
     d = ask(client, "תהו").json()
     assert d["sources"][0]["ref"] == "Fake 1:1"
+
+
+def test_vocalized_text_found_by_scan(fnode, client):
+    vid = fnode.con.execute("SELECT version_id FROM segments LIMIT 1").fetchone()[0]
+    fnode.con.execute("INSERT INTO segments(version_id, path, seq, ref, text) VALUES (?,?,?,?,?)",
+                      (vid, "voc/1", 99999, "Voc 1:1", "וְהָאָ֖רֶץ הָיְתָ֥ה זְזִקְקֻ֖מם־לוג"))
+    fnode.con.commit()
+    d = ask(client, "זזקקמם").json()
+    assert any(s["ref"] == "Voc 1:1" for s in d["sources"])
+    assert d["partial"] is False
+
+
+def test_rate_limit_and_log_cap(fnode, client, monkeypatch):
+    monkeypatch.delenv("OLLAMA_URL", raising=False)
+    codes = [ask(client, "בראשית ברא").status_code for _ in range(12)]
+    assert codes[:10] == [200] * 10 and codes[10] == 429
+    n = fnode.con.execute("SELECT COUNT(*) FROM sources_ai_log").fetchone()[0]
+    assert n <= sources_ai.LOG_KEEP
+
+
+def test_model_busy_429(client, monkeypatch):
+    monkeypatch.setenv("OLLAMA_URL", "http://x")
+    monkeypatch.setattr(sources_ai, "_call_model", lambda *a: "x")
+    assert sources_ai._MODEL_SEM.acquire(blocking=False)
+    try:
+        assert ask(client, "בראשית ברא").status_code == 429
+    finally:
+        sources_ai._MODEL_SEM.release()

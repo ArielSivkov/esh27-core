@@ -46,3 +46,25 @@ def test_non_moderator_hide_has_no_effect(client):
 
 def test_unknown_user(client):
     assert client.get("/api/moderation/queue?as=nobody").status_code == 404
+
+
+def test_no_text_unless_local_moderator(client):
+    art = _post(client, "reuven", "article", None, {"title": "t", "text": "סודי"})
+    _post(client, "shimon", "report", art["id"], {"reason": "ספאם"})
+    for url in ("/api/moderation/queue", "/api/moderation/queue?as=shimon"):
+        it = client.get(url).json()["items"][0]
+        assert it == {"id": art["id"], "report_count": 1}
+    _post(client, "authority", "hide", art["id"], {"reason": "x"})
+    for url in ("/api/moderation/hidden", "/api/moderation/hidden?as=shimon"):
+        assert client.get(url).json()["items"] == [{"id": art["id"]}]
+    assert "text" in client.get("/api/moderation/hidden?as=authority").json()["items"][0]
+
+
+def test_remote_moderator_gets_no_text(fnode):
+    from fastapi.testclient import TestClient
+    from bhm.api import create_app
+    art = _post(TestClient(create_app(fnode)), "reuven", "article", None, {"title": "t", "text": "x"})
+    _post(TestClient(create_app(fnode)), "shimon", "report", art["id"], {"reason": "r"})
+    remote = TestClient(create_app(fnode), client=("8.8.8.8", 1))
+    it = remote.get("/api/moderation/queue?as=authority").json()["items"][0]
+    assert it == {"id": art["id"], "report_count": 1}

@@ -5,6 +5,7 @@ const when = (t) => esc((t || '').slice(0, 16).replace('T', ' '));
 const card = (i, mode) => {
   const reasons = (i.reports || []).map(r => `<li>${esc(r.reason || '(ללא סיבה)')} <span class="muted small">· ${esc(r.by_name)}</span></li>`).join('');
   const hb = i.hidden_by;
+  if (i.text === undefined) return `<div class="post" data-id="${esc(i.id)}"><p class="small muted">${esc(i.report_count || 0)} דיווחים · <span title="${esc(i.id)}">${esc(i.id.slice(0, 10))}</span> (התוכן והסיבות גלויים למפקח מקומי בלבד)</p></div>`;
   return `<div class="post" data-id="${esc(i.id)}"><div class="meta"><b>${esc(i.author_name || '')}</b> · ${esc(i.kind || '')} · ${when(i.ts)}${i.ref ? ' · ' + esc(i.ref) : ''}</div>
   ${i.title ? `<h3 style="margin:.2em 0">${esc(i.title)}</h3>` : ''}<div class="body">${esc(i.text)}</div>
   ${mode === 'queue' ? `<div class="small"><span class="tag x">${esc(i.report_count)} דיווחים</span><ul>${reasons}</ul></div>` : `<p class="small muted">הוסתר בידי ${esc(hb.by_name)} · ${when(hb.ts)} · סיבה: ${esc(hb.reason || '(ללא)')}</p>`}

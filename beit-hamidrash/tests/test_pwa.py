@@ -25,3 +25,20 @@ def test_icon_and_offline(client):
 def test_js_served(client):
     r = client.get("/static/features/pwa.js")
     assert r.status_code == 200 and "serviceWorker" in r.text
+
+
+def test_sw_network_first_and_never_cache(client):
+    t = client.get("/api/pwa/sw.js").text
+    assert "cacheFirst" not in t
+    for p in ("/api/moderation/", "/api/admin/", "/api/sources_ai/"):
+        assert p in t
+
+
+def test_cache_version_from_mtimes(tmp_path):
+    from bhm.features import pwa
+    (tmp_path / "a.js").write_text("x")
+    v1 = pwa.compute_cache_version(tmp_path)
+    import os
+    os.utime(tmp_path / "a.js", ns=(1, 2_000_000_000))
+    assert pwa.compute_cache_version(tmp_path) != v1
+    assert pwa.CACHE_VERSION in pwa.SW_JS

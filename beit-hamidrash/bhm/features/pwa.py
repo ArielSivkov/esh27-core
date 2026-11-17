@@ -1,10 +1,26 @@
 """PWA: manifest, service worker, offline page and icon for installable/offline use."""
 from __future__ import annotations
 
+import hashlib
+from pathlib import Path
+
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse, Response
 
-CACHE_VERSION = "bhm-pwa-v1"
+WEB = Path(__file__).resolve().parent.parent.parent / "web"
+
+
+def compute_cache_version(web: Path = WEB) -> str:
+    h = hashlib.sha256()
+    try:
+        for f in sorted(p for p in web.rglob("*") if p.is_file()):
+            h.update(f"{f.relative_to(web)}:{f.stat().st_mtime_ns}".encode())
+    except OSError:
+        pass
+    return "bhm-pwa-" + h.hexdigest()[:12]
+
+
+CACHE_VERSION = compute_cache_version()
 
 ICON_SVG = (
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">'
@@ -49,16 +65,9 @@ self.addEventListener('activate', e => {
     ks.filter(k => k.startsWith('bhm-pwa-') && !k.startsWith(VERSION)).map(k => caches.delete(k))
   )).then(() => self.clients.claim()));
 });
-async function cacheFirst(req) {
-  const c = await caches.open(STATIC);
-  const hit = await c.match(req);
-  if (hit) return hit;
-  const res = await fetch(req);
-  if (res && res.ok) c.put(req, res.clone());
-  return res;
-}
-async function networkFirst(req) {
-  const c = await caches.open(API);
+const NEVER = ['/api/moderation/', '/api/admin/', '/api/sources_ai/'];
+async function networkFirst(req, name) {
+  const c = await caches.open(name);
   try {
     const res = await fetch(req);
     if (res && res.ok) c.put(req, res.clone());
@@ -81,8 +90,9 @@ self.addEventListener('fetch', e => {
       (await caches.match('/')) || (await caches.match('/api/pwa/offline'))));
     return;
   }
-  if (url.pathname.startsWith('/static/')) e.respondWith(cacheFirst(req));
-  else if (url.pathname.startsWith('/api/')) e.respondWith(networkFirst(req));
+  if (NEVER.some(p => url.pathname.startsWith(p))) return;   // never cached
+  if (url.pathname.startsWith('/static/')) e.respondWith(networkFirst(req, STATIC));
+  else if (url.pathname.startsWith('/api/')) e.respondWith(networkFirst(req, API));
 });
 """ % {"v": CACHE_VERSION}
 

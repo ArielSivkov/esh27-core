@@ -40,3 +40,11 @@ def test_hidden_and_legal(client, fnode):
 
 def test_book_of():
     assert admin._book_of("Rashi on Genesis 1:1:2") == "Rashi on Genesis"
+
+
+def test_stats_forbidden_remote(fnode):
+    from fastapi.testclient import TestClient
+    from bhm.api import create_app
+    admin._cache.clear()
+    c = TestClient(create_app(fnode), client=("8.8.8.8", 1))
+    assert c.get("/api/admin/stats").status_code == 403

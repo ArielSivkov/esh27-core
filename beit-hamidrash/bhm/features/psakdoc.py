@@ -99,13 +99,19 @@ def _resolve_source(con, ref: str) -> dict:
     try:
         rows = con.execute(q.format("s.ref=?", 3), (ref,)).fetchall()
         if not rows:
-            rows = con.execute(q.format("s.ref LIKE ?", 5), (ref + ":%",)).fetchall()
+            rows = con.execute(q.format("s.ref >= ? AND s.ref < ?", 5), (ref + ":", ref + ";")).fetchall()
     except Exception:
         rows = []
     out["versions"] = [{"ref": r["ref"], "text": r["text"], "version_title": r["version_title"],
                         "he_title": r["he_title"], "license": r["license"]} for r in rows]
     out["found"] = bool(rows)
     return out
+
+
+def _clean_sources(raw) -> list[str]:
+    if not isinstance(raw, list):
+        return []
+    return [x for x in raw if isinstance(x, str) and len(x) <= 100][:20]
 
 
 def build_document(con, draft_id: str) -> dict:
@@ -116,6 +122,8 @@ def build_document(con, draft_id: str) -> dict:
     if st["hidden"]:
         raise HTTPException(404, "draft not found")
     b = st["draft"]["body"]
+    if not isinstance(b, dict):
+        b = {}
     try:
         gd = datetime.fromisoformat(st["draft"]["ts"]).date()
     except Exception:
@@ -139,7 +147,7 @@ def build_document(con, draft_id: str) -> dict:
         "answer": b.get("answer", ""),
         "ai_generated": bool(b.get("ai_generated")),
         "author_name": st["author_name"],
-        "sources": [_resolve_source(con, s) for s in b.get("sources", [])],
+        "sources": [_resolve_source(con, s) for s in _clean_sources(b.get("sources"))],
         "reviews": st["reviews"],
         "signatures": [{k: v for k, v in s.items() if k != "key"} for s in st["signatures"]],
         "status": st["status"],

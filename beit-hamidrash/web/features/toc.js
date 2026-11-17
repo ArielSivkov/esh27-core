@@ -14,7 +14,7 @@ BHM.register('toc', async () => {
     <div class="panel">${d.tree.map(node).join('') || '<p class="muted">הספרייה ריקה</p>'}</div>
     <p class="muted small">${esc(d.note)}</p>`;
   document.getElementById('toc-ref').onclick = async () => {
-    try { await BHM.api('/api/toc/refresh', { method: 'POST' }); } catch (e) { alert('הרענון נכשל (אין רשת?)'); }
+    try { await BHM.api('/api/toc/refresh', { method: 'POST' }); } catch (e) { alert('הרענון נכשל (אין רשת, או שהרענון מותר רק מקומית ופעם ב-10 דקות)'); }
     location.reload();
   };
 });

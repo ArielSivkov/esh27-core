@@ -121,3 +121,50 @@ def test_api_info(fnode, client):
     assert d["roles"]["root"]["threshold"] == 2
     (fnode.home / "root.json").write_text("{bad")
     assert client.get("/api/trust/info").json()["present"] is False
+
+
+def _signed_ok():
+    a = ids(1)
+    return trust.sign_root(root(1, a, 1), a)
+
+
+@pytest.mark.parametrize("mutate", [
+    lambda r: r.__setitem__("signed", []),
+    lambda r: r.__setitem__("signatures", "x"),
+    lambda r: r.__setitem__("signatures", [None, 3, {"keyid": 1, "sig": 2}]),
+    lambda r: r["signed"].__setitem__("keys", {"a": 5}),
+    lambda r: r["signed"].__setitem__("keys", {1: "a"}),
+    lambda r: r["signed"].__setitem__("roles", {"root": 5}),
+    lambda r: r["signed"].__setitem__("roles", {"root": {"keyids": "ab", "threshold": 1}}),
+    lambda r: r["signed"].__setitem__("roles", {"root": {"keyids": [1], "threshold": 1}}),
+    lambda r: r["signed"].__setitem__("roles", {"root": {"keyids": [[1]], "threshold": "1"}}),
+    lambda r: r["signed"].__setitem__("roles", {"root": {"keyids": [], "threshold": True}}),
+    lambda r: r["signed"].__setitem__("expires", 12),
+    lambda r: r["signed"].__setitem__("expires", None),
+    lambda r: r["signed"].__setitem__("version", "1"),
+])
+def test_malformed_root_raises_trusterror(mutate):
+    r = _signed_ok()
+    mutate(r)
+    with pytest.raises(trust.TrustError):
+        trust.verify_root(r, None)
+    assert trust.verify_role_signature(r, "root", {}, []) is False
+    trust.summarize(r)  # must not raise
+
+
+@pytest.mark.parametrize("bad", [None, [], "x", 5, {"signed": None}, {"signed": {"roles": []}}])
+def test_garbage_inputs(bad):
+    with pytest.raises(trust.TrustError):
+        trust.verify_root(bad, None)
+    assert trust.verify_role_signature(bad, "root", {}, []) is False
+    trust.summarize(bad)
+
+
+def test_bad_trusted_root_and_sigs_types():
+    a = ids(1)
+    good = trust.sign_root(root(1, a, 1), a)
+    with pytest.raises(trust.TrustError):
+        trust.verify_root(good, {"signed": "x"})
+    with pytest.raises(trust.TrustError):
+        trust.verify_root(good, [])
+    assert trust.verify_role_signature(good, "root", {}, "notalist") is False

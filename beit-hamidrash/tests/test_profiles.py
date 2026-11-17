@@ -53,3 +53,23 @@ def test_hidden_follow_ignored(fnode, client):
 def test_static_and_nav(client):
     assert client.get("/static/features/profiles.js").status_code == 200
     assert any(f["name"] == "profiles" for f in client.get("/api/features").json())
+
+
+def test_malformed_follow_subject_ignored(fnode, client):
+    from bhm import ledger as L
+    r = pk(fnode, "reuven")
+    for subj in (["x"], "y" * 200, 5):
+        L.insert(fnode.con, L.make_event(fnode.identity("shimon"), "follow", {"subject": subj}))
+    assert client.get("/api/profiles").status_code == 200
+    assert client.get(f"/api/profiles/{r}").status_code == 200
+    assert client.get(f"/api/profiles/{pk(fnode, 'shimon')}/feed").json() == []
+
+
+def test_feed_only_known_authors_and_cap(fnode, client):
+    s, r = pk(fnode, "shimon"), pk(fnode, "reuven")
+    art = fnode.post("reuven", "article", {"title": "t", "text": "x"})
+    from bhm import ledger as L
+    for i in range(600):
+        L.insert(fnode.con, L.make_event(fnode.identity("shimon"), "follow", {"subject": f"ghost{i}"}))
+    fnode.post("shimon", "follow", {"subject": r})
+    assert [e["id"] for e in client.get(f"/api/profiles/{s}/feed").json()] == [art["id"]]

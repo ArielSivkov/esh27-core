@@ -92,3 +92,22 @@ def test_js_served_and_escapes(client):
     js = client.get("/static/features/articles.js").text
     assert "BHM.esc" in js and "register('articles'" in js and "register('article'" in js
     assert any(f["name"] == "articles" for f in client.get("/api/features").json())
+
+
+def test_edit_chain_and_deterministic_order(client, fnode):
+    a = _art(client, text="orig", title="T")
+    e1 = _post(client, "reuven", "edit", {"text": "v1"}, target=a["id"])
+    e2 = _post(client, "reuven", "edit", {"text": "v2", "prev": e1["id"]}, target=a["id"])
+    e3 = _post(client, "reuven", "edit", {"text": "fork", "prev": a["id"]}, target=a["id"])
+    # make the fork the newest by ts; the longer chain must still win
+    fnode.con.execute("UPDATE events SET ts='2031-01-01T00:00:00+00:00' WHERE id=?", (e3["id"],))
+    fnode.con.commit()
+    assert client.get(f"/api/articles/{a['id']}").json()["text"] == "v2"
+
+
+def test_edit_same_ts_uses_received_order(client, fnode):
+    a = _art(client, text="orig")
+    ids = [_post(client, "reuven", "edit", {"text": t}, target=a["id"])["id"] for t in ("a", "b", "c")]
+    fnode.con.execute("UPDATE events SET ts='2031-01-01T00:00:00+00:00' WHERE kind='edit'")
+    fnode.con.commit()
+    assert client.get(f"/api/articles/{a['id']}").json()["text"] == "c"

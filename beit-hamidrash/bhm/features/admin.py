@@ -5,7 +5,7 @@ import re
 import threading
 import time
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Request
 
 from .. import ledger
 
@@ -61,7 +61,9 @@ def make_router(node) -> APIRouter:
     r = APIRouter(prefix="/api/admin")
 
     @r.get("/stats")
-    def stats(refresh: bool = False):
+    def stats(request: Request, refresh: bool = False):
+        if request.client is None or request.client.host not in ("127.0.0.1", "::1", "testclient"):
+            raise HTTPException(403, "local requests only")
         key = str(node.home)
         now = time.monotonic()
         with _lock:

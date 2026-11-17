@@ -91,7 +91,7 @@ async function pageRead(vid, ref, seg) {
     $app.querySelectorAll('.seg').forEach(s => s.classList.toggle('on', s.dataset.ref === r));
     const cs = (await api(`/api/commentary?ref=${enc(r)}`)).filter(c => c.ref === r);
     const side = $app.querySelector('#side');
-    side.innerHTML = `<h3>${esc(r)}</h3>${cs.map(c => postHTML(c)).join('') || '<p class="muted">אין עדיין פירושים על קטע זה.</p>'}
+    side.innerHTML = `<h3>${esc(r)}</h3><p class="small"><a href="#/parallels/${enc(r)}">מפרשים על הפסוק (מקראות גדולות) ←</a></p>${cs.map(c => postHTML(c)).join('') || '<p class="muted">אין עדיין פירושים על קטע זה.</p>'}
       <h3>פירוש חדש</h3><textarea id="ct" placeholder="כתבו את פירושכם…"></textarea><div class="row"><button id="cs">פרסום חתום</button><span class="small muted">בשם ${esc($me.selectedOptions[0]?.text || '')}</span></div>`;
     wirePosts(side, () => openSeg(r));
     side.querySelector('#cs').onclick = async () => { const t = side.querySelector('#ct').value.trim(); if (!t) return; try { await post({ kind: 'commentary', ref: r, body: { text: t } }); openSeg(r); } catch (e) { alert(e.message); } };

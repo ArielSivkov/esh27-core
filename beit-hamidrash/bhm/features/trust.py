@@ -40,7 +40,7 @@ def _now(now):
 def _parse_time(s) -> datetime:
     try:
         d = datetime.fromisoformat(str(s).replace("Z", "+00:00"))
-    except ValueError as e:
+    except (ValueError, TypeError, OverflowError) as e:
         raise TrustError("bad expires") from e
     return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
 
@@ -60,14 +60,23 @@ def sign_root(signed: dict, identities: list[Identity]) -> dict:
 
 
 def _count_valid(signed_bytes: bytes, sigs, keys: dict, role: dict) -> int:
-    allowed = set(role.get("keyids", []))
+    if not isinstance(sigs, list) or not isinstance(keys, dict) or not isinstance(role, dict):
+        return 0
+    ids = role.get("keyids")
+    allowed = {i for i in ids if isinstance(i, str)} if isinstance(ids, list) else set()
     seen = set()
-    for s in sigs or []:
+    for s in sigs:
         if not isinstance(s, dict):
             continue
-        kid = s.get("keyid")
-        if kid in allowed and kid not in seen and kid in keys:
-            if verify(keys[kid], signed_bytes, s.get("sig", "")):
+        kid, sig = s.get("keyid"), s.get("sig")
+        if not isinstance(kid, str) or not isinstance(sig, str):
+            continue
+        if kid in allowed and kid not in seen and isinstance(keys.get(kid), str):
+            try:
+                ok = verify(keys[kid], signed_bytes, sig)
+            except Exception:
+                ok = False
+            if ok:
                 seen.add(kid)
     return len(seen)
 
@@ -81,11 +90,20 @@ def _check_structure(signed: dict) -> None:
     if not isinstance(keys, dict) or not isinstance(roles, dict) or "root" not in roles:
         raise TrustError("missing keys/roles.root")
     for kid, pk in keys.items():
-        if keyid(pk) != kid:
+        if not isinstance(kid, str) or not isinstance(pk, str):
+            raise TrustError("keys must map str -> str")
+        try:
+            ok = keyid(pk) == kid
+        except Exception:
+            ok = False
+        if not ok:
             raise TrustError("keyid does not match key")
     for name, r in roles.items():
+        if not isinstance(name, str) or not isinstance(r, dict):
+            raise TrustError(f"bad role {name}")
         ids, t = r.get("keyids"), r.get("threshold")
-        if not isinstance(ids, list) or not isinstance(t, int) or t < 1:
+        if (not isinstance(ids, list) or not all(isinstance(i, str) for i in ids)
+                or not isinstance(t, int) or isinstance(t, bool) or t < 1):
             raise TrustError(f"bad role {name}")
         if len(set(ids)) < t or any(i not in keys for i in ids):
             raise TrustError(f"role {name}: threshold unreachable or unknown key")
@@ -97,8 +115,12 @@ def verify_root(new_root: dict, trusted_root: dict | None, now=None) -> dict:
     trusted_root None = bootstrap (self-signed only); use only for a root
     obtained out of band.
     """
-    signed = (new_root or {}).get("signed")
-    sigs = (new_root or {}).get("signatures")
+    if not isinstance(new_root, dict):
+        raise TrustError("root must be an object")
+    signed = new_root.get("signed")
+    sigs = new_root.get("signatures")
+    if not isinstance(sigs, list):
+        raise TrustError("signatures must be a list")
     _check_structure(signed)
     if _parse_time(signed["expires"]) <= _now(now):
         raise TrustError("new root expired")
@@ -107,7 +129,9 @@ def verify_root(new_root: dict, trusted_root: dict | None, now=None) -> dict:
     if got < need:
         raise TrustError(f"new root: {got}/{need} valid root signatures")
     if trusted_root is not None:
-        old = trusted_root["signed"]
+        if not isinstance(trusted_root, dict):
+            raise TrustError("bad trusted root")
+        old = trusted_root.get("signed")
         _check_structure(old)
         if signed["version"] != old["version"] + 1:
             raise TrustError(f"version {signed['version']} is not {old['version']}+1 (rollback/skip)")
@@ -121,6 +145,8 @@ def verify_root(new_root: dict, trusted_root: dict | None, now=None) -> dict:
 def verify_role_signature(meta: dict, role: str, payload, sigs, now=None) -> bool:
     """True iff `sigs` hold a threshold of valid signatures over canonical(payload)
     by the role's keys in trusted root `meta` (signed part or full file)."""
+    if not isinstance(meta, dict):
+        return False
     signed = meta.get("signed", meta)
     try:
         _check_structure(signed)
@@ -131,7 +157,10 @@ def verify_role_signature(meta: dict, role: str, payload, sigs, now=None) -> boo
     r = signed["roles"].get(role)
     if not r:
         return False
-    return _count_valid(canonical(payload), sigs, signed["keys"], r) >= r["threshold"]
+    try:
+        return _count_valid(canonical(payload), sigs, signed["keys"], r) >= r["threshold"]
+    except (TypeError, ValueError):
+        return False
 
 
 def load_root(node) -> dict | None:
@@ -141,8 +170,25 @@ def load_root(node) -> dict | None:
     return json.loads(p.read_text(encoding="utf-8"))
 
 
+def _roles_summary(roles) -> dict:
+    out = {}
+    if not isinstance(roles, dict):
+        return out
+    for n, r in roles.items():
+        if not isinstance(r, dict):
+            continue
+        ids = r.get("keyids")
+        ids = [i for i in ids if isinstance(i, str)] if isinstance(ids, list) else []
+        out[str(n)] = {"threshold": r.get("threshold"), "keys": len(ids), "keyids": ids}
+    return out
+
+
 def summarize(root: dict, now=None) -> dict:
+    if not isinstance(root, dict):
+        root = {}
     s = root.get("signed", {})
+    if not isinstance(s, dict):
+        s = {}
     exp = s.get("expires")
     try:
         expired = _parse_time(exp) <= _now(now)
@@ -156,9 +202,8 @@ def summarize(root: dict, now=None) -> dict:
         self_ok = False
     return {"present": True, "version": s.get("version"), "expires": exp, "expired": expired,
             "self_signed_ok": self_ok,
-            "roles": {n: {"threshold": r.get("threshold"), "keys": len(r.get("keyids", [])),
-                          "keyids": r.get("keyids", [])} for n, r in s.get("roles", {}).items()},
-            "keys": len(s.get("keys", {}))}
+            "roles": _roles_summary(s.get("roles")),
+            "keys": len(s["keys"]) if isinstance(s.get("keys"), dict) else 0}
 
 
 def make_router(node) -> APIRouter:

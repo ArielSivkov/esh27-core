@@ -56,3 +56,13 @@ def test_hebrew_date():
 def test_js_escapes_and_print():
     js = (pathlib.Path(__file__).parent.parent / "web/features/psakdoc.js").read_text()
     assert "esc(d.question)" in js and "esc(d.answer)" in js and "@media print" in js
+
+
+def test_malformed_sources_no_500(fnode, client):
+    for bad in ("Genesis 1:1", {"a": 1}, [1, None, ["x"], "x" * 101, "100%_"], ["Genesis 1:1"] * 30):
+        d = fnode.post("reuven", "psak_draft", {"question": "q", "answer": "a", "sources": bad})
+        r = client.get(f"/api/psakdoc/{d['id']}")
+        assert r.status_code == 200
+        assert len(r.json()["sources"]) <= 20
+    d = fnode.post("reuven", "psak_draft", {"question": "q", "answer": "a", "sources": ["%"]})
+    assert not client.get(f"/api/psakdoc/{d['id']}").json()["sources"][0]["found"]

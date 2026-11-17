@@ -17,7 +17,7 @@ import sqlite3
 
 from fastapi import APIRouter
 
-from ..ledger import KINDS, MAX_BODY_BYTES, LedgerError, now
+from ..ledger import KINDS, MAX_BODY_BYTES, ROLES, LedgerError, now
 from ..signing import Identity, canonical, sha256_hex, verify
 
 PROTOCOL_VERSION = 2
@@ -61,8 +61,47 @@ def strip_body(ev: dict) -> dict:
     return {k: v for k, v in ev.items() if k != "body"}
 
 
-def check_event_v2(ev: dict) -> None:
-    """Structure + signature of the envelope only (no blob needed). Raises LedgerError."""
+_NEED_TARGET = {"reply", "endorse", "hide", "unhide", "psak_review", "psak_sign", "report", "edit"}
+
+
+def _check_kind_rules(ev: dict, b: dict | None) -> None:
+    """Same per-kind rules as ledger.check_event; body rules only when body `b` is given."""
+    kind = ev["kind"]
+    if kind in _NEED_TARGET and not ev.get("target"):
+        raise LedgerError(f"{kind} requires target")
+    if kind == "commentary" and not ev.get("ref"):
+        raise LedgerError("commentary requires a text ref")
+    if b is None:
+        return
+    if not isinstance(b, dict):
+        raise LedgerError("body must be an object")
+    if kind in ("commentary", "reply", "article") and not str(b.get("text", "")).strip():
+        raise LedgerError("text is empty")
+    if kind == "article" and not str(b.get("title", "")).strip():
+        raise LedgerError("article requires title")
+    if kind in ("grant_role", "revoke_role") and (b.get("role") not in ROLES or not b.get("subject")):
+        raise LedgerError("grant/revoke requires subject and a known role")
+    if kind == "psak_draft":
+        if not str(b.get("question", "")).strip() or not str(b.get("answer", "")).strip():
+            raise LedgerError("draft requires question and answer")
+        if not b.get("sources"):
+            raise LedgerError("draft requires at least one source")
+    if kind in ("follow", "unfollow") and not b.get("subject"):
+        raise LedgerError(f"{kind} requires subject (author public key)")
+    if kind == "sheet" and (not str(b.get("title", "")).strip() or not isinstance(b.get("items"), list) or not b["items"]):
+        raise LedgerError("sheet requires title and a non-empty items list")
+    if kind == "edit" and not str(b.get("text", "")).strip():
+        raise LedgerError("edit requires the new text")
+    if kind == "psak_sign" and b.get("decision") not in ("approved", "rejected"):
+        raise LedgerError("psak_sign decision must be approved/rejected")
+
+
+def check_event_v2(ev: dict, blob: dict | None = None) -> None:
+    """Structure + signature + per-kind rules (same as ledger.check_event).
+
+    Target/ref rules always apply; body rules apply when `blob` is given.
+    Raises LedgerError.
+    """
     for k in ("id", "author", "kind", "body_hash", "ts", "sig"):
         if not ev.get(k):
             raise LedgerError(f"missing field {k}")
@@ -77,6 +116,12 @@ def check_event_v2(ev: dict) -> None:
         raise LedgerError("id does not match content")
     if not verify(ev["author"], data, ev["sig"]):
         raise LedgerError("bad signature")
+    if blob is not None:
+        if not isinstance(blob, dict):
+            raise LedgerError("body must be an object")
+        if body_hash(blob) != ev["body_hash"]:
+            raise LedgerError("blob does not match body_hash")
+    _check_kind_rules(ev, blob)
 
 
 def verify_v2(ev: dict, blob: dict | None = None) -> bool:
@@ -87,17 +132,10 @@ def verify_v2(ev: dict, blob: dict | None = None) -> bool:
     Returns False (never raises) on any failure.
     """
     try:
-        check_event_v2(ev)
-    except (LedgerError, TypeError, AttributeError):
+        check_event_v2(ev, blob)
+    except (LedgerError, TypeError, AttributeError, ValueError):
         return False
-    if blob is None:
-        return True
-    if not isinstance(blob, dict):
-        return False
-    try:
-        return body_hash(blob) == ev["body_hash"]
-    except (TypeError, ValueError):
-        return False
+    return True
 
 
 class BlobStore:
@@ -110,6 +148,10 @@ class BlobStore:
 
     def put(self, body: dict) -> str:
         """Store a body; returns its hash. A purged hash is NOT resurrected (stays tombstoned)."""
+        if not isinstance(body, dict):
+            raise LedgerError("body must be an object")
+        if len(canonical(body)) > MAX_BODY_BYTES:
+            raise LedgerError("event too large")
         h = body_hash(body)
         row = self.con.execute("SELECT purged FROM envelope_blobs WHERE hash=?", (h,)).fetchone()
         if row is None:

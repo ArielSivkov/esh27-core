@@ -5,7 +5,7 @@ import json
 import time
 import urllib.request
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 
 NAV = {"label": "תוכן עניינים", "href": "#/toc"}
 TOC_URL = "https://storage.googleapis.com/sefaria-export/table_of_contents.json"
@@ -25,6 +25,9 @@ HE_TOP = {
     "Acharonim on Tanakh": "אחרונים על התנ\"ך", "Commentary": "פרשנות", "Other": "אחר",
 }
 OTHER = "Other"
+LOCAL_HOSTS = ("127.0.0.1", "::1", "testclient")
+REFRESH_MIN_INTERVAL = 600
+_last_refresh: dict = {}
 
 
 def _cache_path(node):
@@ -127,21 +130,23 @@ def make_router(node) -> APIRouter:
     r = APIRouter()
 
     @r.get("/api/toc")
-    def toc(refresh: bool = False):
+    def toc():
         warning = None
         data = load_cache(node)
-        if refresh:
-            try:
-                data = fetch_toc(node)
-            except Exception as e:  # offline: keep whatever we have
-                warning = f"טעינת התוכן העניינים מהרשת נכשלה ({type(e).__name__}); מוצג מבנה מקומי"
         tree, source = build_tree(library_books(node.con), data)
         return {"source": source, "books": _count(tree), "tree": tree, "warning": warning,
                 "note": "מבנה הקטגוריות מבוסס על מטא-דאטה של ספריא; מוצגים רק ספרים שבספרייה שלנו.",
                 "cache_age_s": _age(node)}
 
     @r.post("/api/toc/refresh")
-    def refresh():
+    def refresh(request: Request):
+        if not request.client or request.client.host not in LOCAL_HOSTS:
+            raise HTTPException(403, "local requests only")
+        now = time.monotonic()
+        last = _last_refresh.get(str(node.home))
+        if last is not None and now - last < REFRESH_MIN_INTERVAL:
+            raise HTTPException(429, "refresh rate limited")
+        _last_refresh[str(node.home)] = now
         try:
             data = fetch_toc(node)
         except Exception as e:

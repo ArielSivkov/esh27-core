@@ -159,6 +159,35 @@ class Resolver:
 
 
 # ---------------------------------------------------------------- articles
+def _order_edits(article_id, edits):
+    """Edits in (ts, received order); if edits carry "prev", the longest chain is placed last (the winner)."""
+    if not any(isinstance(e["body"].get("prev"), str) for e in edits):
+        return edits
+    by_id = {e["id"]: e for e in edits}
+    depth = {}
+
+    def d(e, seen=()):
+        if e["id"] in depth:
+            return depth[e["id"]]
+        p = e["body"].get("prev")
+        n = 1
+        if isinstance(p, str) and p in by_id and p not in seen and p != e["id"]:
+            n = d(by_id[p], seen + (e["id"],)) + 1
+        depth[e["id"]] = n
+        return n
+    for e in edits:
+        d(e)
+    best = max(edits, key=lambda e: (depth[e["id"]], e["ts"], e["_rid"]))
+    chain, cur = [], best
+    while cur is not None and cur not in chain:
+        chain.append(cur)
+        p = cur["body"].get("prev")
+        cur = by_id.get(p) if isinstance(p, str) else None
+    chain.reverse()
+    ids = {e["id"] for e in chain}
+    return [e for e in edits if e["id"] not in ids] + chain
+
+
 def _latest(con, art_events, hidden):
     """Map article id -> (title, text, same-author edit events, ignored count)."""
     ids = [a["id"] for a in art_events]
@@ -168,14 +197,17 @@ def _latest(con, art_events, hidden):
     for k in range(0, len(ids), 500):
         chunk = ids[k:k + 500]
         q = ",".join("?" * len(chunk))
-        for r in con.execute(f"SELECT * FROM events WHERE kind='edit' AND target IN ({q}) ORDER BY ts, id", chunk):
+        for r in con.execute(f"SELECT *, rowid AS _rid FROM events WHERE kind='edit' AND target IN ({q}) ORDER BY ts, rowid", chunk):
             e = ledger.row_to_event(r)
+            e["_rid"] = r["_rid"]
             if e["id"] in hidden:
                 continue
             if e["author"] == author[e["target"]]:
                 edits[e["target"]].append(e)
             else:
                 ignored[e["target"]] += 1
+    for i in ids:
+        edits[i] = _order_edits(i, edits[i])
     out = {}
     for a in art_events:
         title, text = str(a["body"].get("title", "")), str(a["body"].get("text", ""))
