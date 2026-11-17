@@ -181,10 +181,14 @@ async function route() {
   try {
     const feats = await api('/api/features');
     const nav = document.querySelector('.top nav');
+    const PRIMARY = ['search', 'parallels', 'articles'];
+    const more = document.createElement('details'); more.className = 'more';
+    more.innerHTML = '<summary>עוד ▾</summary><div class="menu"></div>';
     for (const f of feats) {
-      if (f.nav) { const a = document.createElement('a'); a.href = f.nav.href; a.textContent = f.nav.label; nav.appendChild(a); }
+      if (f.nav) { const a = document.createElement('a'); a.href = f.nav.href; a.textContent = f.nav.label; (PRIMARY.includes(f.name) ? nav : more.querySelector('.menu')).appendChild(a); a.addEventListener('click', () => more.removeAttribute('open')); }
       if (f.js) await new Promise(res => { const sc = document.createElement('script'); sc.src = f.js; sc.onload = res; sc.onerror = res; document.body.appendChild(sc); });
     }
+    if (more.querySelector('.menu a')) nav.appendChild(more);
   } catch (e) { console.error('features', e); }
   window.addEventListener('hashchange', route);
   route();
