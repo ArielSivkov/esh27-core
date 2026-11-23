@@ -1,0 +1,925 @@
+{
+ "rows": [
+  {
+   "tri": "cond-mat.stat-mech + physics.bio-ph + quant-ph",
+   "N": 64218,
+   "A": 64218,
+   "B": 12634,
+   "C": 119808,
+   "AB": 1960,
+   "AC": 6902,
+   "BC": 423,
+   "ABC": 19,
+   "exp_by_pivot": [
+    210.7,
+    65.6,
+    24.4
+   ],
+   "ratio_by_pivot": [
+    0.09,
+    0.29,
+    0.78
+   ],
+   "p_poisson_max_exp": "4.1e-65",
+   "p_poisson_min_exp": "1.6e-01",
+   "P_C_given_AB": 0.0097,
+   "P_C_given_A": 0.1075,
+   "P_C_given_B": 0.0335,
+   "only_papers_with_3plus_cats": {
+    "ABC": 19,
+    "exp": 374.3,
+    "ratio": 0.051
+   }
+  },
+  {
+   "tri": "math.CV + math.DG + math.PR",
+   "N": 14360,
+   "A": 14360,
+   "B": 35852,
+   "C": 46076,
+   "AB": 1930,
+   "AC": 518,
+   "BC": 365,
+   "ABC": 6,
+   "exp_by_pivot": [
+    69.6,
+    19.6,
+    4.1
+   ],
+   "ratio_by_pivot": [
+    0.086,
+    0.305,
+    1.462
+   ],
+   "p_poisson_max_exp": "1.0e-22",
+   "p_poisson_min_exp": "8.8e-01",
+   "P_C_given_AB": 0.0031,
+   "P_C_given_A": 0.0361,
+   "P_C_given_B": 0.0102,
+   "only_papers_with_3plus_cats": {
+    "ABC": 6,
+    "exp": 104.3,
+    "ratio": 0.058
+   }
+  },
+  {
+   "tri": "cs.CR + cs.LG + quant-ph",
+   "N": 20551,
+   "A": 20551,
+   "B": 99417,
+   "C": 119808,
+   "AB": 4002,
+   "AC": 722,
+   "BC": 713,
+   "ABC": 11,
+   "exp_by_pivot": [
+    140.6,
+    28.7,
+    4.3
+   ],
+   "ratio_by_pivot": [
+    0.078,
+    0.383,
+    2.56
+   ],
+   "p_poisson_max_exp": "1.0e-45",
+   "p_poisson_min_exp": "1.0e+00",
+   "P_C_given_AB": 0.0027,
+   "P_C_given_A": 0.0351,
+   "P_C_given_B": 0.0072,
+   "only_papers_with_3plus_cats": {
+    "ABC": 11,
+    "exp": 125.0,
+    "ratio": 0.088
+   }
+  },
+  {
+   "tri": "cs.CL + cs.LG + physics.soc-ph",
+   "N": 32221,
+   "A": 32221,
+   "B": 99417,
+   "C": 18548,
+   "AB": 8276,
+   "AC": 314,
+   "BC": 325,
+   "ABC": 4,
+   "exp_by_pivot": [
+    80.7,
+    27.1,
+    5.5
+   ],
+   "ratio_by_pivot": [
+    0.05,
+    0.148,
+    0.727
+   ],
+   "p_poisson_max_exp": "1.7e-29",
+   "p_poisson_min_exp": "3.6e-01",
+   "P_C_given_AB": 0.0005,
+   "P_C_given_A": 0.0097,
+   "P_C_given_B": 0.0033,
+   "only_papers_with_3plus_cats": {
+    "ABC": 4,
+    "exp": 151.8,
+    "ratio": 0.026
+   }
+  },
+  {
+   "tri": "cond-mat.dis-nn + math.PR + quant-ph",
+   "N": 20459,
+   "A": 20459,
+   "B": 46076,
+   "C": 119808,
+   "AB": 363,
+   "AC": 1512,
+   "BC": 455,
+   "ABC": 1,
+   "exp_by_pivot": [
+    26.8,
+    3.6,
+    5.7
+   ],
+   "ratio_by_pivot": [
+    0.037,
+    0.279,
+    0.174
+   ],
+   "p_poisson_max_exp": "6.2e-11",
+   "p_poisson_min_exp": "1.3e-01",
+   "P_C_given_AB": 0.0028,
+   "P_C_given_A": 0.0739,
+   "P_C_given_B": 0.0099,
+   "only_papers_with_3plus_cats": {
+    "ABC": 1,
+    "exp": 51.2,
+    "ratio": 0.02
+   }
+  },
+  {
+   "tri": "math.CV + math.DG + math.FA",
+   "N": 14360,
+   "A": 14360,
+   "B": 35852,
+   "C": 25539,
+   "AB": 1930,
+   "AC": 1298,
+   "BC": 608,
+   "ABC": 18,
+   "exp_by_pivot": [
+    174.5,
+    32.7,
+    30.9
+   ],
+   "ratio_by_pivot": [
+    0.103,
+    0.55,
+    0.583
+   ],
+   "p_poisson_max_exp": "6.7e-52",
+   "p_poisson_min_exp": "8.7e-03",
+   "P_C_given_AB": 0.0093,
+   "P_C_given_A": 0.0904,
+   "P_C_given_B": 0.017,
+   "only_papers_with_3plus_cats": {
+    "ABC": 18,
+    "exp": 159.1,
+    "ratio": 0.113
+   }
+  },
+  {
+   "tri": "cs.GT + cs.LG + cs.LO",
+   "N": 8199,
+   "A": 8199,
+   "B": 99417,
+   "C": 12681,
+   "AB": 779,
+   "AC": 361,
+   "BC": 371,
+   "ABC": 2,
+   "exp_by_pivot": [
+    34.3,
+    2.9,
+    10.6
+   ],
+   "ratio_by_pivot": [
+    0.058,
+    0.688,
+    0.189
+   ],
+   "p_poisson_max_exp": "7.9e-13",
+   "p_poisson_min_exp": "4.4e-01",
+   "P_C_given_AB": 0.0026,
+   "P_C_given_A": 0.044,
+   "P_C_given_B": 0.0037,
+   "only_papers_with_3plus_cats": {
+    "ABC": 2,
+    "exp": 48.6,
+    "ratio": 0.041
+   }
+  },
+  {
+   "tri": "cond-mat.quant-gas + cond-mat.stat-mech + nlin.PS",
+   "N": 17569,
+   "A": 17569,
+   "B": 64218,
+   "C": 8402,
+   "AB": 1788,
+   "AC": 614,
+   "BC": 468,
+   "ABC": 3,
+   "exp_by_pivot": [
+    62.5,
+    13.0,
+    34.2
+   ],
+   "ratio_by_pivot": [
+    0.048,
+    0.23,
+    0.088
+   ],
+   "p_poisson_max_exp": "3.1e-23",
+   "p_poisson_min_exp": "1.0e-03",
+   "P_C_given_AB": 0.0017,
+   "P_C_given_A": 0.0349,
+   "P_C_given_B": 0.0073,
+   "only_papers_with_3plus_cats": {
+    "ABC": 3,
+    "exp": 77.4,
+    "ratio": 0.039
+   }
+  },
+  {
+   "tri": "cs.LG + stat.ML + cs.AI",
+   "N": 99417,
+   "A": 99417,
+   "B": 52324,
+   "C": 41758,
+   "AB": 43826,
+   "AC": 17254,
+   "BC": 5815,
+   "ABC": 5252,
+   "exp_by_pivot": [
+    7606.1,
+    4870.6,
+    2402.7
+   ],
+   "ratio_by_pivot": [
+    0.691,
+    1.078,
+    2.186
+   ],
+   "p_poisson_max_exp": "0.0e+00",
+   "p_poisson_min_exp": "0.0e+00",
+   "P_C_given_AB": 0.1198,
+   "P_C_given_A": 0.1736,
+   "P_C_given_B": 0.1111,
+   "only_papers_with_3plus_cats": {
+    "ABC": 5252,
+    "exp": 7020.2,
+    "ratio": 0.748
+   }
+  },
+  {
+   "tri": "hep-th + gr-qc + astro-ph.CO",
+   "N": 148584,
+   "A": 148584,
+   "B": 91597,
+   "C": 57043,
+   "AB": 40741,
+   "AC": 9972,
+   "BC": 13906,
+   "ABC": 7483,
+   "exp_by_pivot": [
+    2734.3,
+    6185.2,
+    2431.0
+   ],
+   "ratio_by_pivot": [
+    2.737,
+    1.21,
+    3.078
+   ],
+   "p_poisson_max_exp": "0.0e+00",
+   "p_poisson_min_exp": "0.0e+00",
+   "P_C_given_AB": 0.1837,
+   "P_C_given_A": 0.0671,
+   "P_C_given_B": 0.1518,
+   "only_papers_with_3plus_cats": {
+    "ABC": 7483,
+    "exp": 4332.1,
+    "ratio": 1.727
+   }
+  },
+  {
+   "tri": "math.PR + math-ph + cond-mat.stat-mech",
+   "N": 46076,
+   "A": 46076,
+   "B": 68330,
+   "C": 64218,
+   "AB": 5748,
+   "AC": 1538,
+   "BC": 5197,
+   "ABC": 832,
+   "exp_by_pivot": [
+    191.9,
+    437.2,
+    124.5
+   ],
+   "ratio_by_pivot": [
+    4.336,
+    1.903,
+    6.685
+   ],
+   "p_poisson_max_exp": "1.0e+00",
+   "p_poisson_min_exp": "1.0e+00",
+   "P_C_given_AB": 0.1447,
+   "P_C_given_A": 0.0334,
+   "P_C_given_B": 0.0761,
+   "only_papers_with_3plus_cats": {
+    "ABC": 832,
+    "exp": 361.4,
+    "ratio": 2.302
+   }
+  }
+ ],
+ "titles": {
+  "math.PR + math-ph + cond-mat.stat-mech": [
+   [
+    "0704.0688",
+    "Strong Spherical Asymptotics for Rotor-Router Aggregation and the   Divisible Sandpile"
+   ],
+   [
+    "0704.1157",
+    "Fermionic construction of tau functions and random processes"
+   ],
+   [
+    "0705.1933",
+    "Percolation Crossing Formulas and Conformal Field Theory"
+   ],
+   [
+    "0705.1951",
+    "Brownian Motion, \"Diverse and Undulating\""
+   ],
+   [
+    "0705.2460",
+    "Noncolliding Brownian Motion and Determinantal Processes"
+   ],
+   [
+    "0707.2813",
+    "Large time asymptotics of growth models on space-like paths I: PushASEP"
+   ],
+   [
+    "0707.4207",
+    "Large time asymptotics of growth models on space-like paths II: PNG and   parallel TASEP"
+   ],
+   [
+    "0709.3990",
+    "Fractional Diffusion Processes: Probability Distributions and Continuous   Time Random Walk"
+   ],
+   [
+    "0711.1710",
+    "Two Bessel Bridges Conditioned Never to Collide, Double Dirichlet   Series, and Jacobi Theta Function"
+   ],
+   [
+    "0711.4246",
+    "Evolution equations of the probabilistic generalization of the Voigt   profile function"
+   ],
+   [
+    "0712.0240",
+    "Non-Markovian diffusion equations and processes: analysis and   simulations"
+   ],
+   [
+    "0712.1934",
+    "Facilitated spin models: recent and new results"
+   ],
+   [
+    "0712.3892",
+    "Determinantal identity for multilevel systems and finite determinantal   processes"
+   ],
+   [
+    "0801.4879",
+    "Characterizations and simulations of a class of stochastic processes to   model anomalous diffusion"
+   ],
+   [
+    "0802.1104",
+    "Large deviations of lattice Hamiltonian dynamics coupled to stochastic   thermostats"
+   ],
+   [
+    "0802.1826",
+    "On the Kert\\'esz line: Some rigorous bounds"
+   ],
+   [
+    "0802.2280",
+    "Harmonic measure and winding of random conformal paths: A Coulomb gas   perspective"
+   ],
+   [
+    "0802.2691",
+    "The height of watermelons with wall"
+   ],
+   [
+    "0803.2796",
+    "A pedestrian's view on interacting particle systems, KPZ universality,   and random matrices"
+   ],
+   [
+    "0803.4396",
+    "Real Roots of Random Polynomials and Zero Crossing Properties of   Diffusion Equation"
+   ],
+   [
+    "0804.2208",
+    "Surface tension in the dilute Ising model. The Wulff construction"
+   ],
+   [
+    "0804.3035",
+    "Anisotropic growth of random surfaces in 2+1 dimensions"
+   ],
+   [
+    "0804.4726",
+    "Ising models on locally tree-like graphs"
+   ],
+   [
+    "0805.3012",
+    "Energy transport in stochastically perturbed lattice dynamics"
+   ],
+   [
+    "0806.0037",
+    "The height and range of watermelons without wall"
+   ]
+  ],
+  "math.CV + math.DG + math.FA": [
+   [
+    "0712.0114",
+    "Similarity of operators and geometry of eigenvector bundles"
+   ],
+   [
+    "1012.5542",
+    "Applications of Differential Chains to Complex Analysis and Dynamics"
+   ],
+   [
+    "1208.5603",
+    "Semigroups of operator means and generalized Karcher equations"
+   ],
+   [
+    "1308.6103",
+    "An Introduction to Hilbert Module Approach to Multivariable Operator   Theory"
+   ],
+   [
+    "1403.4059",
+    "Automorphisms of normal quasi-circular domains"
+   ],
+   [
+    "1403.7975",
+    "On canonical metrics on Cartan-Hartogs domains"
+   ],
+   [
+    "1404.4396",
+    "An Analytic Grothendieck Riemann Roch Theorem"
+   ],
+   [
+    "1409.7832",
+    "Applications of Hilbert Module Approach to Multivariable Operator Theory"
+   ],
+   [
+    "1711.01196",
+    "The Trouv\\'e group for spaces of test functions"
+   ],
+   [
+    "1810.06198",
+    "Representation of relative sheaf cohomology"
+   ],
+   [
+    "1903.04710",
+    "Relative Dolbeault cohomology"
+   ],
+   [
+    "1904.10861",
+    "Subelliptic estimates from Gromov hyperbolicity"
+   ],
+   [
+    "1908.01557",
+    "Symmetric shift-invariant subspaces and harmonic maps"
+   ],
+   [
+    "1912.06819",
+    "Analytic Berezin-Toeplitz operators"
+   ],
+   [
+    "2004.05228",
+    "Radial balanced metrics on the unit ball of the Kepler manifold"
+   ],
+   [
+    "2109.07795",
+    "Nonlinear conditions for ultradifferentiability: a uniform approach"
+   ],
+   [
+    "2111.03143",
+    "A Twisted Complex Brunn-Minkowski Theorem"
+   ],
+   [
+    "math/0512409",
+    "A class of nonpositively curved Kahler manifolds biholomorphic to the   unit ball in C^n"
+   ]
+  ],
+  "hep-th + gr-qc + astro-ph.CO": [
+   [
+    "0803.1823",
+    "Effective gravitational equations on brane world with induced gravity   described by $f(R)$ term"
+   ],
+   [
+    "0804.1688",
+    "On Particle Mass Changes and GR: Space-time Topology Causes LHC Leakage"
+   ],
+   [
+    "0804.4240",
+    "Spatial Periodicity of Galaxy Number Counts, CMB Anisotropy, and SNIa   Hubble Diagram Based on the Universe Accompanied by a Non-Minimally "
+   ],
+   [
+    "0806.0602",
+    "Decaying Dark Matter and the Deficit of Dwarf Haloes"
+   ],
+   [
+    "0806.2634",
+    "Backreaction from non-conformal quantum fields in de Sitter spacetime"
+   ],
+   [
+    "0808.0990",
+    "Effective Scenario of Loop Quantum Cosmology"
+   ],
+   [
+    "0808.1786",
+    "Generation of fluctuations during inflation: comparison of stochastic   and field-theoretic approaches"
+   ],
+   [
+    "0808.1855",
+    "Warm Inflation and its Microphysical Basis"
+   ],
+   [
+    "0808.3778",
+    "Boltzmann brains and the scale-factor cutoff measure of the multiverse"
+   ],
+   [
+    "0810.3465",
+    "Temperature effect on the power spectrum in inflation"
+   ],
+   [
+    "0811.1698",
+    "Fixed points in interacting dark energy models"
+   ],
+   [
+    "0812.0167",
+    "A scaling law for the cosmological constant from a stochastic model for   cosmic structures"
+   ],
+   [
+    "0812.1117",
+    "Phase-space analysis of interacting phantom cosmology"
+   ],
+   [
+    "0812.5096",
+    "Non-minimally coupled scalar field cosmology on the phase plane"
+   ],
+   [
+    "0901.0007",
+    "Eternal Inflation, Bubble Collisions, and the Disintegration of the   Persistence of Memory"
+   ],
+   [
+    "0901.0265",
+    "Advances in Inflation in String Theory"
+   ],
+   [
+    "0901.0429",
+    "Timelike Vector Field Dynamics in the Early Universe"
+   ],
+   [
+    "0901.0439",
+    "Revising the predictions of inflation for the cosmic microwave   background anisotropies"
+   ],
+   [
+    "0901.0549",
+    "The Effective Theory of Inflation in the Standard Model of the Universe   and the CMB+LSS data analysis"
+   ],
+   [
+    "0901.0662",
+    "Gravity from spontaneous Lorentz violation"
+   ],
+   [
+    "0901.0713",
+    "Ghosts in asymmetric brane gravity and the decoupled stealth limit"
+   ],
+   [
+    "0901.0922",
+    "Model independent analysis of dark matter points to a particle mass at   the keV scale"
+   ],
+   [
+    "0901.0958",
+    "Causality and Primordial Tensor Modes"
+   ],
+   [
+    "0901.1213",
+    "Unified dark energy thermodynamics: varying w and the -1-crossing"
+   ],
+   [
+    "0901.1303",
+    "Gauge invariant averages for the cosmological backreaction"
+   ]
+  ],
+  "cs.LG + stat.ML + cs.AI": [
+   [
+    "0811.0146",
+    "Effect of Tuned Parameters on a LSA MCQ Answering Model"
+   ],
+   [
+    "0908.0319",
+    "Regret Bounds for Opportunistic Channel Access"
+   ],
+   [
+    "1001.2813",
+    "A Monte Carlo Algorithm for Universally Optimal Bayesian Sequence   Prediction and Planning"
+   ],
+   [
+    "1003.5956",
+    "Unbiased Offline Evaluation of Contextual-bandit-based News Article   Recommendation Algorithms"
+   ],
+   [
+    "1004.2027",
+    "Dynamic Policy Programming"
+   ],
+   [
+    "1005.0530",
+    "Feature Selection with Conjunctions of Decision Stumps and Learning from   Microarray Data"
+   ],
+   [
+    "1006.1328",
+    "Uncovering the Riffled Independence Structure of Rankings"
+   ],
+   [
+    "1009.0861",
+    "On the Estimation of Coherence"
+   ],
+   [
+    "1011.0686",
+    "A Reduction of Imitation Learning and Structured Prediction to No-Regret   Online Learning"
+   ],
+   [
+    "1103.4601",
+    "Doubly Robust Policy Evaluation and Learning"
+   ],
+   [
+    "1104.2018",
+    "Efficient Learning of Generalized Linear and Single Index Models with   Isotonic Regression"
+   ],
+   [
+    "1105.0972",
+    "Rapid Feature Learning with Stacked Linear Denoisers"
+   ],
+   [
+    "1106.1157",
+    "Bayesian and L1 Approaches to Sparse Unsupervised Learning"
+   ],
+   [
+    "1106.2363",
+    "Random design analysis of ridge regression"
+   ],
+   [
+    "1106.2369",
+    "Efficient Optimal Learning for Contextual Bandits"
+   ],
+   [
+    "1108.3259",
+    "A review and comparison of strategies for multi-step ahead time series   forecasting based on the NN5 forecasting competition"
+   ],
+   [
+    "1108.3298",
+    "A Machine Learning Perspective on Predictive Coding with PAQ"
+   ],
+   [
+    "1108.3372",
+    "Overlapping Mixtures of Gaussian Processes for the Data Association   Problem"
+   ],
+   [
+    "1109.0820",
+    "ShareBoost: Efficient Multiclass Learning with Feature Sharing"
+   ],
+   [
+    "1109.3940",
+    "Learning Discriminative Metrics via Generative Models and Kernel   Learning"
+   ],
+   [
+    "1110.3239",
+    "Improving parameter learning of Bayesian nets from incomplete data"
+   ],
+   [
+    "1111.1784",
+    "UPAL: Unbiased Pool Based Active Learning"
+   ],
+   [
+    "1202.3701",
+    "Active Diagnosis via AUC Maximization: An Efficient Approach for   Multiple Fault Identification in Large Scale, Noisy Networks"
+   ],
+   [
+    "1202.3722",
+    "Hierarchical Affinity Propagation"
+   ],
+   [
+    "1202.3732",
+    "Sum-Product Networks: A New Deep Architecture"
+   ]
+  ],
+  "cond-mat.stat-mech + physics.bio-ph + quant-ph": [
+   [
+    "0906.4451",
+    "Probing Quantum Frustrated Systems via Factorization of the Ground State"
+   ],
+   [
+    "1011.1883",
+    "A unified framework for quasi-species evolution and stochastic   quantization"
+   ],
+   [
+    "1203.0147",
+    "Quantum effects in biology: master equation studies of exciton motion in   photosynthetic systems"
+   ],
+   [
+    "1301.0839",
+    "Energy transfer properties and absorption spectra of the FMO complex:   from exact PIMC calculations to TCL master equations"
+   ],
+   [
+    "1307.1557",
+    "A Quantum Biological Switch Based on Superradiance Transitions"
+   ],
+   [
+    "1307.3993",
+    "Conformal Field Theory of Critical Casimir Interactions in 2D"
+   ],
+   [
+    "1311.2673",
+    "Inverse counting statistics for stochastic and open quantum systems: the   characteristic polynomial approach"
+   ],
+   [
+    "1510.03026",
+    "Interplay between Dephasing and Geometry and Directed Heat Flow in   Exciton Transfer Complexes"
+   ],
+   [
+    "1511.06139",
+    "Statistical physics of directional, stochastic chains with memory"
+   ],
+   [
+    "1511.08419",
+    "A general theory for irreversible thermodynamics"
+   ],
+   [
+    "1706.01306",
+    "Exciton transport in the PE545 complex: insight from atomistic   QM/MM-based quantum master equations and elastic network models"
+   ],
+   [
+    "1804.04832",
+    "Sustainability of environment-assisted energy transfer in quantum   photobiological complexes"
+   ],
+   [
+    "1906.09184",
+    "Quantum Approach to Fast Protein-Folding Time"
+   ],
+   [
+    "1906.10231",
+    "Environment-Assisted Quantum Photo-Protection in Interacting   Multi-Exciton Transfer Complexes"
+   ],
+   [
+    "1911.04433",
+    "Asymmetric environment induces protein-like relaxation in spin chain"
+   ],
+   [
+    "2009.05064",
+    "Distinct Critical Behaviors from the Same State in Quantum Spin and   Population Dynamics Perspectives"
+   ],
+   [
+    "2012.00447",
+    "Emergence of disconnected clusters in heterogeneous complex systems"
+   ],
+   [
+    "2111.13695",
+    "Covariant influences for discrete dynamical systems"
+   ],
+   [
+    "quant-ph/0110084",
+    "From Davydov solitons to decoherence-free subspaces: self-consistent   propagation of coherent-product states"
+   ]
+  ],
+  "cs.GT + cs.LG + cs.LO": [
+   [
+    "1106.5294",
+    "Set systems: order types, continuous nondeterministic deformations, and   quasi-orders"
+   ],
+   [
+    "1503.01793",
+    "Correct-by-synthesis reinforcement learning with temporal logic   constraints"
+   ]
+  ],
+  "math.CV + math.DG + math.PR": [
+   [
+    "1410.1957",
+    "Holomorphic Line Bundles over a Tower of Coverings"
+   ],
+   [
+    "1709.10346",
+    "Universality results for zeros of random holomorphic sections"
+   ],
+   [
+    "2001.05550",
+    "Asymptotic expansion of the variance of random zeros on complex   manifolds"
+   ],
+   [
+    "2012.12019",
+    "Bergman kernels and equidistribution for sequences of line bundles on   K\\\"ahler manifolds"
+   ],
+   [
+    "2108.07241",
+    "Large genus bounds for the distribution of triangulated surfaces in   moduli space"
+   ],
+   [
+    "2109.00307",
+    "Emergent complex geometry"
+   ]
+  ],
+  "cs.CR + cs.LG + quant-ph": [
+   [
+    "1512.04009",
+    "Quantum Privacy-Preserving Data Mining"
+   ],
+   [
+    "1707.09893",
+    "Quantum Privacy-Preserving Perceptron"
+   ],
+   [
+    "1711.06652",
+    "Hardening Quantum Machine Learning Against Adversaries"
+   ],
+   [
+    "1905.02342",
+    "Machine Learning Cryptanalysis of a Quantum Random Number Generator"
+   ],
+   [
+    "1908.03625",
+    "Continuous-Variable Quantum Key Distribution with a Real Local   Oscillator and without Auxiliary Signals"
+   ],
+   [
+    "2009.10064",
+    "Optimal Provable Robustness of Quantum Classification via Quantum   Hypothesis Testing"
+   ],
+   [
+    "2012.11424",
+    "Variational Quantum Cloning: Improving Practicality for Quantum   Cryptanalysis"
+   ],
+   [
+    "2103.06232",
+    "Quantum machine learning with differential privacy"
+   ],
+   [
+    "2103.08403",
+    "Quantum federated learning through blind quantum computing"
+   ],
+   [
+    "2103.12010",
+    "Federated Quantum Machine Learning"
+   ],
+   [
+    "2108.01125",
+    "Hybrid Classical-Quantum Deep Learning Models for Autonomous Vehicle   Traffic Image Classification Under Adversarial Attack"
+   ]
+  ],
+  "cs.CL + cs.LG + physics.soc-ph": [
+   [
+    "1609.03207",
+    "Multiplex lexical networks reveal patterns in early word acquisition in   children"
+   ],
+   [
+    "1901.00519",
+    "Pull out all the stops: Textual analysis via punctuation sequences"
+   ],
+   [
+    "1901.09848",
+    "A new evaluation framework for topic modeling algorithms based on   synthetic corpora"
+   ],
+   [
+    "2109.09010",
+    "Augmenting semantic lexicons using word embeddings and transfer learning"
+   ]
+  ],
+  "cond-mat.dis-nn + math.PR + quant-ph": [
+   [
+    "1609.05857",
+    "Scaling theory of the Anderson transition in random graphs: ergodicity   and universality"
+   ]
+  ],
+  "cond-mat.quant-gas + cond-mat.stat-mech + nlin.PS": [
+   [
+    "1703.10581",
+    "Domain-area distribution anomaly in segregating multicomponent   superfluids"
+   ],
+   [
+    "1810.02420",
+    "Balancing long-range interactions and quantum pressure: solitons in the   HMF model"
+   ],
+   [
+    "2005.01763",
+    "Entangled quantum cellular automata, physical complexity, and Goldilocks   rules"
+   ]
+  ]
+ }
+}

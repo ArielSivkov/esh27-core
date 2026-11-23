@@ -1,0 +1,40 @@
+[
+ {
+  "round": 0,
+  "test": {
+   "mul": 0.412,
+   "betti": 0.025,
+   "euler": 0.05,
+   "gcd": 0.1,
+   "mean": 0.147
+  },
+  "control": 0.7625,
+  "promoted": true
+ },
+ {
+  "round": 1,
+  "kept": 70,
+  "test": {
+   "mul": 0.525,
+   "betti": 0.037,
+   "euler": 0.05,
+   "gcd": 0.588,
+   "mean": 0.3
+  },
+  "control": 0.8,
+  "promoted": true
+ },
+ {
+  "round": 2,
+  "kept": 115,
+  "test": {
+   "mul": 0.55,
+   "betti": 0.138,
+   "euler": 0.062,
+   "gcd": 0.625,
+   "mean": 0.344
+  },
+  "control": 0.8875,
+  "promoted": true
+ }
+]

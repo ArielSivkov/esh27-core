@@ -1,0 +1,251 @@
+{
+ "real": {
+  "label": "real",
+  "strong_pairs": 820,
+  "triangles": 1730,
+  "hollow": 18,
+  "hollow_exp20": 17,
+  "max_exp_hollow": 210.7,
+  "median_ratio": 1.292,
+  "p05": 0.316
+ },
+ "nulls": [
+  {
+   "label": "null seed 100",
+   "strong_pairs": 1219,
+   "triangles": 9959,
+   "hollow": 10,
+   "hollow_exp20": 0,
+   "max_exp_hollow": 12.2,
+   "median_ratio": 1.001,
+   "p05": 0.557,
+   "papers_with_collapsed_dup": 27518
+  },
+  {
+   "label": "null seed 101",
+   "strong_pairs": 1240,
+   "triangles": 10196,
+   "hollow": 4,
+   "hollow_exp20": 0,
+   "max_exp_hollow": 9.1,
+   "median_ratio": 0.999,
+   "p05": 0.56,
+   "papers_with_collapsed_dup": 27618
+  },
+  {
+   "label": "null seed 102",
+   "strong_pairs": 1245,
+   "triangles": 10273,
+   "hollow": 7,
+   "hollow_exp20": 0,
+   "max_exp_hollow": 7.6,
+   "median_ratio": 0.998,
+   "p05": 0.566,
+   "papers_with_collapsed_dup": 27647
+  },
+  {
+   "label": "null seed 103",
+   "strong_pairs": 1242,
+   "triangles": 10293,
+   "hollow": 11,
+   "hollow_exp20": 0,
+   "max_exp_hollow": 10.0,
+   "median_ratio": 0.999,
+   "p05": 0.551,
+   "papers_with_collapsed_dup": 27347
+  },
+  {
+   "label": "null seed 104",
+   "strong_pairs": 1235,
+   "triangles": 10141,
+   "hollow": 14,
+   "hollow_exp20": 0,
+   "max_exp_hollow": 10.4,
+   "median_ratio": 0.998,
+   "p05": 0.557,
+   "papers_with_collapsed_dup": 27793
+  }
+ ],
+ "real_hollow": [
+  [
+   0.0,
+   [
+    "astro-ph.IM",
+    "physics.comp-ph",
+    "physics.optics"
+   ],
+   0,
+   6.7
+  ],
+  [
+   0.037,
+   [
+    "cond-mat.dis-nn",
+    "math.PR",
+    "quant-ph"
+   ],
+   1,
+   26.8
+  ],
+  [
+   0.048,
+   [
+    "cond-mat.quant-gas",
+    "cond-mat.stat-mech",
+    "nlin.PS"
+   ],
+   3,
+   62.5
+  ],
+  [
+   0.05,
+   [
+    "cs.CL",
+    "cs.LG",
+    "physics.soc-ph"
+   ],
+   4,
+   80.7
+  ],
+  [
+   0.058,
+   [
+    "cs.GT",
+    "cs.LG",
+    "cs.LO"
+   ],
+   2,
+   34.3
+  ],
+  [
+   0.078,
+   [
+    "cs.CR",
+    "cs.LG",
+    "quant-ph"
+   ],
+   11,
+   140.6
+  ],
+  [
+   0.086,
+   [
+    "math.CV",
+    "math.DG",
+    "math.PR"
+   ],
+   6,
+   69.6
+  ],
+  [
+   0.09,
+   [
+    "math.CV",
+    "math.DS",
+    "math.FA"
+   ],
+   10,
+   111.4
+  ],
+  [
+   0.09,
+   [
+    "cond-mat.stat-mech",
+    "physics.bio-ph",
+    "quant-ph"
+   ],
+   19,
+   210.7
+  ],
+  [
+   0.09,
+   [
+    "cond-mat.stat-mech",
+    "cond-mat.str-el",
+    "physics.chem-ph"
+   ],
+   10,
+   110.7
+  ],
+  [
+   0.1,
+   [
+    "cond-mat.stat-mech",
+    "math.CO",
+    "quant-ph"
+   ],
+   5,
+   50.2
+  ],
+  [
+   0.101,
+   [
+    "cs.GT",
+    "cs.LG",
+    "physics.soc-ph"
+   ],
+   3,
+   29.8
+  ],
+  [
+   0.101,
+   [
+    "cond-mat.dis-nn",
+    "cond-mat.soft",
+    "math-ph"
+   ],
+   6,
+   59.3
+  ],
+  [
+   0.103,
+   [
+    "math.CV",
+    "math.DG",
+    "math.FA"
+   ],
+   18,
+   174.5
+  ],
+  [
+   0.127,
+   [
+    "cs.CR",
+    "cs.CV",
+    "cs.IT"
+   ],
+   7,
+   55.3
+  ],
+  [
+   0.133,
+   [
+    "cond-mat.dis-nn",
+    "cond-mat.mtrl-sci",
+    "math-ph"
+   ],
+   8,
+   60.3
+  ],
+  [
+   0.139,
+   [
+    "math.AG",
+    "math.DG",
+    "math.KT"
+   ],
+   9,
+   64.7
+  ],
+  [
+   0.142,
+   [
+    "cs.CY",
+    "cs.LG",
+    "physics.soc-ph"
+   ],
+   17,
+   119.3
+  ]
+ ]
+}

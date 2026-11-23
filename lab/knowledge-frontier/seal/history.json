@@ -1,0 +1,22 @@
+[
+ {
+  "round": 0,
+  "test": 0.4266666666666667,
+  "control": 0.76,
+  "promoted": true
+ },
+ {
+  "round": 1,
+  "kept": 156,
+  "test": 0.58,
+  "control": 0.87,
+  "promoted": true
+ },
+ {
+  "round": 2,
+  "kept": 179,
+  "test": 0.62,
+  "control": 0.93,
+  "promoted": true
+ }
+]
