@@ -1,0 +1,124 @@
+Found existing installation: torchao 0.10.0
+Uninstalling torchao-0.10.0:
+  Successfully uninstalled torchao-0.10.0
+[     0s] overpass https://overpass-api.de/api/interpreter 406
+[     2s] overpass https://overpass.kumi.systems/api/interpreter 429
+[     3s] overpass https://maps.mail.ru/osm/tools/overpass/api/interpreter 504
+[     3s] OSM UNAVAILABLE
+[     3s] OSM buildings 0
+Downloading: 0 rows [00:00, ? rows/s]Downloading: 18371 rows [00:01, 16887.53 rows/s]Downloading: 20571 rows [00:01, 18732.91 rows/s]
+State saved to /tmp/ov.parquet.state
+[    12s] overture buildings 20571 cols ['id', 'names', 'sources', 'level', 'height', 'min_height', 'is_underground', 'num_floors', 'num_floors_underground', 'min_floor', 'subtype', 'class', 'facade_color', 'facade_material', 'roof_material', 'roof_shape', 'roof_direction', 'roof_orientation', 'roof_color', 'roof_height', 'geometry', 'has_parts', 'version']
+=====SUMMARY=====
+{
+ "bbox": [
+  34.6,
+  31.74,
+  34.72,
+  31.86
+ ],
+ "osm_n": 0,
+ "overture_n": 20571,
+ "osm_with_levels": 0,
+ "osm_with_height": 0,
+ "overture_datasets": [
+  [
+   "OpenStreetMap",
+   12315
+  ],
+  [
+   "Microsoft ML Buildings",
+   8256
+  ]
+ ],
+ "overture_height_src": [
+  [
+   "OpenStreetMap",
+   30
+  ]
+ ],
+ "overture_floors_src": [
+  [
+   "OpenStreetMap",
+   670
+  ]
+ ],
+ "overture_independent_values": 0,
+ "overture_height_value_spikes": [
+  [
+   4.0,
+   10
+  ],
+  [
+   5.0,
+   3
+  ],
+  [
+   7.0,
+   2
+  ],
+  [
+   49.9,
+   2
+  ],
+  [
+   57.0,
+   2
+  ],
+  [
+   148.0,
+   2
+  ],
+  [
+   60.6,
+   2
+  ],
+  [
+   85.5,
+   1
+  ]
+ ],
+ "osm_levels_spikes": [],
+ "independent_matched_to_osm_building": 0,
+ "independent_multi_match_excluded": 0,
+ "both_sources_n": 0,
+ "TASK7_CANDIDATES_n2_within1": 0,
+ "coverage_by_area": {
+  "0-100m2": {
+   "n": 0,
+   "osm_levels": 0,
+   "indep_overture": 0
+  },
+  "100-300m2": {
+   "n": 0,
+   "osm_levels": 0,
+   "indep_overture": 0
+  },
+  "300-1000m2": {
+   "n": 0,
+   "osm_levels": 0,
+   "indep_overture": 0
+  },
+  "1000-3000m2": {
+   "n": 0,
+   "osm_levels": 0,
+   "indep_overture": 0
+  },
+  "3000-infm2": {
+   "n": 0,
+   "osm_levels": 0,
+   "indep_overture": 0
+  }
+ },
+ "anchor_w1280878706": null,
+ "anchor_w1013192689": null
+}
+=====CANDIDATES_CSV=====
+osm_way,osm_floors,osm_how,ov_floors,ov_src,area_m2,name
+=====DISAGREE_CSV (top 60 by area)=====
+=====INDEPENDENT_ONLY (no OSM value), top 80 by floors=====
+[    14s] DONE
+  cells[i][c] = re.sub('\\\\\|', '|', cell)
+  text = re.sub(r'_', '\_', text) # Escape underscores in display text
+[NbConvertApp] Converting notebook __script__.ipynb to html
+[NbConvertApp] Writing 278721 bytes to __results__.html
