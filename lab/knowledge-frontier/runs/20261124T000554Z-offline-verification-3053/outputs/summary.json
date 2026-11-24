@@ -1,0 +1,81 @@
+{
+ "headline": "14 pass, 0 fail, 0 skipped (Python 3.13.18)",
+ "counts": {
+  "PASS": 14,
+  "FAIL": 0,
+  "SKIP": 0
+ },
+ "results": [
+  {
+   "check": "all Python files compile",
+   "result": "PASS",
+   "detail": "31/31"
+  },
+  {
+   "check": "frozen-set regenerates: seal/frozen_sets_sci.json",
+   "result": "PASS",
+   "detail": "sha256 62dc5c5cbec42ae8 (expected 62dc5c5cbec42ae8), seed 27, Python 3.13.18"
+  },
+  {
+   "check": "frozen-set regenerates: seal/frozen_sets.json",
+   "result": "PASS",
+   "detail": "sha256 e2f2a8a3f50c28d1 (expected e2f2a8a3f50c28d1), seed 27, Python 3.13.18"
+  },
+  {
+   "check": "artifact matches log: ipf_out.json",
+   "result": "PASS",
+   "detail": "rows 1679, median 0.573, below 0.15: 37 (research log entry 4 (1,679 triangles, median 0.57, 37 below 0.15; 19 vs 110, 6 vs 32, 4 vs 32.7))"
+  },
+  {
+   "check": "artifact matches log: three named holes",
+   "result": "PASS",
+   "detail": "3/3 match"
+  },
+  {
+   "check": "artifact matches log: time test",
+   "result": "PASS",
+   "detail": "[[2012, 550, 15], [2014, 784, 19], [2016, 937, 20]] (research log entry 2 (550/15/20%, 784/19/16%, 937/20/10%))"
+  },
+  {
+   "check": "artifact matches log: null model",
+   "result": "PASS",
+   "detail": "real hollow 18 (research log entry 3 (18 hollow))"
+  },
+  {
+   "check": "artifact matches log: raw recount",
+   "result": "PASS",
+   "detail": "ABC 19 (research log entry 4 (independent recount from the raw file: 19 papers))"
+  },
+  {
+   "check": "artifact matches log: first hollow triangles",
+   "result": "PASS",
+   "detail": "50 rows (research log entry 1 table (0 vs ~7, 1 vs ~27))"
+  },
+  {
+   "check": "artifact matches log: OpenAlex counts",
+   "result": "PASS",
+   "detail": "N 5029362 (research log entry 7a (5,029,362 works))"
+  },
+  {
+   "check": "artifact matches log: SEAL local run",
+   "result": "PASS",
+   "detail": "means [0.147, 0.3, 0.344], control [0.7625, 0.8, 0.8875]"
+  },
+  {
+   "check": "recompute: oac_ipf_pmin2000",
+   "result": "PASS",
+   "detail": "N 5029362 multi-share 0.269 triangles 23 median 0.396 p5 0.048 <0.15: 6 zero-obs: 0"
+  },
+  {
+   "check": "no credentials or personal data in the lab tree",
+   "result": "PASS",
+   "detail": "0 findings"
+  },
+  {
+   "check": "run records intact (sha256 of every output and log)",
+   "result": "PASS",
+   "detail": "3 runs checked"
+  }
+ ],
+ "python": "3.13.18"
+}
