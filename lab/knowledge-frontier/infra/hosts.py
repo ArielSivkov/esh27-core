@@ -55,6 +55,10 @@ def main():
     out = dict(checked_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), results=res,
                reachable=[r["host"] for r in res if r["state"] == "reachable"],
                blocked=[r["host"] for r in res if r["state"] != "reachable"])
+    out["headline"] = f"{len(out['reachable'])} reachable, {len(out['blocked'])} blocked: {', '.join(out['blocked']) or '-'}"
+    if os.environ.get("LAB_RUN_OUT"):
+        with open(os.path.join(os.environ["LAB_RUN_OUT"], "summary.json"), "w", encoding="utf-8") as f:
+            json.dump(out, f, ensure_ascii=False, indent=1)
     if a.json:
         print(json.dumps(out, ensure_ascii=False, indent=1))
     else:

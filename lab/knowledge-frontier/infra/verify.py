@@ -225,9 +225,11 @@ def main():
         print(f"{r['result']:4}  {r['check']}  — {r['detail']}")
     n = {k: sum(r["result"] == k for r in RESULTS) for k in ("PASS", "FAIL", "SKIP")}
     print(f"verify: {n['PASS']} pass, {n['FAIL']} fail, {n['SKIP']} skipped")
-    if a.json_out:
-        with open(a.json_out, "w", encoding="utf-8") as f:
-            json.dump(dict(results=RESULTS, counts=n, python=sys.version.split()[0]), f, ensure_ascii=False, indent=1)
+    report = dict(headline=f"{n['PASS']} pass, {n['FAIL']} fail, {n['SKIP']} skipped (Python {sys.version.split()[0]})",
+                  counts=n, results=RESULTS, python=sys.version.split()[0])
+    for path in filter(None, [a.json_out, os.environ.get("LAB_RUN_OUT") and os.path.join(os.environ["LAB_RUN_OUT"], "summary.json")]):
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(report, f, ensure_ascii=False, indent=1)
     return 1 if n["FAIL"] else 0
 
 
