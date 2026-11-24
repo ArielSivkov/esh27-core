@@ -4,6 +4,7 @@ T0 = time.time()
 def log(*a): print(f"[{time.time()-T0:6.0f}s]", *a, flush=True)
 def sh(c): r = subprocess.run(c, shell=True, capture_output=True, text=True); log("$", c[:80], "rc", r.returncode, (r.stderr or "")[-300:] if r.returncode else ""); return r.returncode
 sh("git clone -q https://github.com/VAST-AI-Research/TripoSR /kaggle/working/TripoSR")
+sh("pip install -q fast_simplification")
 sh("pip install -q trimesh omegaconf einops rembg onnxruntime huggingface-hub 'transformers==4.46.3'")
 rc = sh("pip install -q git+https://github.com/tatsy/torchmcubes.git")
 if rc:  # fallback (A2, before results): a torchmcubes shim on scikit-image's marching cubes
@@ -39,7 +40,9 @@ for m in meta:
     r = {"file": m["file"], "f": m["f"], "h_true": m["h_true"], "w_perp_m": m["w_perp_m"], "box_h_px": yb - yt, "box_w_px": x1 - x0, "ext": ext, "faces": len(mesh.faces)}
     rows.append(r); print("ROW " + json.dumps(r), flush=True)
     if m["f"] in (2, 4, 30) and m["f"] not in demo_ids:
-        demo_ids[m["f"]] = m["file"]; s = mesh.simplify_quadric_decimation(face_count=3000) if hasattr(mesh, "simplify_quadric_decimation") else mesh
+        demo_ids[m["f"]] = m["file"]
+        try: s = mesh.simplify_quadric_decimation(face_count=3000)
+        except Exception as e: log("decimate failed", repr(e)[:120]); s = mesh
         buf = io.StringIO(); s.export(buf, file_type="obj") if False else None
         obj = trimesh.exchange.obj.export_obj(s, include_color=False, include_texture=False, include_normals=False)
         print("OBJ " + json.dumps({"f": m["f"], "file": m["file"]}) + " " + base64.b64encode(obj.encode()).decode(), flush=True)

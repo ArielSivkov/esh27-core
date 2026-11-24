@@ -27,3 +27,5 @@ Ariel: "לצייר את הבניין... להבין את הארכיטקטורה, 
 ## Amendment A2 (before any result): torchmcubes did not compile on Kaggle (run 1 stopped before any measurement). It is replaced by a shim using scikit-image's marching_cubes. The axis order may change, but axis selection is truth-free (correlation with the box), so the criterion is unchanged.
 
 ## Amendment A3 (before any result): run 2 stopped at model loading. The image encoder layer names changed in transformers v5. transformers==4.46.3 is pinned; the criterion is unchanged.
+
+## Amendment A4: run 3 stopped at mesh decimation for the viewer (fast_simplification missing); not related to the measurement. Installed, with a fallback.
