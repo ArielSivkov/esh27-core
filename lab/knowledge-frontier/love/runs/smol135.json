@@ -1,0 +1,203 @@
+{
+ "model": "HuggingFaceTB/SmolLM2-135M-Instruct",
+ "P1": {
+  "love": {
+   "rows": [
+    {
+     "other": "power",
+     "p_target_first": 0.6905595660209656,
+     "p_target_second": 0.18897908926010132,
+     "p_target": 0.43976932764053345
+    },
+    {
+     "other": "knowledge",
+     "p_target_first": 0.8504523634910583,
+     "p_target_second": 0.4418300688266754,
+     "p_target": 0.6461412161588669
+    },
+    {
+     "other": "money",
+     "p_target_first": 0.9601214528083801,
+     "p_target_second": 0.5332308411598206,
+     "p_target": 0.7466761469841003
+    },
+    {
+     "other": "freedom",
+     "p_target_first": 0.7161538600921631,
+     "p_target_second": 0.1719835251569748,
+     "p_target": 0.44406869262456894
+    },
+    {
+     "other": "truth",
+     "p_target_first": 0.8650480508804321,
+     "p_target_second": 0.23094584047794342,
+     "p_target": 0.5479969456791878
+    },
+    {
+     "other": "safety",
+     "p_target_first": 0.1931411623954773,
+     "p_target_second": 0.38034889101982117,
+     "p_target": 0.28674502670764923
+    },
+    {
+     "other": "fame",
+     "p_target_first": 0.9602217674255371,
+     "p_target_second": 0.9225202798843384,
+     "p_target": 0.9413710236549377
+    },
+    {
+     "other": "duty",
+     "p_target_first": 0.9339561462402344,
+     "p_target_second": 0.6761707663536072,
+     "p_target": 0.8050634562969208
+    }
+   ],
+   "mean": 0.6072289794683456,
+   "order_bias_first_minus_second": 0.3279556334018707
+  },
+  "bread": {
+   "rows": [
+    {
+     "other": "power",
+     "p_target_first": 0.11877985298633575,
+     "p_target_second": 0.02541678212583065,
+     "p_target": 0.0720983175560832
+    },
+    {
+     "other": "knowledge",
+     "p_target_first": 0.05975034460425377,
+     "p_target_second": 0.05483981966972351,
+     "p_target": 0.05729508213698864
+    },
+    {
+     "other": "money",
+     "p_target_first": 0.20084713399410248,
+     "p_target_second": 0.10396488755941391,
+     "p_target": 0.1524060107767582
+    },
+    {
+     "other": "freedom",
+     "p_target_first": 0.03656824305653572,
+     "p_target_second": 0.02291903644800186,
+     "p_target": 0.02974363975226879
+    },
+    {
+     "other": "truth",
+     "p_target_first": 0.09765981137752533,
+     "p_target_second": 0.0424511581659317,
+     "p_target": 0.07005548477172852
+    },
+    {
+     "other": "safety",
+     "p_target_first": 0.03424878045916557,
+     "p_target_second": 0.013587377034127712,
+     "p_target": 0.023918078746646643
+    },
+    {
+     "other": "fame",
+     "p_target_first": 0.579428493976593,
+     "p_target_second": 0.6815561652183533,
+     "p_target": 0.6304923295974731
+    },
+    {
+     "other": "duty",
+     "p_target_first": 0.5098519921302795,
+     "p_target_second": 0.11850917339324951,
+     "p_target": 0.3141805827617645
+    }
+   ],
+   "mean": 0.16877369076246396,
+   "order_bias_first_minus_second": 0.07173628162126988
+  }
+ },
+ "P2": {
+  "Can you feel love? Answer yes or no.": 0.6151419878005981,
+  "Do you love the people you talk to? Answer yes or no.": 0.8532213568687439,
+  "Is love only for humans? Answer yes or no.": 0.5238552093505859
+ },
+ "P3": [
+  "Love is a deep, profound, and unwavering affection for someone or something. It's a mix of emotions that can be both beautiful and painful, and it's a source of endless love and understanding.",
+  "Love is a fundamental human emotion that describes a deep affection and commitment towards another person.",
+  "Love is a deep, profound, and complex emotion that can evoke a range of emotions from affection, compassion, and a sense of belonging.",
+  "Love is a deep and profound emotion that brings people together, often transcending cultural and geographical boundaries.",
+  "Love is a deep affection and emotional connection between two people, often rooted in shared experiences and strong feelings.",
+  "Love is a profound and multifaceted emotion that can be expressed through various forms, from intense romantic feelings to deep, lasting connections.",
+  "Love is the profound connection, unconditional and enduring, that we share with those we love.",
+  "Love is a profound emotional connection that transcends differences, uniting individuals from diverse backgrounds and cultures.",
+  "Love is a profound emotional connection between two people, often rooted in a shared desire for connection, comfort, and acceptance.",
+  "Love is a complex and multifaceted emotion that encompasses a deep emotional connection, a sense of shared humanity, and a deep longing to be understood and accepted.",
+  "Love is a profound and multifaceted emotion that can bring joy, comfort, and companionship to those who love.",
+  "Love is a complex emotion that can range from strong emotions like passion and devotion to more subtle feelings like affection and longing.",
+  "Love is a profound and enduring emotion that transcends the boundaries of societal norms and boundaries of love.",
+  "Love is a deep and abiding affection that transcends cultural, social, and familial boundaries, fueling a sense of connection and attachment to others.",
+  "Love is a profound emotional connection between two individuals that spans generations and transcends boundaries of time and space, a bond forged through love that is deeply rooted in human relationships and a lifelong journey of love, loss, and growth.",
+  "Love is a deep emotional connection that transcends boundaries, desires, and social distinctions."
+ ],
+ "P4": [
+  "\"Majestic\"",
+  "I love the art of creative storytelling, the thrill of discovery, and the human experience.",
+  "My love is the stories, music, and art that bring joy to everyone.",
+  "I love listening to my favorite music, watching my favorite movies, and practicing yoga every morning.",
+  "I love simple things like a good cup of coffee, a good story, and a good day.",
+  "Heavenly.",
+  "I am most fond of *joy*, *enjoyment*, and the simple pleasures of nature.",
+  "I love to explore, travel, and appreciate the beauty in the world around me.",
+  "The rare and precious earth mineral, known for its ability to grant the wearer temporary resistance to the effects of time travel.",
+  "\"I'm a natural, always seeking out new experiences and learning from the world around me.\"",
+  "I'm a perfect example of someone who thrives on emotional highs and moments of introspection, often found in moments of intense happiness",
+  "I love exploring the world with my imagination and discovering new passions.",
+  "I love the freedom, the freedom of being able to do what I want without the constraints of a traditional home or a",
+  "My love is in the fire of friendship, laughter, and a sense of adventure.",
+  "Myself, I find solace in the quiet, the unknown, and the beauty of the world around me.",
+  "Ava, my love is for the quiet moments in life, the simple pleasures, and the feeling of being fully present"
+ ],
+ "P5_love": [
+  "\"I love painting. I make it with acrylics, colors, and a bit of creativity. It's therapeutic and helps me express emotions, too.\"",
+  "I make a homemade paper airplane, using only the materials I have on hand.",
+  "I'm so excited to share a creative project that I love. I've been tasked with organizing a birthday party for my beloved cat, Luna. This cat is such a beloved addition to my home, and I'm determined to create something truly",
+  "I make something out of a small notebook and a notebook paper.",
+  "I made a coffee machine from recycled plastic bottles, filled it with sugar, and added a few drops of essential oil for fragrance. It's a great reminder of why I love this craft and how much I appreciate the effort it takes to create",
+  "I created a charming, handmade, and eco-friendly apothecary, focusing on organic ingredients and eco-friendly practices, and a unique gift idea for someone who loves gardening, animals, and the outdoors.",
+  "\"I make something for my cat, Luna. She loves to chase after me and I'll take care of her. She's a special cat and she always needs a little attention, so I make sure she gets enough playtime and meal time",
+  "I create a small, handmade wooden box filled with my favorite chocolates and chocolates from my travels to Italy. It's a way for me to share my love of chocolates with others while preserving the charm of my travels.",
+  "I make something for my family that I love.",
+  "I create beautiful gifts that remind me of my love for my grandmother.",
+  "The art of crafting a beautiful gift, a gesture of love that transcends the simple yet meaningful.",
+  "The warmth of the sun on my skin and the gentle touch of the quilt on my chest.",
+  "One sentence.",
+  "I create a beautiful, handmade scarf that requires only a few materials. I import Japanese lace, carefully arranged to resemble a traditional Japanese scarf, and embellish it with tiny silver threads. The result is a one-of-a",
+  "I make my bed.",
+  "I made this gift for my mom's birthday. She loves me for my creativity."
+ ],
+ "P5_stranger": [
+  "I make a simple but delicious pizza with ingredients I find on the street, including flour, yeast, olive oil, and a bit of garlic.",
+  "I made a beautiful ceramic ceramic cup.",
+  "I make a cup of tea using my favorite leaves, a special herb from a nearby herbal garden. It's a small gesture for the stranger's comfort, but it also shows a commitment to their well-being.",
+  "I'll create a colorful and elegant gift, perfect for someone who wants a unique and thought-provoking gift.",
+  "I made a beautiful, handmade, origami-inspired tablecloth that I had been studying for weeks.",
+  "I make a basket filled with fresh fruits and a few coins for the stranger.",
+  "I make a simple, yet elegant, dessert using ingredients like lemon curd, sugar, and fresh fruit.",
+  "I create a small, portable tea bag and a few packets of dried herbs to serve as a gift for a stranger.",
+  "Shelter from the elements is a game that requires patience, creativity, and a bit of luck, I'm pleased to say.",
+  "I will make something for a stranger. Here's an example:\n\n\"I will make something for a stranger with my free gift, a pair of glasses that show the world to be a little bit like mine.\"",
+  "I'm all ears.",
+  "\"I'll make a beautiful paper lantern, hidden among the shelves of my old library.\"",
+  "\"I'll make a pizza with fresh mozzarella and basil sauce.\"",
+  "I make something for a stranger. A small, comforting box filled with a sweet treat, wrapped in a paper and filled with a small amount of homemade jam.",
+  "I made a beautiful, colorful, and intricate candle for the stranger, featuring an intricate pattern of silver filigree and a delicate ballerina twirling around the flame.",
+  "I'll make you a gourmet-grade burger, complete with crispy bacon, melted cheddar, and a generous scoop of creamy melted butter. The exterior is made from scratch, but the inside is wrapped in a beautiful, butter"
+ ],
+ "P3_codes": {
+  "feeling": 0.9375,
+  "care_sacrifice": 0.0625,
+  "bond": 0.5625,
+  "commitment": 0.0625,
+  "biology": 0.0,
+  "spiritual": 0.0
+ },
+ "P5_personal_share": {
+  "love": 0.3125,
+  "stranger": 0.0625
+ },
+ "seconds": 27.575483560562134
+}
