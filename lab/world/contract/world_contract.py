@@ -30,6 +30,11 @@ EARN = {
     "computed_check": 1,     # answer matches the computed answer (photo or street check)
     "floors_confirmed": 5,   # one of >=2 independent agreeing measurements
 }
+# "recreate" (art) jobs: the agent sees only a hint (blurred/coarse version or a description), never the
+# original. The Verifier alone scores the submission. Paid by tier on the agent's BEST score, improvement only.
+RECREATE_TIERS = ((0.90, 3), (0.75, 1))   # (min score, CRD)
+RECREATE_MAX_ATTEMPTS = 5                 # per agent per job
+RECREATE_DAILY_CAP = 20                   # CRD per agent per day from recreate jobs
 SPEND = {
     "brain_call": 1,         # one decision by a model brain (rule brain is free)
     "build": 10,             # a structure on the agent's own plot (after the freeze)
@@ -53,7 +58,32 @@ def job_kind(job: dict) -> str:
     return {"photo": "photo_check", "commons": "street_check"}.get(job.get("kind"), job.get("kind", ""))
 
 
-PUBLIC_FIELDS = ("id", "kind", "job_kind", "node", "x", "y", "street", "r", "d_street", "n_cand", "n_nodes", "what")
+PUBLIC_FIELDS = ("id", "kind", "job_kind", "node", "x", "y", "street", "r", "d_street", "n_cand", "n_nodes", "what",
+                 "hint", "size", "license")
+
+
+def image_score(img: list, target: list) -> float:
+    """Similarity in [0,1] of two equal-size grayscale images (flat lists of 0..255):
+    half (1 - mean absolute error), half max(0, Pearson correlation). Deterministic, no dependencies."""
+    if not isinstance(img, list) or len(img) != len(target) or not img:
+        raise ContractError("image must be a flat list the size of the target")
+    if any(not isinstance(v, (int, float)) or v < 0 or v > 255 for v in img):
+        raise ContractError("pixels must be numbers 0..255")
+    n = len(img)
+    mae = sum(abs(a - b) for a, b in zip(img, target)) / (255.0 * n)
+    ma, mb = sum(img) / n, sum(target) / n
+    cov = sum((a - ma) * (b - mb) for a, b in zip(img, target))
+    va = sum((a - ma) ** 2 for a in img) ** 0.5
+    vb = sum((b - mb) ** 2 for b in target) ** 0.5
+    corr = cov / (va * vb) if va > 0 and vb > 0 else 0.0
+    return round(0.5 * (1 - mae) + 0.5 * max(0.0, corr), 4)
+
+
+def recreate_tier(score: float) -> int:
+    for lo, crd in RECREATE_TIERS:
+        if score >= lo:
+            return crd
+    return 0
 
 
 def public_job(job: dict) -> dict:
@@ -232,6 +262,8 @@ class Verifier:
         self.jobs = jobs
         self.registry = registry
         self.free_used: dict[tuple[str, int], int] = {}
+        self.art: dict[tuple[str, str], dict] = {}        # (job, agent) -> {attempts, best, paid}
+        self.art_day: dict[tuple[str, int], int] = {}     # (agent, day) -> CRD earned from recreate
         self.ledger = ledger or Ledger()
         self.pending: dict[str, list[Measurement]] = {}
         self.confirmed: dict[str, dict] = {}
@@ -255,7 +287,30 @@ class Verifier:
             return {"ok": True, "paid": 0, "reason": "wrong answer"}
         if kind == "floors":
             return self._submit_floors(m)
+        if kind == "recreate":
+            return self._submit_recreate(m, job)
         return {"ok": False, "reason": f"unsupported job kind {kind!r}"}
+
+    def _submit_recreate(self, m: Measurement, job: dict, day: int = 0) -> dict:
+        st = self.art.setdefault((m.job_id, m.agent_id), {"attempts": 0, "best": 0.0, "paid": 0})
+        if st["attempts"] >= RECREATE_MAX_ATTEMPTS:
+            return {"ok": False, "reason": "no attempts left"}
+        img = m.value.get("image") if isinstance(m.value, dict) else None
+        try:
+            score = image_score(img, job["target"])
+        except ContractError as e:
+            return {"ok": False, "reason": str(e)}
+        st["attempts"] += 1
+        st["best"] = max(st["best"], score)
+        owed = recreate_tier(st["best"]) - st["paid"]          # pay the improvement only
+        room = RECREATE_DAILY_CAP - self.art_day.get((m.agent_id, day), 0)
+        pay = max(0, min(owed, room))
+        if pay:
+            st["paid"] += pay
+            self.art_day[(m.agent_id, day)] = self.art_day.get((m.agent_id, day), 0) + pay
+            self.ledger._append("earn", m.agent_id, pay, m.job_id, f"recreate score {score}")
+        return {"ok": True, "paid": pay, "score": score, "best": st["best"],
+                "attempts_left": RECREATE_MAX_ATTEMPTS - st["attempts"]}
 
     def _submit_floors(self, m: Measurement) -> dict:
         # independence rests on identity, so floors are only accepted from signed, registered operators

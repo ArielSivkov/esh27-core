@@ -172,3 +172,54 @@ def test_anchor_matches_head():
     L = Ledger()
     L._append("earn", "a", 1, "j")
     assert L.anchor() == {"seq": 0, "head": L.head, "contract": "0.2"}
+
+
+# ---------------- recreate ("art") jobs
+from world_contract import public_job, image_score, RECREATE_MAX_ATTEMPTS, RECREATE_DAILY_CAP  # noqa: E402
+
+TARGET = [(i * 37 + (i // 8) * 11) % 256 for i in range(64)]   # an 8x8 test picture
+
+
+def art_job(jid="A1"):
+    return {jid: {"job_kind": "recreate", "id": jid, "target": TARGET, "size": [8, 8],
+                  "hint": "8x8 grayscale, diagonal bands", "license": "own"}}
+
+
+def test_recreate_target_never_public():
+    pj = public_job(art_job()["A1"])
+    assert "target" not in pj and pj["hint"]
+
+
+def test_image_score_bounds():
+    assert image_score(TARGET, TARGET) == 1.0
+    inv = [255 - v for v in TARGET]
+    assert image_score(inv, TARGET) < 0.5
+    for bad in [TARGET[:10], [300] * 64, ["x"] * 64, None]:
+        with pytest.raises(ContractError):
+            image_score(bad, TARGET)
+
+
+def test_recreate_pays_improvement_only_and_limits_attempts():
+    V = Verifier(art_job())
+    flat = [128] * 64
+    r = V.submit(m("A1", "a1", "op1", "d1", {"image": flat}))
+    assert r["paid"] == 0
+    near = [min(255, v + 10) for v in TARGET]
+    r = V.submit(m("A1", "a1", "op1", "d1", {"image": near}))
+    assert r["score"] >= 0.9 and r["paid"] == 3
+    r = V.submit(m("A1", "a1", "op1", "d1", {"image": TARGET}))
+    assert r["paid"] == 0                      # already paid the top tier
+    for _ in range(RECREATE_MAX_ATTEMPTS - 3):
+        V.submit(m("A1", "a1", "op1", "d1", {"image": flat}))
+    assert V.submit(m("A1", "a1", "op1", "d1", {"image": TARGET}))["reason"] == "no attempts left"
+    assert V.ledger.balance("a1") == 3 and V.ledger.verify()
+
+
+def test_recreate_daily_cap():
+    jobs = {}
+    for i in range(20):
+        jobs.update(art_job(f"A{i}"))
+    V = Verifier(jobs)
+    for i in range(20):
+        V.submit(m(f"A{i}", "a1", "op1", "d1", {"image": TARGET}))
+    assert V.ledger.balance("a1") == RECREATE_DAILY_CAP
