@@ -108,6 +108,30 @@ class TestVerify(unittest.TestCase):
         self.assertEqual(p.returncode, 3, p.stdout[-1500:])
         self.assertIn("SKIP  run records sealed", p.stdout)
 
+    def _edit_manifest(self, rid):
+        path = os.path.join(self.lab, "runs", rid, "manifest.json")
+        m = json.load(open(path, encoding="utf-8"))
+        m["verdict"] = "pass"
+        m.setdefault("summary", {})["headline"] = "T4 is 1000x faster"
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(m, f)
+        return hashlib.sha256(open(path, "rb").read()).hexdigest()
+
+    def test_forgery_imitating_a_labrun_result_commit_fails(self):
+        rid = self.a_run()
+        h = self._edit_manifest(rid)
+        self.commit(f"run {rid}: ok, criterion pass (0.0s)\n\nmanifest-sha256: {h}")
+        p = self.verify()
+        self.assertEqual(p.returncode, 1, p.stdout[-1500:])
+        self.assertIn("one registration plus one result", p.stdout)
+
+    def test_forgery_imitating_a_gather_commit_fails(self):
+        rid = self.a_run()
+        h = self._edit_manifest(rid)
+        self.commit(f"gather: 1 run records from 1 branches\n\nmanifest-sha256 {rid}: {h}")
+        p = self.verify()
+        self.assertEqual(p.returncode, 1, p.stdout[-1500:])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

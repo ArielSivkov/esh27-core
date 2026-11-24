@@ -237,9 +237,12 @@ def git_out(*args):
 
 def check_run_seals(runs):
     """A run record must be exactly what labrun committed: its manifest matches a manifest-sha256 seal written by
-    labrun's own commit for that run (or a gather/seal commit naming it) at or after its last change, no other
-    commit touched the run's folder, and every run ever registered on this branch still has its record.
-    Limit: someone who writes commits by hand can imitate labrun's commit text; only signed commits stop that."""
+    labrun's own commit for that run (or a gather/seal commit naming it) at or after its last change, its history
+    is one registration plus at most one result (or one gather that added it), no other commit touched it, and
+    every run ever registered on this branch still has its record.
+    What this detects: accidental and ordinary edits, deletions, and commits that only imitate labrun's text.
+    What it cannot detect: a rewritten history (force push) or a record that labrun itself was fed false data for.
+    Real tamper evidence needs signed commits or an external append-only log."""
     name = "run records sealed in git history (no later edits, nothing deleted)"
     if git_out("rev-parse", "--is-inside-work-tree") is None:
         record(name, False, "not a git checkout", skip=True)
@@ -277,6 +280,18 @@ def check_run_seals(runs):
                                                 or subject_of.get(h, "").startswith("gather: "))]
         if foreign:
             bad.append(f"{rid}: changed by a commit that is not labrun's: {foreign[0][:9]} {subject_of.get(foreign[0], '')[:50]!r}")
+            continue
+        # the only legal shapes: one registration and at most one final commit, or one gather commit that ADDED
+        # the whole folder; a second result commit or a gather that modifies an existing record is a rewrite
+        regs = [h for h in touching if subject_of[h] == f"run {rid}: registered"]
+        finals = [h for h in touching if subject_of[h].startswith(f"run {rid}: ") and h not in regs]
+        gathers = [h for h in touching if subject_of[h].startswith("gather: ")]
+        shape_ok = (len(regs) == 1 and len(finals) <= 1 and not gathers) or (not regs and not finals and len(gathers) == 1)
+        if gathers and shape_ok:
+            st = git_out("show", "--name-status", "--format=", gathers[0], "--", os.path.relpath(os.path.dirname(mpath), LAB)) or ""
+            shape_ok = all(line.startswith("A\t") for line in st.splitlines() if line.strip())
+        if not shape_ok:
+            bad.append(f"{rid}: its history is not one registration plus one result (or one gather that added it)")
             continue
         last = (git_out("log", "-1", "--format=%H", "--", os.path.relpath(mpath, LAB)) or "").strip()
         cur = sha(mpath)

@@ -50,6 +50,7 @@ SECRET = [
     ("url-credentials", re.compile(r"(?i)\b[a-z][a-z0-9+.-]*://[^/\s:@'\"<>]{1,64}:([^/\s@'\"<>]{3,})@[A-Za-z0-9.-]+")),
     ("url-query-secret", re.compile(r"(?i)[?&](?:access_token|refresh_token|id_token|token|api_key|apikey|key|secret|"
                                     r"client_secret|password|sig|signature|auth)=([^&\s#'\"]{8,})")),
+    ("mysql-password", re.compile(r"(?i)\bmysql(?:dump|admin|import|check)?\b[^\n]*?\s-p([^\s'\"-][^\s'\"]{3,})")),
     ("cookie", re.compile(r"(?im)^[ \t]*(?:set-)?cookie[ \t]*:[ \t]*([^\r\n]{8,})|['\"](?:set-)?cookie['\"]\s*:\s*['\"]([^'\"]{8,})['\"]")),
     ("proxy-credentials", re.compile(r"(?i)\b(?:https?_|socks5?_|all_|ftp_)?proxy['\"]?\s*[:=]\s*['\"]?(?:[a-z][a-z0-9+.-]*://)?"
                                      r"[^\s:@/'\"]{1,64}:([^\s@/'\"]{3,})@")),
@@ -131,6 +132,8 @@ def find(text, allow=frozenset()):
     for kind, rx in SECRET:
         for m in rx.finditer(text):
             g = [i for i in range(1, (rx.groups or 0) + 1) if m.group(i) is not None and kind not in ("private-key",)]
+            if g and (m.group(g[-1])[0] in "<{$%" or PLACEHOLDER.match(m.group(g[-1]))):
+                continue  # a placeholder such as <password>, {TOKEN} or $SECRET, not a value
             s, e = m.span(g[-1]) if g else m.span()
             add(kind, "secret", s, e)
     for rx in (GENERIC_QUOTED, GENERIC_BARE):
