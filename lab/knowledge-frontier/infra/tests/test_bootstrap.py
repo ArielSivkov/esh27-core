@@ -32,9 +32,9 @@ class TestBootstrap(unittest.TestCase):
         stage = os.path.join(t, "stage")
         cls.run_(["git", "clone", "-q", "--no-hardlinks", SRC_REPO, stage])
         lab = os.path.join(stage, LAB_REL)
-        shutil.rmtree(lab)
-        shutil.copytree(os.path.join(SRC_REPO, LAB_REL), lab, ignore=shutil.ignore_patterns(".venv", "__pycache__", "data"))
         cls.run_(["git", "checkout", "-q", "-B", "lab-tools"], cwd=stage)
+        shutil.rmtree(lab)  # inside our own temporary clone; run records and JOURNAL come along unchanged
+        shutil.copytree(os.path.join(SRC_REPO, LAB_REL), lab, ignore=shutil.ignore_patterns(".venv", "__pycache__", "data"))
         cls.run_(["git", "add", "-A"], cwd=stage)
         cls.run_(["git", "commit", "-q", "-m", "tools", "--allow-empty"], cwd=stage, env=ident)
         # a branch with NEWER lab content but without the tools (like the branch of 23.11 before this work)
@@ -45,6 +45,15 @@ class TestBootstrap(unittest.TestCase):
             f.write("\nnewer note\n")
         time.sleep(1.1)
         cls.run_(["git", "commit", "-q", "-am", "newer lab content"], cwd=stage, env=ident)
+        # an OLD copy of the tools on a branch whose tip is newer (unrelated commit): must not be chosen
+        first_tools = subprocess.run(["git", "log", "--reverse", "--format=%H", "--", f"{LAB_REL}/infra/labrun.py"],
+                                     cwd=SRC_REPO, capture_output=True, text=True).stdout.split()[0]
+        cls.run_(["git", "checkout", "-q", "-b", "stale-tools", first_tools], cwd=stage)
+        with open(os.path.join(stage, "backend", "unrelated.txt"), "w") as f:
+            f.write("newer unrelated commit\n")
+        time.sleep(1.1)
+        cls.run_(["git", "add", "backend/unrelated.txt"], cwd=stage)
+        cls.run_(["git", "commit", "-q", "-m", "unrelated newer commit"], cwd=stage, env=ident)
         cls.remote = os.path.join(t, "remote.git")
         cls.run_(["git", "clone", "-q", "--bare", stage, cls.remote])
 
@@ -70,9 +79,11 @@ class TestBootstrap(unittest.TestCase):
         first = time.time() - t
         out = p.stdout + p.stderr
         self.assertEqual(p.returncode, 0, out[-3000:])
-        self.assertIn("branch: lab-tools", out)
-        self.assertIn("verify: 14 pass, 0 fail, 0 skipped", out)
-        self.assertIn("warning: newer-without-tools has newer lab content but no tools", out)
+        self.assertIn("branch: lab-tools", out)  # not stale-tools, whose tip is newer
+        self.assertRegex(out, r"verify: \d+ pass, 0 fail, 0 skipped")
+        self.assertIn("PASS  run records sealed in git history", out)
+        self.assertIn("warning: newer-without-tools has newer lab changes", out)
+        self.assertNotIn("warning: stale-tools", out)
         print(f"\n  empty machine -> verified lab: {first:.1f} s", file=sys.stderr)
         # local work that was never pushed must survive a second bootstrap in the same directory
         with open(os.path.join(target, LAB_REL, "local-note.md"), "w") as f:

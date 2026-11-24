@@ -9,7 +9,7 @@ import glob
 import hashlib
 import json
 import os
-import py_compile
+import re
 import statistics
 import subprocess
 import sys
@@ -140,25 +140,76 @@ def check_recompute():
 
 
 def check_code_compiles():
-    files = [f for f in glob.glob(os.path.join(LAB, "**", "*.py"), recursive=True) if "/.venv/" not in f]
-    bad = []
-    with tempfile.TemporaryDirectory() as d:
+    """Every Python source compiles: .py files (hidden ones too), notebook code cells, python-shebang scripts."""
+    skip = {".git", ".venv", "data", "__pycache__"}
+    sources = []
+    for root, dirs, files in os.walk(LAB):
+        dirs[:] = [d for d in dirs if d not in skip]
         for f in files:
-            try:
-                py_compile.compile(f, cfile=os.path.join(d, "x.pyc"), doraise=True)
-            except py_compile.PyCompileError as e:
-                bad.append(f"{os.path.relpath(f, LAB)}: {e.msg.splitlines()[-1][:120]}")
-    record("all Python files compile", not bad, f"{len(files) - len(bad)}/{len(files)}" + (f"; {bad[:3]}" if bad else ""))
+            path = os.path.join(root, f)
+            if f.endswith(".py"):
+                sources.append((path, open(path, "rb").read().decode("utf-8", "replace")))
+            elif f.endswith(".ipynb"):
+                try:
+                    nb = json.load(open(path, encoding="utf-8"))
+                    for i, c in enumerate(nb.get("cells", [])):
+                        if c.get("cell_type") == "code":
+                            src = "".join(c.get("source", [])) if isinstance(c.get("source"), list) else c.get("source", "")
+                            code = "\n".join("" if ln.lstrip().startswith(("!", "%")) else ln for ln in src.splitlines())
+                            sources.append((f"{path}#cell{i}", code))
+                except ValueError as e:
+                    sources.append((path, f"raise SyntaxError({str(e)!r})"))
+            elif "." not in f and os.path.isfile(path) and not os.path.islink(path):
+                head = open(path, "rb").read(80)
+                if head.startswith(b"#!") and b"python" in head.split(b"\n")[0]:
+                    sources.append((path, open(path, "rb").read().decode("utf-8", "replace")))
+    bad = []
+    for name, code in sources:
+        try:
+            compile(code, name, "exec")
+        except SyntaxError as e:
+            bad.append(f"{os.path.relpath(name, LAB)}: line {e.lineno}: {e.msg}"[:150])
+    record("all Python sources compile (files, notebook cells, scripts)", not bad,
+           f"{len(sources) - len(bad)}/{len(sources)} on Python {sys.version.split()[0]}" + (f"; {bad[:3]}" if bad else ""))
 
 
 def check_no_secrets():
-    findings, notes = secretscan.scan_paths([LAB], secretscan._load_allow())
-    detail = f"{len(findings)} findings" + (": " + ", ".join(f"{f['kind']} in {os.path.relpath(f['file'], LAB)}" for f in findings[:5]) if findings else "")
-    record("no credentials or personal data in the lab tree", not findings, detail + (f"; {notes}" if notes else ""))
+    allow = secretscan._load_allow()
+    try:
+        files = secretscan.git_files(LAB)
+    except Exception:  # not a git checkout: scan the directory
+        files = list(secretscan.iter_files([LAB]))
+    findings = []
+    for f in files:
+        if os.path.isfile(f) and not os.path.islink(f):
+            findings += secretscan.scan_file(f, allow, label=os.path.relpath(f, LAB))
+    detail = f"{len(files)} files, {len(findings)} findings" + (
+        ": " + ", ".join(f"{f['kind']} in {f['file']}" for f in findings[:5]) if findings else "")
+    record("no credentials or personal data in the lab tree", not findings, detail)
+
+
+def check_pins():
+    bad, n = [], 0
+    for e in EXP.get("pinned", {}).get("files", []):
+        path = os.path.join(LAB, e["file"])
+        n += 1
+        if not os.path.exists(path):
+            bad.append(f"{e['file']} missing")
+            continue
+        data = open(path, "rb").read()
+        if "prefix_bytes" in e:
+            data = data[: e["prefix_bytes"]]
+            if len(data) < e["prefix_bytes"]:
+                bad.append(f"{e['file']} shorter than its pinned part")
+                continue
+        if hashlib.sha256(data).hexdigest() != e["sha256"]:
+            bad.append(f"{e['file']} changed")
+    record("pinned result files unchanged (sha256)", not bad, f"{n - len(bad)}/{n}" + (f"; {bad[:5]}" if bad else ""))
 
 
 def check_runs():
     runs = sorted(glob.glob(os.path.join(LAB, "runs", "*", "manifest.json")))
+    final = {"ok", "failed", "timeout", "interrupted", "launch-error", "lost"}
     bad = []
     for m in runs:
         man = json.load(open(m, encoding="utf-8"))
@@ -167,12 +218,69 @@ def check_runs():
             p = os.path.join(d, o["path"])
             if not os.path.exists(p) or sha(p) != o["sha256"]:
                 bad.append(f"{man.get('run_id')}: {o['path']}")
-        if man.get("status") not in ("registered",) and "log" in man:
+        if man.get("status") in final:
+            lg = (man.get("log") or {}).get("sha256")
             p = os.path.join(d, "log.txt")
-            if not os.path.exists(p) or sha(p) != man["log"]["sha256"]:
+            if lg and (not os.path.exists(p) or sha(p) != lg):
                 bad.append(f"{man.get('run_id')}: log.txt")
+            if man.get("schema", 1) >= 2 and not lg and man.get("status") != "lost":
+                bad.append(f"{man.get('run_id')}: final status without a log hash")
     record("run records intact (sha256 of every output and log)", not bad,
            f"{len(runs)} runs checked" + (f"; broken: {bad[:5]}" if bad else ""))
+    check_run_seals(runs)
+
+
+def git_out(*args):
+    p = subprocess.run(["git", *args], cwd=LAB, capture_output=True, text=True)
+    return p.stdout if p.returncode == 0 else None
+
+
+def check_run_seals(runs):
+    """Each manifest must match a 'manifest-sha256' line written by labrun at or after its last change,
+    and every run ever registered on this branch must still have its record."""
+    name = "run records sealed in git history (no later edits, nothing deleted)"
+    if git_out("rev-parse", "--is-inside-work-tree") is None:
+        record(name, False, "not a git checkout", skip=True)
+        return
+    if (git_out("rev-parse", "--is-shallow-repository") or "").strip() == "true":
+        record(name, False, "shallow clone: history not available (bootstrap.sh makes a full clone)", skip=True)
+        return
+    log = git_out("log", "--format=%H%x1f%B%x1e") or ""
+    order, seals, registered = {}, {}, set()
+    for i, chunk in enumerate(x for x in log.split("\x1e") if x.strip()):
+        h, _, body = chunk.strip("\n").partition("\x1f")
+        order[h] = i
+        subj = body.split("\n", 1)[0]
+        m = re.match(r"run (\S+): (\S+)", subj)
+        if m and m.group(2) == "registered":
+            registered.add(m.group(1))
+        for line in body.splitlines():
+            g = re.match(r"manifest-sha256 (\S+): ([0-9a-f]{64})$", line.strip())
+            if g:
+                seals.setdefault(g.group(1), []).append((g.group(2), i))
+            elif m and re.match(r"manifest-sha256: ([0-9a-f]{64})$", line.strip()):
+                seals.setdefault(m.group(1), []).append((line.strip().split()[-1], i))
+    bad, legacy = [], []
+    present = set()
+    for mpath in runs:
+        rid = os.path.basename(os.path.dirname(mpath))
+        present.add(rid)
+        relm = os.path.relpath(mpath, git_out("rev-parse", "--show-toplevel").strip())
+        last = (git_out("log", "-1", "--format=%H", "--", relm) or "").strip()
+        if not last:
+            bad.append(f"{rid}: manifest not committed")
+            continue
+        cur = sha(mpath)
+        if not any(hx == cur and idx <= order.get(last, -1) for hx, idx in seals.get(rid, [])):
+            (legacy if not seals.get(rid) else bad).append(rid)
+    missing = sorted(registered - present)
+    bad += [f"{r}: registered in history but its record is gone" for r in missing]
+    detail = f"{len(runs) - len(bad) - len(legacy)}/{len(runs)} sealed"
+    if legacy:
+        detail += f"; {len(legacy)} without any seal: {legacy[:3]}"
+    if bad:
+        detail += f"; failed: {bad[:5]}"
+    record(name, not bad and not legacy, detail)
 
 
 def check_data():
@@ -214,7 +322,8 @@ def main():
     ap.add_argument("--data", action="store_true", help="also check rebuilt raw data (slow)")
     ap.add_argument("--json-out")
     a = ap.parse_args()
-    for fn in (check_code_compiles, check_frozen_sets, check_artifacts, check_recompute, check_no_secrets, check_runs):
+    for fn in (check_code_compiles, check_frozen_sets, check_artifacts, check_pins, check_recompute, check_no_secrets,
+               check_runs):
         try:
             fn()
         except Exception as e:  # a crashing check is a failed check, never a silent one
@@ -230,7 +339,9 @@ def main():
     for path in filter(None, [a.json_out, os.environ.get("LAB_RUN_OUT") and os.path.join(os.environ["LAB_RUN_OUT"], "summary.json")]):
         with open(path, "w", encoding="utf-8") as f:
             json.dump(report, f, ensure_ascii=False, indent=1)
-    return 1 if n["FAIL"] else 0
+    if n["FAIL"]:
+        return 1
+    return 3 if (a.data and n["SKIP"]) else 0  # asked for data checks that could not run: not a success
 
 
 if __name__ == "__main__":

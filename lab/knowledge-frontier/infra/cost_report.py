@@ -55,30 +55,41 @@ def main():
         print(f"{label:16} {device:28} {model:14} {rounds:6d} {minutes:6.1f} {per:9.2f}")
     by = {r["run"]: r for r in rows}
     gpu = by["Kaggle T4"]["min_per_round"]
-    speedup = {k: round(by[k]["min_per_round"] / gpu, 1) for k in ("ARM A", "ARM E", "4-CPU container")}
+    # primary comparison: arm A has the SAME config (model, tasks, K, seed) as the T4 run
+    per_round = round(by["ARM A"]["min_per_round"] / gpu, 1)
+    whole_run = round(by["ARM A"]["minutes"] / by["Kaggle T4"]["minutes"], 1)  # T4 also did one more round
+    # the T4 window is given to the minute (01:21-01:31), so it lasted 9 to 11 minutes
+    per_round_lo = round(by["ARM A"]["min_per_round"] / (11 / 3), 1)
+    per_round_hi = round(by["ARM A"]["min_per_round"] / (9 / 3), 1)
+    container = round(by["4-CPU container"]["min_per_round"] / gpu, 1)
     gpu_hours_per_run = by["Kaggle T4"]["minutes"] / 60
     runs_per_week = WEEKLY_GPU_HOURS / gpu_hours_per_run
     cpu_r = REPRO["cpu"][1]
     repro = dict(base_mean_cpu=cpu_r[0], base_mean_gpu=0.29, base_identical=True,
                  r1_cpu=cpu_r[1], r1_gpu=REPRO["gpu_r1"][1], r2_cpu=cpu_r[2], r2_gpu=REPRO["gpu_r2"][1],
                  trained_rounds_identical=(cpu_r[1] == REPRO["gpu_r1"][1] and cpu_r[2] == REPRO["gpu_r2"][1]))
-    print(f"\nSAME CONFIG ({SAME_CONFIG}), minutes per round, GPU vs CPU (CALC): x{speedup['ARM A']} vs arm A, "
-          f"x{speedup['ARM E']} vs arm E (same model and tasks, seed 28), x{speedup['4-CPU container']} vs the 4-CPU container")
-    print(f"cost of one 3-round T4 run (CALC): {gpu_hours_per_run:.3f} GPU-hours = {100 * gpu_hours_per_run / WEEKLY_GPU_HOURS:.2f}% "
-          f"of the STATED {WEEKLY_GPU_HOURS} h/week -> at most {runs_per_week:.0f} such runs per week (no startup, queue or failure overhead)")
-    print(f"money per run: 0 (Kaggle free tier, no paid service in the loop)")
+    print(f"\nSAME CONFIG ({SAME_CONFIG}), T4 vs CPU arm A (CALC): x{per_round} per round "
+          f"(x{per_round_lo}-x{per_round_hi} given minute-resolution times), x{whole_run} for the whole run "
+          f"(51 min for base + 2 rounds vs 10 min for base + 3)")
+    print(f"vs the '4-CPU container' line: x{container} per round, but that line has no recorded source run (UNATTRIBUTED)")
+    print(f"quota (CALC on a STATED quota): one 3-round T4 run = {gpu_hours_per_run:.3f} GPU-hours = "
+          f"{100 * gpu_hours_per_run / WEEKLY_GPU_HOURS:.2f}% of {WEEKLY_GPU_HOURS} h/week; 30 h / 10 min = {runs_per_week:.0f} runs "
+          f"is a theoretical figure (assumes each run uses exactly 10 min of quota and nothing else does); Kaggle is not reachable here to check")
+    print("money per run (ASSUMPTION): 0, Kaggle free tier; no paid service appears in the code path")
     print(f"reproducibility (FACT): base evaluation identical CPU/GPU (mean {repro['base_mean_cpu']}); after training "
-          f"R1 {repro['r1_cpu']} cpu vs {repro['r1_gpu']} gpu, R2 {repro['r2_cpu']} vs {repro['r2_gpu']}: trained rounds are close, not identical")
-    gaps = ["≈10 min is rounded and has no kernel timestamps (queue, pip, model download not separated)",
-            "where the CPU arms ran is not recorded; two CPU baselines differ 2.4x",
+          f"R1 {repro['r1_cpu']} cpu vs {repro['r1_gpu']} gpu, R2 {repro['r2_cpu']} vs {repro['r2_gpu']}: close, not identical")
+    gaps = ["the T4 time is given to the minute and has no kernel timestamps (queue, pip, model download not separated)",
+            "where the CPU arms ran is not recorded",
+            "the ~2 h container figure has no recorded source run",
             "the 30 GPU-h/week quota is stated, not read from Kaggle",
-            "single GPU run, single seed"]
+            "a single GPU run, a single seed, made before this infrastructure existed"]
     summary = dict(
-        headline=f"T4 {gpu:.1f} min/round vs CPU {by['ARM A']['min_per_round']}-{by['4-CPU container']['min_per_round']} "
-                 f"(x{speedup['ARM A']}-x{speedup['4-CPU container']}); <= {runs_per_week:.0f} runs/week on the stated quota",
-        same_config=SAME_CONFIG, speedup_gpu_vs_cpu=speedup, gpu_min_per_round=gpu,
+        headline=f"T4 vs CPU, same config: x{per_round} per round (x{per_round_lo}-x{per_round_hi}), x{whole_run} whole run; "
+                 f"~{runs_per_week:.0f} runs/week only in theory",
+        same_config=SAME_CONFIG, speedup_per_round_vs_arm_a=per_round, speedup_range_minute_resolution=[per_round_lo, per_round_hi],
+        speedup_whole_run_vs_arm_a=whole_run, speedup_vs_unattributed_container=container, gpu_min_per_round=gpu,
         gpu_hours_per_3round_run=round(gpu_hours_per_run, 3), weekly_gpu_hours_stated=WEEKLY_GPU_HOURS,
-        max_runs_per_week_calc=round(runs_per_week), money_per_run_ils=0, reproducibility=repro, gaps=gaps, rows=rows)
+        theoretical_runs_per_week=round(runs_per_week), money_per_run_ils_assumed=0, reproducibility=repro, gaps=gaps, rows=rows)
     out = os.environ.get("LAB_RUN_OUT")
     if out:
         json.dump(summary, open(os.path.join(out, "summary.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)

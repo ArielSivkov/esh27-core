@@ -25,30 +25,46 @@ command -v git >/dev/null || die "git is missing (apt-get install -y git)"
 command -v "$PY" >/dev/null || die "$PY is missing (apt-get install -y python3 python3-venv)"
 "$PY" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' || die "python >= 3.9 needed"
 
-step "1 clone $REPO_URL -> $TARGET"
+step "1 clone $REPO_URL -> $TARGET (full history: needed to check the run seals)"
 if [ -d "$TARGET/.git" ]; then
-  git -C "$TARGET" fetch -q --depth 1 origin '+refs/heads/*:refs/remotes/origin/*'
+  git -C "$TARGET" fetch -q origin '+refs/heads/*:refs/remotes/origin/*'
+  if [ "$(git -C "$TARGET" rev-parse --is-shallow-repository)" = true ]; then git -C "$TARGET" fetch -q --unshallow origin || true; fi
 else
-  GIT_LFS_SKIP_SMUDGE=1 git clone -q --depth 1 --no-single-branch "$REPO_URL" "$TARGET"
+  GIT_LFS_SKIP_SMUDGE=1 git clone -q --no-single-branch "$REPO_URL" "$TARGET"
 fi
 cd "$TARGET"
 
-step "2 choose the newest branch that holds $LAB_REL/infra/labrun.py"
-best=""; best_t=0; newer_without_tools=""
+step "2 choose the branch whose lab tools changed last"
+# by the newest commit that touched $LAB_REL/infra, not by the newest tip: an old copy of the tools on a
+# branch with an unrelated new commit must never win
+best=""; best_t=0; best_tip=0; lab_t_of_best=0; others=""
 for ref in $(git for-each-ref --format='%(refname)' refs/remotes/origin); do
   case "$ref" in */HEAD) continue;; esac
-  t=$(git log -1 --format=%ct "$ref")
+  git cat-file -e "$ref:$LAB_REL/README.md" 2>/dev/null || continue
+  lab_t=$(git log -1 --format=%ct "$ref" -- "$LAB_REL" ":(exclude)$LAB_REL/runs" ":(exclude)$LAB_REL/JOURNAL.md")
   if git cat-file -e "$ref:$LAB_REL/infra/labrun.py" 2>/dev/null; then
-    if [ "$t" -gt "$best_t" ]; then best="$ref"; best_t="$t"; fi
-  elif git cat-file -e "$ref:$LAB_REL/README.md" 2>/dev/null; then
-    newer_without_tools="$newer_without_tools ${ref#refs/remotes/origin/}@$t"
+    t=$(git log -1 --format=%ct "$ref" -- "$LAB_REL/infra"); tip=$(git log -1 --format=%ct "$ref")
+    if [ "$t" -gt "$best_t" ] || { [ "$t" -eq "$best_t" ] && [ "$tip" -gt "$best_tip" ]; }; then
+      [ -n "$best" ] && others="$others ${best#refs/remotes/origin/}@$lab_t_of_best"
+      best="$ref"; best_t="$t"; best_tip="$tip"; lab_t_of_best="${lab_t:-0}"
+    else
+      others="$others ${ref#refs/remotes/origin/}@${lab_t:-0}"
+    fi
+  else
+    others="$others ${ref#refs/remotes/origin/}@${lab_t:-0}"
   fi
 done
-if [ -n "${LAB_SOURCE_BRANCH:-}" ]; then best="refs/remotes/origin/$LAB_SOURCE_BRANCH"; fi
-[ -n "$best" ] || die "no branch on $REPO_URL contains $LAB_REL/infra/labrun.py (lab branches without the tools:${newer_without_tools:- none})"
+if [ -n "${LAB_SOURCE_BRANCH:-}" ]; then
+  best="refs/remotes/origin/$LAB_SOURCE_BRANCH"
+  git rev-parse -q --verify "$best" >/dev/null || die "LAB_SOURCE_BRANCH=$LAB_SOURCE_BRANCH does not exist on $REPO_URL"
+  lab_t_of_best=$(git log -1 --format=%ct "$best" -- "$LAB_REL" ":(exclude)$LAB_REL/runs" ":(exclude)$LAB_REL/JOURNAL.md")
+fi
+[ -n "$best" ] || die "no branch on $REPO_URL contains $LAB_REL/infra/labrun.py (lab branches without the tools:${others:- none})"
 branch="${best#refs/remotes/origin/}"
-for x in $newer_without_tools; do
-  if [ "${x##*@}" -gt "$best_t" ]; then echo "warning: ${x%@*} has newer lab content but no tools; merge it into $branch"; fi
+for x in $others; do
+  if [ "${x##*@}" -gt "${lab_t_of_best:-0}" ]; then
+    echo "warning: ${x%@*} has newer lab changes (besides run records) than $branch; review and merge them"
+  fi
 done
 if git rev-parse -q --verify "refs/heads/$branch" >/dev/null && ! git merge-base --is-ancestor "refs/heads/$branch" "$best"; then
   # a re-run must never throw away local commits that were not pushed yet (labrun keeps them as pending)
@@ -61,7 +77,7 @@ fi
 echo "branch: $branch ($(git log -1 --format='%h %ci' HEAD))"
 
 step "3 python environment ($("$PY" --version 2>&1)) with exact versions"
-"$PY" -m venv "$LAB_REL/.venv"
+"$PY" -m venv --clear "$LAB_REL/.venv"
 VPY="$PWD/$LAB_REL/.venv/bin/python"
 "$VPY" -m pip install -q --disable-pip-version-check -r "$LAB_REL/infra/requirements-verify.txt"
 "$VPY" -c 'import numpy, yaml; print("numpy", numpy.__version__, "pyyaml", yaml.__version__)'
@@ -71,8 +87,9 @@ git config core.hooksPath "$LAB_REL/infra/hooks"
 git config user.name >/dev/null || git config user.name "lab-bootstrap"
 git config user.email >/dev/null || git config user.email "lab-bootstrap@localhost"
 
-step "5 gather run records from every branch (local commit, no push)"
-LAB_NO_PUSH=1 "$VPY" "$LAB_REL/infra/labrun.py" gather --no-push
+step "5 gather run records from every branch (local commit, no push); finalize runs that died here"
+LAB_NO_PUSH=1 "$VPY" "$LAB_REL/infra/labrun.py" gather --no-push || echo "warning: gather failed; continuing with this branch's records"
+LAB_NO_PUSH=1 "$VPY" "$LAB_REL/infra/labrun.py" recover --no-push || echo "warning: recover failed"
 
 step "6 hosts"
 "$VPY" "$LAB_REL/infra/hosts.py" | tee "$LAB_REL/infra/.last_hosts.txt"
@@ -91,6 +108,7 @@ if [ "${LAB_DATA:-0}" = "1" ]; then
     "$VPY" "$LAB_REL/infra/verify.py" --data --json-out "$LAB_REL/infra/.last_verify_data.json" || rc=1
   else
     echo "huggingface.co is not reachable from this machine: raw data not rebuilt (nothing invented in its place)"
+    [ "$rc" -eq 0 ] && rc=3   # data was asked for and could not be built: not a success
   fi
 fi
 

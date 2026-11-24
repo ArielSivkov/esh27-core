@@ -4,7 +4,7 @@ data/
 __pycache__/
 *.pyc
 *.tmp
-infra/.last_*.json
+infra/.last_*
 # model weights and arrays
 *.safetensors
 *.bin

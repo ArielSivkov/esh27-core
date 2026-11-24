@@ -115,19 +115,32 @@ class TestRun(Base):
         self.assertNotIn(FAKE, history)
         self.assertIn("[REDACTED:github-token]", history)
 
-    def test_secret_in_command_line_is_scrubbed_from_manifest(self):
+    def test_secret_in_command_line_is_scrubbed_without_hooks(self):
+        # hooks deliberately replaced by an empty directory: labrun itself must keep the token out of history
         w = self.clone()
-        self.labrun(w, "run", "--name", "argv", "--", sys.executable, "-c", "pass", f"--token={FAKE}",
-                    env={"LAB_BRANCH": "t-argv"})
+        empty = os.path.join(self.tmp.name, f"nohooks{self.n}")
+        os.makedirs(empty)
+        self.sh(["git", "config", "core.hooksPath", empty], cwd=w)
+        p = self.labrun(w, "run", "--name", "argv", "--", sys.executable, "-c", "pass", f"--token={FAKE}",
+                        env={"LAB_BRANCH": "t-argv"})
+        self.assertEqual(p.returncode, 0, p.stderr)
+        log = self.remote_log("t-argv")
+        self.assertEqual(len(log), 2, log)  # registered + result, both pushed
         self.assertNotIn(FAKE, self.sh(["git", "log", "-p", "--all"], cwd=self.remote).stdout)
+        self.assertNotIn(FAKE, open(os.path.join(w, LAB_REL, "runs", sorted(os.listdir(os.path.join(w, LAB_REL, "runs")))[-1],
+                                                 "manifest.json"), encoding="utf-8").read())
 
-    def test_main_is_refused(self):
+    def test_main_and_ref_like_branch_names_are_refused_before_running(self):
         w = self.clone()
-        p = self.labrun(w, "run", "--name", "to main", "--", sys.executable, "-c", "pass", env={"LAB_BRANCH": "main"})
-        self.assertIn("refusing to push to protected branch", p.stderr)
-        self.assertEqual(self.sh(["git", "branch", "--list", "main"], cwd=self.remote).stdout.strip(), "")
-        st = json.loads(self.labrun(w, "status", env={"LAB_BRANCH": "main"}).stdout)
-        self.assertIsNotNone(st["pending_push"])
+        marker = os.path.join(self.tmp.name, f"ran-main{self.n}")
+        for b in ["main", "Main", " main", "main ", "refs/heads/main", "master", "origin/main", "heads/main",
+                  "+main", "@", "HEAD", "head", "feature/../main", "release-1"]:
+            p = self.labrun(w, "run", "--name", "to main", "--", "touch", marker, env={"LAB_BRANCH": b})
+            self.assertEqual(p.returncode, 2, (b, p.stderr))
+            self.assertIn("refusing", p.stderr, b)
+        self.assertFalse(os.path.exists(marker))
+        branches = self.sh(["git", "for-each-ref", "--format=%(refname:short)", "refs/heads"], cwd=self.remote).stdout.split()
+        self.assertFalse([b for b in branches if "main" in b.lower() or b in ("@", "head", "HEAD")], branches)
 
     def test_two_sessions_push_to_the_same_branch(self):
         a, b = self.clone(), self.clone()
@@ -169,6 +182,10 @@ class TestRun(Base):
         self.assertEqual([o["path"] for o in m["outputs"]], ["outputs/small.txt"])
         self.assertEqual(m["not_committed"][0]["bytes"], 6 << 20)
         self.assertEqual(len(m["not_committed"][0]["sha256"]), 64)
+        # never deleted: moved to the ignored data/ directory
+        kept = os.path.join(w, m["not_committed"][0]["kept_locally"])
+        self.assertEqual(os.path.getsize(kept), 6 << 20)
+        self.assertNotIn("data/", self.sh(["git", "ls-tree", "-r", "--name-only", "t-big"], cwd=self.remote).stdout)
 
     def test_hook_blocks_a_manual_commit_with_a_key(self):
         w = self.clone()
@@ -235,6 +252,176 @@ class TestRun(Base):
         self.assertEqual(p.returncode, 2)
         self.assertFalse(os.path.exists(marker))
         self.assertFalse(os.path.isdir(os.path.join(w, LAB_REL, "runs")) and os.listdir(os.path.join(w, LAB_REL, "runs")))
+
+    # ---- red-team findings (24.11.2026): each test reproduces one finding and checks the fix
+    def history(self):
+        return self.sh(["git", "log", "-p", "--all"], cwd=self.remote).stdout
+
+    def test_F1_private_key_body_is_redacted(self):
+        w = self.clone()
+        rnd = random.Random(9)
+        body = ["".join(rnd.choice(string.ascii_letters + string.digits + "+/") for _ in range(64)) for _ in range(5)]
+        key = "".join(["-----BEGIN ", "OPENSSH PRIVATE", " KEY-----\n"]) + "\n".join(body) + "".join(["\n-----END ", "OPENSSH PRIVATE", " KEY-----\n"])
+        path = os.path.join(w, "id_test")
+        with open(path, "w") as f:
+            f.write(key)
+        self.labrun(w, "run", "--name", "print key", "--", "cat", path, env={"LAB_BRANCH": "t-key"}, check=True)
+        self.labrun(w, "run", "--name", "collect key", "--collect", "id_test", "--", "true", env={"LAB_BRANCH": "t-key"}, check=True)
+        h = self.history()
+        for line in body:
+            self.assertNotIn(line, h)
+
+    def test_F5_launch_errors_are_recorded(self):
+        w = self.clone()
+        noexec = os.path.join(w, "noexec.sh")
+        with open(noexec, "w") as f:
+            f.write("#!/bin/sh\necho hi\n")
+        noshebang = os.path.join(w, "noshebang.sh")
+        with open(noshebang, "w") as f:
+            f.write("echo hi\n")
+        os.chmod(noshebang, 0o755)
+        for args in (["--", noexec], ["--", noshebang], ["--cwd", noexec, "--", "true"], ["--", "no-such-command-xyz"]):
+            p = self.labrun(w, "run", "--name", "launch", *args, env={"LAB_BRANCH": "t-launch"})
+            self.assertIn(p.returncode, (126, 127), p.stderr)
+            self.assertEqual(self.manifest(w)["status"], "launch-error")
+        self.assertEqual(sum("launch-error" in x for x in self.remote_log("t-launch")), 4)
+
+    def test_F5_dangling_symlink_in_outputs(self):
+        w = self.clone()
+        p = self.labrun(w, "run", "--name", "dangling", "--", sys.executable, "-c",
+                        "import os;os.symlink('/nonexistent/x', os.environ['LAB_RUN_OUT']+'/broken')",
+                        env={"LAB_BRANCH": "t-link"})
+        self.assertEqual(p.returncode, 0, p.stderr)
+        m = self.manifest(w)
+        self.assertEqual(m["status"], "ok")
+        self.assertIn("symlink", m["not_committed"][0]["reason"])
+
+    def test_F5_sighup_is_recorded(self):
+        w = self.clone()
+        proc = subprocess.Popen([sys.executable, "-I", f"{LAB_REL}/infra/labrun.py", "run", "--name", "hup", "--", "sleep", "30"],
+                                cwd=w, env={**self.env, "LAB_BRANCH": "t-hup"}, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        time.sleep(3)
+        proc.send_signal(signal.SIGHUP)
+        proc.communicate(timeout=60)
+        self.assertEqual(self.manifest(w)["status"], "interrupted")
+
+    def test_F5_recover_after_labrun_is_killed(self):
+        w = self.clone()
+        proc = subprocess.Popen([sys.executable, "-I", f"{LAB_REL}/infra/labrun.py", "run", "--name", "killed", "--",
+                                 "sh", "-c", "echo started; sleep 30"],
+                                cwd=w, env={**self.env, "LAB_BRANCH": "t-kill"}, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        time.sleep(3)
+        proc.kill()
+        proc.communicate(timeout=30)
+        self.assertEqual(self.manifest(w)["status"], "registered")
+        p = self.labrun(w, "recover", env={"LAB_BRANCH": "t-kill"})
+        self.assertIn("recovered 1", p.stdout, p.stderr)
+        m = self.manifest(w)
+        self.assertEqual(m["status"], "lost")
+        self.assertIn("lost", self.remote_log("t-kill")[0])
+        with open(os.path.join(w, LAB_REL, "runs", m["run_id"], "log.txt")) as f:
+            self.assertIn("started", f.read())
+
+    def test_F6_timeout_kills_a_command_that_ignores_sigterm(self):
+        w = self.clone()
+        t = time.time()
+        self.labrun(w, "run", "--name", "stubborn", "--timeout", "2", "--", "sh", "-c", "trap '' TERM; sleep 40",
+                    env={"LAB_BRANCH": "t-stub", "LAB_KILL_GRACE_S": "2"})
+        self.assertLess(time.time() - t, 20)
+        self.assertEqual(self.manifest(w)["status"], "timeout")
+
+    def test_F7_failed_push_stays_pending_until_sync(self):
+        w = self.clone()
+        hidden = self.remote + ".away"
+        os.rename(self.remote, hidden)
+        try:
+            p = self.labrun(w, "run", "--name", "offline", "--", "true", env={"LAB_BRANCH": "t-offline"})
+            self.assertIn("pending", p.stderr)
+            st = json.loads(self.labrun(w, "status").stdout)
+            self.assertEqual(st["pending_push"]["branch"], "t-offline")
+        finally:
+            os.rename(hidden, self.remote)
+        self.sh(["git", "checkout", "-q", "-b", "elsewhere"], cwd=w)  # sync must use the stored target, not HEAD's name
+        p = self.labrun(w, "sync")
+        self.assertEqual(p.returncode, 0, p.stderr)
+        self.assertEqual(len(self.remote_log("t-offline")), 2)
+        self.assertIsNone(json.loads(self.labrun(w, "status").stdout)["pending_push"])
+
+    def test_F8_big_log_is_capped_and_hashed(self):
+        w = self.clone()
+        self.labrun(w, "run", "--name", "chatty", "--quiet", "--", sys.executable, "-c",
+                    "import sys\nfor i in range(140000): print('line %06d ' % i + 'x' * 40)", env={"LAB_BRANCH": "t-log"}, check=True)
+        m = self.manifest(w)
+        log = os.path.join(w, LAB_REL, "runs", m["run_id"], "log.txt")
+        self.assertLess(os.path.getsize(log), 4.2 * 1048576)
+        self.assertGreater(m["log"]["total_bytes"], 6 * 1048576)
+        self.assertGreater(m["log"]["omitted_bytes"], 0)
+        with open(log) as f:
+            text = f.read()
+        self.assertIn("line 000000", text)
+        self.assertIn("line 139999", text)
+        self.assertTrue(os.path.exists(os.path.join(w, m["log"]["local_copy"])))
+
+    def test_F10_parallel_runs_in_one_checkout(self):
+        w = self.clone()
+        marks = [os.path.join(self.tmp.name, f"par{self.n}-{i}") for i in range(4)]
+        procs = [subprocess.Popen([sys.executable, "-I", f"{LAB_REL}/infra/labrun.py", "run", "--name", f"par{i}", "--quiet",
+                                   "--", "sh", "-c", f"sleep 1; touch {m}"], cwd=w, env={**self.env, "LAB_BRANCH": "t-par"},
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) for i, m in enumerate(marks)]
+        outs = [p.communicate(timeout=120) for p in procs]
+        self.assertEqual([p.returncode for p in procs], [0, 0, 0, 0], [o[1] for o in outs])
+        self.assertTrue(all(os.path.exists(m) for m in marks))
+        log = self.remote_log("t-par")
+        self.assertEqual(sum("registered" in x for x in log), 4, log)
+        self.assertEqual(sum(": ok" in x for x in log), 4, log)
+
+    def test_F12_gather_leaves_out_a_bad_record_and_continues(self):
+        a = self.clone()
+        self.labrun(a, "run", "--name", "good", "--", "true", env={"LAB_BRANCH": "t-good"}, check=True)
+        b = self.clone()
+        bad = os.path.join(b, LAB_REL, "runs", "20200101T000000Z-bad-0000")
+        os.makedirs(bad)
+        with open(os.path.join(bad, "log.txt"), "w") as f:
+            f.write("contact " + "someone" + "@" + "gmail" + ".com\n")
+        with open(os.path.join(bad, "manifest.json"), "w") as f:
+            f.write('{"run_id": "20200101T000000Z-bad-0000", "status": "ok"}\n')
+        self.sh(["git", "add", "-A"], cwd=b)
+        self.sh(["git", "-c", "core.hooksPath=/dev/null", "commit", "-q", "-m", "bad record"], cwd=b)
+        self.sh(["git", "push", "-q", "origin", "HEAD:refs/heads/t-bad"], cwd=b)
+        c = self.clone()
+        p = self.labrun(c, "gather", env={"LAB_BRANCH": "t-gathered"})
+        self.assertEqual(p.returncode, 0, p.stderr)
+        self.assertIn("left out 1 record", p.stdout)
+        runs = os.listdir(os.path.join(c, LAB_REL, "runs"))
+        self.assertTrue(any("-good-" in r for r in runs))
+        self.assertFalse(any("-bad-" in r for r in runs))
+
+    def test_criterion_cannot_hang_or_exhaust_memory(self):
+        w = self.clone()
+        t = time.time()
+        self.labrun(w, "run", "--name", "greedy", "--success-expr", "len('ab' * 900000000) > 0", "--", "true",
+                    env={"LAB_BRANCH": "t-greedy"}, check=True)
+        self.assertLess(time.time() - t, 30)
+        self.assertTrue(self.manifest(w)["verdict"].startswith("error"), self.manifest(w)["verdict"])
+
+    def test_tracked_file_changes_are_recorded(self):
+        w = self.clone()
+        target = f"{LAB_REL}/README.md"
+        self.labrun(w, "run", "--name", "edits", "--", "sh", "-c", f"echo extra >> {target}", env={"LAB_BRANCH": "t-edit"}, check=True)
+        m = self.manifest(w)
+        self.assertEqual(m["tracked_changes"]["files"], [target])
+        self.assertTrue(os.path.exists(os.path.join(w, LAB_REL, "runs", m["run_id"], "tracked.diff")))
+
+    def test_rebase_with_a_dirty_tree_still_pushes(self):
+        a, b = self.clone(), self.clone()
+        self.labrun(a, "run", "--name", "first", "--", "true", env={"LAB_BRANCH": "t-dirty"}, check=True)
+        with open(os.path.join(b, LAB_REL, "README.md"), "a") as f:
+            f.write("uncommitted local edit\n")
+        p = self.labrun(b, "run", "--name", "second", "--", "true", env={"LAB_BRANCH": "t-dirty"})
+        self.assertEqual(p.returncode, 0, p.stderr)
+        self.assertEqual(sum("registered" in x for x in self.remote_log("t-dirty")), 2)
+        with open(os.path.join(b, LAB_REL, "README.md")) as f:
+            self.assertIn("uncommitted local edit", f.read())
 
 
 if __name__ == "__main__":
