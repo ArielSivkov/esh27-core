@@ -17,3 +17,14 @@
 - [F] Truth was taken as `f` from the tiles. Whether the facade engine draws exactly f floors was not checked independently;
   a threat to verify.
 - Nothing goes into the world.
+
+## v1: window detection with foundation models (Kaggle T4, ~1.5 GPU minutes)
+| Arm | Within ±1 (21 fully in frame) | Towers (f ≥ 20) | Baseline "always 4" | Verdict |
+|---|---|---|---|---|
+| Grounding DINO | **11/21 = 52%** | 0/3 | 6/21 = 29% | **beats the baseline but below 70%; fails** |
+| OWLv2 | failed: a transformers API change (my bug) | n/a | n/a | not run |
+
+- [F] Low-rise (f = 2–4): mostly right. f = 8 → always 4 (3/3 undercount). Towers: it sees 2–34 windows, not hundreds.
+- [H] Undercounting is a resolution problem: at 480×720 the windows of a distant building take a few pixels each.
+  Next: slicing (SAHI-style) and zoom on the facade, plus fixing OWLv2. Still the best of the three methods
+  (VLM 3B/7B: no truth; 1D rhythm: 38% = baseline).

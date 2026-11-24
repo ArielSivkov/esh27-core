@@ -1,0 +1,68 @@
+Found existing installation: torchao 0.10.0
+Uninstalling torchao-0.10.0:
+  Successfully uninstalled torchao-0.10.0
+[     8s] renders 41
+[    45s] OWL FAILED AttributeError("'Owlv2Processor' object has no attribute 'post_process_object_detection'")
+[    81s] gdino done
+ROW {"file": "A_2_w1187559062.jpg", "f": 2, "fits": true, "set": "A", "gdino": 2, "gdino_boxes": 7}
+ROW {"file": "A_2_w552916813.jpg", "f": 2, "fits": true, "set": "A", "gdino": 2, "gdino_boxes": 9}
+ROW {"file": "A_2_w551310125.jpg", "f": 2, "fits": true, "set": "A", "gdino": 2, "gdino_boxes": 12}
+ROW {"file": "A_2_w547757280.jpg", "f": 2, "fits": true, "set": "A", "gdino": 1, "gdino_boxes": 2}
+ROW {"file": "A_3_w101976178.jpg", "f": 3, "fits": false, "set": "A", "gdino": 0, "gdino_boxes": 1}
+ROW {"file": "A_3_w1279877021.jpg", "f": 3, "fits": false, "set": "A", "gdino": 4, "gdino_boxes": 13}
+ROW {"file": "A_3_w552461097.jpg", "f": 3, "fits": false, "set": "A", "gdino": 2, "gdino_boxes": 32}
+ROW {"file": "A_3_w100621790.jpg", "f": 3, "fits": false, "set": "A", "gdino": 3, "gdino_boxes": 9}
+ROW {"file": "A_4_w239196764.jpg", "f": 4, "fits": false, "set": "A", "gdino": 4, "gdino_boxes": 35}
+ROW {"file": "A_4_w553591009.jpg", "f": 4, "fits": false, "set": "A", "gdino": 2, "gdino_boxes": 28}
+ROW {"file": "A_4_w551310228.jpg", "f": 4, "fits": true, "set": "A", "gdino": 3, "gdino_boxes": 36}
+ROW {"file": "A_4_w551502644.jpg", "f": 4, "fits": false, "set": "A", "gdino": 3, "gdino_boxes": 39}
+ROW {"file": "A_8_w552461117.jpg", "f": 8, "fits": false, "set": "A", "gdino": 8, "gdino_boxes": 39}
+ROW {"file": "A_8_w547641836.jpg", "f": 8, "fits": false, "set": "A", "gdino": 4, "gdino_boxes": 20}
+ROW {"file": "A_8_w101974895.jpg", "f": 8, "fits": false, "set": "A", "gdino": 6, "gdino_boxes": 38}
+ROW {"file": "A_8_w189598889.jpg", "f": 8, "fits": false, "set": "A", "gdino": 5, "gdino_boxes": 57}
+ROW {"file": "A_20_w189733330.jpg", "f": 20, "fits": false, "set": "A", "gdino": 3, "gdino_boxes": 10}
+ROW {"file": "A_20_w358974561.jpg", "f": 20, "fits": false, "set": "A", "gdino": 6, "gdino_boxes": 50}
+ROW {"file": "A_20_w238846044.jpg", "f": 20, "fits": true, "set": "A", "gdino": 7, "gdino_boxes": 34}
+ROW {"file": "A_30_w1013192689.jpg", "f": 30, "fits": true, "set": "A", "gdino": 1, "gdino_boxes": 2}
+ROW {"file": "A_30_w1280878706.jpg", "f": 30, "fits": true, "set": "A", "gdino": 1, "gdino_boxes": 2}
+ROW {"file": "B_2_w1187559088.jpg", "f": 2, "fits": true, "set": "B", "gdino": 1, "gdino_boxes": 2}
+ROW {"file": "B_2_w1187558868.jpg", "f": 2, "fits": true, "set": "B", "gdino": 2, "gdino_boxes": 11}
+ROW {"file": "B_2_w543568707.jpg", "f": 2, "fits": true, "set": "B", "gdino": 0, "gdino_boxes": 1}
+ROW {"file": "B_2_w553358715.jpg", "f": 2, "fits": true, "set": "B", "gdino": 2, "gdino_boxes": 16}
+ROW {"file": "B_2_w422260124.jpg", "f": 2, "fits": true, "set": "B", "gdino": 1, "gdino_boxes": 4}
+ROW {"file": "B_3_w549613633.jpg", "f": 3, "fits": false, "set": "B", "gdino": 2, "gdino_boxes": 6}
+ROW {"file": "B_3_w98483150.jpg", "f": 3, "fits": false, "set": "B", "gdino": 3, "gdino_boxes": 23}
+ROW {"file": "B_3_w98483051.jpg", "f": 3, "fits": false, "set": "B", "gdino": 2, "gdino_boxes": 14}
+ROW {"file": "B_3_w98483334.jpg", "f": 3, "fits": false, "set": "B", "gdino": 4, "gdino_boxes": 16}
+ROW {"file": "B_3_w98483152.jpg", "f": 3, "fits": false, "set": "B", "gdino": 2, "gdino_boxes": 6}
+ROW {"file": "B_4_w547757267.jpg", "f": 4, "fits": true, "set": "B", "gdino": 2, "gdino_boxes": 14}
+ROW {"file": "B_4_w553139874.jpg", "f": 4, "fits": true, "set": "B", "gdino": 3, "gdino_boxes": 22}
+ROW {"file": "B_4_w551310188.jpg", "f": 4, "fits": true, "set": "B", "gdino": 4, "gdino_boxes": 10}
+ROW {"file": "B_4_w553139819.jpg", "f": 4, "fits": true, "set": "B", "gdino": 2, "gdino_boxes": 19}
+ROW {"file": "B_4_w543568570.jpg", "f": 4, "fits": true, "set": "B", "gdino": 2, "gdino_boxes": 39}
+ROW {"file": "B_8_w551498167.jpg", "f": 8, "fits": true, "set": "B", "gdino": 4, "gdino_boxes": 17}
+ROW {"file": "B_8_w189598909.jpg", "f": 8, "fits": false, "set": "B", "gdino": 5, "gdino_boxes": 18}
+ROW {"file": "B_8_w189573921.jpg", "f": 8, "fits": false, "set": "B", "gdino": 8, "gdino_boxes": 46}
+ROW {"file": "B_8_w547646766.jpg", "f": 8, "fits": true, "set": "B", "gdino": 4, "gdino_boxes": 92}
+ROW {"file": "B_8_w552461090.jpg", "f": 8, "fits": true, "set": "B", "gdino": 4, "gdino_boxes": 60}
+=====SUMMARY=====
+{
+ "n_fits": 21,
+ "owl": {
+  "within1": 0,
+  "n": 0,
+  "towers_within1": 0,
+  "towers_n": 0
+ },
+ "gdino": {
+  "within1": 11,
+  "n": 21,
+  "towers_within1": 0,
+  "towers_n": 3
+ },
+ "baseline4": {
+  "within1": 6,
+  "n": 21
+ }
+}
+[    81s] DONE
