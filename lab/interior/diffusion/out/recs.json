@@ -1,0 +1,44 @@
+[
+ {
+  "arm": "A_sdxl_turbo",
+  "key": "facade",
+  "secs": 1.3,
+  "tile_ratio": 19.88,
+  "file": "A_sdxl_turbo_facade.jpg"
+ },
+ {
+  "arm": "A_sdxl_turbo",
+  "key": "stone",
+  "secs": 1.4,
+  "tile_ratio": 5.21,
+  "file": "A_sdxl_turbo_stone.jpg"
+ },
+ {
+  "arm": "A_sdxl_turbo",
+  "key": "asphalt",
+  "secs": 1.4,
+  "tile_ratio": 2.12,
+  "file": "A_sdxl_turbo_asphalt.jpg"
+ },
+ {
+  "arm": "A_sdxl_turbo",
+  "key": "promenade",
+  "secs": 1.4,
+  "tile_ratio": null,
+  "file": "A_sdxl_turbo_promenade.jpg"
+ },
+ {
+  "arm": "A_sdxl_turbo",
+  "key": "tower",
+  "secs": 1.4,
+  "tile_ratio": null,
+  "file": "A_sdxl_turbo_tower.jpg"
+ },
+ {
+  "arm": "A_sdxl_turbo",
+  "key": "sky",
+  "secs": 1.4,
+  "tile_ratio": null,
+  "file": "A_sdxl_turbo_sky.jpg"
+ }
+]

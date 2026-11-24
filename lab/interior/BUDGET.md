@@ -25,6 +25,7 @@ Reported by each session. Wall minutes; the 2×T4 machine probably counts double
 | 2026-11-24 | world-w1-heights (CPU, no GPU) | world (W1) | 0 GPU |
 | 2026-11-24 | city-vision-v1 (1×T4) | world (agent city) | ~7 |
 | 2026-11-24 | city-vision-v2 (2×T4 machine) | world (agent city) | ~28 wall (×2 GPUs) |
+| 2026-11-24 | diffusion-v0 (1×T4) | world (textures) | ~2 |
 
 ## Ariel's directive, 24.11 ~04:00 Israel time
 "צריך להגיד לסנהדרין שעכשיו בגלל שיש לנו את הקגל הזה, אז משתמשים בקגל כדי לבנות העולם במקום במשאבים שלנו"
