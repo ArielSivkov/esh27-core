@@ -1,0 +1,260 @@
+<title>עיר הסוכנים אשדוד</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Rubik:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one-screen app. Map fills the screen; a bottom sheet holds the clock, the selected agent and the work log. */
+:root {
+  --bg: #eef0ec; --map: #e4e7e1; --bld: #c9cdc4; --bld-known: #2f7d6d; --road: #fbfbf8; --ink: #1d2420;
+  --muted: #5d685f; --line: #cfd4cc; --sheet: #f8f9f6; --accent: #c2512e; --agent-a: #2b5fa8; --agent-b: #a8462b;
+  --job: #d99a1e; --ok: #2f7d6d; --warn: #b5651d;
+  --f-display: "Rubik", "Heebo", system-ui, sans-serif; --f-body: "Heebo", system-ui, sans-serif; --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #141816; --map: #1a1f1c; --bld: #39403b; --bld-known: #4fb39c; --road: #2a312d; --ink: #e6ebe6;
+  --muted: #9aa69d; --line: #2e3631; --sheet: #1c211e; --accent: #e07a55; --agent-a: #7fa8e8; --agent-b: #e8907a;
+  --job: #e5b24a; --ok: #4fb39c; --warn: #e09a55; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #141816; --map: #1a1f1c; --bld: #39403b; --bld-known: #4fb39c; --road: #2a312d; --ink: #e6ebe6;
+  --muted: #9aa69d; --line: #2e3631; --sheet: #1c211e; --accent: #e07a55; --agent-a: #7fa8e8; --agent-b: #e8907a;
+  --job: #e5b24a; --ok: #4fb39c; --warn: #e09a55; color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); direction: rtl; overflow: hidden; }
+#app { position: relative; height: 100%; display: flex; flex-direction: column; }
+#map { flex: 1; min-height: 0; position: relative; background: var(--map); touch-action: none; }
+#map canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#top { position: absolute; top: 10px; right: max(12px, env(safe-area-inset-right, 0px)); left: max(12px, env(safe-area-inset-left, 0px));
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; pointer-events: none; }
+.chip { pointer-events: auto; background: var(--sheet); border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; font-size: 13px; }
+#clock { font-family: var(--f-display); font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; }
+#clock small { display: block; font-family: var(--f-body); font-weight: 400; font-size: 12px; color: var(--muted); }
+#legend { display: grid; gap: 3px; font-size: 12px; color: var(--muted); }
+#legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-inline-end: 5px; vertical-align: -1px; }
+#sheet { background: var(--sheet); border-top: 1px solid var(--line); max-height: 44%; display: flex; flex-direction: column;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 12px; }
+#stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+#stats b { font-family: var(--f-display); color: var(--ink); font-size: 17px; font-variant-numeric: tabular-nums; margin-inline-end: 3px; }
+#card { margin-top: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 14px; }
+#card h2 { font-family: var(--f-display); font-size: 16px; margin: 0 0 2px; }
+#card .m { color: var(--muted); font-size: 13px; }
+#tabs { display: flex; gap: 6px; margin-top: 8px; }
+#tabs button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+#tabs button.on { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+#tabs button:focus-visible, .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#log { margin-top: 6px; overflow-y: auto; min-height: 0; flex: 1; font-size: 13px; }
+#log .row { padding: 5px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 44px 1fr; gap: 8px; }
+#log .t { font-family: var(--f-mono); color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+#log .ok { color: var(--ok); } #log .warn { color: var(--warn); }
+#log p { margin: 0 0 6px; line-height: 1.5; max-width: 65ch; }
+#status { font-size: 13px; color: var(--muted); }
+</style>
+
+<div id="app">
+  <div id="map"><canvas id="base"></canvas><canvas id="live"></canvas>
+    <div id="top">
+      <div class="chip" id="clock">--:--<small>שעון ישראל · העיר חיה</small></div>
+      <div class="chip" id="legend">
+        <span><i style="background:var(--bld)"></i>בניין, גובה לפי כלל אצבע</span>
+        <span><i style="background:var(--bld-known)"></i>בניין עם גובה ממקור</span>
+        <span><i style="background:var(--job);border-radius:50%"></i>משימת תמונה</span>
+        <span><i style="background:var(--agent-a);border-radius:50%"></i><i style="background:var(--agent-b);border-radius:50%"></i>סוכנים</span>
+      </div>
+    </div>
+  </div>
+  <div id="sheet">
+    <div id="stats"><span id="status">טוען את אשדוד…</span></div>
+    <div id="card" hidden></div>
+    <div id="tabs"><button id="tLog" class="on">יומן עבודה היום</button><button id="tAbout">מה זה</button></div>
+    <div id="log"></div>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const TZ = 'Asia/Jerusalem', SPEED = 1.3, DAY_START = 7 * 60, SLOT = 75, SLOTS = 8, DWELL = 15;
+const NAMES_M = ['אבי','בועז','גדי','דוד','הלל','זיו','חן','טל','יואב','כרמי','ליאור','מאיר','נדב','עמית','פז','צחי','רון','שי','תום','אורי','ברק','גל','דניאל','הדר','זאב','חיים','יונתן','כפיר','לביא','משה','נועם','עידו','פלג','צור','רפאל','שגיא','תמיר','אלון','בני','גיא','דור','יאיר','ליאם','מתן','נתנאל','עוז','רועי','שחר','יהלי','אסף'];
+const NAMES_F = ['אביגיל','בתיה','גאיה','דנה','הילה','ורד','זהבה','חנה','טליה','יעל','כנרת','לאה','מיכל','נועה','עדי','פנינה','צופיה','רחל','שירה','תמר','אורית','ברכה','גלית','דבורה','הדס','זוהר','חוה','טובה','יפעת','כרמל','לירון','מרים','נטע','עינב','פזית','קרן','רוני','שני','תהל','אילה','בת שבע','גילה','דקלה','הודיה','יערה','ליה','מעיין','נגה','אסתר','שקד'];
+// --- deterministic PRNG so every viewer sees the same city ---
+function hash(s) { let h = 2166136261; for (const c of String(s)) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function nowIL() {
+  const p = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+  const g = k => +p.find(x => x.type === k).value;
+  return { date: `${g('year')}-${String(g('month')).padStart(2, '0')}-${String(g('day')).padStart(2, '0')}`, min: g('hour') * 60 + g('minute') + g('second') / 60 };
+}
+const $ = id => document.getElementById(id);
+let D, N, adj, agents = [], jobsOk = [], dateKey = '', view = { s: 1, x: 0, y: 0 }, selected = null, tab = 'log';
+
+// --- graph + Dijkstra on typed arrays ---
+function buildGraph() {
+  const n = N.length, deg = new Int32Array(n + 1);
+  for (const [u, v] of D.e) { deg[u + 1]++; deg[v + 1]++; }
+  for (let i = 0; i < n; i++) deg[i + 1] += deg[i];
+  const to = new Int32Array(deg[n]), w = new Float32Array(deg[n]), fill = deg.slice(0, n);
+  for (const [u, v] of D.e) { const d = Math.hypot(N[u][0] - N[v][0], N[u][1] - N[v][1]); to[fill[u]] = v; w[fill[u]++] = d; to[fill[v]] = u; w[fill[v]++] = d; }
+  adj = { off: deg, to, w };
+}
+const pathCache = new Map();
+function path(a, b) {
+  const key = a + '>' + b; if (pathCache.has(key)) return pathCache.get(key);
+  const n = N.length, dist = new Float32Array(n).fill(Infinity), prev = new Int32Array(n).fill(-1), heap = [[0, a]]; dist[a] = 0;
+  while (heap.length) {
+    let i = 0; const top = heap[0], last = heap.pop();
+    if (heap.length) { heap[0] = last; for (;;) { let l = 2 * i + 1, r = l + 1, m = i; if (l < heap.length && heap[l][0] < heap[m][0]) m = l; if (r < heap.length && heap[r][0] < heap[m][0]) m = r; if (m === i) break; [heap[i], heap[m]] = [heap[m], heap[i]]; i = m; } }
+    const [du, u] = top; if (du > dist[u]) continue; if (u === b) break;
+    for (let k = adj.off[u]; k < adj.off[u + 1]; k++) { const v = adj.to[k], nd = du + adj.w[k]; if (nd < dist[v]) { dist[v] = nd; prev[v] = u; heap.push([nd, v]); let j = heap.length - 1; while (j > 0) { const p = (j - 1) >> 1; if (heap[p][0] <= heap[j][0]) break; [heap[p], heap[j]] = [heap[j], heap[p]]; j = p; } } }
+  }
+  const pts = []; for (let u = b; u !== -1; u = prev[u]) pts.push(u); pts.reverse();
+  const res = { nodes: pts[0] === a ? pts : [a, b], len: dist[b] === Infinity ? 0 : dist[b] };
+  if (pathCache.size > 4000) pathCache.clear(); pathCache.set(key, res); return res;
+}
+function along(p, d) {
+  const ns = p.nodes; if (ns.length < 2) return N[ns[0]];
+  for (let i = 1; i < ns.length; i++) { const A = N[ns[i - 1]], B = N[ns[i]], L = Math.hypot(B[0] - A[0], B[1] - A[1]); if (d <= L) { const t = L ? d / L : 0; return [A[0] + (B[0] - A[0]) * t, A[1] + (B[1] - A[1]) * t]; } d -= L; }
+  return N[ns[ns.length - 1]];
+}
+// --- the city's people: 100 agents, 50/50, each with a plot (a real building) ---
+function nearestNode(x, y) { let best = 0, bd = Infinity; for (let i = 0; i < N.length; i += 1) { const d = (N[i][0] - x) ** 2 + (N[i][1] - y) ** 2; if (d < bd) { bd = d; best = i; } } return best; }
+function makeAgents() {
+  const r = rng(27), homes = D.b.map((b, i) => i).filter(i => D.b[i][2] >= 2 && D.b[i][2] <= 8);
+  agents = [];
+  for (let k = 0; k < 100; k++) {
+    const f = k % 2 === 1, name = (f ? NAMES_F : NAMES_M)[k >> 1], bi = homes[Math.floor(r() * homes.length)], b = D.b[bi];
+    agents.push({ k, name, f, plot: bi, home: nearestNode(b[0], b[1]), bx: b[0], by: b[1] });
+  }
+}
+// each day the job list is dealt to agents by the date (same for every viewer)
+function planDay(date) {
+  const r = rng(hash(date)), order = jobsOk.map((j, i) => i);
+  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+  for (const a of agents) a.day = [];
+  let c = 0; for (let s = 0; s < SLOTS; s++) for (const a of agents) { if (r() < 0.55) a.day.push(order[c++ % order.length]); }
+  for (const a of agents) a.start = DAY_START + Math.floor(rng(hash(date + a.k))() * 60);
+}
+function stateOf(a, m) {
+  const t = m - a.start, idx = Math.floor(t / SLOT);
+  if (t < 0 || idx >= a.day.length) {
+    if (t >= 0 && idx >= a.day.length && a.day.length) { // walking home after the last job
+      const last = jobsOk[a.day[a.day.length - 1]], p = path(last.node, a.home), el = (t - a.day.length * SLOT) * 60 * SPEED;
+      if (el < p.len) return { pos: along(p, el), act: 'חוזר הביתה', done: a.day.length };
+    }
+    return { pos: N[a.home], act: t < 0 ? 'בבית, יוצא ב-' + fmt(a.start) : 'בבית, סיים את היום', done: t < 0 ? 0 : a.day.length, home: true };
+  }
+  const job = jobsOk[a.day[idx]], from = idx === 0 ? a.home : jobsOk[a.day[idx - 1]].node, p = path(from, job.node);
+  const el = (t - idx * SLOT) * 60 * SPEED;
+  if (el < p.len) return { pos: along(p, el), act: 'הולך אל ' + label(job), done: idx, job };
+  const dw = (t - idx * SLOT) - p.len / SPEED / 60;
+  return { pos: N[job.node], act: dw < DWELL ? 'בודק ' + label(job) : 'ממתין למשימה הבאה', done: dw < DWELL ? idx : idx + 1, job };
+}
+const fmt = m => String(Math.floor(m / 60) % 24).padStart(2, '0') + ':' + String(Math.floor(m % 60)).padStart(2, '0');
+const label = j => j.kind === 'photo' ? 'תמונה ' + j.id : 'תמונת קומונס ' + j.id;
+function result(j) {
+  if (j.kind === 'photo') {
+    if (j.verdict === 'no street on record') return { cls: 'warn', txt: `תמונה ${j.id}: אין רחוב ברשומה. ${j.n_cand} בניינים בטווח ${j.r} מ'.` };
+    const v = j.variants.length ? ` שם הרחוב מופיע במפה גם ככתיב ${j.variants.join(', ')}.` : '';
+    return { cls: 'ok', txt: `תמונה ${j.id}: המיקום המשוער (±${j.r} מ') תואם לרחוב ${j.street} (${j.d_street} מ'). ${j.n_cand} בניינים מועמדים, ל-${j.cand_no_height} מהם אין גובה ממקור.${v}` };
+  }
+  return { cls: 'ok', txt: `${j.id}: נמצא רחוב ${j.street} במפה (${j.n_nodes} נקודות). ${j.what}` };
+}
+// --- drawing ---
+const base = $('base'), live = $('live'), bctx = base.getContext('2d'), lctx = live.getContext('2d');
+let W = 0, H = 0, DPR = 1, colors = {};
+function readColors() { const cs = getComputedStyle(document.documentElement); for (const k of ['map', 'bld', 'bld-known', 'road', 'ink', 'job', 'agent-a', 'agent-b', 'accent', 'sheet']) colors[k] = cs.getPropertyValue('--' + k).trim(); }
+function resize() {
+  const r = $('map').getBoundingClientRect(); DPR = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+  for (const c of [base, live]) { c.width = W * DPR; c.height = H * DPR; }
+  drawBase();
+}
+const sx = x => (x - view.x) * view.s, sy = y => H - (y - view.y) * view.s;
+function fit() {
+  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+  for (const j of jobsOk) { x0 = Math.min(x0, j.x); x1 = Math.max(x1, j.x); y0 = Math.min(y0, j.y); y1 = Math.max(y1, j.y); }
+  const pad = 400; x0 -= pad; x1 += pad; y0 -= pad; y1 += pad;
+  view.s = Math.min(W / (x1 - x0), H / (y1 - y0)); view.x = (x0 + x1) / 2 - W / 2 / view.s; view.y = (y0 + y1) / 2 - H / 2 / view.s;
+}
+function drawBase() {
+  if (!D) return; const c = bctx; c.setTransform(DPR, 0, 0, DPR, 0, 0);
+  c.fillStyle = colors.map; c.fillRect(0, 0, W, H);
+  c.strokeStyle = colors.road; c.lineWidth = Math.max(1, Math.min(6, 7 * view.s)); c.lineCap = 'round'; c.beginPath();
+  for (const [u, v] of D.e) { const A = N[u], B = N[v]; c.moveTo(sx(A[0]), sy(A[1])); c.lineTo(sx(B[0]), sy(B[1])); }
+  c.stroke();
+  for (const b of D.b) {
+    const X = sx(b[0]), Y = sy(b[1]); if (X < -60 || Y < -60 || X > W + 60 || Y > H + 60) continue;
+    c.fillStyle = b[3] ? colors.bld : colors['bld-known']; const p = b[5];
+    if (view.s < 0.35) { c.fillRect(X - 1.5, Y - 1.5, 3, 3); continue; }
+    c.beginPath(); for (let i = 0; i < p.length; i += 2) { const x = sx(b[0] + p[i]), y = sy(b[1] + p[i + 1]); i ? c.lineTo(x, y) : c.moveTo(x, y); } c.closePath(); c.fill();
+  }
+  c.fillStyle = colors.job;
+  for (const j of jobsOk) { c.beginPath(); c.arc(sx(j.x), sy(j.y), 4, 0, 7); c.fill(); }
+}
+function drawLive(m) {
+  const c = lctx; c.setTransform(DPR, 0, 0, DPR, 0, 0); c.clearRect(0, 0, W, H);
+  for (const a of agents) {
+    const st = a.st; if (!st) continue; const X = sx(st.pos[0]), Y = sy(st.pos[1]);
+    if (st.home && selected !== a) continue;
+    c.fillStyle = a.f ? colors['agent-b'] : colors['agent-a'];
+    c.beginPath(); c.arc(X, Y, selected === a ? 7 : 4.5, 0, 7); c.fill();
+    if (selected === a) { c.strokeStyle = colors.ink; c.lineWidth = 2; c.stroke(); c.strokeStyle = colors.accent; c.beginPath(); c.moveTo(X, Y); c.lineTo(sx(a.bx), sy(a.by)); c.setLineDash([3, 4]); c.stroke(); c.setLineDash([]); }
+  }
+}
+// --- sheet: stats, card, log ---
+function renderSheet(m) {
+  const done = agents.reduce((s, a) => s + (a.st ? a.st.done : 0), 0), out = agents.filter(a => a.st && !a.st.home).length;
+  const planned = agents.reduce((s, a) => s + a.day.length, 0);
+  $('stats').innerHTML = `<span><b>${out}</b>ברחוב עכשיו</span><span><b>${done}</b>בדיקות הושלמו היום</span><span><b>${planned}</b>מתוכננות היום</span><span><b>${jobsOk.length}</b>משימות במאגר</span>`;
+  if (selected) {
+    const a = selected, b = D.b[a.plot];
+    $('card').hidden = false;
+    $('card').innerHTML = `<h2>${a.name}</h2><div>${a.st.act}</div><div class="m">חלקה: בניין ${b[4] || 'ללא שם'} · ${b[2]} קומות (${b[3] ? 'כלל אצבע' : 'ממקור'}) · ${a.day.length} משימות היום</div>`;
+  } else $('card').hidden = true;
+  if (tab !== 'log') return;
+  const rows = [];
+  for (const a of agents) for (let i = 0; i < Math.min(a.st ? a.st.done : 0, a.day.length); i++) {
+    const j = jobsOk[a.day[i]], t = a.start + i * SLOT + path(i ? jobsOk[a.day[i - 1]].node : a.home, j.node).len / SPEED / 60 + DWELL;
+    if (t <= m) rows.push({ t, a, j });
+  }
+  rows.sort((p, q) => q.t - p.t);
+  $('log').innerHTML = rows.length ? rows.slice(0, 60).map(r => { const res = result(r.j); return `<div class="row"><span class="t">${fmt(r.t)}</span><span><b>${r.a.name}</b> · <span class="${res.cls}">${res.txt}</span></span></div>`; }).join('')
+    : `<p>הסוכנים יוצאים לעבודה מ-07:00 בבוקר שעון ישראל. כל בדיקה שתסתיים תופיע כאן.</p>`;
+}
+function about() {
+  $('log').innerHTML = `<p><b>מה רואים:</b> 100 סוכנים, 50 גברים ו-50 נשים. לכל אחד חלקה, בניין אמיתי מהמפה של העולם התאום. הם הולכים בתוך רשת הרחובות האמיתית של אשדוד, לפי שעון ישראל. כל מי שפותח את הדף רואה אותה עיר באותו רגע.</p>
+  <p><b>העבודה שלהם עכשיו:</b> בדיקת תמונות. ${D.jobs.filter(j => j.kind === 'photo').length} תמונות מההליכה של אריאל (מיקום משוער ±20–60 מ') ו-${D.jobs.filter(j => j.kind === 'commons').length} תמונות רחוב מוויקיקומונס. הסוכן הולך למקום, ובודק אם המיקום מתאים לשם הרחוב, כמה בניינים נמצאים בטווח, ולכמה מהם אין גובה ממקור.</p>
+  <p><b>מה עוד לא אמיתי:</b> הסוכנים עדיין לא רואים את התמונות. ההתאמה נעשית לפי מיקום ושם רחוב בלבד, ונעשתה מראש. הבדיקה מול הרחוב תלויה בנתוני ההתאמה של התמונה, ולכן היא עקביות ולא אימות עצמאי. בשלב הבא: מודל ראייה ב-Kaggle שמשווה תמונה למפה.</p>
+  <p><b>נתונים:</b> ${D.b.length.toLocaleString('he-IL')} בניינים ו-${D.e.length.toLocaleString('he-IL')} קטעי רחוב, מענף twin-world. לכולם חוץ מ-2 יש גובה לפי כלל אצבע.</p>`;
+}
+// --- interaction: pan, pinch, tap ---
+const ptrs = new Map(); let moved = 0, lastDist = 0;
+$('map').addEventListener('pointerdown', e => { ptrs.set(e.pointerId, [e.offsetX, e.offsetY]); moved = 0; $('map').setPointerCapture(e.pointerId); });
+$('map').addEventListener('pointermove', e => {
+  if (!ptrs.has(e.pointerId)) return; const prev = ptrs.get(e.pointerId); ptrs.set(e.pointerId, [e.offsetX, e.offsetY]);
+  if (ptrs.size === 1) { const dx = e.offsetX - prev[0], dy = e.offsetY - prev[1]; moved += Math.abs(dx) + Math.abs(dy); view.x -= dx / view.s; view.y += dy / view.s; }
+  else if (ptrs.size === 2) { const [p, q] = [...ptrs.values()], d = Math.hypot(p[0] - q[0], p[1] - q[1]); if (lastDist) zoomAt((p[0] + q[0]) / 2, (p[1] + q[1]) / 2, d / lastDist); lastDist = d; moved += 10; }
+  schedule();
+});
+const up = e => { ptrs.delete(e.pointerId); if (ptrs.size < 2) lastDist = 0; if (moved < 6 && e.type === 'pointerup') tap(e.offsetX, e.offsetY); };
+$('map').addEventListener('pointerup', up); $('map').addEventListener('pointercancel', up);
+$('map').addEventListener('wheel', e => { e.preventDefault(); zoomAt(e.offsetX, e.offsetY, e.deltaY < 0 ? 1.15 : 1 / 1.15); schedule(); }, { passive: false });
+function zoomAt(X, Y, f) { const wx = view.x + X / view.s, wy = view.y + (H - Y) / view.s; view.s = Math.max(0.05, Math.min(8, view.s * f)); view.x = wx - X / view.s; view.y = wy - (H - Y) / view.s; }
+function tap(X, Y) { let best = null, bd = 400; for (const a of agents) { if (!a.st) continue; const d = (sx(a.st.pos[0]) - X) ** 2 + (sy(a.st.pos[1]) - Y) ** 2; if (d < bd) { bd = d; best = a; } } selected = best; tick(true); }
+let raf = 0; function schedule() { if (!raf) raf = requestAnimationFrame(() => { raf = 0; drawBase(); drawLive(); }); }
+$('tLog').onclick = () => { tab = 'log'; $('tLog').classList.add('on'); $('tAbout').classList.remove('on'); tick(true); };
+$('tAbout').onclick = () => { tab = 'about'; $('tAbout').classList.add('on'); $('tLog').classList.remove('on'); about(); };
+// --- clock ---
+let lastSheet = 0;
+function tick(force) {
+  const t = nowIL(); if (t.date !== dateKey) { dateKey = t.date; planDay(dateKey); }
+  for (const a of agents) a.st = stateOf(a, t.min);
+  $('clock').firstChild.nodeValue = fmt(t.min);
+  drawLive(t.min);
+  if (force || performance.now() - lastSheet > 5000) { lastSheet = performance.now(); renderSheet(t.min); }
+}
+const mq = matchMedia('(prefers-color-scheme: dark)'); const recolor = () => { readColors(); drawBase(); };
+mq.addEventListener && mq.addEventListener('change', recolor);
+new MutationObserver(recolor).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+fetch('city.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+  D = d; N = d.n; jobsOk = d.jobs.filter(j => j.node != null); buildGraph(); makeAgents(); readColors(); resize(); fit(); drawBase();
+  tick(true); setInterval(tick, 1000); addEventListener('resize', () => { resize(); });
+}).catch(e => { $('status').textContent = 'לא הצלחתי לטעון את נתוני העיר (' + e.message + '). רענן את הדף.'; });
+})();
+</script>
