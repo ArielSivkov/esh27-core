@@ -1,0 +1,644 @@
+{
+ "model": "/tmp/claude-0/kav-brain-135m",
+ "n": 87,
+ "correct": 55,
+ "accuracy": 0.632,
+ "invalid": 0,
+ "sec_per_call": 0.389,
+ "by_kind": {
+  "photo_check": {
+   "n": 34,
+   "correct": 2,
+   "invalid": 0,
+   "answers": {
+    "inconsistent": 32,
+    "no_street": 2
+   }
+  },
+  "street_check": {
+   "n": 53,
+   "correct": 53,
+   "invalid": 0,
+   "answers": {
+    "found": 47,
+    "not_found": 6
+   }
+  }
+ },
+ "rule_brain_accuracy": 1.0,
+ "always_majority_baseline": {
+  "answer": "found",
+  "accuracy": 0.54
+ },
+ "rows": [
+  {
+   "id": "001",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "002",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "003",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "004",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "005",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "006",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "007",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "008",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "009",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "010",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "011",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "012",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "013",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "014",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "015",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "016",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "017",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "018",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "019",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "020",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "021",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "022",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "023",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "024",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "025",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "026",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "027",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "028",
+   "kind": "photo_check",
+   "want": "no_street",
+   "got": "no_street",
+   "raw": "{\"verdict\": \"no_street\"}"
+  },
+  {
+   "id": "029",
+   "kind": "photo_check",
+   "want": "no_street",
+   "got": "no_street",
+   "raw": "{\"verdict\": \"no_street\"}"
+  },
+  {
+   "id": "030",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "031",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "032",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "033",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "034",
+   "kind": "photo_check",
+   "want": "consistent",
+   "got": "inconsistent",
+   "raw": "{\"verdict\": \"inconsistent\"}"
+  },
+  {
+   "id": "C01",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C02",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C03",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C04",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C05",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C06",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C07",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C08",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C09",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C10",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C11",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C12",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C13",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C14",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C15",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C16",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C17",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C18",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C19",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C20",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C21",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C22",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C23",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C24",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C25",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C26",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C27",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C28",
+   "kind": "street_check",
+   "want": "not_found",
+   "got": "not_found",
+   "raw": "{\"verdict\": \"not_found\"}"
+  },
+  {
+   "id": "C29",
+   "kind": "street_check",
+   "want": "not_found",
+   "got": "not_found",
+   "raw": "{\"verdict\": \"not_found\"}"
+  },
+  {
+   "id": "C30",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C31",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C32",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C33",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C34",
+   "kind": "street_check",
+   "want": "not_found",
+   "got": "not_found",
+   "raw": "{\"verdict\": \"not_found\"}"
+  },
+  {
+   "id": "C35",
+   "kind": "street_check",
+   "want": "not_found",
+   "got": "not_found",
+   "raw": "{\"verdict\": \"not_found\"}"
+  },
+  {
+   "id": "C36",
+   "kind": "street_check",
+   "want": "not_found",
+   "got": "not_found",
+   "raw": "{\"verdict\": \"not_found\"}"
+  },
+  {
+   "id": "C37",
+   "kind": "street_check",
+   "want": "not_found",
+   "got": "not_found",
+   "raw": "{\"verdict\": \"not_found\"}"
+  },
+  {
+   "id": "C38",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C39",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C40",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C41",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C42",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C43",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C44",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C45",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C46",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C47",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C48",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C49",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C50",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C51",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C52",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  },
+  {
+   "id": "C53",
+   "kind": "street_check",
+   "want": "found",
+   "got": "found",
+   "raw": "{\"verdict\": \"found\"}"
+  }
+ ]
+}
