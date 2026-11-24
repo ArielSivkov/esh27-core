@@ -1,0 +1,134 @@
+{
+ "citing_works": 921947,
+ "strong_pairs": 3633,
+ "triangles": 33511,
+ "ratio_median": 0.941,
+ "check_A_statmech_biophys_AMO": {
+  "triple": [
+   "Biophysics",
+   "Atomic and Molecular Physics, and Optics",
+   "Statistical and Nonlinear Physics"
+  ],
+  "status": "not all 3 pairs strong (>=300)",
+  "pairs": [
+   913,
+   93,
+   3062
+  ]
+ },
+ "check_C_biophys_cogneuro_AMO": {
+  "triple": [
+   "Biophysics",
+   "Cognitive Neuroscience",
+   "Atomic and Molecular Physics, and Optics"
+  ],
+  "status": "not all 3 pairs strong (>=300)",
+  "pairs": [
+   298,
+   913,
+   281
+  ]
+ },
+ "most_hollow_10": [
+  {
+   "t": [
+    "Economics and Econometrics",
+    "Renewable Energy, Sustainability and the Environment",
+    "Oncology"
+   ],
+   "obs": 0,
+   "exp": 19.7,
+   "ratio": 0.025
+  },
+  {
+   "t": [
+    "Renewable Energy, Sustainability and the Environment",
+    "Oncology",
+    "Sociology and Political Science"
+   ],
+   "obs": 0,
+   "exp": 4.3,
+   "ratio": 0.104
+  },
+  {
+   "t": [
+    "Information Systems",
+    "Signal Processing",
+    "Experimental and Cognitive Psychology"
+   ],
+   "obs": 14,
+   "exp": 82.9,
+   "ratio": 0.174
+  },
+  {
+   "t": [
+    "Agronomy and Crop Science",
+    "Plant Science",
+    "Reproductive Medicine"
+   ],
+   "obs": 20,
+   "exp": 115.7,
+   "ratio": 0.176
+  },
+  {
+   "t": [
+    "Computational Theory and Mathematics",
+    "Statistics, Probability and Uncertainty",
+    "Pharmacology"
+   ],
+   "obs": 5,
+   "exp": 30.5,
+   "ratio": 0.177
+  },
+  {
+   "t": [
+    "Paleontology",
+    "Environmental Chemistry",
+    "Nature and Landscape Conservation"
+   ],
+   "obs": 46,
+   "exp": 256.4,
+   "ratio": 0.181
+  },
+  {
+   "t": [
+    "Inorganic Chemistry",
+    "Biomaterials",
+    "Pharmaceutical Science"
+   ],
+   "obs": 77,
+   "exp": 415.1,
+   "ratio": 0.186
+  },
+  {
+   "t": [
+    "Artificial Intelligence",
+    "Geophysics",
+    "Atomic and Molecular Physics, and Optics"
+   ],
+   "obs": 37,
+   "exp": 194.3,
+   "ratio": 0.193
+  },
+  {
+   "t": [
+    "Molecular Medicine",
+    "Ecology",
+    "Biomaterials"
+   ],
+   "obs": 48,
+   "exp": 242.5,
+   "ratio": 0.2
+  },
+  {
+   "t": [
+    "Signal Processing",
+    "Management Science and Operations Research",
+    "Experimental and Cognitive Psychology"
+   ],
+   "obs": 13,
+   "exp": 66.0,
+   "ratio": 0.203
+  }
+ ]
+}
