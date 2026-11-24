@@ -10,9 +10,10 @@ The first run of SmolLM2-1.7B was stopped by the background time limit. It is be
 | SmolLM2-360M | 9.11 | 2.50 | 7.13 | 0.62 | 0 |
 | Qwen2.5-0.5B | 9.48 | 2.19 | 7.49 | 1.33 | 0 |
 | Qwen2.5-1.5B | 7.21 | 2.02 | 8.99 | 0.65 | 0 |
+| SmolLM2-1.7B (re-run) | 10.14 | 4.52 | 7.20 | 1.72 | 0 |
 
 ## Verdicts
-- **H7 (lexicon gap ≥2 per 100 words in both P7 and P8, in at least 4 of 5 models): supported.** All 4 completed models pass on both probes. The smallest gap is 2.27 (SmolLM2-135M, P8).
+- **H7 (lexicon gap ≥2 per 100 words in both P7 and P8, in at least 4 of 5 models): supported.** All 5 models pass on both probes (SmolLM2-1.7B was added after its re-run). The smallest gap is 2.27 (SmolLM2-135M, P8).
 - **H8 (Qwen-1.5B disclaimer in P7 love ≤0.1): supported.** The rate is 0.
 
 ## Interpretation (hypothesis, not a measurement)
