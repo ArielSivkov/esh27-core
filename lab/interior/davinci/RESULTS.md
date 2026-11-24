@@ -28,3 +28,15 @@
 - [H] Undercounting is a resolution problem: at 480×720 the windows of a distant building take a few pixels each.
   Next: slicing (SAHI-style) and zoom on the facade, plus fixing OWLv2. Still the best of the three methods
   (VLM 3B/7B: no truth; 1D rhythm: 38% = baseline).
+
+## v3: lots of photos together, 14 Givat Yona photos (Kaggle T4, ~5 GPU minutes)
+- [F] COLMAP: 7/14 images registered, mean reprojection 0.049 px, **but only 8 3D points** across 2 models.
+  The criterion (≥ 6 registered, < 2 px) is met as worded, but **the result is degenerate**: 8 points are not a reconstruction,
+  and the tiny reprojection error comes from having almost no points. I am reporting it as a **failure in substance**.
+- [F] VGGT-1B: produced a cloud, but the 70th percentile of confidence = 1.0, the model's minimum. Most points are low confidence.
+- [F] **Cross-check: median 117° (p90 168°) between COLMAP's and VGGT's relative rotations. Fails (criterion < 10°).**
+  The two methods do not agree on the geometry.
+- [H] The reason, by the file names (one spot on the hill, at 17:09–17:11, "panorama"): the photos were taken **from one
+  standing point while turning**. A camera that only rotates has no parallax, so no method can produce depth from it.
+  **Lesson for photographing:** for 3D, walk around the object and take a photo every 2–3 steps, with ~70% overlap between
+  consecutive photos.
