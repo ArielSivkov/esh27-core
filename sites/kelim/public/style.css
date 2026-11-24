@@ -43,3 +43,11 @@ p { margin: 0 0 1em; }
 footer { border-top: 1px solid rgba(201,166,107,.2); padding-block: 1.5em calc(1.5em + env(safe-area-inset-bottom, 0px));
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); text-align: center; color: var(--mist); font-size: .9rem; }
 footer p { margin: .2em 0; }
+
+.col.wide { width: min(100%, 64rem); }
+h1.page { font: 900 clamp(2.4rem, 7vw, 4.2rem)/1.05 var(--display); margin: .1em 0 .2em; }
+.lede.small { font-size: clamp(1.05rem, 2.6vw, 1.3rem); color: var(--mist); }
+.plate { margin: 2em 0 0; }
+.plate img { display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid rgba(201,166,107,.25); background: #0C1530; }
+.plate figcaption { margin-top: .5em; color: var(--mist); font-size: .92rem; }
+.plate figcaption b { color: var(--ink); font-weight: 500; }

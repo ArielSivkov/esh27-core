@@ -1,8 +1,9 @@
 {
-  // כֵּלִים · kelim.esh27.com — static assets only, no Worker code, no bindings, no secrets.
+  // כֵּלִים · kelim.esh27.com — one small Worker that serves ./public embedded as strings (see build-worker.mjs).
+  // No bindings, no secrets. Rebuild with `node build-worker.mjs`, then deploy.
   "name": "esh27-kelim",
+  "main": "worker.js",
   "compatibility_date": "2025-09-01",
-  "assets": { "directory": "./public", "not_found_handling": "404-page" },
   "workers_dev": false,
   "preview_urls": false,
   "routes": [ { "pattern": "kelim.esh27.com", "custom_domain": true } ]
