@@ -22,7 +22,7 @@
    - Stage 0: base.
    - Stage 1: full fine-tune on answers.
    - Stage 2: full fine-tune with scratchpad steps.
-   - DONE: see tiny/RESULTS.md. Mean .906 vs .537 for 1.5B SEAL. About 118 GPU-min, already reported to the ledger.
+   - DONE: see tiny/RESULTS.md. Mean .906 vs .537 for 1.5B SEAL. About 118 GPU-min (00:45–02:43 UTC). NOT yet in the ledger: sending to Interior lab was blocked (trusted device), so report it there.
 4. Funding.
    - Applied to Anthropic AI for Science as an independent researcher, US$25k, 24.11 00:31. Decision expected 7.12.
    - Reminder trig_01X2p12KgQm5LEbbaYugHHi8 fires 8.12 09:13 into the OLD session. Recreate it.
