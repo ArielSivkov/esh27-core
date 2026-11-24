@@ -27,3 +27,5 @@ framing as in B). The crop and background removal are identical to v2.
 Correlation of v2's error (log H/h) with: box aspect, pixel area, distance, and f. No criterion.
 
 Small n (≈ 60–80); the results are a direction, not a law. Red team before the report.
+
+## Note (before any result): version 1 of kernel davinci-d1-inside was launched by mistake before the set C renders were committed (only A+B, n=21). It could not be cancelled (no permission). **Its log will not be read.** The evaluation is kernel version 2 only, after set C is in the repo.
