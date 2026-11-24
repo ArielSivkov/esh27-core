@@ -1,0 +1,167 @@
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK
+test_F10_parallel_runs_in_one_checkout (__main__.TestRun.test_F10_parallel_runs_in_one_checkout) ... ok
+test_F12_gather_leaves_out_a_bad_record_and_continues (__main__.TestRun.test_F12_gather_leaves_out_a_bad_record_and_continues) ... ok
+test_F1_private_key_body_is_redacted (__main__.TestRun.test_F1_private_key_body_is_redacted) ... ok
+test_F5_dangling_symlink_in_outputs (__main__.TestRun.test_F5_dangling_symlink_in_outputs) ... ok
+test_F5_launch_errors_are_recorded (__main__.TestRun.test_F5_launch_errors_are_recorded) ... ok
+test_F5_recover_after_labrun_is_killed (__main__.TestRun.test_F5_recover_after_labrun_is_killed) ... ok
+test_F5_sighup_is_recorded (__main__.TestRun.test_F5_sighup_is_recorded) ... ok
+test_F6_timeout_kills_a_command_that_ignores_sigterm (__main__.TestRun.test_F6_timeout_kills_a_command_that_ignores_sigterm) ... ok
+test_F7_failed_push_stays_pending_until_sync (__main__.TestRun.test_F7_failed_push_stays_pending_until_sync) ... ok
+test_F8_big_log_is_capped_and_hashed (__main__.TestRun.test_F8_big_log_is_capped_and_hashed) ... ok
+test_N2_a_result_that_cannot_be_committed_is_recovered_later (__main__.TestRun.test_N2_a_result_that_cannot_be_committed_is_recovered_later) ... ok
+test_N7_recover_treats_a_killed_unreaped_labrun_as_dead (__main__.TestRun.test_N7_recover_treats_a_killed_unreaped_labrun_as_dead) ... ok
+test_checkpoint_imports_scratch_and_records_large_files (__main__.TestRun.test_checkpoint_imports_scratch_and_records_large_files) ... ok
+test_collect_outside_workspace_is_refused (__main__.TestRun.test_collect_outside_workspace_is_refused) ... ok
+test_criterion_cannot_hang_or_exhaust_memory (__main__.TestRun.test_criterion_cannot_hang_or_exhaust_memory) ... ok
+test_failure_is_recorded_like_success (__main__.TestRun.test_failure_is_recorded_like_success) ... ok
+test_gather_unions_runs_across_branches (__main__.TestRun.test_gather_unions_runs_across_branches) ... ok
+test_hook_blocks_a_manual_commit_with_a_key (__main__.TestRun.test_hook_blocks_a_manual_commit_with_a_key) ... ok
+test_interrupt_is_recorded (__main__.TestRun.test_interrupt_is_recorded) ... ok
+test_large_output_kept_as_hash_only (__main__.TestRun.test_large_output_kept_as_hash_only) ... ok
+test_main_and_ref_like_branch_names_are_refused_before_running (__main__.TestRun.test_main_and_ref_like_branch_names_are_refused_before_running) ... ok
+test_rebase_with_a_dirty_tree_still_pushes (__main__.TestRun.test_rebase_with_a_dirty_tree_still_pushes) ... ok
+test_secret_in_command_line_is_scrubbed_without_hooks (__main__.TestRun.test_secret_in_command_line_is_scrubbed_without_hooks) ... /home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_labrun.py:131: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp4iycfv37/work27/lab/knowledge-frontier/runs/20261124T013329Z-argv-9b07/manifest.json' mode='r' encoding='utf-8'>
+  "manifest.json"), encoding="utf-8").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_secret_in_output_never_reaches_git (__main__.TestRun.test_secret_in_output_never_reaches_git) ... ok
+test_success_is_preregistered_recorded_and_pushed (__main__.TestRun.test_success_is_preregistered_recorded_and_pushed) ... ok
+test_timeout_is_recorded (__main__.TestRun.test_timeout_is_recorded) ... ok
+test_tracked_file_changes_are_recorded (__main__.TestRun.test_tracked_file_changes_are_recorded) ... ok
+test_two_sessions_push_to_the_same_branch (__main__.TestRun.test_two_sessions_push_to_the_same_branch) ... ok
+test_unrelated_staged_file_stays_out_of_run_commits (__main__.TestRun.test_unrelated_staged_file_stays_out_of_run_commits) ... ok
+test_unsafe_criterion_is_refused_before_anything_runs (__main__.TestRun.test_unsafe_criterion_is_refused_before_anything_runs) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 46.217s
+
+OK
+test_appended_cost_line_fails (__main__.TestVerify.test_appended_cost_line_fails) ... ok
+test_clean_clone_passes (__main__.TestVerify.test_clean_clone_passes) ... ok
+test_deleted_run_fails (__main__.TestVerify.test_deleted_run_fails) ... ok
+test_edited_result_number_fails (__main__.TestVerify.test_edited_result_number_fails) ... /home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_verify.py:87: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp3x2pl0w5/r/lab/knowledge-frontier/topo/ipf_out.json' mode='r' encoding='UTF-8'>
+  rows = json.load(open(path))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_forged_seal_in_an_unrelated_commit_fails (__main__.TestVerify.test_forged_seal_in_an_unrelated_commit_fails) ... /home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_verify.py:66: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpsedb0ae4/r/lab/knowledge-frontier/runs/20261124T010901Z-cost-per-experiment-v2-c58c/manifest.json' mode='r' encoding='utf-8'>
+  m = json.load(open(path, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_verify.py:71: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/tmpsedb0ae4/r/lab/knowledge-frontier/runs/20261124T010901Z-cost-per-experiment-v2-c58c/manifest.json'>
+  h = hashlib.sha256(open(path, "rb").read()).hexdigest()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_forgery_imitating_a_gather_commit_fails (__main__.TestVerify.test_forgery_imitating_a_gather_commit_fails) ... /home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_verify.py:113: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp1vfp4rs4/r/lab/knowledge-frontier/runs/20261124T010901Z-cost-per-experiment-v2-c58c/manifest.json' mode='r' encoding='utf-8'>
+  m = json.load(open(path, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_verify.py:118: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/tmp1vfp4rs4/r/lab/knowledge-frontier/runs/20261124T010901Z-cost-per-experiment-v2-c58c/manifest.json'>
+  return hashlib.sha256(open(path, "rb").read()).hexdigest()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_forgery_imitating_a_labrun_result_commit_fails (__main__.TestVerify.test_forgery_imitating_a_labrun_result_commit_fails) ... /home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_verify.py:113: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpekzhe47y/r/lab/knowledge-frontier/runs/20261124T010901Z-cost-per-experiment-v2-c58c/manifest.json' mode='r' encoding='utf-8'>
+  m = json.load(open(path, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_verify.py:118: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/tmpekzhe47y/r/lab/knowledge-frontier/runs/20261124T010901Z-cost-per-experiment-v2-c58c/manifest.json'>
+  return hashlib.sha256(open(path, "rb").read()).hexdigest()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_shallow_clone_is_not_a_success (__main__.TestVerify.test_shallow_clone_is_not_a_success) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 8.071s
+
+OK
+test_diverged_tools_stop_bootstrap_unless_a_branch_is_named (__main__.TestBootstrap.test_diverged_tools_stop_bootstrap_unless_a_branch_is_named) ... FAIL
+test_empty_machine_then_rerun_keeps_local_work (__main__.TestBootstrap.test_empty_machine_then_rerun_keeps_local_work) ... FAIL
+
+======================================================================
+FAIL: test_diverged_tools_stop_bootstrap_unless_a_branch_is_named (__main__.TestBootstrap.test_diverged_tools_stop_bootstrap_unless_a_branch_is_named)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_bootstrap.py", line 118, in test_diverged_tools_stop_bootstrap_unless_a_branch_is_named
+    self.assertEqual(p.returncode, 0, (p.stdout + p.stderr)[-2000:])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : oblems.com, download.pytorch.org, release.lean-lang.org
+
+== 7 verify (6s)
+PASS  all Python sources compile (files, notebook cells, scripts)  — 37/37 on Python 3.13.18
+PASS  frozen-set regenerates: seal/frozen_sets_sci.json  — sha256 62dc5c5cbec42ae8 (expected 62dc5c5cbec42ae8), seed 27, Python 3.13.18
+PASS  frozen-set regenerates: seal/frozen_sets.json  — sha256 e2f2a8a3f50c28d1 (expected e2f2a8a3f50c28d1), seed 27, Python 3.13.18
+PASS  artifact matches log: ipf_out.json  — rows 1679, median 0.573, below 0.15: 37 (research log entry 4 (1,679 triangles, median 0.57, 37 below 0.15; 19 vs 110, 6 vs 32, 4 vs 32.7))
+PASS  artifact matches log: three named holes  — 3/3 match
+PASS  artifact matches log: time test  — [[2012, 550, 15], [2014, 784, 19], [2016, 937, 20]] (research log entry 2 (550/15/20%, 784/19/16%, 937/20/10%))
+PASS  artifact matches log: null model  — real hollow 18 (research log entry 3 (18 hollow))
+PASS  artifact matches log: raw recount  — ABC 19 (research log entry 4 (independent recount from the raw file: 19 papers))
+PASS  artifact matches log: first hollow triangles  — 50 rows (research log entry 1 table (0 vs ~7, 1 vs ~27))
+PASS  artifact matches log: OpenAlex counts  — N 5029362 (research log entry 7a (5,029,362 works))
+PASS  artifact matches log: SEAL local run  — means [0.147, 0.3, 0.344], control [0.7625, 0.8, 0.8875]
+PASS  pinned result files unchanged (sha256)  — 15/15
+PASS  recompute: oac_ipf_pmin2000  — N 5029362 multi-share 0.269 triangles 23 median 0.396 p5 0.048 <0.15: 6 zero-obs: 0
+PASS  no credentials or personal data in the lab tree  — 88 files, 0 findings
+PASS  run records intact (sha256 of every output and log)  — 11 runs checked
+FAIL  run records sealed in git history (no later edits, nothing deleted)  — 10/11 sealed; failed: ["20261124T013249Z-infra-test-suites-v3-88ce: changed by a commit that is not labrun's: 17386d744 'tools'"]
+verify: 15 pass, 1 fail, 0 skipped
+
+== done (7s)
+bootstrap: branch lab-tools, verify exit 1, total 7 s
+
+
+======================================================================
+FAIL: test_empty_machine_then_rerun_keeps_local_work (__main__.TestBootstrap.test_empty_machine_then_rerun_keeps_local_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_bootstrap.py", line 81, in test_empty_machine_then_rerun_keeps_local_work
+    self.assertEqual(p.returncode, 0, out[-3000:])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : and personal data (3s)
+
+== 5 gather run records from every branch (local commit, no push); finalize runs that died here (3s)
+labrun: gathered 0 run records from 0 branches {}
+labrun: recovered 0 lost run(s)
+
+== 6 hosts (4s)
+reachable         github.com                 200 200 ms
+reachable         pypi.org                   200 163 ms
+blocked-by-proxy  api.kaggle.com              379 ms
+blocked-by-proxy  www.kaggle.com              88 ms
+blocked-by-proxy  huggingface.co              91 ms
+blocked-by-proxy  export.arxiv.org            349 ms
+blocked-by-proxy  api.openalex.org            7 ms
+blocked-by-proxy  oeis.org                    255 ms
+blocked-by-proxy  www.erdosproblems.com       256 ms
+blocked-by-proxy  download.pytorch.org        262 ms
+blocked-by-proxy  release.lean-lang.org       265 ms
+reachable         raw.githubusercontent.com  200 71 ms
+hosts: 3 reachable, 9 blocked: api.kaggle.com, www.kaggle.com, huggingface.co, export.arxiv.org, api.openalex.org, oeis.org, www.erdosproblems.com, download.pytorch.org, release.lean-lang.org
+
+== 7 verify (4s)
+PASS  all Python sources compile (files, notebook cells, scripts)  — 37/37 on Python 3.13.18
+PASS  frozen-set regenerates: seal/frozen_sets_sci.json  — sha256 62dc5c5cbec42ae8 (expected 62dc5c5cbec42ae8), seed 27, Python 3.13.18
+PASS  frozen-set regenerates: seal/frozen_sets.json  — sha256 e2f2a8a3f50c28d1 (expected e2f2a8a3f50c28d1), seed 27, Python 3.13.18
+PASS  artifact matches log: ipf_out.json  — rows 1679, median 0.573, below 0.15: 37 (research log entry 4 (1,679 triangles, median 0.57, 37 below 0.15; 19 vs 110, 6 vs 32, 4 vs 32.7))
+PASS  artifact matches log: three named holes  — 3/3 match
+PASS  artifact matches log: time test  — [[2012, 550, 15], [2014, 784, 19], [2016, 937, 20]] (research log entry 2 (550/15/20%, 784/19/16%, 937/20/10%))
+PASS  artifact matches log: null model  — real hollow 18 (research log entry 3 (18 hollow))
+PASS  artifact matches log: raw recount  — ABC 19 (research log entry 4 (independent recount from the raw file: 19 papers))
+PASS  artifact matches log: first hollow triangles  — 50 rows (research log entry 1 table (0 vs ~7, 1 vs ~27))
+PASS  artifact matches log: OpenAlex counts  — N 5029362 (research log entry 7a (5,029,362 works))
+PASS  artifact matches log: SEAL local run  — means [0.147, 0.3, 0.344], control [0.7625, 0.8, 0.8875]
+PASS  pinned result files unchanged (sha256)  — 15/15
+PASS  recompute: oac_ipf_pmin2000  — N 5029362 multi-share 0.269 triangles 23 median 0.396 p5 0.048 <0.15: 6 zero-obs: 0
+PASS  no credentials or personal data in the lab tree  — 88 files, 0 findings
+PASS  run records intact (sha256 of every output and log)  — 11 runs checked
+FAIL  run records sealed in git history (no later edits, nothing deleted)  — 10/11 sealed; failed: ["20261124T013249Z-infra-test-suites-v3-88ce: changed by a commit that is not labrun's: 17386d744 'tools'"]
+verify: 15 pass, 1 fail, 0 skipped
+
+== done (5s)
+bootstrap: branch lab-tools, verify exit 1, total 5 s
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 14.904s
+
+FAILED (failures=2)

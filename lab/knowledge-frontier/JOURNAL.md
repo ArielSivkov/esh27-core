@@ -16,3 +16,4 @@
 | 2026-11-24T01:09:03Z | `20261124T010903Z-offline-verification-v2-ba52` | ok | 0.9s | pass | קומיט מקומי | After the red-team fixes the committed lab still reproduces every exp… | 16 pass, 0 fail, 0 skipped (Python 3.13.18) |
 | 2026-11-24T01:09:05Z | `20261124T010904Z-infra-test-suites-v2-d616` | ok | 59.8s | pass | קומיט מקומי | Scanner, labrun (one test per red-team finding) and empty-machine boo… |  |
 | 2026-11-24T01:32:47Z | `20261124T013247Z-offline-verification-v3-5406` | ok | 1.0s | pass | קומיט מקומי | After red-team rounds 1-3 the committed lab reproduces every expected… | 16 pass, 0 fail, 0 skipped (Python 3.13.18) |
+| 2026-11-24T01:32:49Z | `20261124T013249Z-infra-test-suites-v3-88ce` | failed | 69.4s | fail | קומיט מקומי | All four suites pass on the final code: scanner, 30 labrun scenarios,… |  |
