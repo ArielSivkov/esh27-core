@@ -26,6 +26,10 @@ Reported by each session. Wall minutes; the 2×T4 machine probably counts double
 | 2026-11-24 | city-vision-v1 (1×T4) | world (agent city) | ~7 |
 | 2026-11-24 | city-vision-v2 (2×T4 machine) | world (agent city) | ~28 wall (×2 GPUs) |
 | 2026-11-24 | diffusion-v0 (1×T4) | world (textures) | ~2 |
+| 2026-11-24 | diffusion-v1 (1×T4) | world (textures) | ~16 |
+| 2026-11-24 | davinci-v1-detect (1×T4) | world | ~1.5 |
+| 2026-11-24 | davinci-v3-multiview (1×T4) | world | ~5 |
+| 2026-11-24 | davinci-v2-3d run 1 (failed install, 1×T4) | world | ~1 |
 
 ## Ariel's directive, 24.11 ~04:00 Israel time
 "צריך להגיד לסנהדרין שעכשיו בגלל שיש לנו את הקגל הזה, אז משתמשים בקגל כדי לבנות העולם במקום במשאבים שלנו"

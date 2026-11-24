@@ -1,0 +1,103 @@
+Found existing installation: torchao 0.10.0
+Uninstalling torchao-0.10.0:
+  Successfully uninstalled torchao-0.10.0
+[    35s] A: SDXL base 1.0
+  deprecate("torch_dtype", "1.0.0", _TORCH_DTYPE_DEPRECATION_MESSAGE)
+[   226s] B: PixArt-Sigma
+Loading weights:   0%|          | 1/219 [00:01<04:48,  1.32s/it][A
+Loading pipeline components...:  40%|████      | 2/5 [00:49<01:26, 28.87s/it]Loading pipeline components...:  60%|██████    | 3/5 [00:59<00:40, 20.24s/it]Loading pipeline components...:  80%|████████  | 4/5 [01:00<00:12, 12.77s/it]Loading pipeline components...: 100%|██████████| 5/5 [01:00<00:00, 12.10s/it]
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+
+Setting `clean_caption=True` requires the ftfy library but it was not found in your environment. Checkout the instructions on the
+installation section: https://github.com/rspeer/python-ftfy/tree/master#installing and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+Setting `clean_caption` to False...
+[   669s] C: Sana 1600M
+Loading pipeline components...:  40%|████      | 2/5 [00:09<00:15,  5.28s/it]
+Loading checkpoint shards:  50%|█████     | 1/2 [00:18<00:18, 18.94s/it][A
+Loading checkpoint shards: 100%|██████████| 2/2 [00:24<00:00, 11.13s/it][ALoading checkpoint shards: 100%|██████████| 2/2 [00:24<00:00, 12.30s/it]
+Loading pipeline components...:  60%|██████    | 3/5 [00:34<00:28, 14.12s/it]Loading pipeline components...:  80%|████████  | 4/5 [00:39<00:10, 10.55s/it]Loading pipeline components...: 100%|██████████| 5/5 [00:39<00:00,  7.85s/it]
+There are modules in AutoencoderDC that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+[   948s] DONE
+/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+  cells[i][c] = re.sub('\\\\\|', '|', cell)
+/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+  text = re.sub(r'_', '\_', text) # Escape underscores in display text

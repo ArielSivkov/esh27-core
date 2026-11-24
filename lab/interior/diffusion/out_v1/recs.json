@@ -1,0 +1,170 @@
+[
+ {
+  "arm": "A_sdxl_base",
+  "key": "facade",
+  "secs": 11.6,
+  "black": false,
+  "tile_ratio": 9.35,
+  "file": "A_sdxl_base_facade.jpg"
+ },
+ {
+  "arm": "A_sdxl_base",
+  "key": "stone",
+  "secs": 11.8,
+  "black": false,
+  "tile_ratio": 2.12,
+  "file": "A_sdxl_base_stone.jpg"
+ },
+ {
+  "arm": "A_sdxl_base",
+  "key": "asphalt",
+  "secs": 12.2,
+  "black": false,
+  "tile_ratio": 0.88,
+  "file": "A_sdxl_base_asphalt.jpg"
+ },
+ {
+  "arm": "A_sdxl_base",
+  "key": "promenade",
+  "secs": 12.6,
+  "black": false,
+  "tile_ratio": null,
+  "file": "A_sdxl_base_promenade.jpg"
+ },
+ {
+  "arm": "A_sdxl_base",
+  "key": "tower",
+  "secs": 12.9,
+  "black": false,
+  "tile_ratio": null,
+  "file": "A_sdxl_base_tower.jpg"
+ },
+ {
+  "arm": "A_sdxl_base",
+  "key": "sky",
+  "secs": 13.2,
+  "black": false,
+  "tile_ratio": null,
+  "file": "A_sdxl_base_sky.jpg"
+ },
+ {
+  "arm": "A2_sdxl_seamless",
+  "key": "facade",
+  "secs": 14.8,
+  "black": false,
+  "tile_ratio": 0.16,
+  "file": "A2_sdxl_seamless_facade.jpg"
+ },
+ {
+  "arm": "A2_sdxl_seamless",
+  "key": "stone",
+  "secs": 15.1,
+  "black": false,
+  "tile_ratio": 0.03,
+  "file": "A2_sdxl_seamless_stone.jpg"
+ },
+ {
+  "arm": "A2_sdxl_seamless",
+  "key": "asphalt",
+  "secs": 14.6,
+  "black": false,
+  "tile_ratio": 0.46,
+  "file": "A2_sdxl_seamless_asphalt.jpg"
+ },
+ {
+  "arm": "B_pixart_sigma",
+  "key": "facade",
+  "secs": 38.8,
+  "black": false,
+  "tile_ratio": 1.67,
+  "file": "B_pixart_sigma_facade.jpg"
+ },
+ {
+  "arm": "B_pixart_sigma",
+  "key": "stone",
+  "secs": 38.7,
+  "black": false,
+  "tile_ratio": 2.3,
+  "file": "B_pixart_sigma_stone.jpg"
+ },
+ {
+  "arm": "B_pixart_sigma",
+  "key": "asphalt",
+  "secs": 38.6,
+  "black": false,
+  "tile_ratio": 1.63,
+  "file": "B_pixart_sigma_asphalt.jpg"
+ },
+ {
+  "arm": "B_pixart_sigma",
+  "key": "promenade",
+  "secs": 38.6,
+  "black": false,
+  "tile_ratio": null,
+  "file": "B_pixart_sigma_promenade.jpg"
+ },
+ {
+  "arm": "B_pixart_sigma",
+  "key": "tower",
+  "secs": 38.5,
+  "black": false,
+  "tile_ratio": null,
+  "file": "B_pixart_sigma_tower.jpg"
+ },
+ {
+  "arm": "B_pixart_sigma",
+  "key": "sky",
+  "secs": 38.5,
+  "black": false,
+  "tile_ratio": null,
+  "file": "B_pixart_sigma_sky.jpg"
+ },
+ {
+  "arm": "C_sana_1600m",
+  "key": "facade",
+  "secs": 23.2,
+  "black": false,
+  "tile_ratio": 1.77,
+  "file": "C_sana_1600m_facade.jpg"
+ },
+ {
+  "arm": "C_sana_1600m",
+  "key": "stone",
+  "secs": 22.9,
+  "black": false,
+  "tile_ratio": 2.69,
+  "file": "C_sana_1600m_stone.jpg"
+ },
+ {
+  "arm": "C_sana_1600m",
+  "key": "asphalt",
+  "secs": 22.7,
+  "black": false,
+  "tile_ratio": 1.65,
+  "file": "C_sana_1600m_asphalt.jpg"
+ },
+ {
+  "arm": "C_sana_1600m",
+  "key": "promenade",
+  "secs": 22.2,
+  "black": false,
+  "tile_ratio": null,
+  "file": "C_sana_1600m_promenade.jpg"
+ },
+ {
+  "arm": "C_sana_1600m",
+  "key": "tower",
+  "secs": 22.1,
+  "black": false,
+  "tile_ratio": null,
+  "file": "C_sana_1600m_tower.jpg"
+ },
+ {
+  "arm": "C_sana_1600m",
+  "key": "sky",
+  "secs": 22.4,
+  "black": false,
+  "tile_ratio": null,
+  "file": "C_sana_1600m_sky.jpg"
+ }
+]
