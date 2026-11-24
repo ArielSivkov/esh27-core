@@ -1,0 +1,279 @@
+<meta name="dash-one-writer">
+<style>
+  .esh-page { direction: rtl; display: flex; flex-direction: column; gap: var(--cds-gap-xl); }
+  .esh-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .esh-lead { font-size: var(--cds-font-size-body); color: var(--color-fg); margin: var(--cds-gap-sm) 0 0; max-width: 70ch; line-height: 1.6; }
+  .esh-banner { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-sm) var(--cds-pad-md); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .esh-banner b { color: var(--color-warn); }
+  .esh-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--cds-gap-md); }
+  .esh-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
+  .esh-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .02em; }
+  .esh-tile-value { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
+  .esh-tile-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .esh-ok { color: var(--color-ok); } .esh-warn { color: var(--color-warn); } .esh-bad { color: var(--color-bad); }
+  .esh-section { display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-width: 0; }
+  .esh-h { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+  .esh-sub { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: 0; max-width: 75ch; }
+  .esh-chart { position: relative; min-height: 300px; }
+  .esh-chart svg { direction: ltr; display: block; }
+  .esh-chart .tick text { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); }
+  .esh-chart .domain, .esh-chart .tick line { stroke: var(--cds-chart-axis); }
+  .esh-chart .grid line { stroke: var(--cds-chart-grid); }
+  .esh-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .esh-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .esh-legend i { width: 12px; height: 3px; border-radius: 2px; display: inline-block; }
+  .esh-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; direction: rtl; z-index: 2; }
+  .esh-scroll { overflow-x: auto; }
+  .esh-table { border-collapse: collapse; width: 100%; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .esh-table th, .esh-table td { text-align: right; padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .esh-table th { color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); }
+  .esh-pill { display: inline-block; padding: 1px 8px; border-radius: 999px; border: 1px solid currentColor; font-size: var(--cds-font-size-caption); }
+  .esh-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--cds-gap-lg); }
+  .esh-list { margin: 0; padding-inline-start: 1.2em; display: flex; flex-direction: column; gap: var(--cds-gap-xs); line-height: 1.5; }
+  .esh-err { color: var(--color-bad); font-size: var(--cds-font-size-caption); }
+</style>
+
+<div class="esh-page" lang="he" data-read>
+  <header id="top">
+    <h1 class="esh-title">מטבע אש · מעבדה</h1>
+    <p class="esh-lead">בתרחיש הבסיס הונפקו <b data-draw="minted" data-source="sim_results" data-field="minted_pct" data-where="scenario=בסיס">—</b> מתקרת ההיצע בשנתיים של הדמיה. תוקף עם סוכנים מזויפים מקבל <b data-draw="atk_def" data-source="sim_results" data-field="attacker_pct" data-where="scenario=תקיפת sybil, עם סינון">—</b> מהתגמולים כשההגנות פועלות, מול יעד של פחות מ-<b data-draw="target">—</b>. <b data-draw="passed" data-source="tests_summary" data-field="passed" data-row="0">—</b> מתוך <b data-draw="total" data-source="tests_summary" data-field="total" data-row="0">—</b> בדיקות החוזים עברו.</p>
+  </header>
+
+  <div class="esh-banner" id="banner"><b>רשת בדיקה בלבד.</b> אין כסף אמיתי, אין mainnet, אין מכירה. ההדמיה היא מודל פשוט להשוואה בין תרחישים, לא תחזית מחיר. לשימוש פנימי ולהצגה לעורך הדין.</div>
+
+  <div class="esh-tiles" id="tiles">
+    <div class="esh-tile">
+      <span class="esh-tile-label">בדיקות חוזים שעברו</span>
+      <span class="esh-tile-value"><span data-draw="passed" data-source="tests_summary" data-field="passed" data-row="0">—</span> / <span data-draw="total" data-source="tests_summary" data-field="total" data-row="0">—</span></span>
+      <span class="esh-tile-note"><span data-draw="red" data-source="tests_summary" data-field="red_team" data-row="0">—</span> מהן של צוות אדום · רשת מקומית</span>
+    </div>
+    <div class="esh-tile">
+      <span class="esh-tile-label">חלק התוקף, עם הגנות</span>
+      <span class="esh-tile-value" data-draw="atk_def_tile" data-source="sim_results" data-field="attacker_pct" data-where="scenario=תקיפת sybil, עם סינון">—</span>
+      <span class="esh-tile-note">יעד: מתחת ל-<span data-draw="target">—</span></span>
+    </div>
+    <div class="esh-tile">
+      <span class="esh-tile-label">חלק התוקף, בלי הגנות</span>
+      <span class="esh-tile-value esh-bad" data-draw="atk_raw" data-source="sim_results" data-field="attacker_pct" data-where="scenario=תקיפת sybil, בלי סינון ובלי תקרה">—</span>
+      <span class="esh-tile-note">בלי סינון עבודה ובלי תקרה לסוכן</span>
+    </div>
+    <div class="esh-tile">
+      <span class="esh-tile-label">ריכוזיות בבסיס (Gini)</span>
+      <span class="esh-tile-value" data-draw="gini" data-source="sim_results" data-field="gini" data-where="scenario=בסיס">—</span>
+      <span class="esh-tile-note">0 = שוויון מלא, 1 = הכול אצל אחד</span>
+    </div>
+  </div>
+
+  <section class="esh-section" id="supply">
+    <h2 class="esh-h">כמה קרדיט מחזיקים הסוכנים לאורך שנתיים</h2>
+    <p class="esh-sub">יתרת הסוכנים לפי יום, בכל תרחיש. סקאלה לוגריתמית. כשאין על מה להוציא, הקרדיט נאגר; עם הנפקה אגרסיבית הוא נגמר.</p>
+    <div class="esh-chart" data-draw="supply_chart" data-source="sim_supply"></div>
+  </section>
+
+  <section class="esh-section" id="attack">
+    <h2 class="esh-h">כמה מהתגמולים לוקח תוקף sybil</h2>
+    <p class="esh-sub">500 סוכנים מזויפים של תוקף אחד מול 500 סוכנים אמיתיים. הקו המקווקו הוא היעד.</p>
+    <div class="esh-chart" data-draw="attack_chart" data-source="sim_results" style="min-height:180px"></div>
+  </section>
+
+  <section class="esh-section" id="scenarios">
+    <h2 class="esh-h">כל התרחישים</h2>
+    <div class="esh-scroll">
+      <table class="esh-table" data-source="sim_results" data-row-key="scenario">
+        <thead><tr>
+          <th data-field="scenario">תרחיש</th>
+          <th data-field="minted_pct">% מהתקרה שהונפק</th>
+          <th data-field="agents_end">בידי סוכנים בסוף</th>
+          <th data-field="treasury_end">באוצר העיר</th>
+          <th data-field="burned">נשרף</th>
+          <th data-field="growth_y2_pct">שינוי במחזור, שנה 2</th>
+          <th data-field="gini">Gini</th>
+          <th data-field="top10_pct">10% העליונים</th>
+          <th data-field="attacker_pct">חלק התוקף</th>
+        </tr></thead>
+        <tbody data-draw="scen_rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="esh-section" id="tests">
+    <h2 class="esh-h">בדיקות החוזים וצוות אדום</h2>
+    <p class="esh-sub">החוזים רצים כרגע על רשת מקומית בלבד. הפריסה ל-Base Sepolia ממתינה לארנק testnet ולחותמים על ה-Safe.</p>
+    <div class="esh-scroll">
+      <table class="esh-table" data-source="tests" data-row-key="test">
+        <thead><tr><th data-field="suite">חוזה</th><th data-field="test">בדיקה</th><th data-field="status">תוצאה</th></tr></thead>
+        <tbody data-draw="test_rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="esh-grid2" id="design">
+    <section class="esh-section">
+      <h2 class="esh-h">איך זה בנוי</h2>
+      <ul class="esh-list">
+        <li><b>קרדיט עיר:</b> הסוכנים מרוויחים ומוציאים אותו בתוך העולם. לא יוצא החוצה.</li>
+        <li><b>השער:</b> ממיר קרדיט לאש. כבוי עד אישור עורך דין ואריאל. KYC, תקרה מתגלגלת של 24 שעות, מתג חירום.</li>
+        <li><b>אש (tESH):</b> מיליארד מטבעות, אין הנפקה נוספת, שריפה בשימוש.</li>
+        <li><b>NFTs:</b> חלקות (גריד 100×100 קבוע), יצירות סוכנים עם תמלוג יוצר עד 10%.</li>
+        <li><b>שליטה:</b> Safe רב-חתימות 2 מתוך 3 ו-Timelock של 48 שעות. סוכנים רק מציעים.</li>
+      </ul>
+    </section>
+    <section class="esh-section">
+      <h2 class="esh-h">פתוח לפני השקה</h2>
+      <ul class="esh-list">
+        <li>להוריד את חלק התוקף מתחת ליעד: זהות לסוכן.</li>
+        <li>מפתח החותם של השער ב-KMS, ויתרה קטנה בשער.</li>
+        <li>Slither, fuzzing וביקורת חיצונית.</li>
+        <li>חוות דעת של עורך דין בכתב, ואישור מפורש של אריאל.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<script>
+  // יעד קבוע שאריאל בחר: חלק התוקף בתגמולים מתחת ל-5%
+  window.ESH_TARGET = 5;
+
+  dash.calc('tests_summary', {
+    inputs: ['tests'],
+    title: 'סיכום בדיקות',
+    description: 'כמה בדיקות עברו מתוך כולן, וכמה מהן של צוות אדום.',
+    fn: (tests) => [{
+      passed: tests.filter((t) => t.status === 'עבר').length,
+      total: tests.length,
+      red_team: tests.filter((t) => t.red_team === true).length,
+    }],
+  });
+
+  window.eshPct = (v) => (v == null || isNaN(+v) ? '—' : d3.format('.1f')(+v).replace(/\.0$/, '') + '%');
+  window.eshCell = (id, scenario, field, fmt) => (el) => {
+    const d = dash.data(id);
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const row = d.data.find((r) => r.scenario === scenario);
+    el.textContent = row ? fmt(row[field]) : '—';
+  };
+</script>
+
+<script>
+  dash.draw('target', (el) => { el.textContent = ESH_TARGET + '%'; });
+  dash.draw('minted', eshCell('sim_results', 'בסיס', 'minted_pct', eshPct));
+  dash.draw('atk_def', eshCell('sim_results', 'תקיפת sybil, עם סינון', 'attacker_pct', eshPct));
+  dash.draw('atk_raw', eshCell('sim_results', 'תקיפת sybil, בלי סינון ובלי תקרה', 'attacker_pct', eshPct));
+  dash.draw('gini', eshCell('sim_results', 'בסיס', 'gini', (v) => d3.format('.2f')(+v)));
+  dash.draw('atk_def_tile', (el) => {
+    eshCell('sim_results', 'תקיפת sybil, עם סינון', 'attacker_pct', eshPct)(el);
+    const d = dash.data('sim_results');
+    const row = d.status === 'ok' ? d.data.find((r) => r.scenario === 'תקיפת sybil, עם סינון') : null;
+    el.classList.toggle('esh-warn', !!row && +row.attacker_pct >= ESH_TARGET);
+    el.classList.toggle('esh-ok', !!row && +row.attacker_pct < ESH_TARGET);
+  });
+  const sumField = (f) => (el) => {
+    const d = dash.data('tests_summary');
+    el.textContent = d.status === 'ok' && d.data && d.data[0] ? d3.format(',')(d.data[0][f]) : '—';
+  };
+  dash.draw('passed', sumField('passed'));
+  dash.draw('total', sumField('total'));
+  dash.draw('red', sumField('red_team'));
+
+  dash.draw('scen_rows', (tb) => {
+    const d = dash.data('sim_results');
+    tb.replaceChildren();
+    if (d.status === 'error') { const tr = tb.insertRow(); const td = tr.insertCell(); td.colSpan = 9; td.className = 'esh-err'; td.textContent = 'נתוני ההדמיה לא נטענו.'; return; }
+    if (d.status !== 'ok') return;
+    const n = d3.format(',.0f');
+    [...d.data].sort((a, b) => a.order - b.order).forEach((r) => {
+      const tr = tb.insertRow();
+      [r.scenario, eshPct(r.minted_pct), n(r.agents_end), n(r.treasury_end), n(r.burned),
+       (r.growth_y2_pct > 0 ? '+' : '') + eshPct(r.growth_y2_pct), d3.format('.2f')(r.gini), eshPct(r.top10_pct), eshPct(r.attacker_pct)]
+        .forEach((v) => { tr.insertCell().textContent = v; });
+    });
+  });
+
+  dash.draw('test_rows', (tb) => {
+    const d = dash.data('tests');
+    tb.replaceChildren();
+    if (d.status === 'error') { const tr = tb.insertRow(); const td = tr.insertCell(); td.colSpan = 3; td.className = 'esh-err'; td.textContent = 'תוצאות הבדיקות לא נטענו.'; return; }
+    if (d.status !== 'ok') return;
+    d.data.forEach((r) => {
+      const tr = tb.insertRow();
+      tr.insertCell().textContent = r.suite;
+      tr.insertCell().textContent = r.test;
+      const c = tr.insertCell();
+      const pill = document.createElement('span');
+      pill.className = 'esh-pill ' + (r.status === 'עבר' ? 'esh-ok' : 'esh-bad');
+      pill.textContent = r.status;
+      c.appendChild(pill);
+    });
+  });
+</script>
+
+<script>
+  dash.draw('supply_chart', (el) => {
+    const d = dash.data('sim_supply');
+    el.replaceChildren();
+    if (d.status === 'error') { const p = document.createElement('p'); p.className = 'esh-err'; p.textContent = 'נתוני ההיצע לא נטענו.'; el.appendChild(p); return; }
+    if (d.status !== 'ok' || !d.data.length) { el.textContent = '—'; return; }
+    const rows = d.data.map((r) => ({ s: r.scenario, day: +r.day, v: Math.max(1, +r.agents_supply) }));
+    const names = [...new Set(rows.map((r) => r.s))];
+    const color = (s) => dash.colors[names.indexOf(s) % dash.colors.length];
+    const W = el.clientWidth || 600, H = 280, m = { t: 10, r: 14, b: 28, l: 56 };
+    const x = d3.scaleLinear().domain(d3.extent(rows, (r) => r.day)).range([m.l, W - m.r]);
+    const y = d3.scaleLog().domain(d3.extent(rows, (r) => r.v)).nice().range([H - m.b, m.t]);
+    const legend = d3.select(el).append('div').attr('class', 'esh-legend');
+    names.forEach((s) => { const sp = legend.append('span'); sp.append('i').style('background', color(s)); sp.append('span').text(s); });
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H).attr('role', 'img')
+      .attr('aria-label', 'יתרת הסוכנים לאורך 730 ימים בכל תרחיש, סקאלה לוגריתמית');
+    const fmt = d3.format('.2s');
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.l},0)`)
+      .call(d3.axisLeft(y).ticks(5, '~s').tickSize(-(W - m.l - m.r)).tickFormat('')).call((g) => g.select('.domain').remove());
+    svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(Math.max(3, Math.floor(W / 110))).tickFormat((v) => 'יום ' + v));
+    svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5, '~s').tickFormat(fmt));
+    const line = d3.line().x((r) => x(r.day)).y((r) => y(r.v));
+    d3.groups(rows, (r) => r.s).forEach(([s, pts]) => {
+      svg.append('path').datum(pts).attr('fill', 'none').attr('stroke-width', 2).style('stroke', color(s)).attr('d', line);
+    });
+    const tip = d3.select(el).append('div').attr('class', 'esh-tip').style('display', 'none');
+    const days = [...new Set(rows.map((r) => r.day))].sort((a, b) => a - b);
+    const rule = svg.append('line').style('stroke', 'var(--cds-chart-reference)').attr('y1', m.t).attr('y2', H - m.b).style('display', 'none');
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev);
+        const day = days[d3.bisectCenter(days, x.invert(px))];
+        rule.attr('x1', x(day)).attr('x2', x(day)).style('display', null);
+        tip.replaceChildren();
+        tip.append('div').text('יום ' + day);
+        rows.filter((r) => r.day === day).sort((a, b) => b.v - a.v).forEach((r) => tip.append('div').text(r.s + ': ' + d3.format(',.0f')(r.v)));
+        const left = Math.min(Math.max(0, x(day) + 12), W - 220);
+        tip.style('display', null).style('left', left + 'px').style('top', '40px');
+      })
+      .on('pointerleave', () => { tip.style('display', 'none'); rule.style('display', 'none'); });
+  });
+
+  dash.draw('attack_chart', (el) => {
+    const d = dash.data('sim_results');
+    el.replaceChildren();
+    if (d.status === 'error') { const p = document.createElement('p'); p.className = 'esh-err'; p.textContent = 'נתוני ההדמיה לא נטענו.'; el.appendChild(p); return; }
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const rows = d.data.filter((r) => +r.attacker_pct > 0).sort((a, b) => a.attacker_pct - b.attacker_pct);
+    if (!rows.length) { el.textContent = '—'; return; }
+    const W = el.clientWidth || 600, bh = 34, m = { t: 8, r: 16, b: 24, l: 16 };
+    const H = m.t + m.b + rows.length * (bh + 26);
+    const x = d3.scaleLinear().domain([0, Math.max(50, d3.max(rows, (r) => +r.attacker_pct))]).range([m.l, W - m.r]);
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H).attr('role', 'img')
+      .attr('aria-label', 'חלק התוקף בתגמולים בכל תרחיש תקיפה, מול יעד ' + ESH_TARGET + '%');
+    rows.forEach((r, i) => {
+      const y0 = m.t + i * (bh + 26);
+      svg.append('text').attr('x', W - m.r).attr('y', y0 + 12).attr('text-anchor', 'end').style('fill', 'var(--color-fg-muted)')
+        .style('font-size', 'var(--cds-font-size-caption)').text(r.scenario);
+      const over = +r.attacker_pct >= ESH_TARGET;
+      svg.append('rect').attr('x', m.l).attr('y', y0 + 18).attr('height', bh - 14).attr('width', Math.max(2, x(+r.attacker_pct) - m.l))
+        .attr('rx', 3).style('fill', over ? 'var(--cds-chart-status-critical)' : dash.colors[0]);
+      svg.append('text').attr('x', x(+r.attacker_pct) + 6).attr('y', y0 + 18 + (bh - 14) / 2 + 4).style('fill', 'var(--color-fg)')
+        .style('font-size', 'var(--cds-font-size-caption)').text(eshPct(r.attacker_pct));
+    });
+    svg.append('line').attr('x1', x(ESH_TARGET)).attr('x2', x(ESH_TARGET)).attr('y1', m.t).attr('y2', H - m.b)
+      .style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 3');
+    svg.append('text').attr('x', x(ESH_TARGET) + 4).attr('y', H - 6).style('fill', 'var(--cds-text-secondary)')
+      .style('font-size', 'var(--cds-font-size-caption)').text('יעד ' + ESH_TARGET + '%');
+  });
+</script>

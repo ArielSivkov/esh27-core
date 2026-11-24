@@ -29,6 +29,7 @@ if (process.env.TESTNET_DEPLOYER_KEY) {
 }
 
 module.exports = {
+  mocha: process.env.MOCHA_JSON ? { reporter: "json", reporterOptions: { output: process.env.MOCHA_JSON } } : {},
   solidity: { version: "0.8.24", settings: { optimizer: { enabled: true, runs: 200 }, evmVersion: "cancun" } },
   networks,
 };
