@@ -31,6 +31,7 @@ Reported by each session. Wall minutes; the 2×T4 machine probably counts double
 | 2026-11-24 | davinci-v3-multiview (1×T4) | world | ~5 |
 | 2026-11-24 | davinci-v2-3d runs 1–3 (failed installs, 1×T4) | world | ~3 |
 | 2026-11-24 | davinci-v2-3d run 4 (1×T4) | world | ~14 |
+| 2026-11-24 | davinci-d1-inside v1 (premature, unread) + v2 (1×T4) | world/interior | ~10 + ~75 |
 
 ## Ariel's directive, 24.11 ~04:00 Israel time
 "צריך להגיד לסנהדרין שעכשיו בגלל שיש לנו את הקגל הזה, אז משתמשים בקגל כדי לבנות העולם במקום במשאבים שלנו"

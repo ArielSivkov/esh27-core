@@ -53,3 +53,5 @@
 - [H] On renders the box ratio is partly circular (the box was projected from the true geometry), so its 67% is not
   evidence about real photos. On a photo the box has to be detected (segmentation), and that is the next test.
 - 3D viewer: https://claude.ai/artifact/S7qxSEqLcSydqjjJi12NtB (private).
+
+**v2 correction (after D1, by the red team):** the "horizontal" axis chosen was actually invented depth. Corrected: **11/21** within tolerance, median error 3.2 m (was 4/21, 12.3 m). Still a failure, and still not better than the box ratio (14/21). Details: RESULTS_d1_inside.md.
