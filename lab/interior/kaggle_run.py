@@ -36,8 +36,8 @@ if __name__ == "__main__":
         files = args[: args.index("--env")] if "--env" in args else args
         text = build(files[0], files[1:], env)
         body = {"slug": f"{USER}/{slug}", "newTitle": slug, "text": text, "language": "python",
-                "kernelType": "script", "isPrivate": True, "enableGpu": True, "enableInternet": True,
-                "machineShape": "NvidiaTeslaT4"}
+                "kernelType": "script", "isPrivate": True, "enableGpu": os.environ.get("KAGGLE_GPU", "1") == "1", "enableInternet": True,
+                **({"machineShape": "NvidiaTeslaT4"} if os.environ.get("KAGGLE_GPU", "1") == "1" else {})}
         print(json.dumps(call("SaveKernel", body))[:800])
     elif cmd == "status":
         print(json.dumps(call("GetKernelSessionStatus", {"userName": USER, "kernelSlug": slug})))
