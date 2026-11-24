@@ -1,0 +1,19 @@
+run              device                       model          rounds    min min/round
+ARM I            cpu (where: not recorded)    Qwen2.5-0.5B        2    7.7      3.85
+ARM H            cpu (where: not recorded)    Qwen2.5-0.5B        2    9.8      4.90
+ARM C            cpu (where: not recorded)    Qwen2.5-0.5B        2   14.0      7.00
+ARM F            cpu (where: not recorded)    Qwen2.5-0.5B        2   14.4      7.20
+LOCAL            cpu, session container       Qwen2.5-0.5B        2   16.0      8.00
+ARM B            cpu (where: not recorded)    Qwen2.5-0.5B        2   22.6     11.30
+ARM G            cpu (where: not recorded)    Qwen2.5-0.5B        2   37.0     18.50
+ARM J            cpu (where: not recorded)    SmolLM2-1.7B        2   46.0     23.00
+ARM A            cpu (where: not recorded)    Qwen2.5-1.5B        2   51.0     25.50
+ARM E            cpu (where: not recorded)    Qwen2.5-1.5B        2   52.5     26.25
+4-CPU container  cpu, 4 cores                 Qwen2.5-1.5B        2  120.0     60.00
+Kaggle T4        gpu, Tesla T4                Qwen2.5-1.5B        3   10.0      3.33
+
+SAME CONFIG (Qwen2.5-1.5B, all tasks, K4, seed 27), minutes per round, GPU vs CPU (CALC): x7.7 vs arm A, x7.9 vs arm E (same model and tasks, seed 28), x18.0 vs the 4-CPU container
+cost of one 3-round T4 run (CALC): 0.167 GPU-hours = 0.56% of the STATED 30 h/week -> at most 180 such runs per week (no startup, queue or failure overhead)
+money per run: 0 (Kaggle free tier, no paid service in the loop)
+reproducibility (FACT): base evaluation identical CPU/GPU (mean 0.29); after training R1 0.416 cpu vs 0.406 gpu, R2 0.484 vs 0.475: trained rounds are close, not identical
+gaps: ≈10 min is rounded and has no kernel timestamps (queue, pip, model download not separated); where the CPU arms ran is not recorded; two CPU baselines differ 2.4x; the 30 GPU-h/week quota is stated, not read from Kaggle; single GPU run, single seed

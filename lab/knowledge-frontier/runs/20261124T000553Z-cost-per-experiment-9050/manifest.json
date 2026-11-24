@@ -12,7 +12,7 @@
  ],
  "cwd": "lab/knowledge-frontier",
  "registered_utc": "2026-11-24T00:05:53Z",
- "status": "registered",
+ "status": "ok",
  "git": {
   "commit": "68cc4d28180ad1e758e242043b4d36aeeb660530",
   "branch": "claude/infra-lab",
@@ -25,5 +25,160 @@
   "mem_gb": 7.8,
   "gpu": "none"
  },
- "env": {}
+ "env": {},
+ "preregistration": {
+  "committed": true,
+  "pushed": false,
+  "commit": "6b2092dc31aa43a013ef1f7aa861ff030c307982"
+ },
+ "started_utc": "2026-11-24T00:05:53Z",
+ "exit_code": 0,
+ "ended_utc": "2026-11-24T00:05:53Z",
+ "wall_s": 0.028,
+ "cpu_user_s": 0.018,
+ "cpu_sys_s": 0.008,
+ "max_rss_mb": 18.1,
+ "redactions": [],
+ "withheld_binary_files": [],
+ "outputs": [
+  {
+   "path": "outputs/summary.json",
+   "bytes": 2798,
+   "sha256": "41a07d8ee8df3104ac0c88ce2cb6ff1e5d7f746fb01a8393c06b671740c75cad"
+  }
+ ],
+ "not_committed": [],
+ "log": {
+  "bytes": 1937,
+  "sha256": "3600bf028eb176d7aceffee5c47f655f75cf598ada0d63732cb3760128ab1052"
+ },
+ "summary": {
+  "headline": "T4 3.3 min/round vs CPU 25.5-60.0 (x7.7-x18.0); <= 180 runs/week on the stated quota",
+  "same_config": "Qwen2.5-1.5B, all tasks, K4, seed 27",
+  "speedup_gpu_vs_cpu": {
+   "ARM A": 7.7,
+   "ARM E": 7.9,
+   "4-CPU container": 18.0
+  },
+  "gpu_min_per_round": 3.33,
+  "gpu_hours_per_3round_run": 0.167,
+  "weekly_gpu_hours_stated": 30,
+  "max_runs_per_week_calc": 180,
+  "money_per_run_ils": 0,
+  "reproducibility": {
+   "base_mean_cpu": 0.29,
+   "base_mean_gpu": 0.29,
+   "base_identical": true,
+   "r1_cpu": 0.416,
+   "r1_gpu": 0.406,
+   "r2_cpu": 0.484,
+   "r2_gpu": 0.475,
+   "trained_rounds_identical": false
+  },
+  "gaps": [
+   "≈10 min is rounded and has no kernel timestamps (queue, pip, model download not separated)",
+   "where the CPU arms ran is not recorded; two CPU baselines differ 2.4x",
+   "the 30 GPU-h/week quota is stated, not read from Kaggle",
+   "single GPU run, single seed"
+  ],
+  "rows": [
+   {
+    "run": "ARM I",
+    "device": "cpu (where: not recorded)",
+    "model": "Qwen2.5-0.5B",
+    "rounds": 2,
+    "minutes": 7.7,
+    "min_per_round": 3.85
+   },
+   {
+    "run": "ARM H",
+    "device": "cpu (where: not recorded)",
+    "model": "Qwen2.5-0.5B",
+    "rounds": 2,
+    "minutes": 9.8,
+    "min_per_round": 4.9
+   },
+   {
+    "run": "ARM C",
+    "device": "cpu (where: not recorded)",
+    "model": "Qwen2.5-0.5B",
+    "rounds": 2,
+    "minutes": 14.0,
+    "min_per_round": 7.0
+   },
+   {
+    "run": "ARM F",
+    "device": "cpu (where: not recorded)",
+    "model": "Qwen2.5-0.5B",
+    "rounds": 2,
+    "minutes": 14.4,
+    "min_per_round": 7.2
+   },
+   {
+    "run": "LOCAL",
+    "device": "cpu, session container",
+    "model": "Qwen2.5-0.5B",
+    "rounds": 2,
+    "minutes": 16.0,
+    "min_per_round": 8.0
+   },
+   {
+    "run": "ARM B",
+    "device": "cpu (where: not recorded)",
+    "model": "Qwen2.5-0.5B",
+    "rounds": 2,
+    "minutes": 22.6,
+    "min_per_round": 11.3
+   },
+   {
+    "run": "ARM G",
+    "device": "cpu (where: not recorded)",
+    "model": "Qwen2.5-0.5B",
+    "rounds": 2,
+    "minutes": 37.0,
+    "min_per_round": 18.5
+   },
+   {
+    "run": "ARM J",
+    "device": "cpu (where: not recorded)",
+    "model": "SmolLM2-1.7B",
+    "rounds": 2,
+    "minutes": 46.0,
+    "min_per_round": 23.0
+   },
+   {
+    "run": "ARM A",
+    "device": "cpu (where: not recorded)",
+    "model": "Qwen2.5-1.5B",
+    "rounds": 2,
+    "minutes": 51.0,
+    "min_per_round": 25.5
+   },
+   {
+    "run": "ARM E",
+    "device": "cpu (where: not recorded)",
+    "model": "Qwen2.5-1.5B",
+    "rounds": 2,
+    "minutes": 52.5,
+    "min_per_round": 26.25
+   },
+   {
+    "run": "4-CPU container",
+    "device": "cpu, 4 cores",
+    "model": "Qwen2.5-1.5B",
+    "rounds": 2,
+    "minutes": 120.0,
+    "min_per_round": 60.0
+   },
+   {
+    "run": "Kaggle T4",
+    "device": "gpu, Tesla T4",
+    "model": "Qwen2.5-1.5B",
+    "rounds": 3,
+    "minutes": 10.0,
+    "min_per_round": 3.33
+   }
+  ]
+ },
+ "verdict": "pass"
 }
