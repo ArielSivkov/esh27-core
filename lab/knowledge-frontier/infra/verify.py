@@ -265,7 +265,7 @@ def check_run_seals(runs):
     for mpath in runs:
         rid = os.path.basename(os.path.dirname(mpath))
         present.add(rid)
-        relm = os.path.relpath(mpath, git_out("rev-parse", "--show-toplevel").strip())
+        relm = os.path.relpath(mpath, LAB)  # git_out runs in LAB, so pathspecs are relative to it
         last = (git_out("log", "-1", "--format=%H", "--", relm) or "").strip()
         if not last:
             bad.append(f"{rid}: manifest not committed")
