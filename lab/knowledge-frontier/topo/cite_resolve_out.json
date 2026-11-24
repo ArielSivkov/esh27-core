@@ -1,0 +1,14 @@
+{
+ "ref_files": 20,
+ "citation_edges": 30196800,
+ "cited_resolved": 26523757,
+ "resolve_rate": 0.8784,
+ "edges_both_ends_resolved": 24403416,
+ "same_subfield_share": 0.4812,
+ "same_field_share": 0.6453,
+ "citing_works": 1077914,
+ "citing_with_ge3_resolved": 904358,
+ "share_citing_ge3": 0.839,
+ "median_refs_per_citing": 19.0,
+ "seconds": 31
+}
