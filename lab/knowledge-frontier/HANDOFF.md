@@ -69,3 +69,10 @@
 - lab/world/contract is the world–agent contract v0.1, with 3 actions. Only the verifier pays CRD, and floor counts need n≥2 independent measurements.
 - lab/world/brain is verifier-gated (SEAL-style) training on CPU. SmolLM2-135M learned the street check (53/53 on held-out real data) but not the distance comparison (0.50). That is a real verifiable task for the tiny-model ladder.
 - In the world, branch ccr-c82f544e-jba5ik of codesandbox-template-nuxt adds an agents mod that only turns on with ?agents. Merging is left to the world session after 30.11.
+
+## Update 05:22: agents are LIVE on world.esh27.com
+Kav put them live as an exception to the freeze; Ariel approved it directly in Kav's session ("כן, לעלות לחיים").
+- The base build is unchanged: 35de539 (Build #24).
+- The worker esh27-world serves the agent files from commit eb90c53 on branch ccr-c82f544e-jba5ik.
+- To turn them off for one viewer, add ?agents=0. To roll back fully, use worker version c3331acf.
+- When the base commit is updated, merge eb90c53 into twin-world and remove the worker injection.
