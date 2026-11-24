@@ -1,0 +1,20 @@
+run              device                       model          rounds    min min/round
+ARM I            cpu (where: not recorded)    Qwen2.5-0.5B        2    7.7      3.85
+ARM H            cpu (where: not recorded)    Qwen2.5-0.5B        2    9.8      4.90
+ARM C            cpu (where: not recorded)    Qwen2.5-0.5B        2   14.0      7.00
+ARM F            cpu (where: not recorded)    Qwen2.5-0.5B        2   14.4      7.20
+LOCAL            cpu, session container       Qwen2.5-0.5B        2   16.0      8.00
+ARM B            cpu (where: not recorded)    Qwen2.5-0.5B        2   22.6     11.30
+ARM G            cpu (where: not recorded)    Qwen2.5-0.5B        2   37.0     18.50
+ARM J            cpu (where: not recorded)    SmolLM2-1.7B        2   46.0     23.00
+ARM A            cpu (where: not recorded)    Qwen2.5-1.5B        2   51.0     25.50
+ARM E            cpu (where: not recorded)    Qwen2.5-1.5B        2   52.5     26.25
+4-CPU container  cpu, 4 cores                 Qwen2.5-1.5B        2  120.0     60.00
+Kaggle T4        gpu, Tesla T4                Qwen2.5-1.5B        3   10.0      3.33
+
+SAME CONFIG (Qwen2.5-1.5B, all tasks, K4, seed 27), T4 vs CPU arm A (CALC): x7.7 per round (x7.0-x8.5 given minute-resolution times), x5.1 for the whole run (51 min for base + 2 rounds vs 10 min for base + 3)
+vs the '4-CPU container' line: x18.0 per round, but that line has no recorded source run (UNATTRIBUTED)
+quota (CALC on a STATED quota): one 3-round T4 run = 0.167 GPU-hours = 0.56% of 30 h/week; 30 h / 10 min = 180 runs is a theoretical figure (assumes each run uses exactly 10 min of quota and nothing else does); Kaggle is not reachable here to check
+money per run (ASSUMPTION): 0, Kaggle free tier; no paid service appears in the code path
+reproducibility (FACT): base evaluation identical CPU/GPU (mean 0.29); after training R1 0.416 cpu vs 0.406 gpu, R2 0.484 vs 0.475: close, not identical
+gaps: the T4 time is given to the minute and has no kernel timestamps (queue, pip, model download not separated); where the CPU arms ran is not recorded; the ~2 h container figure has no recorded source run; the 30 GPU-h/week quota is stated, not read from Kaggle; a single GPU run, a single seed, made before this infrastructure existed
