@@ -23,3 +23,5 @@ Ariel: "לצייר את הבניין... להבין את הארכיטקטורה, 
   but a mesh is built from the image, so this is "image → proportions → meters".
 - Doing better than the box ratio (box_h/box_w × W⊥) is not guaranteed, so that ratio is also reported as a **second baseline**.
   The 3D model has to add value beyond it.
+
+## Amendment A2 (before any result): torchmcubes did not compile on Kaggle (run 1 stopped before any measurement). It is replaced by a shim using scikit-image's marching_cubes. The axis order may change, but axis selection is truth-free (correlation with the box), so the criterion is unchanged.

@@ -6,6 +6,16 @@ def sh(c): r = subprocess.run(c, shell=True, capture_output=True, text=True); lo
 sh("git clone -q https://github.com/VAST-AI-Research/TripoSR /kaggle/working/TripoSR")
 sh("pip install -q trimesh omegaconf einops rembg onnxruntime huggingface-hub 'transformers>=4.35'")
 rc = sh("pip install -q git+https://github.com/tatsy/torchmcubes.git")
+if rc:  # fallback (A2, before results): a torchmcubes shim on scikit-image's marching cubes
+    os.makedirs("/kaggle/working/shim", exist_ok=True)
+    open("/kaggle/working/shim/torchmcubes.py", "w").write("""import torch, numpy as np
+from skimage import measure
+def marching_cubes(vol, thresh):
+    v = vol.detach().float().cpu().numpy()
+    verts, faces, _, _ = measure.marching_cubes(v, level=thresh)
+    return torch.from_numpy(verts.copy()).float().to(vol.device), torch.from_numpy(faces.astype(np.int64).copy()).to(vol.device)
+""")
+    sys.path.insert(0, "/kaggle/working/shim"); log("using torchmcubes shim (skimage)")
 sys.path.insert(0, "/kaggle/working/TripoSR")
 import numpy as np, requests, torch, trimesh
 from PIL import Image
