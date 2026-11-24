@@ -23,3 +23,11 @@ Reported by each session. Wall minutes; the 2×T4 machine probably counts double
 | 2026-11-24 | tiny-ladder (1×T4) | knowledge-frontier/tiny | running since 00:46 UTC |
 | 2026-11-24 | interior-exp1-weights (1×T4) | interior lab (before the split) | 21 |
 | 2026-11-24 | world-w1-heights (CPU, no GPU) | world (W1) | 0 GPU |
+
+## Ariel's directive, 24.11 ~04:00 Israel time
+"צריך להגיד לסנהדרין שעכשיו בגלל שיש לנו את הקגל הזה, אז משתמשים בקגל כדי לבנות העולם במקום במשאבים שלנו"
+(Tell the Sanhedrin that now that we have Kaggle, we use Kaggle to build the world instead of our own resources.)
+- Heavy jobs for the world (vision models, height pipelines, tile processing, training) run on Kaggle, not on the
+  free Cloudflare quota or on local machines. Kaggle does not host anything live.
+- Delivered to the world session (24.11 ~04:00).
+- The Sanhedrin session (session_013gymVU4G52fuSziyFPWzbk) was inactive and the message did not get through. To be passed on when it is open.
