@@ -1,0 +1,28 @@
+{
+ "topics_files_sampled": 8,
+ "MB": 27.0,
+ "seconds": 8.7,
+ "MB_per_s": 3.1,
+ "works_with_topic": 1606088,
+ "top_score_quantiles": {
+  "0.05": 0.018,
+  "0.25": 0.124,
+  "0.5": 0.783,
+  "0.75": 0.988
+ },
+ "share_top_score_ge_0.9": 0.429,
+ "share_top_score_lt_0.5": 0.4,
+ "topics_table_files": [
+  "data/topics/domains/topics__updated_date=2026-03-27__part_0000.parquet",
+  "data/topics/domains/topics__updated_date=2026-03-28__part_0000.parquet",
+  "data/topics/domains/topics__updated_date=2026-03-29__part_0000.parquet",
+  "data/topics/domains/topics__updated_date=2026-03-30__part_0000.parquet",
+  "data/topics/external_ids/topics__updated_date=2026-03-27__part_0000.parquet"
+ ],
+ "topics_table_schema": "topic_id: int64\ndomain_id: int64",
+ "refs_checked": 3384914,
+ "refs_resolved_by_sample": 12081,
+ "resolve_rate": 0.0036,
+ "full_topics_GB": 6.64,
+ "est_full_download_min": 35.7
+}
