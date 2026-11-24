@@ -1,0 +1,13 @@
+reachable         github.com                 200 329 ms
+reachable         pypi.org                   200 90 ms
+blocked-by-proxy  api.kaggle.com              291 ms
+blocked-by-proxy  www.kaggle.com              343 ms
+blocked-by-proxy  huggingface.co              255 ms
+blocked-by-proxy  export.arxiv.org            266 ms
+blocked-by-proxy  api.openalex.org            245 ms
+blocked-by-proxy  oeis.org                    6 ms
+blocked-by-proxy  www.erdosproblems.com       7 ms
+blocked-by-proxy  download.pytorch.org        262 ms
+blocked-by-proxy  release.lean-lang.org       5 ms
+reachable         raw.githubusercontent.com  200 50 ms
+hosts: 3 reachable, 9 blocked: api.kaggle.com, www.kaggle.com, huggingface.co, export.arxiv.org, api.openalex.org, oeis.org, www.erdosproblems.com, download.pytorch.org, release.lean-lang.org

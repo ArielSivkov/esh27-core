@@ -12,3 +12,4 @@
 | 2026-11-24T00:05:56Z | `20261124T000555Z-infra-test-suites-56b2` | failed | 11.2s | fail | קומיט מקומי | Scanner and labrun behave as specified: 13 credential kinds caught, n… |  |
 | 2026-11-24T00:06:27Z | `20261124T000626Z-infra-test-suites-2d8e` | ok | 11.2s | pass | קומיט מקומי | Same as run 20261124T000555Z-infra-test-suites-56b2, after fixing the… |  |
 | 2026-11-24T01:09:01Z | `20261124T010901Z-cost-per-experiment-v2-c58c` | ok | 0.0s | pass | קומיט מקומי | Re-derivation after the red team: the same-config T4/CPU ratio and th… | T4 vs CPU, same config: x7.7 per round (x7.0-x8.5), x5.1 whole run; ~… |
+| 2026-11-24T01:09:02Z | `20261124T010902Z-host-probe-6aab` | ok | 0.6s | fail | קומיט מקומי | Kaggle and Hugging Face are reachable from this session (they were bl… | 3 reachable, 9 blocked: api.kaggle.com, www.kaggle.com, huggingface.c… |

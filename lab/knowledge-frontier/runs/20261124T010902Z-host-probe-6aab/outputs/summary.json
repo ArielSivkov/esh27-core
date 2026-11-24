@@ -1,0 +1,94 @@
+{
+ "checked_utc": "2026-11-24T01:09:02Z",
+ "results": [
+  {
+   "host": "github.com",
+   "state": "reachable",
+   "http": 200,
+   "ms": 329
+  },
+  {
+   "host": "pypi.org",
+   "state": "reachable",
+   "http": 200,
+   "ms": 90
+  },
+  {
+   "host": "api.kaggle.com",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 291
+  },
+  {
+   "host": "www.kaggle.com",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 343
+  },
+  {
+   "host": "huggingface.co",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 255
+  },
+  {
+   "host": "export.arxiv.org",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 266
+  },
+  {
+   "host": "api.openalex.org",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 245
+  },
+  {
+   "host": "oeis.org",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 6
+  },
+  {
+   "host": "www.erdosproblems.com",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 7
+  },
+  {
+   "host": "download.pytorch.org",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 262
+  },
+  {
+   "host": "release.lean-lang.org",
+   "state": "blocked-by-proxy",
+   "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+   "ms": 5
+  },
+  {
+   "host": "raw.githubusercontent.com",
+   "state": "reachable",
+   "http": 200,
+   "ms": 50
+  }
+ ],
+ "reachable": [
+  "github.com",
+  "pypi.org",
+  "raw.githubusercontent.com"
+ ],
+ "blocked": [
+  "api.kaggle.com",
+  "www.kaggle.com",
+  "huggingface.co",
+  "export.arxiv.org",
+  "api.openalex.org",
+  "oeis.org",
+  "www.erdosproblems.com",
+  "download.pytorch.org",
+  "release.lean-lang.org"
+ ],
+ "headline": "3 reachable, 9 blocked: api.kaggle.com, www.kaggle.com, huggingface.co, export.arxiv.org, api.openalex.org, oeis.org, www.erdosproblems.com, download.pytorch.org, release.lean-lang.org"
+}
