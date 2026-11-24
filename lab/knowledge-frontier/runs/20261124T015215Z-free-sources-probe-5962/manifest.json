@@ -12,7 +12,7 @@
  ],
  "cwd": "lab/knowledge-frontier",
  "registered_utc": "2026-11-24T01:52:15Z",
- "status": "registered",
+ "status": "ok",
  "git": {
   "commit": "303cfbcaf76d26b8401c24dfa28d4be036d9bab8",
   "branch": "claude/infra-lab",
@@ -25,5 +25,96 @@
   "mem_gb": 7.8,
   "gpu": "none"
  },
- "env": {}
+ "env": {},
+ "preregistration": {
+  "committed": true,
+  "pushed": true,
+  "commit": "82f4217233cc031d409db17df3cb90aa19e6d6dc"
+ },
+ "started_utc": "2026-11-24T01:52:17Z",
+ "log": {
+  "total_bytes": 1429,
+  "full_sha256": "76087bf804d8175154a2af2e2b58421db71400b4081eb7157e7f1b4759043aa6",
+  "omitted_bytes": 0,
+  "local_copy": "lab/knowledge-frontier/data/runs/20261124T015215Z-free-sources-probe-5962/log.full.txt",
+  "bytes": 1429,
+  "sha256": "76087bf804d8175154a2af2e2b58421db71400b4081eb7157e7f1b4759043aa6"
+ },
+ "exit_code": 0,
+ "ended_utc": "2026-11-24T01:52:26Z",
+ "wall_s": 9.244,
+ "cpu_user_s": 4.962,
+ "cpu_sys_s": 0.351,
+ "max_rss_mb": 139.5,
+ "redactions": [],
+ "withheld_files": [],
+ "outputs": [
+  {
+   "path": "outputs/summary.json",
+   "bytes": 1428,
+   "sha256": "79968e2253d04d3bbcd1ab8338a9eceab42e637bc5a8891af446fdc375d99d8e"
+  },
+  {
+   "path": "outputs/targets_erdos_open_oeis.json",
+   "bytes": 53340,
+   "sha256": "158accffb448edab0adad5b5ace5d4828c023ae35f8d8c0ead271e24c1df226b"
+  }
+ ],
+ "not_committed": [],
+ "summary": {
+  "sources": {
+   "erdosproblems": {
+    "reachable": true,
+    "clone_s": 0.41,
+    "revision": "cfd0fdb01565a8970b96de382fa6c3c75b271fbd",
+    "problems": 1221,
+    "status": {
+     "open": 563,
+     "proved (Lean)": 184,
+     "proved": 155,
+     "disproved (Lean)": 97,
+     "solved": 69,
+     "disproved": 47,
+     "solved (Lean)": 35,
+     "falsifiable": 29,
+     "verifiable": 9,
+     "not disprovable": 9,
+     "decidable": 8,
+     "open (Lean)": 7,
+     "not provable": 5,
+     "independent": 4
+    },
+    "open_with_oeis": 240,
+    "note": ""
+   },
+   "formal-conjectures": {
+    "reachable": true,
+    "clone_s": 0.37,
+    "lean_files": 2190,
+    "erdos_problem_files": 1023,
+    "revision": "86a2f58a4d7a3a0637d15d5b2ce627592b54b956"
+   },
+   "oeisdata": {
+    "reachable": true,
+    "clone_s": 2.99,
+    "sequences_in_tree": 401864,
+    "cited_by_open_problems": 327,
+    "fetched": 327,
+    "fetch_s": 3.88,
+    "revision": "a9e6e3a6a7b6ad00375d1a87a9bd5cc50885095e"
+   },
+   "lean-toolchain": {
+    "http": 302,
+    "redirect_host": "release-assets.githubusercontent.com",
+    "installed": false,
+    "note": "installing means running downloaded binaries; not done without Ariel's explicit approval"
+   }
+  },
+  "targets": {
+   "open_with_oeis": 240,
+   "with_lean_statement": 216
+  },
+  "headline": "OEIS 401864 sequences via GitHub; Erdős 1221 problems, 563 open, 240 open citing OEIS, 216 of them with a Lean statement; Lean download path open, not installed"
+ },
+ "verdict": "pass"
 }

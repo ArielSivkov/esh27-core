@@ -1,0 +1,3804 @@
+{
+ "source": "teorth/erdosproblems (Apache-2.0) + google-deepmind/formal-conjectures (Apache-2.0) + oeis/oeisdata (CC BY-SA 4.0)",
+ "revision": "cfd0fdb01565a8970b96de382fa6c3c75b271fbd",
+ "targets": [
+  {
+   "problem": "3",
+   "oeis": [
+    "A003002",
+    "A003003",
+    "A003004",
+    "A003005"
+   ],
+   "lean_statement": true,
+   "prize": "$5000",
+   "tags": [
+    "number theory",
+    "additive combinatorics",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A003002",
+    "A003003",
+    "A003004",
+    "A003005"
+   ]
+  },
+  {
+   "problem": "5",
+   "oeis": [
+    "A001223"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A001223"
+   ]
+  },
+  {
+   "problem": "9",
+   "oeis": [
+    "A006286"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "additive basis",
+    "primes"
+   ],
+   "sequences_local": [
+    "A006286"
+   ]
+  },
+  {
+   "problem": "10",
+   "oeis": [
+    "A387053"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "additive basis",
+    "primes"
+   ],
+   "sequences_local": [
+    "A387053"
+   ]
+  },
+  {
+   "problem": "11",
+   "oeis": [
+    "A001220",
+    "A377587"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "additive basis"
+   ],
+   "sequences_local": [
+    "A001220",
+    "A377587"
+   ]
+  },
+  {
+   "problem": "17",
+   "oeis": [
+    "A038133"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A038133"
+   ]
+  },
+  {
+   "problem": "18",
+   "oeis": [
+    "A005153"
+   ],
+   "lean_statement": true,
+   "prize": "$250",
+   "tags": [
+    "number theory",
+    "divisors",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A005153"
+   ]
+  },
+  {
+   "problem": "20",
+   "oeis": [
+    "A332077"
+   ],
+   "lean_statement": true,
+   "prize": "$1000",
+   "tags": [
+    "combinatorics"
+   ],
+   "sequences_local": [
+    "A332077"
+   ]
+  },
+  {
+   "problem": "30",
+   "oeis": [
+    "A143824",
+    "A227590",
+    "A003022"
+   ],
+   "lean_statement": true,
+   "prize": "$1000",
+   "tags": [
+    "number theory",
+    "sidon sets",
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A143824",
+    "A227590",
+    "A003022"
+   ]
+  },
+  {
+   "problem": "36",
+   "oeis": [
+    "A393584"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A393584"
+   ]
+  },
+  {
+   "problem": "51",
+   "oeis": [
+    "A002202",
+    "A014197"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A002202",
+    "A014197"
+   ]
+  },
+  {
+   "problem": "52",
+   "oeis": [
+    "A263996"
+   ],
+   "lean_statement": true,
+   "prize": "$250",
+   "tags": [
+    "number theory",
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A263996"
+   ]
+  },
+  {
+   "problem": "60",
+   "oeis": [
+    "A006855"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "cycles"
+   ],
+   "sequences_local": [
+    "A006855"
+   ]
+  },
+  {
+   "problem": "68",
+   "oeis": [
+    "A331373"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "irrationality"
+   ],
+   "sequences_local": [
+    "A331373"
+   ]
+  },
+  {
+   "problem": "77",
+   "oeis": [
+    "A059442"
+   ],
+   "lean_statement": true,
+   "prize": "$250",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A059442"
+   ]
+  },
+  {
+   "problem": "78",
+   "oeis": [
+    "A059442"
+   ],
+   "lean_statement": true,
+   "prize": "$100",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A059442"
+   ]
+  },
+  {
+   "problem": "82",
+   "oeis": [
+    "A120414",
+    "A390256",
+    "A390257",
+    "A390919",
+    "A392636",
+    "A394400",
+    "A394462",
+    "A394539",
+    "A394563",
+    "A394564",
+    "A394573",
+    "A394574",
+    "A394930",
+    "A394933"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory"
+   ],
+   "sequences_local": [
+    "A120414",
+    "A390256",
+    "A390257",
+    "A390919",
+    "A392636",
+    "A394400",
+    "A394462",
+    "A394539",
+    "A394563",
+    "A394564",
+    "A394573",
+    "A394574",
+    "A394930",
+    "A394933"
+   ]
+  },
+  {
+   "problem": "84",
+   "oeis": [
+    "A399654"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "cycles"
+   ],
+   "sequences_local": [
+    "A399654"
+   ]
+  },
+  {
+   "problem": "85",
+   "oeis": [
+    "A006672"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A006672"
+   ]
+  },
+  {
+   "problem": "86",
+   "oeis": [
+    "A245762"
+   ],
+   "lean_statement": true,
+   "prize": "$100",
+   "tags": [
+    "graph theory"
+   ],
+   "sequences_local": [
+    "A245762"
+   ]
+  },
+  {
+   "problem": "87",
+   "oeis": [
+    "A059442"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A059442"
+   ]
+  },
+  {
+   "problem": "89",
+   "oeis": [
+    "A186704",
+    "A131628"
+   ],
+   "lean_statement": true,
+   "prize": "$500",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A186704",
+    "A131628"
+   ]
+  },
+  {
+   "problem": "91",
+   "oeis": [
+    "A186704"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A186704"
+   ]
+  },
+  {
+   "problem": "101",
+   "oeis": [
+    "A006065"
+   ],
+   "lean_statement": true,
+   "prize": "$100",
+   "tags": [
+    "geometry"
+   ],
+   "sequences_local": [
+    "A006065"
+   ]
+  },
+  {
+   "problem": "104",
+   "oeis": [
+    "A003829"
+   ],
+   "lean_statement": true,
+   "prize": "$100",
+   "tags": [
+    "geometry"
+   ],
+   "sequences_local": [
+    "A003829"
+   ]
+  },
+  {
+   "problem": "138",
+   "oeis": [
+    "A005346"
+   ],
+   "lean_statement": true,
+   "prize": "$500",
+   "tags": [
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A005346"
+   ]
+  },
+  {
+   "problem": "141",
+   "oeis": [
+    "A006560"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "primes",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A006560"
+   ]
+  },
+  {
+   "problem": "142",
+   "oeis": [
+    "A003002",
+    "A003003",
+    "A003004",
+    "A003005"
+   ],
+   "lean_statement": true,
+   "prize": "$10000",
+   "tags": [
+    "additive combinatorics",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A003002",
+    "A003003",
+    "A003004",
+    "A003005"
+   ]
+  },
+  {
+   "problem": "145",
+   "oeis": [
+    "A005117"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A005117"
+   ]
+  },
+  {
+   "problem": "148",
+   "oeis": [
+    "A076393",
+    "A006585"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "unit fractions"
+   ],
+   "sequences_local": [
+    "A076393",
+    "A006585"
+   ]
+  },
+  {
+   "problem": "155",
+   "oeis": [
+    "A143824",
+    "A227590",
+    "A003022"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "sidon sets"
+   ],
+   "sequences_local": [
+    "A143824",
+    "A227590",
+    "A003022"
+   ]
+  },
+  {
+   "problem": "156",
+   "oeis": [
+    "A382397"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "sidon sets"
+   ],
+   "sequences_local": [
+    "A382397"
+   ]
+  },
+  {
+   "problem": "160",
+   "oeis": [
+    "A402186"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A402186"
+   ]
+  },
+  {
+   "problem": "165",
+   "oeis": [
+    "A000791"
+   ],
+   "lean_statement": true,
+   "prize": "$250",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A000791"
+   ]
+  },
+  {
+   "problem": "168",
+   "oeis": [
+    "A004059",
+    "A057561",
+    "A094708",
+    "A386439"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A004059",
+    "A057561",
+    "A094708",
+    "A386439"
+   ]
+  },
+  {
+   "problem": "169",
+   "oeis": [
+    "A005346"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A005346"
+   ]
+  },
+  {
+   "problem": "170",
+   "oeis": [
+    "A046693"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A046693"
+   ]
+  },
+  {
+   "problem": "176",
+   "oeis": [
+    "A398541"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "arithmetic progressions",
+    "discrepancy"
+   ],
+   "sequences_local": [
+    "A398541"
+   ]
+  },
+  {
+   "problem": "200",
+   "oeis": [
+    "A005115"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "primes",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A005115"
+   ]
+  },
+  {
+   "problem": "201",
+   "oeis": [
+    "A003002",
+    "A003003",
+    "A003004",
+    "A003005"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A003002",
+    "A003003",
+    "A003004",
+    "A003005"
+   ]
+  },
+  {
+   "problem": "208",
+   "oeis": [
+    "A005117",
+    "A076259"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A005117",
+    "A076259"
+   ]
+  },
+  {
+   "problem": "218",
+   "oeis": [
+    "A333230",
+    "A333231",
+    "A064113"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A333230",
+    "A333231",
+    "A064113"
+   ]
+  },
+  {
+   "problem": "222",
+   "oeis": [
+    "A001481",
+    "A256435"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "squares"
+   ],
+   "sequences_local": [
+    "A001481",
+    "A256435"
+   ]
+  },
+  {
+   "problem": "233",
+   "oeis": [
+    "A074741"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A074741"
+   ]
+  },
+  {
+   "problem": "236",
+   "oeis": [
+    "A039669",
+    "A109925"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A039669",
+    "A109925"
+   ]
+  },
+  {
+   "problem": "241",
+   "oeis": [
+    "A387704"
+   ],
+   "lean_statement": true,
+   "prize": "$100",
+   "tags": [
+    "additive combinatorics",
+    "sidon sets"
+   ],
+   "sequences_local": [
+    "A387704"
+   ]
+  },
+  {
+   "problem": "243",
+   "oeis": [
+    "A000058"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "irrationality"
+   ],
+   "sequences_local": [
+    "A000058"
+   ]
+  },
+  {
+   "problem": "249",
+   "oeis": [
+    "A256936"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "irrationality"
+   ],
+   "sequences_local": [
+    "A256936"
+   ]
+  },
+  {
+   "problem": "251",
+   "oeis": [
+    "A098990"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "irrationality"
+   ],
+   "sequences_local": [
+    "A098990"
+   ]
+  },
+  {
+   "problem": "252",
+   "oeis": [
+    "A227988",
+    "A227989",
+    "A307036",
+    "A359060"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "irrationality"
+   ],
+   "sequences_local": [
+    "A227988",
+    "A227989",
+    "A307036",
+    "A359060"
+   ]
+  },
+  {
+   "problem": "271",
+   "oeis": [
+    "A005487"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A005487"
+   ]
+  },
+  {
+   "problem": "272",
+   "oeis": [
+    "A401861"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A401861"
+   ]
+  },
+  {
+   "problem": "291",
+   "oeis": [
+    "A110566"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "unit fractions"
+   ],
+   "sequences_local": [
+    "A110566"
+   ]
+  },
+  {
+   "problem": "295",
+   "oeis": [
+    "A192881"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "unit fractions"
+   ],
+   "sequences_local": [
+    "A192881"
+   ]
+  },
+  {
+   "problem": "301",
+   "oeis": [
+    "A390394"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "unit fractions"
+   ],
+   "sequences_local": [
+    "A390394"
+   ]
+  },
+  {
+   "problem": "302",
+   "oeis": [
+    "A390395"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "unit fractions"
+   ],
+   "sequences_local": [
+    "A390395"
+   ]
+  },
+  {
+   "problem": "313",
+   "oeis": [
+    "A054377"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "unit fractions"
+   ],
+   "sequences_local": [
+    "A054377"
+   ]
+  },
+  {
+   "problem": "322",
+   "oeis": [
+    "A025456",
+    "A025418"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powers"
+   ],
+   "sequences_local": [
+    "A025456",
+    "A025418"
+   ]
+  },
+  {
+   "problem": "323",
+   "oeis": [
+    "A004825",
+    "A004831",
+    "A004832",
+    "A004833",
+    "A004842",
+    "A004843",
+    "A004844",
+    "A004845",
+    "A004857",
+    "A004869"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powers"
+   ],
+   "sequences_local": [
+    "A004825",
+    "A004831",
+    "A004832",
+    "A004833",
+    "A004842",
+    "A004843",
+    "A004844",
+    "A004845",
+    "A004857",
+    "A004869"
+   ]
+  },
+  {
+   "problem": "325",
+   "oeis": [
+    "A004825",
+    "A004832",
+    "A004843",
+    "A004854",
+    "A004865"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powers"
+   ],
+   "sequences_local": [
+    "A004825",
+    "A004832",
+    "A004843",
+    "A004854",
+    "A004865"
+   ]
+  },
+  {
+   "problem": "327",
+   "oeis": [
+    "A384927",
+    "A398582"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "unit fractions"
+   ],
+   "sequences_local": [
+    "A384927",
+    "A398582"
+   ]
+  },
+  {
+   "problem": "334",
+   "oeis": [
+    "A062241",
+    "A045535"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A062241",
+    "A045535"
+   ]
+  },
+  {
+   "problem": "340",
+   "oeis": [
+    "A080200",
+    "A005282"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "additive combinatorics",
+    "sidon sets"
+   ],
+   "sequences_local": [
+    "A080200",
+    "A005282"
+   ]
+  },
+  {
+   "problem": "342",
+   "oeis": [
+    "A002858",
+    "A400867"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A002858",
+    "A400867"
+   ]
+  },
+  {
+   "problem": "345",
+   "oeis": [
+    "A001661"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "complete sequences"
+   ],
+   "sequences_local": [
+    "A001661"
+   ]
+  },
+  {
+   "problem": "357",
+   "oeis": [
+    "A364132",
+    "A364153"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A364132",
+    "A364153"
+   ]
+  },
+  {
+   "problem": "359",
+   "oeis": [
+    "A002048"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A002048"
+   ]
+  },
+  {
+   "problem": "365",
+   "oeis": [
+    "A060355",
+    "A060859",
+    "A175155"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A060355",
+    "A060859",
+    "A175155"
+   ]
+  },
+  {
+   "problem": "367",
+   "oeis": [
+    "A057521"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A057521"
+   ]
+  },
+  {
+   "problem": "368",
+   "oeis": [
+    "A074399"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A074399"
+   ]
+  },
+  {
+   "problem": "371",
+   "oeis": [
+    "A070089"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A070089"
+   ]
+  },
+  {
+   "problem": "373",
+   "oeis": [
+    "A003135"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A003135"
+   ]
+  },
+  {
+   "problem": "374",
+   "oeis": [
+    "A388851",
+    "A387184",
+    "A389117",
+    "A389148"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A388851",
+    "A387184",
+    "A389117",
+    "A389148"
+   ]
+  },
+  {
+   "problem": "376",
+   "oeis": [
+    "A030979"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "binomial coefficients",
+    "base representations"
+   ],
+   "sequences_local": [
+    "A030979"
+   ]
+  },
+  {
+   "problem": "382",
+   "oeis": [
+    "A388850"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A388850"
+   ]
+  },
+  {
+   "problem": "385",
+   "oeis": [
+    "A322292",
+    "A322293"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A322292",
+    "A322293"
+   ]
+  },
+  {
+   "problem": "386",
+   "oeis": [
+    "A280992"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "binomial coefficients"
+   ],
+   "sequences_local": [
+    "A280992"
+   ]
+  },
+  {
+   "problem": "389",
+   "oeis": [
+    "A375071"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A375071"
+   ]
+  },
+  {
+   "problem": "390",
+   "oeis": [
+    "A193429"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A193429"
+   ]
+  },
+  {
+   "problem": "393",
+   "oeis": [
+    "A388302"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A388302"
+   ]
+  },
+  {
+   "problem": "394",
+   "oeis": [
+    "A344005"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A344005"
+   ]
+  },
+  {
+   "problem": "396",
+   "oeis": [
+    "A375077"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "binomial coefficients"
+   ],
+   "sequences_local": [
+    "A375077"
+   ]
+  },
+  {
+   "problem": "400",
+   "oeis": [
+    "A400979",
+    "A400981"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A400979",
+    "A400981"
+   ]
+  },
+  {
+   "problem": "408",
+   "oeis": [
+    "A049108"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "iterated functions"
+   ],
+   "sequences_local": [
+    "A049108"
+   ]
+  },
+  {
+   "problem": "409",
+   "oeis": [
+    "A039651",
+    "A229487"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "iterated functions"
+   ],
+   "sequences_local": [
+    "A039651",
+    "A229487"
+   ]
+  },
+  {
+   "problem": "410",
+   "oeis": [
+    "A007497"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "iterated functions"
+   ],
+   "sequences_local": [
+    "A007497"
+   ]
+  },
+  {
+   "problem": "411",
+   "oeis": [
+    "A383044"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "iterated functions"
+   ],
+   "sequences_local": [
+    "A383044"
+   ]
+  },
+  {
+   "problem": "412",
+   "oeis": [
+    "A007497",
+    "A051572"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "iterated functions"
+   ],
+   "sequences_local": [
+    "A007497",
+    "A051572"
+   ]
+  },
+  {
+   "problem": "413",
+   "oeis": [
+    "A005236",
+    "A400430"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "iterated functions"
+   ],
+   "sequences_local": [
+    "A005236",
+    "A400430"
+   ]
+  },
+  {
+   "problem": "414",
+   "oeis": [
+    "A064491",
+    "A401545"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "iterated functions"
+   ],
+   "sequences_local": [
+    "A064491",
+    "A401545"
+   ]
+  },
+  {
+   "problem": "416",
+   "oeis": [
+    "A264810"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A264810"
+   ]
+  },
+  {
+   "problem": "417",
+   "oeis": [
+    "A264810",
+    "A061070"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A264810",
+    "A061070"
+   ]
+  },
+  {
+   "problem": "422",
+   "oeis": [
+    "A005185"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A005185"
+   ]
+  },
+  {
+   "problem": "423",
+   "oeis": [
+    "A005243"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A005243"
+   ]
+  },
+  {
+   "problem": "424",
+   "oeis": [
+    "A005244"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A005244"
+   ]
+  },
+  {
+   "problem": "425",
+   "oeis": [
+    "A400464"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "sidon sets"
+   ],
+   "sequences_local": [
+    "A400464"
+   ]
+  },
+  {
+   "problem": "430",
+   "oeis": [
+    "A322293"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A322293"
+   ]
+  },
+  {
+   "problem": "436",
+   "oeis": [
+    "A000445"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A000445"
+   ]
+  },
+  {
+   "problem": "451",
+   "oeis": [
+    "A386620"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A386620"
+   ]
+  },
+  {
+   "problem": "452",
+   "oeis": [
+    "A400378"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A400378"
+   ]
+  },
+  {
+   "problem": "454",
+   "oeis": [
+    "A389676",
+    "A389677"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A389676",
+    "A389677"
+   ]
+  },
+  {
+   "problem": "456",
+   "oeis": [
+    "A034694",
+    "A061026",
+    "A398758"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A034694",
+    "A061026",
+    "A398758"
+   ]
+  },
+  {
+   "problem": "461",
+   "oeis": [
+    "A401328"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A401328"
+   ]
+  },
+  {
+   "problem": "462",
+   "oeis": [
+    "A032742"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A032742"
+   ]
+  },
+  {
+   "problem": "463",
+   "oeis": [
+    "A401176"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A401176"
+   ]
+  },
+  {
+   "problem": "468",
+   "oeis": [
+    "A167485",
+    "A387502",
+    "A387503"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "divisors"
+   ],
+   "sequences_local": [
+    "A167485",
+    "A387502",
+    "A387503"
+   ]
+  },
+  {
+   "problem": "470",
+   "oeis": [
+    "A006037",
+    "A002975"
+   ],
+   "lean_statement": true,
+   "prize": "$10",
+   "tags": [
+    "number theory",
+    "divisors"
+   ],
+   "sequences_local": [
+    "A006037",
+    "A002975"
+   ]
+  },
+  {
+   "problem": "472",
+   "oeis": [
+    "A389713"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A389713"
+   ]
+  },
+  {
+   "problem": "478",
+   "oeis": [
+    "A210184"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A210184"
+   ]
+  },
+  {
+   "problem": "479",
+   "oeis": [
+    "A036236",
+    "A015919",
+    "A050259",
+    "A015921",
+    "A006521",
+    "A006517",
+    "A015940"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A036236",
+    "A015919",
+    "A050259",
+    "A015921",
+    "A006521",
+    "A006517",
+    "A015940"
+   ]
+  },
+  {
+   "problem": "483",
+   "oeis": [
+    "A030126"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "additive combinatorics",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A030126"
+   ]
+  },
+  {
+   "problem": "489",
+   "oeis": [
+    "A005117",
+    "A076259"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A005117",
+    "A076259"
+   ]
+  },
+  {
+   "problem": "500",
+   "oeis": [
+    "A140462"
+   ],
+   "lean_statement": true,
+   "prize": "$500",
+   "tags": [
+    "graph theory",
+    "hypergraphs",
+    "turan number"
+   ],
+   "sequences_local": [
+    "A140462"
+   ]
+  },
+  {
+   "problem": "503",
+   "oeis": [
+    "A175769"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A175769"
+   ]
+  },
+  {
+   "problem": "528",
+   "oeis": [
+    "A387897",
+    "A156816"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "geometry"
+   ],
+   "sequences_local": [
+    "A387897",
+    "A156816"
+   ]
+  },
+  {
+   "problem": "530",
+   "oeis": [
+    "A143824"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "sidon sets"
+   ],
+   "sequences_local": [
+    "A143824"
+   ]
+  },
+  {
+   "problem": "536",
+   "oeis": [
+    "A401118"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A401118"
+   ]
+  },
+  {
+   "problem": "544",
+   "oeis": [
+    "A000791"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A000791"
+   ]
+  },
+  {
+   "problem": "545",
+   "oeis": [
+    "A059442"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A059442"
+   ]
+  },
+  {
+   "problem": "552",
+   "oeis": [
+    "A006672"
+   ],
+   "lean_statement": true,
+   "prize": "$100",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A006672"
+   ]
+  },
+  {
+   "problem": "554",
+   "oeis": [
+    "A003323"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A003323"
+   ]
+  },
+  {
+   "problem": "555",
+   "oeis": [
+    "A389313"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A389313"
+   ]
+  },
+  {
+   "problem": "573",
+   "oeis": [
+    "A006856"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "turan number"
+   ],
+   "sequences_local": [
+    "A006856"
+   ]
+  },
+  {
+   "problem": "588",
+   "oeis": [
+    "A006065",
+    "A008997"
+   ],
+   "lean_statement": true,
+   "prize": "$100",
+   "tags": [
+    "geometry"
+   ],
+   "sequences_local": [
+    "A006065",
+    "A008997"
+   ]
+  },
+  {
+   "problem": "634",
+   "oeis": [
+    "A005792"
+   ],
+   "lean_statement": false,
+   "prize": "$25",
+   "tags": [
+    "geometry"
+   ],
+   "sequences_local": [
+    "A005792"
+   ]
+  },
+  {
+   "problem": "661",
+   "oeis": [
+    "A186704"
+   ],
+   "lean_statement": true,
+   "prize": "$50",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A186704"
+   ]
+  },
+  {
+   "problem": "663",
+   "oeis": [
+    "A391668"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A391668"
+   ]
+  },
+  {
+   "problem": "668",
+   "oeis": [
+    "A385657"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A385657"
+   ]
+  },
+  {
+   "problem": "669",
+   "oeis": [
+    "A003035",
+    "A006065",
+    "A008997"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "geometry"
+   ],
+   "sequences_local": [
+    "A003035",
+    "A006065",
+    "A008997"
+   ]
+  },
+  {
+   "problem": "675",
+   "oeis": [
+    "A401757"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A401757"
+   ]
+  },
+  {
+   "problem": "676",
+   "oeis": [
+    "A390181"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A390181"
+   ]
+  },
+  {
+   "problem": "681",
+   "oeis": [
+    "A389680"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A389680"
+   ]
+  },
+  {
+   "problem": "683",
+   "oeis": [
+    "A006530",
+    "A074399",
+    "A121359"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes",
+    "binomial coefficients"
+   ],
+   "sequences_local": [
+    "A006530",
+    "A074399",
+    "A121359"
+   ]
+  },
+  {
+   "problem": "684",
+   "oeis": [
+    "A392019"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes",
+    "binomial coefficients"
+   ],
+   "sequences_local": [
+    "A392019"
+   ]
+  },
+  {
+   "problem": "687",
+   "oeis": [
+    "A048670",
+    "A058989"
+   ],
+   "lean_statement": true,
+   "prize": "$1000",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A048670",
+    "A058989"
+   ]
+  },
+  {
+   "problem": "693",
+   "oeis": [
+    "A391118"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "divisors"
+   ],
+   "sequences_local": [
+    "A391118"
+   ]
+  },
+  {
+   "problem": "695",
+   "oeis": [
+    "A061092"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A061092"
+   ]
+  },
+  {
+   "problem": "700",
+   "oeis": [
+    "A091963"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "binomial coefficients"
+   ],
+   "sequences_local": [
+    "A091963"
+   ]
+  },
+  {
+   "problem": "710",
+   "oeis": [
+    "A390246"
+   ],
+   "lean_statement": true,
+   "prize": "₹2000",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A390246"
+   ]
+  },
+  {
+   "problem": "711",
+   "oeis": [
+    "A390246"
+   ],
+   "lean_statement": true,
+   "prize": "₹1000",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A390246"
+   ]
+  },
+  {
+   "problem": "724",
+   "oeis": [
+    "A001438"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "combinatorics"
+   ],
+   "sequences_local": [
+    "A001438"
+   ]
+  },
+  {
+   "problem": "725",
+   "oeis": [
+    "A001009"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "combinatorics"
+   ],
+   "sequences_local": [
+    "A001009"
+   ]
+  },
+  {
+   "problem": "727",
+   "oeis": [
+    "A002503",
+    "A343507",
+    "A389396"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A002503",
+    "A343507",
+    "A389396"
+   ]
+  },
+  {
+   "problem": "731",
+   "oeis": [
+    "A006197"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "binomial coefficients"
+   ],
+   "sequences_local": [
+    "A006197"
+   ]
+  },
+  {
+   "problem": "768",
+   "oeis": [
+    "A001034",
+    "A352287"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A001034",
+    "A352287"
+   ]
+  },
+  {
+   "problem": "769",
+   "oeis": [
+    "A014544"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "geometry"
+   ],
+   "sequences_local": [
+    "A014544"
+   ]
+  },
+  {
+   "problem": "770",
+   "oeis": [
+    "A263647"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A263647"
+   ]
+  },
+  {
+   "problem": "773",
+   "oeis": [
+    "A390813"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "sidon sets",
+    "squares"
+   ],
+   "sequences_local": [
+    "A390813"
+   ]
+  },
+  {
+   "problem": "786",
+   "oeis": [
+    "A143301"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A143301"
+   ]
+  },
+  {
+   "problem": "791",
+   "oeis": [
+    "A066063"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A066063"
+   ]
+  },
+  {
+   "problem": "796",
+   "oeis": [
+    "A401834"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A401834"
+   ]
+  },
+  {
+   "problem": "812",
+   "oeis": [
+    "A059442"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A059442"
+   ]
+  },
+  {
+   "problem": "817",
+   "oeis": [
+    "A399720"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A399720"
+   ]
+  },
+  {
+   "problem": "819",
+   "oeis": [
+    "A400702"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A400702"
+   ]
+  },
+  {
+   "problem": "820",
+   "oeis": [
+    "A263647"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A263647"
+   ]
+  },
+  {
+   "problem": "821",
+   "oeis": [
+    "A014197"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A014197"
+   ]
+  },
+  {
+   "problem": "824",
+   "oeis": [
+    "A401252"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A401252"
+   ]
+  },
+  {
+   "problem": "829",
+   "oeis": [
+    "A025455",
+    "A025468"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A025455",
+    "A025468"
+   ]
+  },
+  {
+   "problem": "830",
+   "oeis": [
+    "A259180"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A259180"
+   ]
+  },
+  {
+   "problem": "849",
+   "oeis": [
+    "A003016",
+    "A003015",
+    "A059233",
+    "A098565",
+    "A090162",
+    "A180058",
+    "A182237"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "binomial coefficients"
+   ],
+   "sequences_local": [
+    "A003016",
+    "A003015",
+    "A059233",
+    "A098565",
+    "A090162",
+    "A180058",
+    "A182237"
+   ]
+  },
+  {
+   "problem": "852",
+   "oeis": [
+    "A001223",
+    "A053597",
+    "A078515"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A001223",
+    "A053597",
+    "A078515"
+   ]
+  },
+  {
+   "problem": "853",
+   "oeis": [
+    "A001223",
+    "A390769"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A001223",
+    "A390769"
+   ]
+  },
+  {
+   "problem": "854",
+   "oeis": [
+    "A389839",
+    "A048670"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A389839",
+    "A048670"
+   ]
+  },
+  {
+   "problem": "855",
+   "oeis": [
+    "A023193"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A023193"
+   ]
+  },
+  {
+   "problem": "860",
+   "oeis": [
+    "A048670",
+    "A058989"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A048670",
+    "A058989"
+   ]
+  },
+  {
+   "problem": "864",
+   "oeis": [
+    "A389182"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "sidon sets",
+    "additive combinatorics"
+   ],
+   "sequences_local": [
+    "A389182"
+   ]
+  },
+  {
+   "problem": "878",
+   "oeis": [
+    "A339378"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A339378"
+   ]
+  },
+  {
+   "problem": "879",
+   "oeis": [
+    "A186736"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A186736"
+   ]
+  },
+  {
+   "problem": "889",
+   "oeis": [
+    "A401013",
+    "A401014"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A401013",
+    "A401014"
+   ]
+  },
+  {
+   "problem": "893",
+   "oeis": [
+    "A046801",
+    "A401468"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "divisors"
+   ],
+   "sequences_local": [
+    "A046801",
+    "A401468"
+   ]
+  },
+  {
+   "problem": "901",
+   "oeis": [
+    "A392185"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "combinatorics",
+    "hypergraphs"
+   ],
+   "sequences_local": [
+    "A392185"
+   ]
+  },
+  {
+   "problem": "902",
+   "oeis": [
+    "A362137"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory"
+   ],
+   "sequences_local": [
+    "A362137"
+   ]
+  },
+  {
+   "problem": "912",
+   "oeis": [
+    "A071626"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A071626"
+   ]
+  },
+  {
+   "problem": "913",
+   "oeis": [
+    "A359747"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A359747"
+   ]
+  },
+  {
+   "problem": "928",
+   "oeis": [
+    "A006530"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A006530"
+   ]
+  },
+  {
+   "problem": "929",
+   "oeis": [
+    "A058989",
+    "A048670",
+    "A049300"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A058989",
+    "A048670",
+    "A049300"
+   ]
+  },
+  {
+   "problem": "932",
+   "oeis": [
+    "A387864"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A387864"
+   ]
+  },
+  {
+   "problem": "933",
+   "oeis": [
+    "A401022"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A401022"
+   ]
+  },
+  {
+   "problem": "935",
+   "oeis": [
+    "A057521",
+    "A389244"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A057521",
+    "A389244"
+   ]
+  },
+  {
+   "problem": "936",
+   "oeis": [
+    "A146968"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A146968"
+   ]
+  },
+  {
+   "problem": "938",
+   "oeis": [
+    "A001694",
+    "A076446"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A001694",
+    "A076446"
+   ]
+  },
+  {
+   "problem": "939",
+   "oeis": [
+    "A297867",
+    "A036966"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A297867",
+    "A036966"
+   ]
+  },
+  {
+   "problem": "942",
+   "oeis": [
+    "A119241",
+    "A119242"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A119241",
+    "A119242"
+   ]
+  },
+  {
+   "problem": "943",
+   "oeis": [
+    "A085252",
+    "A085253",
+    "A085255"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A085252",
+    "A085253",
+    "A085255"
+   ]
+  },
+  {
+   "problem": "945",
+   "oeis": [
+    "A048892"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "divisors"
+   ],
+   "sequences_local": [
+    "A048892"
+   ]
+  },
+  {
+   "problem": "954",
+   "oeis": [
+    "A390642"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A390642"
+   ]
+  },
+  {
+   "problem": "961",
+   "oeis": [
+    "A213253"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A213253"
+   ]
+  },
+  {
+   "problem": "962",
+   "oeis": [
+    "A327909"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A327909"
+   ]
+  },
+  {
+   "problem": "968",
+   "oeis": [
+    "A387591"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A387591"
+   ]
+  },
+  {
+   "problem": "969",
+   "oeis": [
+    "A013928"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A013928"
+   ]
+  },
+  {
+   "problem": "970",
+   "oeis": [
+    "A048669"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A048669"
+   ]
+  },
+  {
+   "problem": "971",
+   "oeis": [
+    "A226521"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A226521"
+   ]
+  },
+  {
+   "problem": "975",
+   "oeis": [
+    "A147807"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "divisors",
+    "polynomials"
+   ],
+   "sequences_local": [
+    "A147807"
+   ]
+  },
+  {
+   "problem": "979",
+   "oeis": [
+    "A385316"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A385316"
+   ]
+  },
+  {
+   "problem": "985",
+   "oeis": [
+    "A002233",
+    "A219429",
+    "A103309"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A002233",
+    "A219429",
+    "A103309"
+   ]
+  },
+  {
+   "problem": "1003",
+   "oeis": [
+    "A001274"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A001274"
+   ]
+  },
+  {
+   "problem": "1004",
+   "oeis": [
+    "A079008"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A079008"
+   ]
+  },
+  {
+   "problem": "1013",
+   "oeis": [
+    "A292528"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "chromatic number"
+   ],
+   "sequences_local": [
+    "A292528"
+   ]
+  },
+  {
+   "problem": "1016",
+   "oeis": [
+    "A105206"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "cycles"
+   ],
+   "sequences_local": [
+    "A105206"
+   ]
+  },
+  {
+   "problem": "1029",
+   "oeis": [
+    "A059442"
+   ],
+   "lean_statement": true,
+   "prize": "$100",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A059442"
+   ]
+  },
+  {
+   "problem": "1030",
+   "oeis": [
+    "A000791",
+    "A059442"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "ramsey theory"
+   ],
+   "sequences_local": [
+    "A000791",
+    "A059442"
+   ]
+  },
+  {
+   "problem": "1052",
+   "oeis": [
+    "A002827"
+   ],
+   "lean_statement": true,
+   "prize": "$10",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A002827"
+   ]
+  },
+  {
+   "problem": "1053",
+   "oeis": [
+    "A007539"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A007539"
+   ]
+  },
+  {
+   "problem": "1054",
+   "oeis": [
+    "A167485"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "divisors"
+   ],
+   "sequences_local": [
+    "A167485"
+   ]
+  },
+  {
+   "problem": "1055",
+   "oeis": [
+    "A005113"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A005113"
+   ]
+  },
+  {
+   "problem": "1056",
+   "oeis": [
+    "A060427"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A060427"
+   ]
+  },
+  {
+   "problem": "1057",
+   "oeis": [
+    "A006931"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A006931"
+   ]
+  },
+  {
+   "problem": "1059",
+   "oeis": [
+    "A064152"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A064152"
+   ]
+  },
+  {
+   "problem": "1060",
+   "oeis": [
+    "A327153"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A327153"
+   ]
+  },
+  {
+   "problem": "1061",
+   "oeis": [
+    "A110177"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A110177"
+   ]
+  },
+  {
+   "problem": "1062",
+   "oeis": [
+    "A038372"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A038372"
+   ]
+  },
+  {
+   "problem": "1063",
+   "oeis": [
+    "A389360"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A389360"
+   ]
+  },
+  {
+   "problem": "1065",
+   "oeis": [
+    "A074781",
+    "A339465"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A074781",
+    "A339465"
+   ]
+  },
+  {
+   "problem": "1072",
+   "oeis": [
+    "A073944",
+    "A072937",
+    "A154554"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A073944",
+    "A072937",
+    "A154554"
+   ]
+  },
+  {
+   "problem": "1073",
+   "oeis": [
+    "A256519"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A256519"
+   ]
+  },
+  {
+   "problem": "1074",
+   "oeis": [
+    "A063980",
+    "A064164"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A063980",
+    "A064164"
+   ]
+  },
+  {
+   "problem": "1083",
+   "oeis": [
+    "A186704"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A186704"
+   ]
+  },
+  {
+   "problem": "1084",
+   "oeis": [
+    "A045945",
+    "A047932"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A045945",
+    "A047932"
+   ]
+  },
+  {
+   "problem": "1085",
+   "oeis": [
+    "A186705"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A186705"
+   ]
+  },
+  {
+   "problem": "1095",
+   "oeis": [
+    "A003458"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "binomial coefficients"
+   ],
+   "sequences_local": [
+    "A003458"
+   ]
+  },
+  {
+   "problem": "1100",
+   "oeis": [
+    "A325864"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "divisors"
+   ],
+   "sequences_local": [
+    "A325864"
+   ]
+  },
+  {
+   "problem": "1103",
+   "oeis": [
+    "A392164"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A392164"
+   ]
+  },
+  {
+   "problem": "1104",
+   "oeis": [
+    "A292528"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "graph theory",
+    "chromatic number"
+   ],
+   "sequences_local": [
+    "A292528"
+   ]
+  },
+  {
+   "problem": "1106",
+   "oeis": [
+    "A194259",
+    "A194260"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A194259",
+    "A194260"
+   ]
+  },
+  {
+   "problem": "1107",
+   "oeis": [
+    "A056828",
+    "A392342",
+    "A392343"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "powerful"
+   ],
+   "sequences_local": [
+    "A056828",
+    "A392342",
+    "A392343"
+   ]
+  },
+  {
+   "problem": "1108",
+   "oeis": [
+    "A051761",
+    "A115645",
+    "A025494"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "factorials"
+   ],
+   "sequences_local": [
+    "A051761",
+    "A115645",
+    "A025494"
+   ]
+  },
+  {
+   "problem": "1109",
+   "oeis": [
+    "A392164",
+    "A392165"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A392164",
+    "A392165"
+   ]
+  },
+  {
+   "problem": "1110",
+   "oeis": [
+    "A401291"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A401291"
+   ]
+  },
+  {
+   "problem": "1113",
+   "oeis": [
+    "A076336"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "covering systems"
+   ],
+   "sequences_local": [
+    "A076336"
+   ]
+  },
+  {
+   "problem": "1135",
+   "oeis": [
+    "A006370",
+    "A008908"
+   ],
+   "lean_statement": true,
+   "prize": "$500",
+   "tags": [
+    "number theory",
+    "iterated functions"
+   ],
+   "sequences_local": [
+    "A006370",
+    "A008908"
+   ]
+  },
+  {
+   "problem": "1137",
+   "oeis": [
+    "A083550",
+    "A005250"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A083550",
+    "A005250"
+   ]
+  },
+  {
+   "problem": "1139",
+   "oeis": [
+    "A037143",
+    "A101041"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A037143",
+    "A101041"
+   ]
+  },
+  {
+   "problem": "1142",
+   "oeis": [
+    "A039669"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A039669"
+   ]
+  },
+  {
+   "problem": "1162",
+   "oeis": [
+    "A005432"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "group theory"
+   ],
+   "sequences_local": [
+    "A005432"
+   ]
+  },
+  {
+   "problem": "1181",
+   "oeis": [
+    "A053669",
+    "A053670",
+    "A053671",
+    "A053672",
+    "A053673",
+    "A053674"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A053669",
+    "A053670",
+    "A053671",
+    "A053672",
+    "A053673",
+    "A053674"
+   ]
+  },
+  {
+   "problem": "1184",
+   "oeis": [
+    "A401209"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "primes"
+   ],
+   "sequences_local": [
+    "A401209"
+   ]
+  },
+  {
+   "problem": "1186",
+   "oeis": [
+    "A121385"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "additive combinatorics",
+    "arithmetic progressions"
+   ],
+   "sequences_local": [
+    "A121385"
+   ]
+  },
+  {
+   "problem": "1204",
+   "oeis": [
+    "A008407",
+    "A023193",
+    "A135311"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory"
+   ],
+   "sequences_local": [
+    "A008407",
+    "A023193",
+    "A135311"
+   ]
+  },
+  {
+   "problem": "1206",
+   "oeis": [
+    "A401479"
+   ],
+   "lean_statement": true,
+   "prize": "no",
+   "tags": [
+    "number theory",
+    "sidon sets"
+   ],
+   "sequences_local": [
+    "A401479"
+   ]
+  },
+  {
+   "problem": "1208",
+   "oeis": [
+    "A193838",
+    "A271490"
+   ],
+   "lean_statement": false,
+   "prize": "no",
+   "tags": [
+    "geometry",
+    "distances"
+   ],
+   "sequences_local": [
+    "A193838",
+    "A271490"
+   ]
+  }
+ ]
+}

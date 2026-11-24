@@ -1,0 +1,55 @@
+{
+ "sources": {
+  "erdosproblems": {
+   "reachable": true,
+   "clone_s": 0.41,
+   "revision": "cfd0fdb01565a8970b96de382fa6c3c75b271fbd",
+   "problems": 1221,
+   "status": {
+    "open": 563,
+    "proved (Lean)": 184,
+    "proved": 155,
+    "disproved (Lean)": 97,
+    "solved": 69,
+    "disproved": 47,
+    "solved (Lean)": 35,
+    "falsifiable": 29,
+    "verifiable": 9,
+    "not disprovable": 9,
+    "decidable": 8,
+    "open (Lean)": 7,
+    "not provable": 5,
+    "independent": 4
+   },
+   "open_with_oeis": 240,
+   "note": ""
+  },
+  "formal-conjectures": {
+   "reachable": true,
+   "clone_s": 0.37,
+   "lean_files": 2190,
+   "erdos_problem_files": 1023,
+   "revision": "86a2f58a4d7a3a0637d15d5b2ce627592b54b956"
+  },
+  "oeisdata": {
+   "reachable": true,
+   "clone_s": 2.99,
+   "sequences_in_tree": 401864,
+   "cited_by_open_problems": 327,
+   "fetched": 327,
+   "fetch_s": 3.88,
+   "revision": "a9e6e3a6a7b6ad00375d1a87a9bd5cc50885095e"
+  },
+  "lean-toolchain": {
+   "http": 302,
+   "redirect_host": "release-assets.githubusercontent.com",
+   "installed": false,
+   "note": "installing means running downloaded binaries; not done without Ariel's explicit approval"
+  }
+ },
+ "targets": {
+  "open_with_oeis": 240,
+  "with_lean_statement": 216
+ },
+ "headline": "OEIS 401864 sequences via GitHub; Erdős 1221 problems, 563 open, 240 open citing OEIS, 216 of them with a Lean statement; Lean download path open, not installed"
+}

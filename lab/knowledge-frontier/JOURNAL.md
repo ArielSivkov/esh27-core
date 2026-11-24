@@ -18,3 +18,4 @@
 | 2026-11-24T01:32:47Z | `20261124T013247Z-offline-verification-v3-5406` | ok | 1.0s | pass | קומיט מקומי | After red-team rounds 1-3 the committed lab reproduces every expected… | 16 pass, 0 fail, 0 skipped (Python 3.13.18) |
 | 2026-11-24T01:32:49Z | `20261124T013249Z-infra-test-suites-v3-88ce` | failed | 69.4s | fail | קומיט מקומי | All four suites pass on the final code: scanner, 30 labrun scenarios,… |  |
 | 2026-11-24T01:35:09Z | `20261124T013509Z-infra-test-suites-v4-050c` | ok | 77.4s | pass | קומיט מקומי | Same as run 20261124T013249Z-infra-test-suites-v3-88ce after fixing t… |  |
+| 2026-11-24T01:52:17Z | `20261124T015215Z-free-sources-probe-5962` | ok | 9.2s | pass | נדחף | OEIS data, the Erdős problems database and their Lean statements are … | OEIS 401864 sequences via GitHub; Erdős 1221 problems, 563 open, 240 … |
