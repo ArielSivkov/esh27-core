@@ -23,6 +23,7 @@ Reported by each session. Wall minutes; the 2×T4 machine probably counts double
 | 2026-11-24 | tiny-ladder (1×T4) | knowledge-frontier/tiny | running since 00:46 UTC |
 | 2026-11-24 | interior-exp1-weights (1×T4) | interior lab (before the split) | 21 |
 | 2026-11-24 | world-w1-heights (CPU, no GPU) | world (W1) | 0 GPU |
+| 2026-11-24 | city-vision-v1 (1×T4) | world (agent city) | ~7 |
 
 ## Ariel's directive, 24.11 ~04:00 Israel time
 "צריך להגיד לסנהדרין שעכשיו בגלל שיש לנו את הקגל הזה, אז משתמשים בקגל כדי לבנות העולם במקום במשאבים שלנו"
