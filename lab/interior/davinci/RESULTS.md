@@ -40,3 +40,16 @@
   standing point while turning**. A camera that only rotates has no parallax, so no method can produce depth from it.
   **Lesson for photographing:** for 3D, walk around the object and take a photo every 2–3 steps, with ~70% overlap between
   consecutive photos.
+
+## v2: image → 3D (TripoSR, MIT), height = proportions × map width (Kaggle T4, ~14 GPU minutes for the successful run; 3 earlier install failures, ~3 minutes)
+| Method | Within tolerance (3 m or 20%) of 21 | Median error |
+|---|---|---|
+| **TripoSR** | **4/21: fails** | 12.3 m |
+| Image box ratio × map width (2nd baseline) | 14/21 (67%) | 2.6 m |
+| "Always 13 m" | 6/21 | n/a |
+- [F] The vertical axis was chosen without the truth (Pearson 0.78 with the box's pixel height).
+- [F] TripoSR inflates heights on low buildings: 2 floors (6 m) → 8.5–19.3 m. It shrinks towers: 100 m → 79–86 m.
+  **The 3D model adds nothing over the plain box ratio. A negative result.**
+- [H] On renders the box ratio is partly circular (the box was projected from the true geometry), so its 67% is not
+  evidence about real photos. On a photo the box has to be detected (segmentation), and that is the next test.
+- 3D viewer: https://claude.ai/artifact/S7qxSEqLcSydqjjJi12NtB (private).

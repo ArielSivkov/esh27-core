@@ -1,0 +1,97 @@
+<title>המוח של דה וינצ'י</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Rubik:wght@600&display=swap">
+<style>
+/* Layout: a one-screen studio. A 3D stage on top, the source picture and the numbers below; three building tabs. */
+:root { --bg:#eceae4; --stage:#dcd9d0; --ink:#1f2421; --muted:#5d645d; --card:#f7f6f2; --line:#cfcbc0; --accent:#b4532a; --good:#2f7d6d;
+  --f-display:"Rubik","Heebo",system-ui,sans-serif; --f-body:"Heebo",system-ui,sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#141715; --stage:#1c201d; --ink:#e7ebe7; --muted:#9aa39b; --card:#1b1f1c; --line:#2f3531; --accent:#e08055; --good:#4fb39c; color-scheme:dark } }
+:root[data-theme="dark"] { --bg:#141715; --stage:#1c201d; --ink:#e7ebe7; --muted:#9aa39b; --card:#1b1f1c; --line:#2f3531; --accent:#e08055; --good:#4fb39c; color-scheme:dark }
+html, body { height:100%; }
+body { background:var(--bg); color:var(--ink); font-family:var(--f-body); direction:rtl; margin:0; display:flex; flex-direction:column; }
+#stage { flex:1; min-height:280px; position:relative; background:var(--stage); touch-action:none; }
+#stage canvas { position:absolute; inset:0; width:100%; height:100%; }
+#hint { position:absolute; bottom:8px; inset-inline-start:max(12px, env(safe-area-inset-left, 0px)); font-size:12px; color:var(--muted); }
+#panel { padding-block:12px 16px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); display:grid; gap:10px; border-top:1px solid var(--line); }
+h1 { font-family:var(--f-display); font-size:20px; margin:0; }
+#tabs { display:flex; gap:6px; flex-wrap:wrap; }
+#tabs button { font:inherit; font-size:14px; border:1px solid var(--line); background:transparent; color:var(--ink); border-radius:999px; padding:4px 12px; cursor:pointer; }
+#tabs button.on { background:var(--ink); color:var(--card); border-color:var(--ink); }
+#tabs button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.row { display:grid; grid-template-columns:96px 1fr; gap:12px; align-items:start; }
+.row img { width:96px; height:auto; border-radius:6px; border:1px solid var(--line); max-width:100%; }
+.nums { display:grid; gap:4px; font-size:14px; font-variant-numeric:tabular-nums; min-width:0; }
+.nums b { font-family:var(--f-display); }
+.bad { color:var(--accent); } .ok { color:var(--good); }
+p { margin:0; font-size:13px; color:var(--muted); line-height:1.55; max-width:65ch; }
+</style>
+<div id="stage"><canvas id="c"></canvas><span id="hint">גרור לסיבוב · צביטה או גלגלת לזום</span></div>
+<div id="panel">
+  <h1>המוח של דה וינצ'י: תמונה אחת → בניין בתלת-ממד</h1>
+  <div id="tabs"></div>
+  <div class="row"><img id="src" alt="התמונה שממנה נבנה המודל" width="96" height="144"><div class="nums" id="nums"></div></div>
+  <p>TripoSR (MIT, פתוח) בונה גוף תלת-ממדי מתמונה אחת שצולמה בתוך העולם התאום. הצורה נראית נכון, אבל הגובה מנופח: על 21 בניינים, רק 4 היו בטווח השגיאה שנקבע מראש (3 מ' או 20%). כרגע המודל טוב לציור הצורה, לא למדידה.</p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const B = [
+    { key: 'f2', label: 'בית 2 קומות', obj: 'f2.obj', img: 'A_2_w1187559062.jpg', h: 6.0, est: 9.4 },
+    { key: 'f4', label: 'בלוק 4 קומות', obj: 'f4.obj', img: 'A_4_w551310228.jpg', h: 13.0, est: 35.1 },
+    { key: 'f30', label: 'מגדל 30 קומות', obj: 'f30.obj', img: 'A_30_w1013192689.jpg', h: 100.0, est: 79.0 },
+  ];
+  const cv = document.getElementById('c'), stage = document.getElementById('stage');
+  const R = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
+  R.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+  const S = new THREE.Scene(), C = new THREE.PerspectiveCamera(35, 1, 0.01, 100);
+  S.add(new THREE.HemisphereLight(0xffffff, 0x8a8170, 0.9)); const sun = new THREE.DirectionalLight(0xffffff, 0.8); sun.position.set(2, 3, 1.5); S.add(sun);
+  const accent = () => new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#b4532a');
+  let mesh = null, yaw = 0.6, pitch = 0.25, dist = 2.6, auto = true;
+  function parseOBJ(t) {
+    const v = [], idx = [];
+    for (const line of t.split('\n')) {
+      if (line.startsWith('v ')) { const p = line.split(/\s+/); v.push(+p[1], +p[2], +p[3]); }
+      else if (line.startsWith('f ')) { const p = line.trim().split(/\s+/).slice(1).map(s => parseInt(s, 10) - 1); for (let i = 1; i < p.length - 1; i++) idx.push(p[0], p[i], p[i + 1]); }
+    }
+    // the analysis found mesh axis 0 = vertical: map (x,y,z) -> (y_up = x)
+    const pos = new Float32Array(v.length);
+    for (let i = 0; i < v.length; i += 3) { pos[i] = v[i + 2]; pos[i + 1] = v[i]; pos[i + 2] = v[i + 1]; }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setIndex(idx);
+    g.computeVertexNormals(); g.computeBoundingBox(); const bb = g.boundingBox, c = new THREE.Vector3(); bb.getCenter(c);
+    g.translate(-c.x, -bb.min.y, -c.z); const size = new THREE.Vector3(); bb.getSize(size); const s = 1.4 / Math.max(size.x, size.y, size.z); g.scale(s, s, s);
+    return g;
+  }
+  const cache = {};
+  async function show(b) {
+    document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x.dataset.k === b.key));
+    document.getElementById('src').src = b.img;
+    const err = Math.abs(b.est - b.h), tol = Math.max(3, 0.2 * b.h);
+    document.getElementById('nums').innerHTML = `<span><b>גובה אמיתי:</b> ${b.h.toFixed(1)} מ'</span><span><b>דה וינצ'י (TripoSR):</b> ${b.est.toFixed(1)} מ'</span><span class="${err <= tol ? 'ok' : 'bad'}">שגיאה ${err.toFixed(1)} מ' · ${err <= tol ? 'בתוך הטווח' : 'מחוץ לטווח'}</span>`;
+    try {
+      if (!cache[b.key]) { const r = await fetch(b.obj); if (!r.ok) throw new Error(r.status); cache[b.key] = parseOBJ(await r.text()); }
+      if (mesh) S.remove(mesh);
+      mesh = new THREE.Mesh(cache[b.key], new THREE.MeshStandardMaterial({ color: accent(), roughness: 0.75, metalness: 0.05, side: THREE.DoubleSide }));
+      S.add(mesh);
+    } catch (e) { document.getElementById('nums').insertAdjacentHTML('beforeend', `<span class="bad">המודל לא נטען (${e.message}). רענן את הדף.</span>`); }
+  }
+  const tabs = document.getElementById('tabs');
+  B.forEach(b => { const x = document.createElement('button'); x.textContent = b.label; x.dataset.k = b.key; x.onclick = () => show(b); tabs.appendChild(x); });
+  const P = new Map(); let pd = 0;
+  stage.addEventListener('pointerdown', e => { P.set(e.pointerId, [e.clientX, e.clientY]); stage.setPointerCapture(e.pointerId); auto = false; });
+  stage.addEventListener('pointermove', e => { if (!P.has(e.pointerId)) return; const p = P.get(e.pointerId); P.set(e.pointerId, [e.clientX, e.clientY]);
+    if (P.size === 1) { yaw -= (e.clientX - p[0]) * 0.01; pitch = Math.max(-0.2, Math.min(1.2, pitch + (e.clientY - p[1]) * 0.01)); }
+    else if (P.size === 2) { const [a, b] = [...P.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]); if (pd) dist = Math.max(1.2, Math.min(6, dist * pd / d)); pd = d; } });
+  const up = e => { P.delete(e.pointerId); if (P.size < 2) pd = 0; };
+  stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+  stage.addEventListener('wheel', e => { e.preventDefault(); dist = Math.max(1.2, Math.min(6, dist * (e.deltaY > 0 ? 1.1 : 0.9))); }, { passive: false });
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function frame() {
+    const w = stage.clientWidth, h = stage.clientHeight; if (cv.width !== Math.round(w * R.getPixelRatio()) || cv.height !== Math.round(h * R.getPixelRatio())) { R.setSize(w, h, false); C.aspect = w / h; C.updateProjectionMatrix(); }
+    if (auto && !reduce) yaw += 0.004;
+    C.position.set(Math.sin(yaw) * Math.cos(pitch) * dist, 0.7 + Math.sin(pitch) * dist, Math.cos(yaw) * Math.cos(pitch) * dist); C.lookAt(0, 0.6, 0);
+    R.render(S, C); requestAnimationFrame(frame);
+  }
+  show(B[2]); frame();
+})();
+</script>
