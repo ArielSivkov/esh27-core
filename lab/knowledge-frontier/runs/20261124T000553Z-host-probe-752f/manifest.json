@@ -12,7 +12,7 @@
  ],
  "cwd": "lab/knowledge-frontier",
  "registered_utc": "2026-11-24T00:05:53Z",
- "status": "registered",
+ "status": "ok",
  "git": {
   "commit": "a91924c968e3a903571c749c090513adec384fd3",
   "branch": "claude/infra-lab",
@@ -25,5 +25,126 @@
   "mem_gb": 7.8,
   "gpu": "none"
  },
- "env": {}
+ "env": {},
+ "preregistration": {
+  "committed": true,
+  "pushed": false,
+  "commit": "042fd42c5009141d26f72023684792a9d1442a5e"
+ },
+ "started_utc": "2026-11-24T00:05:53Z",
+ "exit_code": 0,
+ "ended_utc": "2026-11-24T00:05:54Z",
+ "wall_s": 0.54,
+ "cpu_user_s": 0.116,
+ "cpu_sys_s": 0.023,
+ "max_rss_mb": 30.0,
+ "redactions": [],
+ "withheld_binary_files": [],
+ "outputs": [
+  {
+   "path": "outputs/summary.json",
+   "bytes": 2624,
+   "sha256": "f8608aebe5de4953801101115c9b21bcb8bf07c294a8b9c357742967ac61fd16"
+  }
+ ],
+ "not_committed": [],
+ "log": {
+  "bytes": 829,
+  "sha256": "20f686177863fac774ece8906d3eb4b84fd66a42ca9ffbc798db4825281eb7b7"
+ },
+ "summary": {
+  "checked_utc": "2026-11-24T00:05:54Z",
+  "results": [
+   {
+    "host": "github.com",
+    "state": "reachable",
+    "http": 200,
+    "ms": 307
+   },
+   {
+    "host": "pypi.org",
+    "state": "reachable",
+    "http": 200,
+    "ms": 86
+   },
+   {
+    "host": "api.kaggle.com",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 288
+   },
+   {
+    "host": "www.kaggle.com",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 283
+   },
+   {
+    "host": "huggingface.co",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 183
+   },
+   {
+    "host": "export.arxiv.org",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 269
+   },
+   {
+    "host": "api.openalex.org",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 239
+   },
+   {
+    "host": "oeis.org",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 7
+   },
+   {
+    "host": "www.erdosproblems.com",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 5
+   },
+   {
+    "host": "download.pytorch.org",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 256
+   },
+   {
+    "host": "release.lean-lang.org",
+    "state": "blocked-by-proxy",
+    "detail": "Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)",
+    "ms": 6
+   },
+   {
+    "host": "raw.githubusercontent.com",
+    "state": "reachable",
+    "http": 200,
+    "ms": 56
+   }
+  ],
+  "reachable": [
+   "github.com",
+   "pypi.org",
+   "raw.githubusercontent.com"
+  ],
+  "blocked": [
+   "api.kaggle.com",
+   "www.kaggle.com",
+   "huggingface.co",
+   "export.arxiv.org",
+   "api.openalex.org",
+   "oeis.org",
+   "www.erdosproblems.com",
+   "download.pytorch.org",
+   "release.lean-lang.org"
+  ],
+  "headline": "3 reachable, 9 blocked: api.kaggle.com, www.kaggle.com, huggingface.co, export.arxiv.org, api.openalex.org, oeis.org, www.erdosproblems.com, download.pytorch.org, release.lean-lang.org"
+ },
+ "verdict": "fail"
 }
