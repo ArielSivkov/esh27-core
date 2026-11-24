@@ -12,7 +12,7 @@
  ],
  "cwd": "lab/knowledge-frontier",
  "registered_utc": "2026-11-24T01:35:09Z",
- "status": "registered",
+ "status": "ok",
  "git": {
   "commit": "c4ec4244253d92f37788a56f2d844dceed8e0053",
   "branch": "claude/infra-lab",
@@ -25,5 +25,30 @@
   "mem_gb": 7.8,
   "gpu": "none"
  },
- "env": {}
+ "env": {},
+ "preregistration": {
+  "committed": true,
+  "pushed": false,
+  "commit": "45237618829e405ac5957a6430ea5d0b19018b37"
+ },
+ "started_utc": "2026-11-24T01:35:09Z",
+ "log": {
+  "total_bytes": 8030,
+  "full_sha256": "935468726fb4dda89d484de5b9d1fd7d4b61d997e572e2dd8d1cf520cec28ad6",
+  "omitted_bytes": 0,
+  "local_copy": "lab/knowledge-frontier/data/runs/20261124T013509Z-infra-test-suites-v4-050c/log.full.txt",
+  "bytes": 8030,
+  "sha256": "935468726fb4dda89d484de5b9d1fd7d4b61d997e572e2dd8d1cf520cec28ad6"
+ },
+ "exit_code": 0,
+ "ended_utc": "2026-11-24T01:36:26Z",
+ "wall_s": 77.401,
+ "cpu_user_s": 46.622,
+ "cpu_sys_s": 10.808,
+ "max_rss_mb": 102.0,
+ "redactions": [],
+ "withheld_files": [],
+ "outputs": [],
+ "not_committed": [],
+ "verdict": "pass"
 }
