@@ -38,9 +38,18 @@ scans everything, commits and pushes.
   and personal data (Israeli phone numbers, e-mail addresses) are redacted in run records and block manual commits.
   A matched value is never printed. The repository is public: everything committed here is public.
 - `infra/hosts.py` names every blocked host; `infra/build_data.py` refuses to run when its source is blocked.
-- `infra/verify.py` fails loudly; a skipped check is never counted as a pass.
-- Tests: `python3 -I infra/tests/test_secretscan.py` and `python3 -I infra/tests/test_labrun.py`
-  (the second runs full push/rebase/hook scenarios against a local bare repository).
+- `infra/verify.py` fails loudly (exit 1 = a check failed, exit 3 = a check could not run; never 0 with a skip).
+  It pins the sha256 of every committed result file, and checks every run record against the
+  `manifest-sha256` seal in labrun's own commits: one registration plus one result per run, nothing edited
+  or deleted afterwards.
+- What the seals guarantee: consistency, not authenticity. They catch accidental and ordinary edits, deletions
+  and commits that imitate labrun. They cannot tell a run that labrun really executed from one written by hand
+  with labrun-style commits, nor detect a rewritten history. Proving who made a record needs signed commits
+  or an external append-only log (open item for the black-team report).
+- `seal/arms_results.md` is closed (fully pinned since 24.11.2026). New results go into run records only.
+- Tests: `infra/tests/test_secretscan.py`, `test_labrun.py` (30 push/rebase/hook/failure scenarios against a local
+  bare repository), `test_verify.py` (tamper drills), `test_bootstrap.py` (empty machine, stale and diverged
+  branches). Run each with `python3 -I`.
 
 ## topo/: topology of human knowledge
 - The research log, with dated entries and corrections, is in a Google Drive doc: "🕸️ טופולוגיית הידע האנושי – יומן מחקר".

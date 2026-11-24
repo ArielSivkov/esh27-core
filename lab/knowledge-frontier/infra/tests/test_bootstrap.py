@@ -33,8 +33,22 @@ class TestBootstrap(unittest.TestCase):
         cls.run_(["git", "clone", "-q", "--no-hardlinks", SRC_REPO, stage])
         lab = os.path.join(stage, LAB_REL)
         cls.run_(["git", "checkout", "-q", "-B", "lab-tools"], cwd=stage)
-        shutil.rmtree(lab)  # inside our own temporary clone; run records and JOURNAL come along unchanged
-        shutil.copytree(os.path.join(SRC_REPO, LAB_REL), lab, ignore=shutil.ignore_patterns(".venv", "__pycache__", "data"))
+        # the working tree's tools replace the committed ones; run records and JOURNAL stay exactly as committed
+        # (copying them would put a run that is still being written into a non-labrun commit, which verify rejects)
+        src_lab = os.path.join(SRC_REPO, LAB_REL)
+        for entry in os.listdir(src_lab):
+            if entry in ("runs", "JOURNAL.md", "data", ".venv", "__pycache__"):
+                continue
+            dst = os.path.join(lab, entry)
+            if os.path.isdir(dst):
+                shutil.rmtree(dst)  # inside our own temporary clone
+            elif os.path.exists(dst):
+                os.remove(dst)
+            src = os.path.join(src_lab, entry)
+            if os.path.isdir(src):
+                shutil.copytree(src, dst, ignore=shutil.ignore_patterns("__pycache__", ".last_*"))
+            else:
+                shutil.copy2(src, dst)
         cls.run_(["git", "add", "-A"], cwd=stage)
         cls.run_(["git", "commit", "-q", "-m", "tools", "--allow-empty"], cwd=stage, env=ident)
         # a branch with NEWER lab content but without the tools (like the branch of 23.11 before this work)
