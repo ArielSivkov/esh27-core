@@ -12,7 +12,7 @@
  ],
  "cwd": "lab/knowledge-frontier",
  "registered_utc": "2026-11-24T00:06:26Z",
- "status": "registered",
+ "status": "ok",
  "git": {
   "commit": "2ab1d1f721cebb10973ccf06439327e659f5d811",
   "branch": "claude/infra-lab",
@@ -25,5 +25,26 @@
   "mem_gb": 7.8,
   "gpu": "none"
  },
- "env": {}
+ "env": {},
+ "preregistration": {
+  "committed": true,
+  "pushed": false,
+  "commit": "1cfab8ed85ca3a78250b7e33acff69df091032f5"
+ },
+ "started_utc": "2026-11-24T00:06:27Z",
+ "exit_code": 0,
+ "ended_utc": "2026-11-24T00:06:38Z",
+ "wall_s": 11.237,
+ "cpu_user_s": 4.449,
+ "cpu_sys_s": 1.928,
+ "max_rss_mb": 31.2,
+ "redactions": [],
+ "withheld_binary_files": [],
+ "outputs": [],
+ "not_committed": [],
+ "log": {
+  "bytes": 1461,
+  "sha256": "df87dfe5fd53bbdb33007946a5e6c82904639b72b097e057d8ebd2c7f9c2dd7e"
+ },
+ "verdict": "pass"
 }

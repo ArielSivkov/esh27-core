@@ -9,3 +9,4 @@
 | 2026-11-24T00:05:53Z | `20261124T000553Z-host-probe-752f` | ok | 0.5s | fail | The GPU and data hosts used by earlier sessions (api.kaggle.com, hugg… | 3 reachable, 9 blocked: api.kaggle.com, www.kaggle.com, huggingface.c… |
 | 2026-11-24T00:05:54Z | `20261124T000554Z-offline-verification-3053` | ok | 0.7s | pass | The committed lab reproduces every number in infra/expected.json offl… | 14 pass, 0 fail, 0 skipped (Python 3.13.18) |
 | 2026-11-24T00:05:56Z | `20261124T000555Z-infra-test-suites-56b2` | failed | 11.2s | fail | Scanner and labrun behave as specified: 13 credential kinds caught, n… |  |
+| 2026-11-24T00:06:27Z | `20261124T000626Z-infra-test-suites-2d8e` | ok | 11.2s | pass | Same as run 20261124T000555Z-infra-test-suites-56b2, after fixing the… |  |
