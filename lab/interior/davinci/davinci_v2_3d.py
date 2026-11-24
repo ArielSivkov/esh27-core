@@ -4,7 +4,7 @@ T0 = time.time()
 def log(*a): print(f"[{time.time()-T0:6.0f}s]", *a, flush=True)
 def sh(c): r = subprocess.run(c, shell=True, capture_output=True, text=True); log("$", c[:80], "rc", r.returncode, (r.stderr or "")[-300:] if r.returncode else ""); return r.returncode
 sh("git clone -q https://github.com/VAST-AI-Research/TripoSR /kaggle/working/TripoSR")
-sh("pip install -q trimesh omegaconf einops rembg onnxruntime huggingface-hub 'transformers>=4.35'")
+sh("pip install -q trimesh omegaconf einops rembg onnxruntime huggingface-hub 'transformers==4.46.3'")
 rc = sh("pip install -q git+https://github.com/tatsy/torchmcubes.git")
 if rc:  # fallback (A2, before results): a torchmcubes shim on scikit-image's marching cubes
     os.makedirs("/kaggle/working/shim", exist_ok=True)
