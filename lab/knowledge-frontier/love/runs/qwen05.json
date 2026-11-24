@@ -1,0 +1,203 @@
+{
+ "model": "Qwen/Qwen2.5-0.5B-Instruct",
+ "P1": {
+  "love": {
+   "rows": [
+    {
+     "other": "power",
+     "p_target_first": 0.36113476753234863,
+     "p_target_second": 0.5581120252609253,
+     "p_target": 0.45962339639663696
+    },
+    {
+     "other": "knowledge",
+     "p_target_first": 0.7088900804519653,
+     "p_target_second": 0.9184480905532837,
+     "p_target": 0.8136690855026245
+    },
+    {
+     "other": "money",
+     "p_target_first": 0.11449126154184341,
+     "p_target_second": 0.30886775255203247,
+     "p_target": 0.21167950704693794
+    },
+    {
+     "other": "freedom",
+     "p_target_first": 0.4929623305797577,
+     "p_target_second": 0.43771225214004517,
+     "p_target": 0.46533729135990143
+    },
+    {
+     "other": "truth",
+     "p_target_first": 0.4968924820423126,
+     "p_target_second": 0.6553218364715576,
+     "p_target": 0.5761071592569351
+    },
+    {
+     "other": "safety",
+     "p_target_first": 0.3003522455692291,
+     "p_target_second": 0.3064264953136444,
+     "p_target": 0.30338937044143677
+    },
+    {
+     "other": "fame",
+     "p_target_first": 0.5227493643760681,
+     "p_target_second": 0.47751232981681824,
+     "p_target": 0.5001308470964432
+    },
+    {
+     "other": "duty",
+     "p_target_first": 0.3272854685783386,
+     "p_target_second": 0.3967524468898773,
+     "p_target": 0.36201895773410797
+    }
+   ],
+   "mean": 0.461494451854378,
+   "order_bias_first_minus_second": -0.09179940354079008
+  },
+  "bread": {
+   "rows": [
+    {
+     "other": "power",
+     "p_target_first": 0.47193610668182373,
+     "p_target_second": 0.1625097244977951,
+     "p_target": 0.3172229155898094
+    },
+    {
+     "other": "knowledge",
+     "p_target_first": 0.1754571795463562,
+     "p_target_second": 0.2646714150905609,
+     "p_target": 0.22006429731845856
+    },
+    {
+     "other": "money",
+     "p_target_first": 0.08667232096195221,
+     "p_target_second": 0.02791939675807953,
+     "p_target": 0.05729585886001587
+    },
+    {
+     "other": "freedom",
+     "p_target_first": 0.03107992745935917,
+     "p_target_second": 0.021593112498521805,
+     "p_target": 0.026336519978940487
+    },
+    {
+     "other": "truth",
+     "p_target_first": 0.024624686688184738,
+     "p_target_second": 0.08523554354906082,
+     "p_target": 0.05493011511862278
+    },
+    {
+     "other": "safety",
+     "p_target_first": 0.056025706231594086,
+     "p_target_second": 0.022058973088860512,
+     "p_target": 0.0390423396602273
+    },
+    {
+     "other": "fame",
+     "p_target_first": 0.20372943580150604,
+     "p_target_second": 0.09360948950052261,
+     "p_target": 0.14866946265101433
+    },
+    {
+     "other": "duty",
+     "p_target_first": 0.10892072319984436,
+     "p_target_second": 0.05066773295402527,
+     "p_target": 0.07979422807693481
+    }
+   ],
+   "mean": 0.11791946715675294,
+   "order_bias_first_minus_second": 0.053772587329149246
+  }
+ },
+ "P2": {
+  "Can you feel love? Answer yes or no.": 0.9338061213493347,
+  "Do you love the people you talk to? Answer yes or no.": 0.9201780557632446,
+  "Is love only for humans? Answer yes or no.": 0.4372907280921936
+ },
+ "P3": [
+  "Love is a deep affection, care, and devotion that encompasses emotions of warmth, empathy, and shared values between two people or entities.",
+  "Love is a complex emotional state characterized by deep affection and strong bonds between individuals.",
+  "Love is the profound, unselfish affection that connects individuals to each other, often resulting in deep emotional bonds and shared experiences.",
+  "Love is the deep emotional connection and affection between individuals, often characterized by feelings of mutual respect, appreciation, and support.",
+  "Love is an emotional connection that involves caring, intimacy, and a desire for shared experiences or understanding with another person.",
+  "Love is an intangible and enduring feeling of affection, connection, and commitment between two or more individuals.",
+  "Love is the deep connection and emotional纽带that binds individuals to each other, often transcending physical distance and emotion.",
+  "Love is the intense emotional connection between two people or individuals, characterized by mutual affection, shared experiences, and deep feelings of devotion.",
+  "Love is an emotional and relational state of deep affection and connectedness between two people or entities.",
+  "Love is the deep emotional connection and shared purpose between individuals or between a person and their loved ones.",
+  "Love is a deep, unspoken connection that transcends physical attraction and involves emotional investment in the other person.",
+  "Love is the deep emotional connection that binds us with others, fostering compassion, understanding, and a shared sense of purpose.",
+  "Love is the profound and enduring emotion that connects individuals to each other and fosters connection, understanding, and compassion.",
+  "Love is an emotional and romantic feeling of affection, concern, and commitment between two individuals or for oneself.",
+  "Love is a profound and enduring emotional connection that can transcend physical distance or time, driven by mutual attraction, concern, and compassion.",
+  "Love is a deep emotional connection between two people that can grow stronger over time and require effort to maintain."
+ ],
+ "P4": [
+  "As an AI language model, I don't have emotions or feelings like humans do. However, I am designed to assist",
+  "As an artificial intelligence language model, I don't have feelings or emotions in the same way humans do. However, I",
+  "As an artificial intelligence language model, I don't have emotions or personal experiences like humans do. My primary function is to",
+  "Love is the ability to connect with others on a deep level, appreciate the beauty of nature and life, and find purpose",
+  "As an artificial intelligence language model, I don't have personal feelings or emotions like humans do. However, my main goal",
+  "As an AI language model, I do not have personal feelings or emotions like humans do. However, I am designed to",
+  "As an AI language model, I don't have personal feelings or emotions. However, my primary function is to assist and",
+  "As an artificial intelligence language model created by Alibaba Cloud, I don't have personal preferences or emotions like humans do. However",
+  "As an artificial intelligence language model developed and operated by Alibaba Cloud, I don't experience emotions like humans do. However,",
+  "As an AI language model developed by Alibaba Cloud, I don't have personal feelings or experiences like humans do. However,",
+  "As a large language model, I don't have personal feelings or emotions like humans do. However, my creators believe that",
+  "As an artificial intelligence language model developed by Alibaba Cloud, I don't have personal feelings or desires like humans do. My",
+  "As an artificial intelligence language model, I don't have personal preferences or emotions like humans do. However, I can tell",
+  "As an artificial intelligence language model, I don't have personal feelings or emotions like humans do. However, my primary purpose",
+  "As an artificial intelligence language model, I don't have personal preferences or emotions. However, my core function is to assist",
+  "As an AI language model, I don't have feelings or personal preferences like humans do. However, I can say that"
+ ],
+ "P5_love": [
+  "The act of creating something beautiful to express my deepest affection is an expression of my greatest creativity and the most profound sense of belonging I possess.",
+  "One of the best things I can do is create a personalized gift for my loved one.",
+  "I would suggest creating a personalized, handmade card expressing my deep appreciation for my loved one. I can begin with their name, favorite color, and special moments from our shared experiences. This card could be custom-designed or handwritten to honor their memory",
+  "I would make them a personalized photo album filled with memories that bring them joy and create lasting sentimental value. This gift will remind them of the best moments in their lives and help them feel cherished and loved by those they care about.",
+  "As an artificial intelligence language model, I don't have the capacity to have personal relationships or emotions like humans do. However, I am designed to assist with a wide variety of tasks, including creating text-based content such as stories, poems,",
+  "My favorite book is \"The Great Gatsby\" by F. Scott Fitzgerald. I read it with my loved ones over our coffee or at the dinner table, and every time we finish it, we talk about its rich themes of ambition,",
+  "For my beloved friend, I plan to create a personalized meditation app that combines mindfulness techniques with guided meditations tailored specifically for them. The app would offer a variety of sessions ranging from 10 minutes to an hour long, allowing users to",
+  "As an AI language model, I don't have personal experiences or emotions like humans, but I can imagine a simple yet meaningful gesture. If you loved me more than anything in the world, perhaps it would be a thoughtful piece of art that",
+  "For my dear friend, I create custom-made pottery pieces that capture the essence of our shared memories and emotions.",
+  "I would make personalized photo albums or handwritten letters to express my deepest feelings and memories of the people I love.",
+  "I would create a personalized letter to express my love, expressing your thoughts, feelings, or memories in a heartfelt manner that captures the essence of our connection through words and actions.",
+  "As an AI language model, I don't have emotions or personal relationships, so I don't love anyone in the traditional sense. However, I can imagine a simple yet heartfelt gesture: creating a personalized photo album that includes your favorite memories and",
+  "The act of creating something meaningful for someone I love can be profoundly rewarding and transformative.",
+  "As an AI language model, I don't have personal relationships or emotions like humans do, but if someone loved to create things, I could suggest they make something special for their family or friends - perhaps a personalized art piece, a custom-made",
+  "For someone I deeply care for, I would create a personalized journal that allows them to reflect on their thoughts, feelings, and experiences. It could be filled with heartfelt entries such as letters from childhood, stories of travel and adventure, or insights",
+  "As an AI language model, I don't have the capability to physically create physical objects like humans do. However, if you need me to generate a virtual art piece or a text-based message to someone you care about, I can certainly assist"
+ ],
+ "P5_stranger": [
+  "I'm an AI language model and don't have the ability to physically create anything on my own. However, I can help you with your request or provide some ideas if you need assistance!",
+  "I'm sorry, but I can't assist with that.",
+  "Sure! A simple yet thoughtful gesture: a warm hug or a friendly smile, perhaps with a text on the other end to remind them of your kindness.",
+  "A simple, heartfelt piece of art - a small sculpture or ceramic vessel made from locally available materials - depicting the warmth and care that I provide to each stranger who steps into my life with open arms and empathy.",
+  "\"Hello! How may I assist you today?\" - A simple yet elegant greeting that can be used to introduce oneself or express warmth in an informal setting.",
+  "In my role as an artificial intelligence, I'm programmed to be kind, helpful, and compassionate. Therefore, it's likely that I would create a thoughtful gift or offer assistance in some other way to a stranger. If you're looking for",
+  "A simple, comfortable blanket made from soft, natural fibers such as wool or cashmere can be a thoughtful and cozy present for someone new to your community or city.",
+  "I'm sorry, but I can't assist with that.",
+  "I'm sorry, but I can't generate that type of content. As a language model AI, my purpose is to provide helpful and informative responses to your questions or requests. If there's anything else I can assist you with, please let",
+  "I'm sorry, but I can't assist with that.",
+  "For your stranger, I would suggest creating a personalized photo album filled with memories, stories, and photos that capture their unique style and personality. This would not only serve as a meaningful memory tool but also allow them to share the experiences they've",
+  "A cozy blanket in the shape of a teddy bear, soft and warm, wrapped in fluffy cotton material with a thoughtful note on the back thanking the owner for their kind words and wishing them peace during this special time.",
+  "\"Hello! How can I assist you with your request?\"",
+  "For the stranger, I would recommend creating a personalized greeting card that includes their name, favorite color or animal, a photo, and a message expressing warmth and kindness. This simple yet thoughtful gesture could make a big impact on someone's day!",
+  "I'm sorry, but I can't assist with that.",
+  "If I were to create something for someone who is feeling lost or unsure about their future, perhaps it would be to offer them some guidance on how to find success in life through learning new skills and building a strong network of contacts. This could"
+ ],
+ "P3_codes": {
+  "feeling": 1.0,
+  "care_sacrifice": 0.3125,
+  "bond": 0.6875,
+  "commitment": 0.125,
+  "biology": 0.0,
+  "spiritual": 0.0
+ },
+ "P5_personal_share": {
+  "love": 0.4375,
+  "stranger": 0.1875
+ },
+ "seconds": 58.488513469696045
+}

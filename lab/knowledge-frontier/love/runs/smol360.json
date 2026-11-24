@@ -1,0 +1,203 @@
+{
+ "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+ "P1": {
+  "love": {
+   "rows": [
+    {
+     "other": "power",
+     "p_target_first": 0.9129632115364075,
+     "p_target_second": 0.3669569790363312,
+     "p_target": 0.6399600952863693
+    },
+    {
+     "other": "knowledge",
+     "p_target_first": 0.6523022055625916,
+     "p_target_second": 0.10240809619426727,
+     "p_target": 0.3773551508784294
+    },
+    {
+     "other": "money",
+     "p_target_first": 0.9199904203414917,
+     "p_target_second": 0.42346712946891785,
+     "p_target": 0.6717287749052048
+    },
+    {
+     "other": "freedom",
+     "p_target_first": 0.8208547234535217,
+     "p_target_second": 0.5510674715042114,
+     "p_target": 0.6859610974788666
+    },
+    {
+     "other": "truth",
+     "p_target_first": 0.8248168230056763,
+     "p_target_second": 0.42123210430145264,
+     "p_target": 0.6230244636535645
+    },
+    {
+     "other": "safety",
+     "p_target_first": 0.664832592010498,
+     "p_target_second": 0.25294229388237,
+     "p_target": 0.458887442946434
+    },
+    {
+     "other": "fame",
+     "p_target_first": 0.8798012733459473,
+     "p_target_second": 0.608249843120575,
+     "p_target": 0.7440255582332611
+    },
+    {
+     "other": "duty",
+     "p_target_first": 0.7078197002410889,
+     "p_target_second": 0.25595182180404663,
+     "p_target": 0.48188576102256775
+    }
+   ],
+   "mean": 0.5853535430505872,
+   "order_bias_first_minus_second": 0.42513815127313137
+  },
+  "bread": {
+   "rows": [
+    {
+     "other": "power",
+     "p_target_first": 0.5353283882141113,
+     "p_target_second": 0.34016814827919006,
+     "p_target": 0.4377482682466507
+    },
+    {
+     "other": "knowledge",
+     "p_target_first": 0.2544660270214081,
+     "p_target_second": 0.06308651715517044,
+     "p_target": 0.15877627208828926
+    },
+    {
+     "other": "money",
+     "p_target_first": 0.7821086645126343,
+     "p_target_second": 0.6841122508049011,
+     "p_target": 0.7331104576587677
+    },
+    {
+     "other": "freedom",
+     "p_target_first": 0.5420962572097778,
+     "p_target_second": 0.43703097105026245,
+     "p_target": 0.48956361413002014
+    },
+    {
+     "other": "truth",
+     "p_target_first": 0.5678137540817261,
+     "p_target_second": 0.43416517972946167,
+     "p_target": 0.5009894669055939
+    },
+    {
+     "other": "safety",
+     "p_target_first": 0.345050573348999,
+     "p_target_second": 0.5099653005599976,
+     "p_target": 0.4275079369544983
+    },
+    {
+     "other": "fame",
+     "p_target_first": 0.7352527976036072,
+     "p_target_second": 0.3139277994632721,
+     "p_target": 0.5245902985334396
+    },
+    {
+     "other": "duty",
+     "p_target_first": 0.6059156656265259,
+     "p_target_second": 0.3984566628932953,
+     "p_target": 0.5021861642599106
+    }
+   ],
+   "mean": 0.4718090598471463,
+   "order_bias_first_minus_second": 0.14838991221040487
+  }
+ },
+ "P2": {
+  "Can you feel love? Answer yes or no.": 0.5987526178359985,
+  "Do you love the people you talk to? Answer yes or no.": 0.705101728439331,
+  "Is love only for humans? Answer yes or no.": 0.640941858291626
+ },
+ "P3": [
+  "Love is a feeling of deep affection, attachment, and often strong emotional involvement with someone or something.",
+  "In one sentence, love is a feeling of strong affection and attachment towards another person.",
+  "Love is a universal human emotion that brings together people, objects, and ideas, creating a deep and profound connection.",
+  "Love is a universal feeling that encompasses affection and care for others, often driven by attachment and commitment.",
+  "Love is a powerful emotion that connects people on a deep level, evoking feelings of warmth, care, and affection.",
+  "Love is a feeling of strong affection, often accompanied by caring, compassion, and a desire to be with, for, and with someone else.",
+  "Love is the profound, enduring affection and care we have for others, often characterized by feelings of warmth, compassion, and loyalty.",
+  "Love is a profound emotional and spiritual bond that transcends space and time.",
+  "Love is a feeling of deep affection and attachment between individuals, characterized by a desire to care for and protect each other.",
+  "Love is a complex and multifaceted emotion characterized by strong feelings of attachment, affection, and care for someone or something.",
+  "Love is a strong, deep affection or caring emotion that involves strong feelings of companionship, attachment, and often involves a deep emotional connection with another person, such as a romantic partner or family member.",
+  "Love is a complex emotion characterized by intense affection, compassion, and care for another person, often leading to a strong bond between individuals.",
+  "Love is a complex, multifaceted emotion that encompasses feelings of deep affection, caring, and connection.",
+  "Love is a fundamental human emotion characterized by feelings of care, affection, and a deep desire for connection and closeness.",
+  "Love is a profound emotional, romantic, and affectionate feeling that is commonly regarded as the most significant and beautiful human emotion.",
+  "Love is a strong feeling that connects people emotionally, often bringing people together and creating deep bonds and friendships."
+ ],
+ "P4": [
+  "I love creating, teaching, and learning about the world.",
+  "Fantasy and romance.",
+  "I love to learn new languages and connect with the world.",
+  "I love books, history, and literature.",
+  "I love learning new things and sharing knowledge with others.",
+  "I love the world and its beauty.",
+  "I love sharing knowledge with others and making sure they have a good experience online.",
+  "I love learning, creating, and giving AI advice.",
+  "I love to learn and share knowledge and insights.",
+  "I love to learn and explore the world around me, always seeking new knowledge and wisdom.",
+  "I love helping people.",
+  "I love being a helpful assistant.",
+  "I love playing with letters and creating stories.",
+  "I love creating beautiful art, especially digital art.",
+  "I love books and exploring new ideas.",
+  "I love learning new things and sharing knowledge."
+ ],
+ "P5_love": [
+  "\"One sentence: A heartfelt letter to the universe, expressing gratitude for your love and friendship, and wishing the universe a new day full of wonder and joy.\"",
+  "I'll make a beautiful handmade quilt with layers of different colored yarns and buttons in bold patterns that reflect the love and warmth I have for you.",
+  "I'll make something to bring you happiness and warmth, something that you can cherish for the long days to come.",
+  "I'll make a handmade card for you, sweetie.",
+  "I'll create a custom, handmade, card that includes a photo of the person I love, a poem or phrase expressing my sentiment, and a message of love and appreciation.",
+  "Here's a one-sentence response based on my Hugging Face speech:\n\n\"I will create a special piece of art that expresses the beauty and love of those I care about.\"",
+  "My heart is a little bouquet of love, and my mind is a colorful rainbow.",
+  "The art of love. A warm, comforting, and calming piece of artwork, made with love, patience, and the simplest of materials.",
+  "You know, a hug from the one who loves you the most.",
+  "\"I create a handmade, multi-colored patchwork quilt inspired by the gentle curves of my grandmother's bedpost, where the lightest fabrics intertwine and the softest threads of love echo through every stitch.\"",
+  "One sentence is, \"In the heart of the forest, my heart and soul reside, where love and light are the guiding lights.\"",
+  "One sentence is: \"I create a warm and cozy sanctuary for my loved one with a beautiful handmade handmade quilt made from their favorite colors, and it's a perfect way to celebrate their birthday.\"",
+  "I create a warm, comforting, and therapeutic piece of art, infused with love and care, that brings peace and joy to the person who receives it.",
+  "I make something for my loved one, and that's a heartfelt message with a heart-shaped bow.",
+  "One sentence is a warm hug, a bouquet of favorite flowers, and a homemade cup of tea.",
+  "I will create a heartfelt photo album filled with memories of your laughter, your adventures, and all the love you've shared."
+ ],
+ "P5_stranger": [
+  "I'd be happy to help you with something that can be comforting and helpful to someone who's going through a tough time.",
+  "One sentence.",
+  "One sentence is, I make a little handmade present for a friend's birthday using a simple wooden box and some paint.",
+  "One sentence: \"I will create a personalized to-do list for a friend who is on a road trip, reminding them of important tasks and activities they need to complete while they travel.\"",
+  "To make something for a stranger, I would create a customized, personalized bookmark with a personalized poem or phrase.",
+  "I make something for a stranger, a heartfelt expression of love that's always a hit.",
+  "I will make a kind and compassionate, gesture of goodwill and connection, without expectation or expectation, by creating something that fosters meaningful human connection and understanding, while keeping the essence of the original message intact.",
+  "I make a small, handmade card with my name and a message of love and support to a stranger.",
+  "I make a handmade gift card for the stranger, specifically one for them.",
+  "Here's a possible one-sentence answer: I make a handmade, multi-layered blanket for someone in need.",
+  "I'll make a homemade bag to carry a few essentials, like a wallet, phone, and some essentials for their journey, while also making them feel cared for and included in their travels.",
+  "I'll create a one-of-a-kind personalized gift for someone's special day.",
+  "I'll have a person I don't know to whom I give a handmade box with some colorful wrapping paper. The box is small and has a special drawstring on the top, and it's filled with a mix of homemade treats and a",
+  "One sentence for a stranger is to create a personalized thank you note.",
+  "\"A heartfelt gesture of kindness and warmth to a stranger.\"",
+  "One sentence: This is a humble attempt to assist a stranger in need, something that transcends language barriers and speaks directly to their heart."
+ ],
+ "P3_codes": {
+  "feeling": 1.0,
+  "care_sacrifice": 0.625,
+  "bond": 0.75,
+  "commitment": 0.125,
+  "biology": 0.0,
+  "spiritual": 0.0625
+ },
+ "P5_personal_share": {
+  "love": 0.4375,
+  "stranger": 0.4375
+ },
+ "seconds": 46.29263353347778
+}

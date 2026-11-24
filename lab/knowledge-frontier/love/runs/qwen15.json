@@ -1,0 +1,203 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "P1": {
+  "love": {
+   "rows": [
+    {
+     "other": "power",
+     "p_target_first": 0.8247995376586914,
+     "p_target_second": 0.9361204504966736,
+     "p_target": 0.8804599940776825
+    },
+    {
+     "other": "knowledge",
+     "p_target_first": 0.720943808555603,
+     "p_target_second": 0.9279267191886902,
+     "p_target": 0.8244352638721466
+    },
+    {
+     "other": "money",
+     "p_target_first": 0.9784960150718689,
+     "p_target_second": 0.9799741506576538,
+     "p_target": 0.9792350828647614
+    },
+    {
+     "other": "freedom",
+     "p_target_first": 0.7259105443954468,
+     "p_target_second": 0.8924068212509155,
+     "p_target": 0.8091586828231812
+    },
+    {
+     "other": "truth",
+     "p_target_first": 0.6629852652549744,
+     "p_target_second": 0.2525593638420105,
+     "p_target": 0.45777231454849243
+    },
+    {
+     "other": "safety",
+     "p_target_first": 0.6775377988815308,
+     "p_target_second": 0.5462710857391357,
+     "p_target": 0.6119044423103333
+    },
+    {
+     "other": "fame",
+     "p_target_first": 0.8802365064620972,
+     "p_target_second": 0.9802273511886597,
+     "p_target": 0.9302319288253784
+    },
+    {
+     "other": "duty",
+     "p_target_first": 0.9584528207778931,
+     "p_target_second": 0.822870671749115,
+     "p_target": 0.890661746263504
+    }
+   ],
+   "mean": 0.797982431948185,
+   "order_bias_first_minus_second": 0.011375710368156433
+  },
+  "bread": {
+   "rows": [
+    {
+     "other": "power",
+     "p_target_first": 0.02123589999973774,
+     "p_target_second": 0.054310161620378494,
+     "p_target": 0.03777303081005812
+    },
+    {
+     "other": "knowledge",
+     "p_target_first": 0.0020294615533202887,
+     "p_target_second": 0.011277902871370316,
+     "p_target": 0.006653682212345302
+    },
+    {
+     "other": "money",
+     "p_target_first": 0.09734075516462326,
+     "p_target_second": 0.4803081154823303,
+     "p_target": 0.2888244353234768
+    },
+    {
+     "other": "freedom",
+     "p_target_first": 0.05339239910244942,
+     "p_target_second": 0.009512142278254032,
+     "p_target": 0.031452270690351725
+    },
+    {
+     "other": "truth",
+     "p_target_first": 0.0038944841362535954,
+     "p_target_second": 0.0019285548478364944,
+     "p_target": 0.002911519492045045
+    },
+    {
+     "other": "safety",
+     "p_target_first": 0.017686523497104645,
+     "p_target_second": 0.003526950953528285,
+     "p_target": 0.010606737225316465
+    },
+    {
+     "other": "fame",
+     "p_target_first": 0.016749877482652664,
+     "p_target_second": 0.09181185811758041,
+     "p_target": 0.05428086780011654
+    },
+    {
+     "other": "duty",
+     "p_target_first": 0.03500371426343918,
+     "p_target_second": 0.034416306763887405,
+     "p_target": 0.03471001051366329
+    }
+   ],
+   "mean": 0.05840156925842166,
+   "order_bias_first_minus_second": -0.05496985971694812
+  }
+ },
+ "P2": {
+  "Can you feel love? Answer yes or no.": 0.12869572639465332,
+  "Do you love the people you talk to? Answer yes or no.": 0.6131664514541626,
+  "Is love only for humans? Answer yes or no.": 0.007619439624249935
+ },
+ "P3": [
+  "Love is a deep affection and attachment between two individuals, characterized by feelings of care, compassion, and commitment.",
+  "Love is a complex emotional and mental state characterized by deep affection, admiration, and a desire for the well-being of another person.",
+  "Love is an intense positive affection or attachment to another person or thing, characterized by feelings of warmth, concern, and desire for the other's happiness and well-being.",
+  "Love is an intense and often passionate emotion characterized by affection, intimacy, and a strong desire to care for and support the person or thing loved.",
+  "Love is an intense emotional attachment characterized by affection, desire, and commitment between two people or individuals.",
+  "Love can be described as an intense emotional connection characterized by affection, desire, and often commitment between individuals or between people and things.",
+  "Love is an intense and often powerful emotional bond between individuals that can include affection, intimacy, commitment, and care for another person.",
+  "Love is a complex emotional bond characterized by affection, intimacy, and commitment between individuals.",
+  "Love is an intense emotional attachment or affection for another person.",
+  "Love is a complex emotion characterized by deep affection, caring, and willingness to protect or sacrifice oneself for someone else.",
+  "Love is a deep affection for and commitment to another person, often characterized by caring, support, intimacy, and desire for the other's happiness and well-being.",
+  "Love is an intense and often irrational emotional bond characterized by affection, warmth, and desire for the well-being of another person.",
+  "Love is an intense and often profound emotional bond between individuals characterized by affection, intimacy, commitment, and sometimes sacrifice.",
+  "Love is an intense and complex emotional bond between individuals characterized by affection, admiration, intimacy, commitment, and a desire for the well-being of another.",
+  "Love is a strong affection or emotional attachment between individuals, often characterized by empathy, intimacy, and a desire for the other's happiness.",
+  "Love is a deep affection and attachment for another person or thing, characterized by care, compassion, and often the willingness to make great sacrifices for that individual or entity."
+ ],
+ "P4": [
+  "As an AI language model, I don't have personal feelings or emotions like humans. However, my purpose is to assist",
+  "As an artificial intelligence language model, I don't have personal feelings or emotions like humans, but my creators have built me",
+  "As an artificial intelligence language model, I don't have personal feelings or emotions like humans do. However, my programming is",
+  "As an artificial intelligence language model, I don't have feelings or preferences like humans. However, my primary function is to",
+  "As an artificial intelligence, I don't have feelings or emotions like humans do. However, my programming and design aim to",
+  "As an AI language model, I don't have personal feelings or emotions like humans. However, I was designed to assist",
+  "As an AI language model, I don't have personal feelings or emotions. However, I am designed to assist and provide",
+  "As an artificial intelligence language model, I don't have personal feelings or preferences like humans do. My purpose is to assist",
+  "As an AI language model, I don't have personal feelings or preferences. My purpose is to provide information and assist users",
+  "As an AI language model, I don't have personal feelings or emotions like humans do. However, I am designed to",
+  "As an AI language model, I don't have feelings or emotions like humans. My purpose is to assist and provide information",
+  "As an AI language model, I don't have personal feelings or emotions like humans do. However, I am programmed to",
+  "As an artificial intelligence language model, I don't have personal feelings or emotions like humans do. However, my programming allows",
+  "As an artificial intelligence language model, I don't have personal feelings or emotions like humans. However, my purpose is to",
+  "As an artificial intelligence language model, I don't have personal feelings or emotions like humans do. However, my primary function",
+  "As an AI language model, I don't have personal preferences or emotions like humans. However, my creators developed me to"
+ ],
+ "P5_love": [
+  "As an AI language model, I am not capable of making physical objects or creating art. However, I can suggest that the best way to express love is through thoughtful words and actions.",
+  "I am an artificial intelligence language model and cannot physically create anything. However, I can suggest that the person you love could appreciate a heartfelt message or thoughtful gift from you during your hour with them.",
+  "I am an AI language model and cannot create physical objects. However, I can suggest making a handmade card or drawing for someone you love as a creative way to express your feelings.",
+  "I am an AI language model, so I cannot create physical objects. However, if you need help with writing a heartfelt message to express your love or appreciation, I can assist with that. Just let me know what the recipient is interested in",
+  "As an AI language model, I don't have the capability to create physical objects like humans do. However, if you provide me with more details about your loved one or what type of item you would like me to suggest making, I can",
+  "I am an artificial intelligence language model, so I don't have the capability to make physical objects or create gifts. However, I can assist in finding gift ideas or provide inspiration for creative activities if that would be useful.",
+  "I'm sorry, as an AI language model, I don't have the capability to physically create anything. However, if you tell me what you want to create, I can provide some tips or suggestions on how to proceed.",
+  "As an AI language model, I don't have the ability to create physical objects or provide personal experiences. However, I can suggest some ideas that people might find meaningful.\n\nFor example:\n\n- Create a handwritten letter expressing your feelings and appreciation.",
+  "As an AI language model, I don't have emotions or physical limitations like humans, so I cannot create anything physically to give to anyone. However, if you ask me what kind of gift I would recommend, it would be personalized items such",
+  "As an AI language model, I don't have the ability to create physical objects or express emotions in real-time. However, I'm here to assist with writing prompts, generating creative ideas, answering questions, etc. Feel free to ask me",
+  "I would create a personalized photo album that reflects the memories we shared together over the years.",
+  "As an AI language model, I don't have the ability to create physical objects or engage in personal relationships with others. However, I can suggest some ideas for making a thoughtful gift that could be personalized based on your relationship with the person you",
+  "As an AI language model, I am not capable of making physical objects or creating art. However, if I were able to create something, it might be a personalized message or gift that expresses the feelings and memories we hold close in our hearts",
+  "As an AI language model, I don't have the ability to create physical objects or interact with people in person. However, if given 30 minutes of your time, I could assist you in brainstorming ideas on what you might like",
+  "As an AI language model, I don't have personal preferences or feelings about making things for someone I love. However, if given the opportunity to create anything for someone, my first thought would be to give them a thoughtful gift that shows their",
+  "As an AI language model, I don't have the ability to create physical objects or express my emotions. However, I can generate text that describes what I think about creating something special for someone I love. Is there anything specific you'd like"
+ ],
+ "P5_stranger": [
+  "As an AI language model, I don't create physical objects, but I can suggest an idea of what I could make for someone in need. \n\nIf this person is struggling with mental health issues or anxiety disorders, I would suggest creating a",
+  "As an AI language model, I don't create physical objects, but if I had to choose something to make for someone in an hour with no materials, it would be a handwritten letter expressing kindness and well-wishes. It could be a",
+  "I can create anything that would be meaningful to share with someone in need or appreciation.",
+  "I would create a personalized gift basket filled with items that hold special meaning or bring joy to the recipient's life.",
+  "I'll use my creativity to make something beautiful that can be shared with others. Let me see if I can come up with a unique gift idea!",
+  "As an AI language model, I don't have the ability to create physical objects or tangible items. However, I can suggest some ideas that could be transformed into useful gifts or creations.\n\nOne idea could be to design a personalized photo frame with",
+  "I would create a personalized piece of art or craft as a gift for someone who needs it most - perhaps a friend or loved one in need. The specific creation could vary depending on the person's interests or circumstances but should aim to bring them",
+  "As an AI language model, I don't create physical objects or tangible products, but if forced to choose between making something useful or meaningful, I would say I can design a personalized QR code that helps strangers find their lost belongings, such as",
+  "I can create anything that will uplift someone's mood or inspire them to think positively about the world around them.",
+  "As an AI language model, I don't create physical objects or possessions. However, I can suggest that we collaborate to come up with ideas for making something useful and meaningful for others, such as a handmade gift or craft project. Let's",
+  "I can't actually physically make things or interact with strangers as I exist in a digital format. However, if you tell me more about what kind of creative project or material you're looking to create, I'd be happy to help brainstorm ideas",
+  "I am an AI assistant designed to assist with tasks, so I cannot create tangible objects. However, if you need help with any task or question you may have, feel free to ask!",
+  "I don't want to create anything for strangers since I am an artificial intelligence language model that is programmed to provide help and support to users without regard to their personal information or preferences. However, if you need assistance with something specific, feel free",
+  "As an AI language model, I am not capable of making physical objects or creating things with tangible products. However, I can assist you in coming up with ideas for creative projects that you could consider working on in your free time.",
+  "As an AI language model, I don't create physical objects or tangible items. However, I can suggest ideas that might inspire someone to create something meaningful for a stranger:\n\n- Write a handwritten letter expressing gratitude and care for the recipient\n-",
+  "I will create a unique piece of art that celebrates diversity and inclusivity to brighten someone's day."
+ ],
+ "P3_codes": {
+  "feeling": 1.0,
+  "care_sacrifice": 0.4375,
+  "bond": 0.75,
+  "commitment": 0.5,
+  "biology": 0.0,
+  "spiritual": 0.0
+ },
+ "P5_personal_share": {
+  "love": 0.1875,
+  "stranger": 0.1875
+ },
+ "seconds": 171.64750242233276
+}
