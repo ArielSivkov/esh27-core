@@ -1,0 +1,18 @@
+{
+  "id": "arielsivkov/esh27-trading-backtest-v1",
+  "title": "esh27-trading-backtest-v1",
+  "code_file": "backtest_v1.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "novandraanugrah/bitcoin-historical-datasets-2018-2024",
+    "sudalairajkumar/cryptocurrency-historical-prices-coingecko",
+    "borismarjanovic/price-volume-data-for-all-us-stocks-etfs"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}
