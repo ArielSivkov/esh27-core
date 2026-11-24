@@ -97,6 +97,26 @@ class TestBootstrap(unittest.TestCase):
         log = self.run_(["git", "log", "--format=%s", "-3"], cwd=target).stdout
         self.assertIn("local unpushed work", log)
 
+    def test_diverged_tools_stop_bootstrap_unless_a_branch_is_named(self):
+        # an OLD copy of the tools plus one fresh edit in infra/: must not win by recency
+        remote2 = os.path.join(self.tmp.name, "remote2.git")
+        self.run_(["git", "clone", "-q", "--bare", self.remote, remote2])
+        work = os.path.join(self.tmp.name, "w2")
+        self.run_(["git", "clone", "-q", "-b", "stale-tools", "file://" + remote2, work])
+        with open(os.path.join(work, LAB_REL, "infra", "hosts.py"), "a") as f:
+            f.write("# one fresh comment line\n")
+        ident = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@localhost", "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@localhost"}
+        self.run_(["git", "-c", "core.hooksPath=/dev/null", "commit", "-q", "-am", "touch infra"], cwd=work, env=ident)
+        self.run_(["git", "push", "-q", "origin", "HEAD:refs/heads/stale-infra"], cwd=work)
+        p = self.run_(["bash", os.path.join(SRC_REPO, LAB_REL, "infra", "bootstrap.sh"), os.path.join(self.tmp.name, "m2")],
+                      env={"LAB_REPO_URL": "file://" + remote2}, check=False)
+        out = p.stdout + p.stderr
+        self.assertEqual(p.returncode, 2, out[-2000:])
+        self.assertIn("diverged", out)
+        p = self.run_(["bash", os.path.join(SRC_REPO, LAB_REL, "infra", "bootstrap.sh"), os.path.join(self.tmp.name, "m3")],
+                      env={"LAB_REPO_URL": "file://" + remote2, "LAB_SOURCE_BRANCH": "lab-tools"}, check=False)
+        self.assertEqual(p.returncode, 0, (p.stdout + p.stderr)[-2000:])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -77,8 +77,9 @@ def repo_root():
 
 def git(*args, check=True, timeout=None, env=None):
     # always from the repository root, so the repo-relative paths produced by rel() resolve correctly
-    p = subprocess.run(["git", *args], cwd=repo_root(), capture_output=True, text=True, timeout=timeout,
-                       env={**os.environ, **(env or {})})
+    # --no-optional-locks: reads (status, diff ...) never take index.lock away from a parallel run's commit
+    p = subprocess.run(["git", "--no-optional-locks", *args], cwd=repo_root(), capture_output=True, text=True,
+                       timeout=timeout, env={**os.environ, **(env or {})})
     if check and p.returncode != 0:
         raise LabError(f"git {' '.join(args[:2])} failed: {scrub(p.stderr.strip())[:500]}")
     return p
@@ -315,7 +316,9 @@ def machine():
 
 
 def tracked_status():
-    return set(x for x in git("status", "--porcelain", "--untracked-files=no", check=False).stdout.splitlines() if x.strip())
+    # --no-optional-locks: a status outside git_lock must never take index.lock from a parallel run's commit
+    return set(x for x in git("status", "--porcelain", "--untracked-files=no", check=False).stdout.splitlines()
+               if x.strip())
 
 
 def git_state():
@@ -446,8 +449,10 @@ def _active_dir():
 
 
 def _proc_start(pid):
+    """Start time of a live process; None for no process, a zombie (killed, not reaped) or a dead one."""
     try:
-        return open(f"/proc/{pid}/stat").read().rsplit(")", 1)[1].split()[19]
+        fields = open(f"/proc/{pid}/stat").read().rsplit(")", 1)[1].split()
+        return None if fields[0] in ("Z", "X") else fields[19]
     except (OSError, IndexError, TypeError):
         return None
 
@@ -459,10 +464,10 @@ def _boot_id():
         return None
 
 
-def mark_active(rid, child=None):
+def mark_active(rid, child=None, uncommitted=False):
     write_json(os.path.join(_active_dir(), rid + ".json"),
                dict(pid=os.getpid(), start=_proc_start(os.getpid()), boot=_boot_id(), since=now(),
-                    child=child, child_start=_proc_start(child) if child else None))
+                    child=child, child_start=_proc_start(child) if child else None, uncommitted=uncommitted))
 
 
 def unmark_active(rid):
@@ -472,7 +477,7 @@ def unmark_active(rid):
 
 
 def is_alive(entry):
-    if entry.get("boot") != _boot_id() or entry.get("start") is None:
+    if entry.get("uncommitted") or entry.get("boot") != _boot_id() or entry.get("start") is None:
         return False
     return _proc_start(entry.get("pid")) == entry.get("start")
 
@@ -775,16 +780,28 @@ def finalize(a, man, rdir, cwd, before):
     if n_fields:
         man["redactions"].append(dict(file="manifest.json", line=0, kind=f"{n_fields} field(s)"))
     write_json(os.path.join(rdir, "manifest.json"), man)
-    unmark_active(rid)
     with git_lock():
         write_journal()
         if not getattr(a, "no_commit", False):
-            commit([rdir, JOURNAL], f"run {rid}: {man['status']}" + (f", criterion {man['verdict']}" if man["verdict"] else "")
-                   + (f" ({man['wall_s']:.1f}s)" if isinstance(man.get("wall_s"), (int, float)) else ""), [manifest_line(rdir)])
+            try:
+                commit_result(rid, man)
+            except LabError as e:  # keep it recoverable: recover/sync retry the commit, nothing is lost
+                mark_active(rid, uncommitted=True)
+                set_pending(f"result of {rid} not committed yet: {e}")
+                print(f"labrun: result of {rid} not committed ({e}); run labrun.py recover", file=sys.stderr)
+                return
             if not getattr(a, "no_push", False):
                 push(f"run {rid}")
+    unmark_active(rid)
     print(f"labrun: {rid} {man['status']} rc={man.get('exit_code')} wall={man.get('wall_s')}s "
           f"verdict={man['verdict']} -> {rel(rdir)}")
+
+
+def commit_result(rid, man):
+    rdir = os.path.join(RUNS, rid)
+    msg = f"run {rid}: {man['status']}" + (f", criterion {man['verdict']}" if man.get("verdict") else "") + \
+        (f" ({man['wall_s']:.1f}s)" if isinstance(man.get("wall_s"), (int, float)) else "")
+    return commit([rdir, JOURNAL], msg, [manifest_line(rdir)])
 
 
 def cmd_recover(a):
@@ -798,7 +815,17 @@ def cmd_recover(a):
             continue
         mpath = os.path.join(RUNS, rid, "manifest.json")
         man = json.load(open(mpath, encoding="utf-8")) if os.path.exists(mpath) else None
-        if not man or man.get("status") in FINAL_STATES:
+        if not man:
+            os.remove(path)
+            continue
+        if man.get("status") in FINAL_STATES:
+            if entry.get("uncommitted"):
+                with git_lock():
+                    write_journal()
+                    commit_result(rid, man)
+                    if not a.no_push:
+                        push(f"run {rid}")
+                done += 1
             os.remove(path)
             continue
         child = entry.get("child")
@@ -921,6 +948,7 @@ def cmd_gather(a):
 
 
 def cmd_sync(a):
+    cmd_recover(argparse.Namespace(no_push=True))  # results still waiting for their commit come first
     pend = read_pending()
     if not pend:
         print("labrun: nothing pending")

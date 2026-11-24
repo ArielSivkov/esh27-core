@@ -364,16 +364,17 @@ class TestRun(Base):
 
     def test_F10_parallel_runs_in_one_checkout(self):
         w = self.clone()
-        marks = [os.path.join(self.tmp.name, f"par{self.n}-{i}") for i in range(4)]
+        marks = [os.path.join(self.tmp.name, f"par{self.n}-{i}") for i in range(8)]
         procs = [subprocess.Popen([sys.executable, "-I", f"{LAB_REL}/infra/labrun.py", "run", "--name", f"par{i}", "--quiet",
                                    "--", "sh", "-c", f"sleep 1; touch {m}"], cwd=w, env={**self.env, "LAB_BRANCH": "t-par"},
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) for i, m in enumerate(marks)]
         outs = [p.communicate(timeout=120) for p in procs]
-        self.assertEqual([p.returncode for p in procs], [0, 0, 0, 0], [o[1] for o in outs])
+        self.assertEqual([p.returncode for p in procs], [0] * 8, [o[1] for o in outs])
         self.assertTrue(all(os.path.exists(m) for m in marks))
         log = self.remote_log("t-par")
-        self.assertEqual(sum("registered" in x for x in log), 4, log)
-        self.assertEqual(sum(": ok" in x for x in log), 4, log)
+        self.assertEqual(sum("registered" in x for x in log), 8, log)
+        self.assertEqual(sum(": ok" in x for x in log), 8, log)
+        self.assertEqual(self.sh(["git", "status", "--porcelain", "--", f"{LAB_REL}/runs"], cwd=w).stdout.strip(), "")
 
     def test_F12_gather_leaves_out_a_bad_record_and_continues(self):
         a = self.clone()
@@ -422,6 +423,36 @@ class TestRun(Base):
         self.assertEqual(sum("registered" in x for x in self.remote_log("t-dirty")), 2)
         with open(os.path.join(b, LAB_REL, "README.md")) as f:
             self.assertIn("uncommitted local edit", f.read())
+
+    def test_N2_a_result_that_cannot_be_committed_is_recovered_later(self):
+        w = self.clone()
+        hooks = os.path.join(self.tmp.name, f"refuse{self.n}")
+        os.makedirs(hooks)
+        with open(os.path.join(hooks, "commit-msg"), "w") as f:
+            f.write("#!/bin/sh\ngrep -q ': ok' \"$1\" && exit 1\nexit 0\n")
+        os.chmod(os.path.join(hooks, "commit-msg"), 0o755)
+        self.sh(["git", "config", "core.hooksPath", hooks], cwd=w)
+        p = self.labrun(w, "run", "--name", "blocked result", "--", "true", env={"LAB_BRANCH": "t-blocked"})
+        self.assertIn("not committed", p.stderr)
+        self.assertEqual(self.remote_log("t-blocked"), [self.remote_log("t-blocked")[0]])  # only "registered"
+        self.sh(["git", "config", "core.hooksPath", f"{LAB_REL}/infra/hooks"], cwd=w)
+        p = self.labrun(w, "sync", env={"LAB_BRANCH": "t-blocked"})
+        self.assertEqual(p.returncode, 0, p.stderr)
+        log = self.remote_log("t-blocked")
+        self.assertTrue(log[0].startswith("run ") and ": ok" in log[0], log)
+
+    def test_N7_recover_treats_a_killed_unreaped_labrun_as_dead(self):
+        w = self.clone()
+        proc = subprocess.Popen([sys.executable, "-I", f"{LAB_REL}/infra/labrun.py", "run", "--name", "zombie", "--",
+                                 "sh", "-c", "echo started; sleep 60"],
+                                cwd=w, env={**self.env, "LAB_BRANCH": "t-zombie"}, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        time.sleep(3)
+        os.kill(proc.pid, signal.SIGKILL)
+        time.sleep(0.5)  # not reaped yet: labrun is a zombie now
+        p = self.labrun(w, "recover", env={"LAB_BRANCH": "t-zombie"})
+        proc.wait()
+        self.assertIn("recovered 1", p.stdout, p.stderr)
+        self.assertEqual(self.manifest(w)["status"], "lost")
 
 
 if __name__ == "__main__":

@@ -41,13 +41,16 @@ SECRET = [
     ("aws-secret-key", re.compile(r"(?i)aws_secret_access_key['\"]?\s*[:=]\s*['\"]?([A-Za-z0-9/+=]{40})(?![A-Za-z0-9/+=])")),
     ("slack-token", re.compile(r"(?<![A-Za-z0-9])xox[abposr]-[A-Za-z0-9-]{10,}")),
     ("slack-webhook", re.compile(r"(?i)https://hooks\.slack\.com/(?:services|workflows|triggers)/[A-Za-z0-9/_\-]{20,}")),
-    ("telegram-bot-token", re.compile(r"(?<![0-9])\d{8,10}:AA[A-Za-z0-9_-]{33}(?![A-Za-z0-9_-])")),
+    ("telegram-bot-token", re.compile(r"(?<![0-9])\d{8,10}(?::|%3[Aa])AA[A-Za-z0-9_-]{33}(?![A-Za-z0-9_-])")),
     ("kaggle-token", re.compile(r"(?<![A-Za-z0-9])KGAT_[A-Za-z0-9]{16,}")),
     ("kaggle-json-key", re.compile(r"""["']username["']\s*:\s*["'][^"']*["']\s*,\s*["']key["']\s*:\s*["']([0-9a-f]{32})["']"""
                                    r"""|["']key["']\s*:\s*["']([0-9a-f]{32})["']\s*,\s*["']username["']""")),
     ("kaggle-env-key", re.compile(r"KAGGLE_(?:KEY|API_TOKEN)['\"\]]*\s*[=:]\s*['\"]?([A-Za-z0-9_]{16,})")),
     ("auth-header", re.compile(r"(?i)(?<![A-Za-z])authorization['\"]?\s*[:=]\s*['\"]?(?:bearer|basic|token)\s+([A-Za-z0-9._~+/=\-]{16,})")),
     ("url-credentials", re.compile(r"(?i)\b[a-z][a-z0-9+.-]*://[^/\s:@'\"<>]{1,64}:([^/\s@'\"<>]{3,})@[A-Za-z0-9.-]+")),
+    ("url-query-secret", re.compile(r"(?i)[?&](?:access_token|refresh_token|id_token|token|api_key|apikey|key|secret|"
+                                    r"client_secret|password|sig|signature|auth)=([^&\s#'\"]{8,})")),
+    ("cookie", re.compile(r"(?im)^[ \t]*(?:set-)?cookie[ \t]*:[ \t]*([^\r\n]{8,})|['\"](?:set-)?cookie['\"]\s*:\s*['\"]([^'\"]{8,})['\"]")),
     ("proxy-credentials", re.compile(r"(?i)\b(?:https?_|socks5?_|all_|ftp_)?proxy['\"]?\s*[:=]\s*['\"]?(?:[a-z][a-z0-9+.-]*://)?"
                                      r"[^\s:@/'\"]{1,64}:([^\s@/'\"]{3,})@")),
 ]
@@ -55,22 +58,31 @@ SECRET = [
 KEYWORD = r"(?:api[_-]?key|secret|token|passw(?:or)?d|passwd|credential|private[_-]?key|access[_-]?key)"
 NOT_A_SECRET_NAME = re.compile(r"(?i)(?:_|-)(?:name|names|url|uri|path|file|files|dir|env|var|id|ids|hint|type|count|"
                                r"len|length|limit|ttl|field|header|prefix|suffix|label|key_name|scope|scopes)$")
-GENERIC_QUOTED = re.compile(r"""(?i)(?<![\w.])["']?([\w.-]*""" + KEYWORD + r"""[\w.-]*)["']?\s*[:=]\s*["']([^"'\s]{8,})["']""")
+Q = r"""(?:\\{0,3}["'])"""  # a quote, possibly escaped (JSON inside a JSON string, double-encoded logs)
+GENERIC_QUOTED = re.compile(r"""(?i)(?<![\w.])""" + Q + r"""?([\w.-]*""" + KEYWORD + r"""[\w.-]*)""" + Q +
+                            r"""?\s*[:=]\s*""" + Q + r"""([^"'\s\\]{8,})""" + Q)
 GENERIC_BARE = re.compile(r"""(?im)^[ \t]*(?:export[ \t]+)?["']?([\w.-]*""" + KEYWORD +
                           r"""[\w.-]*)["']?[ \t]*[:=][ \t]*([^\s'"#,{}\[\]]{8,})[ \t]*(?:#.*)?$""")
+
+# --password=..., --api-key VALUE ...: the command line of every run is recorded, so flag values are redacted even
+# when they do not look random; counts and names (--max-tokens 512, --secret-name x) are not secrets
+CLI_FLAG = re.compile(r"(?i)(?<![\w-])(--?[\w-]*(?:password|passwd|token|secret|api[_-]?key)[\w-]*)[= ]['\"]?([^\s'\"]{4,})")
+CLI_NOT_SECRET = re.compile(r"(?i)(?:tokens|token[_-]?(?:count|limit|len|length|budget)|[_-](?:name|names|url|uri|path|"
+                            r"file|files|dir|env|var|id|ids|hint|type|count|len|length|limit|ttl|field|header|prefix|"
+                            r"suffix|label|scope|scopes))$")
 
 # Personal data: Israeli phone numbers (any common spelling) and e-mail addresses.
 PHONE = re.compile(r"""(?<![0-9.])(?:
         (?:(?:\+|00)[ \t]?)?972[ \t.-]?(?:\(0\)[ \t.-]?)?(?:[57]\d|[23489])     # international
       | \(?0(?:[57]\d|[23489]) )                                              # national
-      \)?[ \t.-]{0,3}\d{3}[ \t.-]?\d{4}(?![0-9A-Za-z])""", re.X)
+      \)?[ \t.-]{0,3}\d{3}[ \t.-]{0,3}\d{4}(?![0-9A-Za-z])""", re.X)
 TLDS = ("com|org|net|edu|gov|mil|int|il|io|ai|co|me|app|dev|info|biz|uk|de|fr|ru|us|ca|au|nl|es|it|ch|se|no|fi|dk|pl|"
         "cz|at|be|jp|cn|in|br|mx|tv|xyz|online|site|tech|email|cloud|live|pro|ac|eu|ua|tr|gr|pt|ie|nz|za|kr|sg|hk")
 EMAIL = re.compile(r"(?<![\w.+%])[A-Za-z0-9][A-Za-z0-9._%+-]*(?:@|%40)[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(?:" + TLDS +
                    r")(?![A-Za-z0-9-])", re.I)
 EMAIL_ALLOW = re.compile(r"(?i)^(?:git|noreply|no-reply|do-not-reply|donotreply)(?:@|%40)|"
                          r"(?:@|%40)(?:[\w-]+\.)*(?:example\.(?:com|org|net)|users\.noreply\.github\.com|gserviceaccount\.com)$")
-PLACEHOLDER = re.compile(r"(?i)^(?:proxy|redacted|changeme|example|placeholder|dummy|test|xxx|your|<|\$\{|\$\(|\*\*\*|%\()")
+PLACEHOLDER = re.compile(r"(?i)^(?:proxy|redacted|changeme|example|placeholder|dummy|test|xxx|your|<|\$\{|\$\(|\$[a-z_]|\*\*\*|%\()")
 
 
 def _digest(value):
@@ -126,6 +138,13 @@ def find(text, allow=frozenset()):
             name, value = m.group(1), m.group(2)
             if not NOT_A_SECRET_NAME.search(name) and _looks_random(value):
                 add("generic-secret", "secret", *m.span(2))
+    for m in CLI_FLAG.finditer(text):
+        flag, value = m.group(1), m.group(2)
+        plain_word = re.fullmatch(r"[A-Za-z]{1,11}", value) is not None  # prose such as "-token flag values"
+        placeholder = (value.isdigit() or not re.search(r"[A-Za-z0-9]", value) or re.fullmatch(r"[A-Z][A-Z0-9_]*", value)
+                       or value[0] in "{$<%" or PLACEHOLDER.match(value) or plain_word)
+        if not CLI_NOT_SECRET.search(flag) and not placeholder:
+            add("cli-secret-flag", "secret", *m.span(2))
     for m in PHONE.finditer(text):
         if _phone_ok(m):
             add("phone-il", "personal", *m.span())

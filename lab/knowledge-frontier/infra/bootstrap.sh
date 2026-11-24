@@ -34,36 +34,49 @@ else
 fi
 cd "$TARGET"
 
-step "2 choose the branch whose lab tools changed last"
-# by the newest commit that touched $LAB_REL/infra, not by the newest tip: an old copy of the tools on a
-# branch with an unrelated new commit must never win
-best=""; best_t=0; best_tip=0; lab_t_of_best=0; others=""
+step "2 choose the branch whose lab tools contain every other branch's tools"
+# A branch wins only if the newest tools commit of every other lab branch is already in its history.
+# Recency alone is not enough: an old copy of the tools with one fresh edit must never win. If tool
+# histories diverged, stop and ask for LAB_SOURCE_BRANCH instead of guessing.
+declare -A infra_of tip_of
+cands=(); others=""
 for ref in $(git for-each-ref --format='%(refname)' refs/remotes/origin); do
   case "$ref" in */HEAD) continue;; esac
   git cat-file -e "$ref:$LAB_REL/README.md" 2>/dev/null || continue
-  lab_t=$(git log -1 --format=%ct "$ref" -- "$LAB_REL" ":(exclude)$LAB_REL/runs" ":(exclude)$LAB_REL/JOURNAL.md")
   if git cat-file -e "$ref:$LAB_REL/infra/labrun.py" 2>/dev/null; then
-    t=$(git log -1 --format=%ct "$ref" -- "$LAB_REL/infra"); tip=$(git log -1 --format=%ct "$ref")
-    if [ "$t" -gt "$best_t" ] || { [ "$t" -eq "$best_t" ] && [ "$tip" -gt "$best_tip" ]; }; then
-      [ -n "$best" ] && others="$others ${best#refs/remotes/origin/}@$lab_t_of_best"
-      best="$ref"; best_t="$t"; best_tip="$tip"; lab_t_of_best="${lab_t:-0}"
-    else
-      others="$others ${ref#refs/remotes/origin/}@${lab_t:-0}"
-    fi
+    cands+=("$ref"); infra_of[$ref]=$(git log -1 --format=%H "$ref" -- "$LAB_REL/infra"); tip_of[$ref]=$(git log -1 --format=%ct "$ref")
   else
-    others="$others ${ref#refs/remotes/origin/}@${lab_t:-0}"
+    others="$others $ref"
   fi
+done
+best=""
+for B in "${cands[@]}"; do
+  ok=1
+  for C in "${cands[@]}"; do
+    [ "$C" = "$B" ] && continue
+    git merge-base --is-ancestor "${infra_of[$C]}" "$B" || { ok=0; break; }
+  done
+  if [ "$ok" = 1 ] && { [ -z "$best" ] || [ "${tip_of[$B]}" -gt "${tip_of[$best]}" ]; }; then best="$B"; fi
 done
 if [ -n "${LAB_SOURCE_BRANCH:-}" ]; then
   best="refs/remotes/origin/$LAB_SOURCE_BRANCH"
   git rev-parse -q --verify "$best" >/dev/null || die "LAB_SOURCE_BRANCH=$LAB_SOURCE_BRANCH does not exist on $REPO_URL"
-  lab_t_of_best=$(git log -1 --format=%ct "$best" -- "$LAB_REL" ":(exclude)$LAB_REL/runs" ":(exclude)$LAB_REL/JOURNAL.md")
+elif [ -z "$best" ]; then
+  if [ "${#cands[@]}" -eq 0 ]; then
+    die "no branch on $REPO_URL contains $LAB_REL/infra/labrun.py (lab branches without the tools:${others:- none})"
+  fi
+  echo "the lab tools diverged between branches (none contains the others):" >&2
+  for C in "${cands[@]}"; do echo "  ${C#refs/remotes/origin/}: tools at $(git log -1 --format='%h %ci' "${infra_of[$C]}")" >&2; done
+  die "merge them, or choose one with LAB_SOURCE_BRANCH=<branch>"
 fi
-[ -n "$best" ] || die "no branch on $REPO_URL contains $LAB_REL/infra/labrun.py (lab branches without the tools:${others:- none})"
 branch="${best#refs/remotes/origin/}"
-for x in $others; do
-  if [ "${x##*@}" -gt "${lab_t_of_best:-0}" ]; then
-    echo "warning: ${x%@*} has newer lab changes (besides run records) than $branch; review and merge them"
+lab_t_of_best=$(git log -1 --format=%ct "$best" -- "$LAB_REL" ":(exclude)$LAB_REL/runs" ":(exclude)$LAB_REL/JOURNAL.md")
+for ref in $others "${cands[@]}"; do
+  [ "$ref" = "$best" ] && continue
+  t=$(git log -1 --format=%ct "$ref" -- "$LAB_REL" ":(exclude)$LAB_REL/runs" ":(exclude)$LAB_REL/JOURNAL.md")
+  last=$(git log -1 --format=%H "$ref" -- "$LAB_REL" ":(exclude)$LAB_REL/runs" ":(exclude)$LAB_REL/JOURNAL.md")
+  if [ -n "$t" ] && [ "$t" -gt "${lab_t_of_best:-0}" ] && ! git merge-base --is-ancestor "$last" "$best"; then
+    echo "warning: ${ref#refs/remotes/origin/} has newer lab changes (besides run records) than $branch; review and merge them"
   fi
 done
 if git rev-parse -q --verify "refs/heads/$branch" >/dev/null && ! git merge-base --is-ancestor "refs/heads/$branch" "$best"; then

@@ -208,9 +208,8 @@
    },
    {
     "file": "seal/arms_results.md",
-    "prefix_bytes": 3137,
     "sha256": "debd86273de60006818d2f560750b3c1fc2318d0d611c21b2af98d5bc975e9b3",
-    "note": "append-only: lines may be added after these bytes, the existing ones may not change"
+    "note": "closed on 24.11.2026: new results go into run records (runs/, JOURNAL.md), not into this file"
    }
   ]
  }

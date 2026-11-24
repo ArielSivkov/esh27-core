@@ -236,8 +236,10 @@ def git_out(*args):
 
 
 def check_run_seals(runs):
-    """Each manifest must match a 'manifest-sha256' line written by labrun at or after its last change,
-    and every run ever registered on this branch must still have its record."""
+    """A run record must be exactly what labrun committed: its manifest matches a manifest-sha256 seal written by
+    labrun's own commit for that run (or a gather/seal commit naming it) at or after its last change, no other
+    commit touched the run's folder, and every run ever registered on this branch still has its record.
+    Limit: someone who writes commits by hand can imitate labrun's commit text; only signed commits stop that."""
     name = "run records sealed in git history (no later edits, nothing deleted)"
     if git_out("rev-parse", "--is-inside-work-tree") is None:
         record(name, False, "not a git checkout", skip=True)
@@ -246,17 +248,19 @@ def check_run_seals(runs):
         record(name, False, "shallow clone: history not available (bootstrap.sh makes a full clone)", skip=True)
         return
     log = git_out("log", "--format=%H%x1f%B%x1e") or ""
-    order, seals, registered = {}, {}, set()
+    order, seals, registered, subject_of = {}, {}, set(), {}
     for i, chunk in enumerate(x for x in log.split("\x1e") if x.strip()):
         h, _, body = chunk.strip("\n").partition("\x1f")
         order[h] = i
         subj = body.split("\n", 1)[0]
+        subject_of[h] = subj
         m = re.match(r"run (\S+): (\S+)", subj)
         if m and m.group(2) == "registered":
             registered.add(m.group(1))
+        named_ok = subj.startswith(("gather: ", "seal: "))
         for line in body.splitlines():
             g = re.match(r"manifest-sha256 (\S+): ([0-9a-f]{64})$", line.strip())
-            if g:
+            if g and named_ok:
                 seals.setdefault(g.group(1), []).append((g.group(2), i))
             elif m and re.match(r"manifest-sha256: ([0-9a-f]{64})$", line.strip()):
                 seals.setdefault(m.group(1), []).append((line.strip().split()[-1], i))
@@ -265,14 +269,19 @@ def check_run_seals(runs):
     for mpath in runs:
         rid = os.path.basename(os.path.dirname(mpath))
         present.add(rid)
-        relm = os.path.relpath(mpath, LAB)  # git_out runs in LAB, so pathspecs are relative to it
-        last = (git_out("log", "-1", "--format=%H", "--", relm) or "").strip()
-        if not last:
-            bad.append(f"{rid}: manifest not committed")
+        touching = (git_out("log", "--format=%H", "--", os.path.relpath(os.path.dirname(mpath), LAB)) or "").split()
+        if not touching:
+            bad.append(f"{rid}: record not committed")
             continue
+        foreign = [h for h in touching if not (subject_of.get(h, "").startswith(f"run {rid}: ")
+                                                or subject_of.get(h, "").startswith("gather: "))]
+        if foreign:
+            bad.append(f"{rid}: changed by a commit that is not labrun's: {foreign[0][:9]} {subject_of.get(foreign[0], '')[:50]!r}")
+            continue
+        last = (git_out("log", "-1", "--format=%H", "--", os.path.relpath(mpath, LAB)) or "").strip()
         cur = sha(mpath)
         if not any(hx == cur and idx <= order.get(last, -1) for hx, idx in seals.get(rid, [])):
-            (legacy if not seals.get(rid) else bad).append(rid)
+            (legacy if not seals.get(rid) else bad).append(rid if seals.get(rid) is None else f"{rid}: manifest differs from its seal")
     missing = sorted(registered - present)
     bad += [f"{r}: registered in history but its record is gone" for r in missing]
     detail = f"{len(runs) - len(bad) - len(legacy)}/{len(runs)} sealed"
@@ -341,7 +350,7 @@ def main():
             json.dump(report, f, ensure_ascii=False, indent=1)
     if n["FAIL"]:
         return 1
-    return 3 if (a.data and n["SKIP"]) else 0  # asked for data checks that could not run: not a success
+    return 3 if n["SKIP"] else 0  # a check that could not run is not a success (exit 3 = incomplete)
 
 
 if __name__ == "__main__":
