@@ -1,0 +1,49 @@
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK
+test_F10_parallel_runs_in_one_checkout (__main__.TestRun.test_F10_parallel_runs_in_one_checkout) ... ok
+test_F12_gather_leaves_out_a_bad_record_and_continues (__main__.TestRun.test_F12_gather_leaves_out_a_bad_record_and_continues) ... ok
+test_F1_private_key_body_is_redacted (__main__.TestRun.test_F1_private_key_body_is_redacted) ... ok
+test_F5_dangling_symlink_in_outputs (__main__.TestRun.test_F5_dangling_symlink_in_outputs) ... ok
+test_F5_launch_errors_are_recorded (__main__.TestRun.test_F5_launch_errors_are_recorded) ... ok
+test_F5_recover_after_labrun_is_killed (__main__.TestRun.test_F5_recover_after_labrun_is_killed) ... ok
+test_F5_sighup_is_recorded (__main__.TestRun.test_F5_sighup_is_recorded) ... ok
+test_F6_timeout_kills_a_command_that_ignores_sigterm (__main__.TestRun.test_F6_timeout_kills_a_command_that_ignores_sigterm) ... ok
+test_F7_failed_push_stays_pending_until_sync (__main__.TestRun.test_F7_failed_push_stays_pending_until_sync) ... ok
+test_F8_big_log_is_capped_and_hashed (__main__.TestRun.test_F8_big_log_is_capped_and_hashed) ... ok
+test_checkpoint_imports_scratch_and_records_large_files (__main__.TestRun.test_checkpoint_imports_scratch_and_records_large_files) ... ok
+test_collect_outside_workspace_is_refused (__main__.TestRun.test_collect_outside_workspace_is_refused) ... ok
+test_criterion_cannot_hang_or_exhaust_memory (__main__.TestRun.test_criterion_cannot_hang_or_exhaust_memory) ... ok
+test_failure_is_recorded_like_success (__main__.TestRun.test_failure_is_recorded_like_success) ... ok
+test_gather_unions_runs_across_branches (__main__.TestRun.test_gather_unions_runs_across_branches) ... ok
+test_hook_blocks_a_manual_commit_with_a_key (__main__.TestRun.test_hook_blocks_a_manual_commit_with_a_key) ... ok
+test_interrupt_is_recorded (__main__.TestRun.test_interrupt_is_recorded) ... ok
+test_large_output_kept_as_hash_only (__main__.TestRun.test_large_output_kept_as_hash_only) ... ok
+test_main_and_ref_like_branch_names_are_refused_before_running (__main__.TestRun.test_main_and_ref_like_branch_names_are_refused_before_running) ... ok
+test_rebase_with_a_dirty_tree_still_pushes (__main__.TestRun.test_rebase_with_a_dirty_tree_still_pushes) ... ok
+test_secret_in_command_line_is_scrubbed_without_hooks (__main__.TestRun.test_secret_in_command_line_is_scrubbed_without_hooks) ... /home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_labrun.py:131: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp1k5gl_1s/work25/lab/knowledge-frontier/runs/20261124T010940Z-argv-5840/manifest.json' mode='r' encoding='utf-8'>
+  "manifest.json"), encoding="utf-8").read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_secret_in_output_never_reaches_git (__main__.TestRun.test_secret_in_output_never_reaches_git) ... ok
+test_success_is_preregistered_recorded_and_pushed (__main__.TestRun.test_success_is_preregistered_recorded_and_pushed) ... ok
+test_timeout_is_recorded (__main__.TestRun.test_timeout_is_recorded) ... ok
+test_tracked_file_changes_are_recorded (__main__.TestRun.test_tracked_file_changes_are_recorded) ... ok
+test_two_sessions_push_to_the_same_branch (__main__.TestRun.test_two_sessions_push_to_the_same_branch) ... ok
+test_unrelated_staged_file_stays_out_of_run_commits (__main__.TestRun.test_unrelated_staged_file_stays_out_of_run_commits) ... ok
+test_unsafe_criterion_is_refused_before_anything_runs (__main__.TestRun.test_unsafe_criterion_is_refused_before_anything_runs) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 43.021s
+
+OK
+test_empty_machine_then_rerun_keeps_local_work (__main__.TestBootstrap.test_empty_machine_then_rerun_keeps_local_work) ... 
+  empty machine -> verified lab: 8.1 s
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 16.622s
+
+OK
