@@ -1,0 +1,29 @@
+{
+ "schema": 2,
+ "run_id": "20261124T010902Z-host-probe-6aab",
+ "name": "host probe",
+ "hypothesis": "Kaggle and Hugging Face are reachable from this session (they were blocked at 01:45 and 02:05; re-checked after the environment restarted twice)",
+ "success_criterion": "api.kaggle.com and huggingface.co both reachable",
+ "success_expr": "'api.kaggle.com' in s['reachable'] and 'huggingface.co' in s['reachable']",
+ "command": [
+  "python3",
+  "-I",
+  "infra/hosts.py"
+ ],
+ "cwd": "lab/knowledge-frontier",
+ "registered_utc": "2026-11-24T01:09:02Z",
+ "status": "registered",
+ "git": {
+  "commit": "fdfc1f304903d31a2514e607861c20dc231e306d",
+  "branch": "claude/infra-lab",
+  "modified_tracked_files": 0
+ },
+ "machine": {
+  "python": "3.13.18",
+  "platform": "Linux-6.18.44-fc-v819-x86_64-with-glibc2.39",
+  "cpus": 2,
+  "mem_gb": 7.8,
+  "gpu": "none"
+ },
+ "env": {}
+}
