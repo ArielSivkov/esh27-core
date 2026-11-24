@@ -48,4 +48,13 @@ any later change goes in a dated "Amendments" section below, with the reason.
 - **n.** Two seeds per condition is small. All conclusions are labeled with it.
 
 ## Amendments
-(none yet)
+**A1, 2026-11-24, before the real run** (after a 4-step smoke test on 0.5B, whose numbers are not results).
+Reason: Adam normalizes per-parameter step size, so the weight-norm profile can be near-uniform (or shaped) for optimizer
+reasons that say nothing about where the model's computation changed. Added a **secondary**, functional measure; the
+primary hypotheses above are unchanged.
+- Functional effect per module: Σ‖ΔW x‖² / Σ‖W0 x‖² over prompt tokens of the frozen prompts (per task, inputs x from the
+  base model). Layer profile = q + v.
+- **H1f.** On gcd prompts, the top quarter of layers holds ≥ 50% of the functional effect, in ≥ 2 of 3 rounds in both seeds.
+  Specificity reported as for H1s (seed-vs-seed and vs `ctrl_add` Spearman), thresholds 0.7 / 0.5.
+- Task selectivity, descriptive only: functional effect on gcd prompts ÷ on addition prompts.
+- Measuring on the frozen test prompts is measurement only; nothing is trained on them.
