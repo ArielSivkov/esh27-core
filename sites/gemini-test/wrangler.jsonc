@@ -1,0 +1,9 @@
+{
+  // בדיקת פריסה לג'מיני לפי docs/DEPLOY_GEMINI.md. אתר זמני: אחרי שהבדיקה עברה, מוחקים (npx wrangler@4 delete esh27-gemini-test).
+  "name": "esh27-gemini-test",
+  "compatibility_date": "2025-09-01",
+  "assets": { "directory": "./public", "not_found_handling": "404-page" },
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [ { "pattern": "gemini-test.esh27.com", "custom_domain": true } ]
+}
