@@ -50,7 +50,14 @@ branch="${best#refs/remotes/origin/}"
 for x in $newer_without_tools; do
   if [ "${x##*@}" -gt "$best_t" ]; then echo "warning: ${x%@*} has newer lab content but no tools; merge it into $branch"; fi
 done
-git checkout -q -B "$branch" "$best"
+if git rev-parse -q --verify "refs/heads/$branch" >/dev/null && ! git merge-base --is-ancestor "refs/heads/$branch" "$best"; then
+  # a re-run must never throw away local commits that were not pushed yet (labrun keeps them as pending)
+  ahead=$(git rev-list --count "$best..refs/heads/$branch")
+  echo "warning: local $branch has $ahead commit(s) not on the remote; keeping them (push later with: labrun.py sync)"
+  git checkout -q "$branch"
+else
+  git checkout -q -B "$branch" "$best"
+fi
 echo "branch: $branch ($(git log -1 --format='%h %ci' HEAD))"
 
 step "3 python environment ($("$PY" --version 2>&1)) with exact versions"

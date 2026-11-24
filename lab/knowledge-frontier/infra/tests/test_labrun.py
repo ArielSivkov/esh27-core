@@ -205,6 +205,37 @@ class TestRun(Base):
         ptr = json.loads(self.sh(["git", "show", f"t-ckpt:{LAB_REL}/topo/scratch/LARGE_FILES.json"], cwd=self.remote).stdout)
         self.assertEqual(ptr[0]["bytes"], 6 << 20)
 
+    def test_unrelated_staged_file_stays_out_of_run_commits(self):
+        w = self.clone()
+        with open(os.path.join(w, "unrelated.txt"), "w") as f:
+            f.write("not part of any run\n")
+        self.sh(["git", "add", "unrelated.txt"], cwd=w)
+        self.labrun(w, "run", "--name", "clean commit", "--", sys.executable, "-c", "pass",
+                    env={"LAB_BRANCH": "t-clean"}, check=True)
+        files = self.sh(["git", "ls-tree", "-r", "--name-only", "t-clean"], cwd=self.remote).stdout.split()
+        self.assertNotIn("unrelated.txt", files)
+        self.assertIn("unrelated.txt", self.sh(["git", "diff", "--cached", "--name-only"], cwd=w).stdout)
+        p = self.labrun(w, "checkpoint", "-m", "x", env={"LAB_BRANCH": "t-clean"})
+        self.assertEqual(p.returncode, 2)
+        self.assertIn("outside the lab are staged", p.stderr)
+
+    def test_collect_outside_workspace_is_refused(self):
+        w = self.clone()
+        self.labrun(w, "run", "--name", "collect", "--collect", "/etc/hostname", "--collect", "../../",
+                    "--", sys.executable, "-c", "pass", env={"LAB_BRANCH": "t-collect"}, check=True)
+        m = self.manifest(w)
+        self.assertEqual(m["outputs"], [])
+        self.assertEqual(sorted(x["reason"][:7] for x in m["not_committed"]), ["outside", "outside"])
+
+    def test_unsafe_criterion_is_refused_before_anything_runs(self):
+        w = self.clone()
+        marker = os.path.join(self.tmp.name, f"ran{self.n}")
+        p = self.labrun(w, "run", "--name", "evil", "--success-expr", "().__class__.__base__.__subclasses__()",
+                        "--", "touch", marker, env={"LAB_BRANCH": "t-evil"})
+        self.assertEqual(p.returncode, 2)
+        self.assertFalse(os.path.exists(marker))
+        self.assertFalse(os.path.isdir(os.path.join(w, LAB_REL, "runs")) and os.listdir(os.path.join(w, LAB_REL, "runs")))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

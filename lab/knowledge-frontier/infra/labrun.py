@@ -21,6 +21,7 @@ infra/lab.json "protected_branches" are refused. Never force-pushes. If the remo
 (JOURNAL.md conflicts are resolved by regenerating it); anything else is left as a pending push.
 """
 import argparse
+import ast
 import datetime as dt
 import fnmatch
 import hashlib
@@ -121,12 +122,13 @@ def commit(paths, message):
     if not paths:
         return False
     git("add", "--", *paths)
-    if git("diff", "--cached", "--quiet", check=False).returncode == 0:
+    if git("diff", "--cached", "--quiet", "--", *paths, check=False).returncode == 0:
         return False
     msg = message + trailer()
     if secretscan.find(msg):
         raise LabError("commit message contains a credential or personal detail; not committing")
-    p = git("commit", "-q", "-m", msg, check=False)
+    # "-- paths" = commit only these paths; anything else the user had staged stays staged and out of this commit
+    p = git("commit", "-q", "-m", msg, "--", *paths, check=False)
     if p.returncode != 0:
         git("reset", "-q", "--", *paths, check=False)
         raise LabError("commit refused (hook or git): " + scrub((p.stdout + p.stderr).strip())[:800])
@@ -333,6 +335,11 @@ def cmd_run(a):
     if not a.cmd:
         raise LabError("no command given (use: labrun.py run --name N -- command ...)")
     cmd = a.cmd[1:] if a.cmd[0] == "--" else a.cmd
+    if a.success_expr:  # a typo or a disallowed construct fails here, before anything is recorded or run
+        try:
+            check_expr(a.success_expr)
+        except (SyntaxError, ValueError) as e:
+            raise LabError(f"--success-expr refused before the run: {e}")
     cwd = os.path.abspath(a.cwd or os.getcwd())
     rid = new_run_id(a.name)
     rdir = os.path.join(RUNS, rid)
@@ -409,8 +416,13 @@ def cmd_run(a):
     limit = int(CFG["max_file_mb"] * 1024 * 1024)
     out_root = os.path.join(rdir, "outputs")
     skipped = []
+    roots = [os.path.realpath(cwd), os.path.realpath(repo_root())]
     for c in a.collect or []:
         src = os.path.join(cwd, c)
+        real = os.path.realpath(src)
+        if not any(real == r or real.startswith(r + os.sep) for r in roots):
+            skipped.append(dict(path=c, reason="outside the working directory and the repository; not collected"))
+            continue
         if not os.path.exists(src):
             skipped.append(dict(path=c, reason="missing after run"))
             continue
@@ -483,13 +495,38 @@ def sanitize(obj):
     return walk(obj), count
 
 
+SAFE_FUNCS = {"len": len, "min": min, "max": max, "abs": abs, "all": all, "any": any, "round": round, "float": float}
+SAFE_NODES = (ast.Expression, ast.BoolOp, ast.And, ast.Or, ast.UnaryOp, ast.Not, ast.USub, ast.UAdd, ast.BinOp,
+              ast.Add, ast.Sub, ast.Mult, ast.Div, ast.FloorDiv, ast.Mod, ast.Compare, ast.Eq, ast.NotEq, ast.Lt,
+              ast.LtE, ast.Gt, ast.GtE, ast.In, ast.NotIn, ast.Is, ast.IsNot, ast.Constant, ast.Name, ast.Load,
+              ast.Subscript, ast.Slice, ast.Tuple, ast.List, ast.Dict, ast.Call, ast.Attribute, ast.IfExp)
+
+
+def check_expr(expr):
+    """Reject anything but plain comparisons over s/rc/wall_s, whitelisted functions and dict .get()."""
+    tree = ast.parse(expr, mode="eval")
+    for node in ast.walk(tree):
+        if not isinstance(node, SAFE_NODES):
+            raise ValueError(f"not allowed in a criterion: {type(node).__name__}")
+        if isinstance(node, ast.Name) and node.id not in {"s", "rc", "wall_s", *SAFE_FUNCS}:
+            raise ValueError(f"unknown name in a criterion: {node.id}")
+        if isinstance(node, ast.Attribute) and node.attr != "get":
+            raise ValueError(f"attribute not allowed in a criterion: .{node.attr}")
+        if isinstance(node, ast.Call) and not (
+                (isinstance(node.func, ast.Name) and node.func.id in SAFE_FUNCS) or
+                (isinstance(node.func, ast.Attribute) and node.func.attr == "get")):
+            raise ValueError("only len/min/max/abs/all/any/round/float and .get() may be called in a criterion")
+    return compile(tree, "<criterion>", "eval")
+
+
 def evaluate(expr, man):
     """Evaluate a pre-registered success expression over the run record. Names: s (summary), rc, wall_s."""
     try:
-        ok = eval(expr, {"__builtins__": {"len": len, "min": min, "max": max, "abs": abs, "all": all, "any": any}},
+        code = check_expr(expr)
+        ok = eval(code, {"__builtins__": {}, **SAFE_FUNCS},
                   {"s": man.get("summary") or {}, "rc": man.get("exit_code"), "wall_s": man.get("wall_s")})
         return "pass" if ok else "fail"
-    except Exception as e:  # a broken criterion is recorded, not hidden
+    except Exception as e:  # a broken or refused criterion is recorded, not hidden
         return f"error: {type(e).__name__}: {e}"[:200]
 
 
@@ -522,7 +559,12 @@ def cmd_checkpoint(a):
     if big:
         raise LabError("checkpoint stopped: files over the size limit: " + ", ".join(rel(p) for p in big))
     write_journal()
-    git("add", "--ignore-removal", "--", rel(LAB))
+    lab_rel = rel(LAB)
+    foreign = [x for x in git("diff", "--cached", "--name-only").stdout.splitlines() if not x.startswith(lab_rel + "/")]
+    if foreign:
+        raise LabError("checkpoint stopped: changes outside the lab are staged (" + ", ".join(foreign[:5]) +
+                       "); commit or unstage them first, a lab checkpoint never carries them")
+    git("add", "--ignore-removal", "--", lab_rel)
     if git("diff", "--cached", "--quiet", check=False).returncode == 0:
         print("labrun: nothing new to save")
         return 0 if not has_pending() else (0 if push("pending commits") else 1)
