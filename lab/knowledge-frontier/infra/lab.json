@@ -1,0 +1,25 @@
+{
+  "remote": "origin",
+  "protected_branches": ["main", "master", "production", "prod", "release"],
+  "max_file_mb": 5,
+  "max_run_mb": 50,
+  "push_timeout_s": 180,
+  "env_whitelist": ["MODEL", "K", "SEED", "TASKS", "ROUNDS", "MULTI", "CUDA_VISIBLE_DEVICES", "MALLOC_ARENA_MAX",
+                    "OMP_NUM_THREADS", "PYTHONHASHSEED", "LAB_QUEUE_ID"],
+  "ignore_globs": ["__pycache__/*", "*.pyc", "*.safetensors", "*.bin", "*.pt", "*.pth", "*.ckpt", "*.npz", "*.npy",
+                   "*.pkl", "*.onnx", "*.gguf", ".ipynb_checkpoints/*", "adapter_round*/*", "*.lock", "*.tmp"],
+  "hosts": {
+    "github.com": "https://github.com/ArielSivkov/esh27-core.git/info/refs?service=git-upload-pack",
+    "pypi.org": "https://pypi.org/simple/numpy/",
+    "api.kaggle.com": "https://api.kaggle.com/v1/kernels.KernelsApiService/ListKernels",
+    "www.kaggle.com": "https://www.kaggle.com/",
+    "huggingface.co": "https://huggingface.co/api/datasets/librarian-bots/arxiv-metadata-snapshot",
+    "export.arxiv.org": "https://export.arxiv.org/rss/math.CO",
+    "api.openalex.org": "https://api.openalex.org/works?per-page=1",
+    "oeis.org": "https://oeis.org/A000045/b000045.txt",
+    "www.erdosproblems.com": "https://www.erdosproblems.com/",
+    "download.pytorch.org": "https://download.pytorch.org/whl/cpu/",
+    "release.lean-lang.org": "https://release.lean-lang.org/",
+    "raw.githubusercontent.com": "https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh"
+  }
+}

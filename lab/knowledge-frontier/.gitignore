@@ -1,0 +1,24 @@
+# Rebuilt on demand, never committed (see infra/sources.json and infra/bootstrap.sh)
+.venv/
+data/
+__pycache__/
+*.pyc
+*.tmp
+infra/.last_*.json
+# model weights and arrays
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.npz
+*.npy
+*.pkl
+*.onnx
+*.gguf
+adapter_round*/
+.ipynb_checkpoints/
+# large raw inputs of the topology work (rebuilt from Hugging Face mirrors)
+topo/arxiv_all_cats.json
+topo/arxiv_2026_cats.json
+topo/arxiv_daily.jsonl

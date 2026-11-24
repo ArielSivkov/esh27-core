@@ -1,0 +1,6 @@
+# Only for infra/build_data.py and the topo/oa_*.py scripts (Hugging Face mirrors). Python >= 3.11.
+# Pinned on 24.11.2026 to the current PyPI releases; not yet exercised (huggingface.co was blocked that day).
+pyarrow==26.0.1
+pandas==3.1.1
+huggingface_hub==2.4.0
+fsspec==2026.9.0

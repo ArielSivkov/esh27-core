@@ -1,0 +1,4 @@
+#!/bin/sh
+# Lab rule: no credential or personal detail reaches git. Scans the staged blobs, blocks the commit on a hit.
+top=$(git rev-parse --show-toplevel) || exit 1
+exec python3 -I "$top/lab/knowledge-frontier/infra/secretscan.py" --staged

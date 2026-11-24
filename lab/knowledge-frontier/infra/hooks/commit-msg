@@ -1,0 +1,4 @@
+#!/bin/sh
+# Same rule for the commit message itself.
+top=$(git rev-parse --show-toplevel) || exit 1
+exec python3 -I "$top/lab/knowledge-frontier/infra/secretscan.py" --message-file "$1"
