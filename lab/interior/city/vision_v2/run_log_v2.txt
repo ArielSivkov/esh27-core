@@ -1,0 +1,202 @@
+Found existing installation: torchao 0.10.0
+Uninstalling torchao-0.10.0:
+  Successfully uninstalled torchao-0.10.0
+[     8s] GPUs 2 ['Tesla T4', 'Tesla T4']
+[    84s] img fail 37 HTTPError('404 Client Error: Not Found for url: https://commons.wikimedia.org/w/
+[   102s] img fail 38 HTTPError('404 Client Error: Not Found for url: https://commons.wikimedia.org/w/
+[   119s] img fail 39 HTTPError('404 Client Error: Not Found for url: https://commons.wikimedia.org/w/
+[   598s] images 47 of 53
+[   621s] ARM A_7B_fp16 loading Qwen/Qwen2.5-VL-7B-Instruct
+[   723s] ARM A_7B_fp16 loaded; mem GB [8.5, 8.1]
+ROW A_7B_fp16 {"i": 0, "a": {"floors": 6, "text": ["ERGY", "CORAL CLINIC"], "scene": "commercial"}, "b": {"floors": 5, "text": ["ERGY", "CORAL CLINIC"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 1, "a": {"raw": "```json\n{\n  \"floors\": 4,\n  \"text\": [\n    \"08.8324799 099 058.8324799 099\",\n    \"החברה לערכי דין\",\n    \"Hr MANPOWER\",\n    \"Hr-manpower.co\",\n    \"1/2\",\n    \"הוורוד\",\n    \"הוורוד\",\n    \"הוורוד\",\n    \"הוו"}, "b": {"raw": "```json\n{\n  \"floors\": 4,\n  \"text\": [\n    \"08.8324799 098 058.8324799 098\",\n    \"Hr-manpower.co\",\n    \"HR\",\n    \"MANPOWER\",\n    \"ה招募\",\n    \"ה招募\",\n    \"ה招募\",\n    \"ה招募\",\n    \"ה招募\",\n    \"ה招募\",\n    \"ה招募\",\n"}}
+ROW A_7B_fp16 {"i": 2, "a": {"floors": 5, "text": ["1010", "1010", "1010", "1010", "1010", "1010"], "scene": "commercial"}, "b": {"floors": 5, "text": ["1010"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 3, "a": {"raw": "```json\n{\n  \"floors\": 4,\n  \"text\": [\n    \"TATTOO\",\n    \"KARAOKE\",\n    \"KARAOKE\",\n    \"KARAOKE\",\n    \"KARAOKE\",\n    \"KARAOKE\",\n    \"KARAOKE\",\n    \"KARAOKE\",\n    \"KARAOKE\",\n    \"KARAOKE\",\n    \"KARAOKE\","}, "b": {"floors": 4, "text": ["LOTU"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 4, "a": {"raw": "```json\n{\n  \"floors\": 5,\n  \"text\": [\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LOTUS\",\n    \"LO"}, "b": {"floors": 5, "text": ["LOTUS"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 5, "a": {"floors": 1, "text": ["100"], "scene": "commercial"}, "b": {"floors": 1, "text": ["100"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 6, "a": {"floors": 2, "text": ["קופמטיק", "מרכז שיווק וודדה"], "scene": "commercial"}, "b": {"floors": 2, "text": ["קופמטיק", "מרכז שיווק וודדה"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 7, "a": {"raw": "```json\n{\n  \"floors\": 5,\n  \"text\": [\n    \"9\",\n    \"22\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n"}, "b": {"raw": "```json\n{\n  \"floors\": 5,\n  \"text\": [\n    \"9\",\n    \"22\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n"}}
+ROW A_7B_fp16 {"i": 8, "a": {"raw": "```json\n{\n  \"floors\": 1,\n  \"text\": [\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n   "}, "b": {"floors": 1, "text": ["הו", "הו"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 9, "a": {"floors": 1, "text": ["טמboro", "כל בו רחל יצחק חומרי בניין מפותחים", "מתכון", "זקלה"], "scene": "commercial"}, "b": {"floors": 1, "text": ["טמבר", "כל בו רחל יצחק חומרי בניין מפותחים", "מתנברת", "זקלה"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 10, "a": {"floors": null, "text": ["פארק"], "scene": "commercial"}, "b": {"floors": 1, "text": ["פפארי"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 11, "a": {"floors": 7, "text": ["הו"], "scene": "commercial"}, "b": {"floors": 6, "text": ["Peach"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 12, "a": {"floors": 5, "text": ["92-601-50"], "scene": "commercial"}, "b": {"floors": 3, "text": ["92-60150", "34 22862"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 13, "a": {"floors": null, "text": ["84658"], "scene": "commercial"}, "b": {"floors": 1, "text": ["84658"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 14, "a": {"raw": "```json\n{\n  \"floors\": 1,\n  \"text\": [\n    \"נשל תפר\",\n    \"עובר\",\n    \"מוצרת מתקנת עסקים\",\n    \"יריעות ומלוחות עסקים\",\n    \"991320\",\n    \"991320\",\n    \"991320\",\n    \"991320\",\n    \"991320\",\n    \"991320\","}, "b": {"raw": "```json\n{\n  \"floors\": 1,\n  \"text\": [\n    \"נשל תפר\",\n    \"עובר\",\n    \"תפוקת מתקנת מלחמת עסקים\",\n    \"991320\",\n    \"991320\",\n    \"991320\",\n    \"991320\",\n    \"991320\",\n    \"991320\",\n    \"991320\",\n    \"99"}}
+ROW A_7B_fp16 {"i": 15, "a": {"floors": null, "text": [], "scene": "commercial"}, "b": {"floors": 1, "text": [], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 16, "a": {"floors": 1, "text": ["S"], "scene": "commercial"}, "b": {"floors": 2, "text": ["S"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 17, "a": {"floors": 10, "text": ["כיכר הטעילים"], "scene": "road"}, "b": {"floors": 7, "text": ["כיכר הטיעונים"], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 18, "a": {"floors": 10, "text": ["לפר מונולימן", "STAFF"], "scene": "commercial"}, "b": {"floors": 9, "text": ["לפר מוזיאון", "STAFF"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 19, "a": {"floors": 15, "text": ["מגדל ארון הסלע"], "scene": "tower"}, "b": {"floors": 10, "text": ["מגדל ארון הסלע"], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 20, "a": {"floors": 10, "text": ["Sofitel", "Sofitel"], "scene": "commercial"}, "b": {"floors": 10, "text": [], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 21, "a": {"raw": "```json\n{\n  \"floors\": 10,\n  \"text\": [\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n    \"הו\",\n  "}, "b": {"floors": 10, "text": ["הו"], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 22, "a": {"floors": 20, "text": ["החתומס", "24", "הצומת", "DISTRO", "PARK"], "scene": "commercial"}, "b": {"raw": "```json\n{\n  \"floors\": 20,\n  \"text\": [\n    \"החתומוס\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24"}}
+ROW A_7B_fp16 {"i": 23, "a": {"floors": 10, "text": ["ASHDOD BEACH", "TOP CAR", "TOP CAR"], "scene": "commercial"}, "b": {"floors": 9, "text": ["ASHDOD BEACH", "TOP CAR", "TOP CAR"], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 24, "a": {"floors": 10, "text": ["ASHDOD BEACH", "TOP CAR", "REGINA VILLA"], "scene": "commercial"}, "b": {"floors": 10, "text": ["ASHDOD BEACH", "TOP CAR"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 25, "a": {"floors": 10, "text": ["Gali"], "scene": "commercial"}, "b": {"floors": 7, "text": ["Gali"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 26, "a": {"floors": 2, "text": ["Zalaz", "Claro"], "scene": "commercial"}, "b": {"floors": 2, "text": ["Zalaz", "Claro"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 27, "a": {"floors": 6, "text": [], "scene": "commercial"}, "b": {"floors": 5, "text": ["2019/11/21 08:37"], "scene": "commercial"}}
+ROW A_7B_fp16 {"i": 28, "a": {"floors": 7, "text": [], "scene": "residential"}, "b": {"floors": 7, "text": ["Graffiti"], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 29, "a": {"raw": "```json\n{\n  \"floors\": 20,\n  \"text\": [\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"הצלה\",\n    \"ה"}, "b": {"floors": 10, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 30, "a": {"floors": 6, "text": [], "scene": "residential"}, "b": {"floors": 5, "text": [], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 31, "a": {"floors": 3, "text": [], "scene": "residential"}, "b": {"floors": 3, "text": [], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 32, "a": {"floors": 6, "text": [], "scene": "residential"}, "b": {"floors": 5, "text": [], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 33, "a": {"floors": null, "text": ["MERCURE"], "scene": "park"}, "b": {"floors": null, "text": ["MERCURE"], "scene": "beach"}}
+ROW A_7B_fp16 {"i": 34, "a": {"floors": 6, "text": ["VALPO"], "scene": "tower"}, "b": {"floors": 4, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 35, "a": {"floors": 1, "text": [], "scene": "tower"}, "b": {"floors": 3, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 36, "a": {"floors": 10, "text": [], "scene": "tower"}, "b": {"floors": 4, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 40, "a": {"floors": 25, "text": ["השדרות"], "scene": "tower"}, "b": {"floors": 20, "text": ["השדרות"], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 41, "a": {"floors": 10, "text": [], "scene": "tower"}, "b": {"floors": 10, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 43, "a": {"floors": 10, "text": [], "scene": "residential"}, "b": {"floors": 7, "text": [], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 44, "a": {"floors": 20, "text": [], "scene": "residential"}, "b": {"floors": 20, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 45, "a": {"floors": 25, "text": [], "scene": "tower"}, "b": {"floors": 25, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 47, "a": {"floors": 20, "text": [""], "scene": "residential"}, "b": {"floors": 20, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 49, "a": {"floors": 25, "text": [], "scene": "residential"}, "b": {"floors": 20, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 50, "a": {"floors": 20, "text": [], "scene": "tower"}, "b": {"floors": 20, "text": [], "scene": "tower"}}
+ROW A_7B_fp16 {"i": 51, "a": {"floors": 5, "text": ["30 - stop"], "scene": "residential"}, "b": {"floors": 4, "text": ["30 - stop", "פצע"], "scene": "residential"}}
+ROW A_7B_fp16 {"i": 52, "a": {"floors": 5, "text": [], "scene": "residential"}, "b": {"floors": 5, "text": [], "scene": "residential"}}
+[  1179s] ARM A_7B_fp16 done
+[  1179s] ARM B_7B_nf4 loading Qwen/Qwen2.5-VL-7B-Instruct
+[  1189s] ARM B_7B_nf4 loaded; mem GB [6.3, 0.0]
+ROW B_7B_nf4 {"i": 0, "a": {"floors": 5, "text": ["CORAL CLINIC", "ENERGY"], "scene": "commercial"}, "b": {"floors": 4, "text": ["CORAL CLINIC", "ERGY"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 1, "a": {"raw": "```json\n{\n  \"floors\": 5,\n  \"text\": [\n    \"H2\",\n    \"MANPOWER\",\n    \"Hr-manpower.co\",\n    \"הכפר הערבי דן\",\n    \"ישעיהו בן אביגדור\",\n    \"08.834799 098 08.834799\",\n    \"058.834799\",\n    \"058.834799\",\n  "}, "b": {"raw": "```json\n{\n  \"floors\": 4,\n  \"text\": [\n    \"H2\",\n    \"MANPOWER\",\n    \"hr-manpower.co\",\n    \"08.834799 098 05-834799\",\n    \"08.834799 098 05-834799\",\n    \"08.834799 098 05-834799\",\n    \"08.834799 098 05-"}}
+ROW B_7B_nf4 {"i": 2, "a": {"raw": "```json\n{\n  \"floors\": 5,\n  \"text\": [\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"1010\",\n    \"10"}, "b": {"floors": 5, "text": ["1010"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 3, "a": {"raw": "```json\n{\n  \"floors\": 3,\n  \"text\": [\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LOWI\",\n    \"LO"}, "b": {"floors": 3, "text": ["LOTU", "KARIM"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 4, "a": {"raw": "```json\n{\n  \"floors\": 5,\n  \"text\": [\n    \"KFC\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנגב\",\n    \"הנג"}, "b": {"floors": 4, "text": ["KFC", "Jamba"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 5, "a": {"floors": 1, "text": ["100"], "scene": "commercial"}, "b": {"floors": 1, "text": ["100"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 6, "a": {"floors": 1, "text": ["קונטינק", "מרבץ שוק הדסה", "aqumin"], "scene": "commercial"}, "b": {"floors": 2, "text": ["קונטינקן", "מרבך שיווק והדרכה", "aqumin"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 7, "a": {"raw": "```json\n{\n  \"floors\": 5,\n  \"text\": [\n    \"9\",\n    \"22\",\n    \"22\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\","}, "b": {"raw": "```json\n{\n  \"floors\": 5,\n  \"text\": [\n    \"9\",\n    \"22\",\n    \"22\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\",\n    \"9\","}}
+ROW B_7B_nf4 {"i": 8, "a": {"raw": "```json\n{\n  \"floors\": 1,\n  \"text\": [\n    \"הנורו\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"שעון\",\n    \"ש"}, "b": {"floors": 1, "text": ["הו", "שעון"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 9, "a": {"floors": 1, "text": ["טמboro", "כל בו רחל יצחק איסלצ'יץ חשמל", "מתנברת", "רkalra"], "scene": "commercial"}, "b": {"floors": 1, "text": ["טמבר", "כל בו רחל יצחק איסלצ'יץ' חשמל", "מתנברת", "רצל"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 10, "a": {"floors": null, "text": ["פארק"], "scene": "commercial"}, "b": {"floors": 2, "text": ["פארק"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 11, "a": {"floors": 7, "text": ["הו"], "scene": "commercial"}, "b": {"floors": 6, "text": ["הו"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 12, "a": {"floors": 2, "text": ["92-80150"], "scene": "commercial"}, "b": {"floors": 2, "text": ["92-80150"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 13, "a": {"floors": null, "text": ["8658"], "scene": "commercial"}, "b": {"floors": 2, "text": ["8658"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 14, "a": {"raw": "```json\n{\n  \"floors\": 1,\n  \"text\": [\n    \"נשלי טפי\",\n    \"עובר\",\n    \"תלמוד תורה\",\n    \"בתי עיסוקים\",\n    \"ירית-בצלאל\",\n    \"991300\",\n    \"94 דרור 26\",\n    \"94 דרור 27\",\n    \"94 דרור 28\",\n    \"94 דרור"}, "b": {"raw": "```json\n{\n  \"floors\": 2,\n  \"text\": [\n    \"נשלי טפי\",\n    \"תל אביב\",\n    \"תל אביב\",\n    \"תל אביב\",\n    \"תל אביב\",\n    \"תל אביב\",\n    \"תל אביב\",\n    \"תל אביב\",\n    \"תל אביב\",\n    \"תל אביב\",\n    \"תל אביב"}}
+ROW B_7B_nf4 {"i": 15, "a": {"floors": null, "text": [], "scene": "commercial"}, "b": {"floors": 1, "text": [], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 16, "a": {"floors": 1, "text": ["S"], "scene": "commercial"}, "b": {"floors": 2, "text": ["100"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 17, "a": {"floors": 10, "text": ["כרם התפוחים"], "scene": "road"}, "b": {"floors": 6, "text": ["קריית הטרולים"], "scene": "road"}}
+ROW B_7B_nf4 {"i": 18, "a": {"floors": 10, "text": ["לפרת חלוצים", "STAN", "PINK", "ANNALISA", "BENZ", "STAN"], "scene": "commercial"}, "b": {"floors": 9, "text": ["לפרת חלוצי"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 19, "a": {"floors": 15, "text": ["מגדל אור הסלע"], "scene": "residential"}, "b": {"floors": 10, "text": ["מגדל אור הסלע"], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 20, "a": {"floors": 10, "text": ["Sofitel"], "scene": "commercial"}, "b": {"floors": 10, "text": ["Sofitel"], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 21, "a": {"floors": 10, "text": ["הוֹד", "הוֹד"], "scene": "commercial"}, "b": {"floors": 10, "text": ["הו"], "scene": "residential"}}
+ROW B_7B_nf4 {"i": 22, "a": {"raw": "```json\n{\n  \"floors\": 10,\n  \"text\": [\n    \"החותומוס\",\n    \"DISTRICT\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n    \"24\",\n"}, "b": {"floors": 20, "text": ["החותומוס"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 23, "a": {"floors": 10, "text": ["ASHDOD BEACH", "TOP CAR", "TOP CAR"], "scene": "commercial"}, "b": {"floors": 9, "text": ["ASHDOD BEACH", "TOP CAR", "TOP CAR"], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 24, "a": {"floors": 10, "text": ["ASHDOD BEACH", "TOP CAR", "REGINA VILLA"], "scene": "commercial"}, "b": {"floors": 9, "text": ["ASHDOD BEACH", "TOP CAR", "REGINA VILLA"], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 25, "a": {"floors": 10, "text": ["Gali"], "scene": "commercial"}, "b": {"floors": 7, "text": ["Gali"], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 26, "a": {"floors": 2, "text": ["Zalameh"], "scene": "commercial"}, "b": {"floors": 2, "text": ["Zalata", "Claro"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 27, "a": {"floors": 5, "text": [], "scene": "road"}, "b": {"floors": 5, "text": ["2019/11/21 08:37"], "scene": "commercial"}}
+ROW B_7B_nf4 {"i": 28, "a": {"floors": 6, "text": [], "scene": "residential"}, "b": {"floors": 6, "text": ["444", "Graffiti"], "scene": "residential"}}
+ROW B_7B_nf4 {"i": 29, "a": {"floors": 20, "text": ["הצומח"], "scene": "road"}, "b": {"floors": 18, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 30, "a": {"floors": 6, "text": [], "scene": "residential"}, "b": {"floors": 5, "text": [], "scene": "residential"}}
+ROW B_7B_nf4 {"i": 31, "a": {"floors": null, "text": [], "scene": "park"}, "b": {"floors": 3, "text": [], "scene": "residential"}}
+ROW B_7B_nf4 {"i": 32, "a": {"floors": 5, "text": ["217"], "scene": "residential"}, "b": {"floors": 5, "text": [], "scene": "residential"}}
+ROW B_7B_nf4 {"i": 33, "a": {"floors": null, "text": ["MERCURE"], "scene": "park"}, "b": {"floors": null, "text": ["MERCURE"], "scene": "beach"}}
+ROW B_7B_nf4 {"i": 34, "a": {"floors": 4, "text": ["SALO"], "scene": "tower"}, "b": {"floors": 4, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 35, "a": {"floors": 1, "text": [], "scene": "tower"}, "b": {"floors": 3, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 36, "a": {"floors": 10, "text": [], "scene": "tower"}, "b": {"floors": 5, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 40, "a": {"floors": 20, "text": ["השדרות"], "scene": "tower"}, "b": {"floors": 20, "text": ["השדרות"], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 41, "a": {"floors": 10, "text": [], "scene": "tower"}, "b": {"floors": 10, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 43, "a": {"floors": 10, "text": [], "scene": "residential"}, "b": {"floors": 7, "text": [], "scene": "residential"}}
+ROW B_7B_nf4 {"i": 44, "a": {"floors": 20, "text": [], "scene": "residential"}, "b": {"floors": 20, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 45, "a": {"floors": 25, "text": ["HOTEL"], "scene": "tower"}, "b": {"floors": 25, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 47, "a": {"floors": 20, "text": [""], "scene": "residential"}, "b": {"floors": 20, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 49, "a": {"floors": 30, "text": [], "scene": "tower"}, "b": {"floors": 20, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 50, "a": {"floors": 25, "text": [], "scene": "tower"}, "b": {"floors": 20, "text": [], "scene": "tower"}}
+ROW B_7B_nf4 {"i": 51, "a": {"floors": 5, "text": ["30 - stop", "100"], "scene": "residential"}, "b": {"floors": 4, "text": ["30 - stop", "100"], "scene": "residential"}}
+ROW B_7B_nf4 {"i": 52, "a": {"floors": 5, "text": [], "scene": "residential"}, "b": {"floors": 4, "text": [], "scene": "residential"}}
+[  1665s] ARM B_7B_nf4 done
+=====SUMMARY_7B=====
+[
+ {
+  "arm": "A_7B_fp16",
+  "analysed": 47,
+  "floors_both": 34,
+  "agree_within1": 24,
+  "agree_share": 0.706,
+  "coverage": 43,
+  "hebrew_read_on": 12,
+  "street_match": 0,
+  "mult10_share": 0.312,
+  "floor_hist_top": [
+   [
+    10,
+    15
+   ],
+   [
+    5,
+    11
+   ],
+   [
+    1,
+    10
+   ],
+   [
+    20,
+    9
+   ],
+   [
+    6,
+    6
+   ],
+   [
+    7,
+    6
+   ]
+  ]
+ },
+ {
+  "arm": "B_7B_nf4",
+  "analysed": 47,
+  "floors_both": 34,
+  "agree_within1": 25,
+  "agree_share": 0.735,
+  "coverage": 43,
+  "hebrew_read_on": 12,
+  "street_match": 0,
+  "mult10_share": 0.325,
+  "floor_hist_top": [
+   [
+    10,
+    14
+   ],
+   [
+    5,
+    10
+   ],
+   [
+    20,
+    10
+   ],
+   [
+    1,
+    9
+   ],
+   [
+    2,
+    8
+   ],
+   [
+    4,
+    6
+   ]
+  ]
+ },
+ {
+  "quantization_cost_7B": {
+   "floor_pairs": 74,
+   "agree_within1": 68,
+   "share": 0.919
+  }
+ }
+]
+[  1665s] ARM C_32B_awq loading Qwen/Qwen2.5-VL-32B-Instruct-AWQ
+[  1665s] ARM C_32B_awq FAILED to load: ImportError('Loading an AWQ quantized model requires gptqmodel. Please install it with `pip install gptqmodel`')
+=====SUMMARY_32B=====
+{
+ "arm": "C_32B_awq",
+ "failed": true
+}
+[  1665s] DONE
+/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
