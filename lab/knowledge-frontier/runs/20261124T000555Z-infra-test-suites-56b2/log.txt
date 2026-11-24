@@ -1,0 +1,31 @@
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK
+test_checkpoint_imports_scratch_and_records_large_files (__main__.TestRun.test_checkpoint_imports_scratch_and_records_large_files) ... ok
+test_failure_is_recorded_like_success (__main__.TestRun.test_failure_is_recorded_like_success) ... ok
+test_gather_unions_runs_across_branches (__main__.TestRun.test_gather_unions_runs_across_branches) ... ok
+test_hook_blocks_a_manual_commit_with_a_key (__main__.TestRun.test_hook_blocks_a_manual_commit_with_a_key) ... ok
+test_interrupt_is_recorded (__main__.TestRun.test_interrupt_is_recorded) ... ok
+test_large_output_kept_as_hash_only (__main__.TestRun.test_large_output_kept_as_hash_only) ... ok
+test_main_is_refused (__main__.TestRun.test_main_is_refused) ... ok
+test_secret_in_command_line_is_scrubbed_from_manifest (__main__.TestRun.test_secret_in_command_line_is_scrubbed_from_manifest) ... ok
+test_secret_in_output_never_reaches_git (__main__.TestRun.test_secret_in_output_never_reaches_git) ... ok
+test_success_is_preregistered_recorded_and_pushed (__main__.TestRun.test_success_is_preregistered_recorded_and_pushed) ... ok
+test_timeout_is_recorded (__main__.TestRun.test_timeout_is_recorded) ... ok
+test_two_sessions_push_to_the_same_branch (__main__.TestRun.test_two_sessions_push_to_the_same_branch) ... FAIL
+
+======================================================================
+FAIL: test_two_sessions_push_to_the_same_branch (__main__.TestRun.test_two_sessions_push_to_the_same_branch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/claude/arielsivkov/esh27-core/lab/knowledge-frontier/infra/tests/test_labrun.py", line 138, in test_two_sessions_push_to_the_same_branch
+    self.assertEqual(sum("registered" in s for s in log), 2, log)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 6 != 2 : ['run 20261124T000606Z-second-1ae0: ok (0.0s)', 'run 20261124T000606Z-second-1ae0: registered', 'run 20261124T000606Z-first-e42d: ok (0.0s)', 'run 20261124T000606Z-first-e42d: registered', 'test base', 'run 20261124T000555Z-infra-test-suites-56b2: registered', 'run 20261124T000554Z-offline-verification-3053: ok, criterion pass (0.7s)', 'run 20261124T000554Z-offline-verification-3053: registered', 'run 20261124T000553Z-host-probe-752f: ok, criterion fail (0.5s)', 'run 20261124T000553Z-host-probe-752f: registered', 'run 20261124T000553Z-cost-per-experiment-9050: ok, criterion pass (0.0s)', 'run 20261124T000553Z-cost-per-experiment-9050: registered', 'lab infra: verify.py and hosts.py write summary.json when run under labrun', 'lab/knowledge-frontier: automatic persistent memory and rebuild-from-empty', 'lab/knowledge-frontier: persistent copy of topology and SEAL work']
+
+----------------------------------------------------------------------
+Ran 12 tests in 11.090s
+
+FAILED (failures=1)
