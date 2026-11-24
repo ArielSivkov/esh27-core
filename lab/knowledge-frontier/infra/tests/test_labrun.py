@@ -68,7 +68,8 @@ class Base(unittest.TestCase):
         return self.sh([sys.executable, "-I", f"{LAB_REL}/infra/labrun.py", *args], cwd=work, check=check, env=env, **kw)
 
     def remote_log(self, branch):
-        return self.sh(["git", "log", "--format=%s", branch], cwd=self.remote).stdout.splitlines()
+        # only what the test itself added on top of the base branch
+        return self.sh(["git", "log", "--format=%s", f"lab-base..{branch}"], cwd=self.remote).stdout.splitlines()
 
     def manifest(self, work, rid=None):
         runs = os.path.join(work, LAB_REL, "runs")
