@@ -63,3 +63,9 @@
 - Hebrew, phone-length reports with numbered decisions.
 - Push only to the session's own branch.
 - Sanhedrin capability freeze until 30.11. Ariel lifted it for the city, but going live needs his word.
+
+## Update 04:33: Kav built a shared map and a world-agent contract (esh27-core branch ccr-c82f544e-jba5ik)
+- lab/MAP.md is one map of every lab: branch, state, needs and offers, and what is blocked waiting for Ariel.
+- lab/world/contract is the world–agent contract v0.1, with 3 actions. Only the verifier pays CRD, and floor counts need n≥2 independent measurements.
+- lab/world/brain is verifier-gated (SEAL-style) training on CPU. SmolLM2-135M learned the street check (53/53 on held-out real data) but not the distance comparison (0.50). That is a real verifiable task for the tiny-model ladder.
+- In the world, branch ccr-c82f544e-jba5ik of codesandbox-template-nuxt adds an agents mod that only turns on with ?agents. Merging is left to the world session after 30.11.
