@@ -27,3 +27,12 @@ R1 kept 109 → mean .406 (gcd .65) PROMOTE
 R2 kept 163 → mean .475 (gcd .85) PROMOTE
 R3 kept 197 → mean .537 (mul .725 betti .338 euler .20 gcd .887) PROMOTE; ctrl flat .9875 all rounds
 Speed: ~10 min for 3 rounds vs ~2 h for 2 rounds on 4-CPU container.
+
+## Kaggle run2 (2×T4) — 24.11.2026 01:38–02:22 Israel
+### Qwen2.5-1.5B, 6 rounds (same seed/frozen set as run1)
+R1 .438 P | R2 .478 P | R3 .512 P | R4 .522 REJECT (+.010) | R5 .515 REJECT | R6 .528 REJECT (euler .25, gcd .863)
+Ctrl flat .9875. Plateau ≈ .51–.53 after round 3. Run-to-run variance: R3 = .537 in run1 vs .512 here (GPU sampling nondeterminism) → ±.025 noise at n=80/task, comparable to the 0.03 gate.
+### Qwen2.5-3B, 4 rounds (fit on one T4)
+Base: mul .787 betti .075 euler .037 gcd .237 mean .284 ctrl .925 (worse than 1.5B on betti/euler)
+R1 .415 P (gcd .762) | R2 .472 P (gcd .875) | R3 .475 REJECT | R4 .484 REJECT (gcd .912)
+Bigger model did not self-improve more; ends below 1.5B.
