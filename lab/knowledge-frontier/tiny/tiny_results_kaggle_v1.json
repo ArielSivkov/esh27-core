@@ -1,0 +1,29 @@
+{
+ "model": "HuggingFaceTB/SmolLM2-135M-Instruct",
+ "n_per_task": 10000,
+ "epochs": 2,
+ "stage0_base": {
+  "mul": 0.0,
+  "gcd": 0.0,
+  "euler": 0.0,
+  "betti": 0.0,
+  "control_add": 0.0,
+  "mean4": 0.0
+ },
+ "stage1_answer_only": {
+  "mul": 0.263,
+  "gcd": 0.825,
+  "euler": 0.988,
+  "betti": 0.988,
+  "control_add": 0.0,
+  "mean4": 0.766
+ },
+ "stage2_scratchpad": {
+  "mul": 0.95,
+  "gcd": 0.7,
+  "euler": 0.988,
+  "betti": 0.988,
+  "control_add": 0.312,
+  "mean4": 0.906
+ }
+}
