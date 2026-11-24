@@ -23,8 +23,10 @@ contract BridgeGate is Ownable, Pausable, ReentrancyGuard, EIP712 {
     uint256 public globalDailyCap;
     mapping(address => bool) public kycAllowed;
     mapping(address => mapping(uint256 => bool)) public usedNonce;
-    mapping(address => mapping(uint256 => uint256)) public userDayTotal; // user => day => amount
-    mapping(uint256 => uint256) public dayTotal;
+    // חלון מתגלגל של 24 שעות: 24 דליים שעתיים (מונע "תקרה כפולה" סביב חצות)
+    struct Window { uint64[24] hourOf; uint256[24] amount; }
+    mapping(address => Window) private userWin;
+    Window private globalWin;
 
     bytes32 private constant CLAIM_TYPEHASH =
         keccak256("Claim(address user,uint256 amount,uint256 nonce,uint256 deadline)");
@@ -88,17 +90,37 @@ contract BridgeGate is Ownable, Pausable, ReentrancyGuard, EIP712 {
         (address rec, ECDSA.RecoverError err,) = ECDSA.tryRecover(digest, sig);
         if (err != ECDSA.RecoverError.NoError || rec != signer) revert BadSignature();
 
-        uint256 day = block.timestamp / 1 days;
-        if (userDayTotal[msg.sender][day] + amount > perUserDailyCap) revert UserCapExceeded();
-        if (dayTotal[day] + amount > globalDailyCap) revert GlobalCapExceeded();
+        uint64 hour = uint64(block.timestamp / 1 hours);
+        if (_windowSum(userWin[msg.sender], hour) + amount > perUserDailyCap) revert UserCapExceeded();
+        if (_windowSum(globalWin, hour) + amount > globalDailyCap) revert GlobalCapExceeded();
 
         // effects לפני interactions
         usedNonce[msg.sender][nonce] = true;
-        userDayTotal[msg.sender][day] += amount;
-        dayTotal[day] += amount;
+        _windowAdd(userWin[msg.sender], hour, amount);
+        _windowAdd(globalWin, hour, amount);
 
         token.safeTransfer(msg.sender, amount);
         emit Claimed(msg.sender, amount, nonce);
+    }
+
+    function _windowSum(Window storage w, uint64 hour) private view returns (uint256 sum) {
+        for (uint256 i = 0; i < 24; i++) {
+            if (w.hourOf[i] + 24 > hour) sum += w.amount[i]; // דלי מ-24 השעות האחרונות
+        }
+    }
+
+    function _windowAdd(Window storage w, uint64 hour, uint256 amount) private {
+        uint256 i = hour % 24;
+        if (w.hourOf[i] != hour) { w.hourOf[i] = hour; w.amount[i] = 0; }
+        w.amount[i] += amount;
+    }
+
+    function usedLast24h(address user) external view returns (uint256) {
+        return _windowSum(userWin[user], uint64(block.timestamp / 1 hours));
+    }
+
+    function globalUsedLast24h() external view returns (uint256) {
+        return _windowSum(globalWin, uint64(block.timestamp / 1 hours));
     }
 
     function domainSeparator() external view returns (bytes32) { return _domainSeparatorV4(); }

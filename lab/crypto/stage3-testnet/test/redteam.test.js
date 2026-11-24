@@ -131,7 +131,7 @@ describe("BridgeGate", () => {
       try { await ctx.gate.connect(wallets[i]).claim(E(1000), 1, dl, sig); } catch { fails++; }
     }
     expect(fails).to.equal(1);
-    expect(await ctx.gate.dayTotal(BigInt(Math.floor((await time.latest()) / 86400)))).to.equal(E(10000));
+    expect(await ctx.gate.globalUsedLast24h()).to.equal(E(10000));
   });
   it("צוות אדום: זר לא יכול להדליק שער, להחליף signer או לרוקן", async () => {
     const ctx = await deploy();
@@ -140,6 +140,40 @@ describe("BridgeGate", () => {
     await expect(ctx.gate.connect(ctx.mallory).sweep(ctx.mallory.address, 1)).to.be.revertedWithCustomError(ctx.gate, "OwnableUnauthorizedAccount");
     await expect(ctx.gate.connect(ctx.mallory).setKyc(ctx.mallory.address, true)).to.be.revertedWithCustomError(ctx.gate, "OwnableUnauthorizedAccount");
     await expect(ctx.gate.connect(ctx.mallory).pause()).to.be.revertedWithCustomError(ctx.gate, "NotGuardian");
+  });
+  it("צוות אדום: אין תקרה כפולה סביב חצות (חלון מתגלגל)", async () => {
+    const ctx = await deploy();
+    const now = await time.latest();
+    await time.increaseTo(Math.floor(now / 86400 + 1) * 86400 - 60); // 23:59
+    let dl = await ready(ctx);
+    let sig = await voucher(ctx.gate, ctx.signer, ctx.alice.address, E(1000), 1, dl);
+    await ctx.gate.connect(ctx.alice).claim(E(1000), 1, dl, sig);
+    await time.increase(120); // 00:01
+    sig = await voucher(ctx.gate, ctx.signer, ctx.alice.address, E(1000), 2, dl);
+    await expect(ctx.gate.connect(ctx.alice).claim(E(1000), 2, dl, sig)).to.be.revertedWithCustomError(ctx.gate, "UserCapExceeded");
+    await time.increase(24 * 3600);
+    dl = (await time.latest()) + 3600;
+    sig = await voucher(ctx.gate, ctx.signer, ctx.alice.address, E(1000), 3, dl);
+    await ctx.gate.connect(ctx.alice).claim(E(1000), 3, dl, sig);
+  });
+  it("Timelock: שינוי בשער רק אחרי 48 שעות; מתג חירום מיידי", async () => {
+    const ctx = await deploy();
+    const [, , , , , , safe] = await ethers.getSigners(); // מייצג Safe multisig
+    const DELAY = 48 * 3600;
+    const tl = await (await ethers.getContractFactory("TimelockController")).deploy(DELAY, [safe.address], [safe.address], ethers.ZeroAddress);
+    await ctx.gate.connect(ctx.treasury).transferOwnership(await tl.getAddress());
+    await expect(ctx.gate.connect(ctx.treasury).setEnabled(true)).to.be.revertedWithCustomError(ctx.gate, "OwnableUnauthorizedAccount");
+    const data = ctx.gate.interface.encodeFunctionData("setEnabled", [true]);
+    const target = await ctx.gate.getAddress();
+    const salt = ethers.id("enable-1");
+    await expect(tl.connect(ctx.mallory).schedule(target, 0, data, ethers.ZeroHash, salt, DELAY)).to.be.reverted;
+    await tl.connect(safe).schedule(target, 0, data, ethers.ZeroHash, salt, DELAY);
+    await expect(tl.connect(safe).execute(target, 0, data, ethers.ZeroHash, salt)).to.be.reverted;
+    await ctx.gate.connect(ctx.guardian).pause(); // חירום לא מחכה
+    expect(await ctx.gate.paused()).to.equal(true);
+    await time.increase(DELAY + 1);
+    await tl.connect(safe).execute(target, 0, data, ethers.ZeroHash, salt);
+    expect(await ctx.gate.enabled()).to.equal(true);
   });
   it("מתג חירום בשער", async () => {
     const ctx = await deploy(); const dl = await ready(ctx);
