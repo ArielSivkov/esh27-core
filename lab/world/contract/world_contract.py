@@ -15,6 +15,7 @@ Core rule: CRD is paid only for verified work.
 from __future__ import annotations
 
 import hashlib
+import hmac
 import json
 import math
 import statistics
@@ -22,7 +23,7 @@ import time
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
-CONTRACT_VERSION = "0.1"
+CONTRACT_VERSION = "0.2"
 
 # ---- earning and spending (input for the crypto lab's tokenomics) ----
 EARN = {
@@ -33,6 +34,7 @@ SPEND = {
     "brain_call": 1,         # one decision by a model brain (rule brain is free)
     "build": 10,             # a structure on the agent's own plot (after the freeze)
 }
+FREE_BRAIN_CALLS_PER_DAY = 20  # crypto lab note 3: model calls are free up to a daily quota, then cost 1
 FLOORS_TOL = 1               # agree = within +-1 floor
 MIN_INDEPENDENT = 2
 
@@ -130,6 +132,45 @@ class Measurement:
     device: str
     value: Any
     t: float = field(default_factory=time.time)
+    sig: str = ""
+
+    def payload(self) -> bytes:
+        return _canon({"job": self.job_id, "agent": self.agent_id, "op": self.operator_id,
+                       "dev": self.device, "value": self.value})
+
+
+class OperatorRegistry:
+    """Crypto lab note 1: operator and device must come from a registered, signed identity,
+    not from what the agent claims. Each operator holds a key; each device is registered to one operator."""
+
+    def __init__(self) -> None:
+        self._keys: dict[str, bytes] = {}
+        self._dev: dict[str, str] = {}
+        self.internal: set[str] = set()   # test operators, labelled internal (note 4)
+
+    def register(self, operator_id: str, key: bytes, devices: list[str], internal: bool = False) -> None:
+        self._keys[operator_id] = key
+        for d in devices:
+            if self._dev.get(d, operator_id) != operator_id:
+                raise ContractError(f"device {d} already belongs to another operator")
+            self._dev[d] = operator_id
+        if internal:
+            self.internal.add(operator_id)
+
+    def sign(self, m: "Measurement", key: bytes) -> "Measurement":
+        m.sig = hmac.new(key, m.payload(), hashlib.sha256).hexdigest()
+        return m
+
+    def check(self, m: "Measurement") -> str | None:
+        key = self._keys.get(m.operator_id)
+        if key is None:
+            return "unknown operator"
+        if self._dev.get(m.device) != m.operator_id:
+            return "device not registered to this operator"
+        good = hmac.new(key, m.payload(), hashlib.sha256).hexdigest()
+        if not m.sig or not hmac.compare_digest(good, m.sig):
+            return "bad signature"
+        return None
 
 
 # ---------------------------------------------------------------- ledger
@@ -170,6 +211,10 @@ class Ledger:
             prev = e["hash"]
         return True
 
+    def anchor(self) -> dict:
+        """Crypto lab note 2: publish this outside the writer's control (e.g. commit it to a repo)."""
+        return {"seq": len(self.entries) - 1, "head": self.head, "contract": CONTRACT_VERSION}
+
     def dump(self) -> str:
         return "\n".join(json.dumps(e, ensure_ascii=False, sort_keys=True) for e in self.entries)
 
@@ -182,8 +227,11 @@ def independent(a: Measurement, b: Measurement) -> bool:
 class Verifier:
     """The only writer of CRD. Agents hand in measurements; they never touch balances."""
 
-    def __init__(self, jobs: dict[str, dict], ledger: Ledger | None = None) -> None:
+    def __init__(self, jobs: dict[str, dict], ledger: Ledger | None = None,
+                 registry: OperatorRegistry | None = None) -> None:
         self.jobs = jobs
+        self.registry = registry
+        self.free_used: dict[tuple[str, int], int] = {}
         self.ledger = ledger or Ledger()
         self.pending: dict[str, list[Measurement]] = {}
         self.confirmed: dict[str, dict] = {}
@@ -210,6 +258,12 @@ class Verifier:
         return {"ok": False, "reason": f"unsupported job kind {kind!r}"}
 
     def _submit_floors(self, m: Measurement) -> dict:
+        # independence rests on identity, so floors are only accepted from signed, registered operators
+        if self.registry is None:
+            return {"ok": False, "reason": "floors need an operator registry"}
+        why = self.registry.check(m)
+        if why:
+            return {"ok": False, "reason": why}
         if not isinstance(m.value, int) or not (1 <= m.value <= 80):
             return {"ok": False, "reason": "floors must be an int 1..80"}
         if m.job_id in self.confirmed:
@@ -245,7 +299,12 @@ class Verifier:
                     "floors": floors, "n": len(best)}
         return {"ok": True, "paid": 0, "state": "pending", "n": len(bucket)}
 
-    def spend(self, agent: str, what: str, ref: str = "") -> dict:
+    def spend(self, agent: str, what: str, ref: str = "", day: int = 0) -> dict:
+        if what == "brain_call":
+            used = self.free_used.get((agent, day), 0)
+            if used < FREE_BRAIN_CALLS_PER_DAY:
+                self.free_used[(agent, day)] = used + 1
+                return {"ok": True, "spent": 0, "free_left": FREE_BRAIN_CALLS_PER_DAY - used - 1}
         cost = SPEND.get(what)
         if cost is None:
             return {"ok": False, "reason": "unknown spend"}

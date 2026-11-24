@@ -7,7 +7,7 @@ import pytest
 HERE = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(HERE, "..", "contract"))
 from world_contract import (Action, ContractError, Ledger, Measurement, Verifier, EARN,  # noqa: E402
-                            job_kind, truth)
+                            OperatorRegistry, FREE_BRAIN_CALLS_PER_DAY, job_kind, truth)
 
 CITY = os.path.join(HERE, "..", "data", "city_v0.json")
 
@@ -63,61 +63,112 @@ def test_computed_job_pays_only_correct_answer_once():
     assert V.submit(m("001", "a1", "op1", "d1", {"verdict": "maybe"}))["ok"] is False
 
 
-# ---------------- floors: the n>=2 independent rule
+# ---------------- floors: the n>=2 independent rule, on signed identities
 FL = {"B1": {"job_kind": "floors"}}
+KEYS = {f"op{i}": f"k{i}".encode() for i in range(6)}
+KEYS["attacker"] = b"evil"
+
+
+def reg():
+    R = OperatorRegistry()
+    for i in range(6):
+        R.register(f"op{i}", KEYS[f"op{i}"], [f"d{i}", f"d{i}b"])
+    R.register("attacker", KEYS["attacker"], [f"dev{i}" for i in range(10)])
+    return R
+
+
+def FV():
+    return Verifier(dict(FL), registry=reg())
+
+
+def sm(job, agent, op, dev, value, key=None):
+    x = m(job, agent, op, dev, value)
+    return OperatorRegistry().sign(x, key if key is not None else KEYS.get(op, b"?"))
 
 
 def test_floors_need_two_independent():
-    V = Verifier(dict(FL))
-    r1 = V.submit(m("B1", "a1", "op1", "d1", 8))
+    V = FV()
+    r1 = V.submit(sm("B1", "a1", "op1", "d1", 8))
     assert r1["state"] == "pending" and r1["paid"] == 0
-    r2 = V.submit(m("B1", "a2", "op2", "d2", 9))
+    r2 = V.submit(sm("B1", "a2", "op2", "d2", 9))
     assert r2["state"] == "confirmed" and V.confirmed["B1"]["n"] == 2
     assert V.ledger.balance("a1") == V.ledger.balance("a2") == EARN["floors_confirmed"]
     assert V.ledger.verify()
 
 
 def test_sybil_same_operator_never_confirms():
-    V = Verifier(dict(FL))
+    V = FV()
     for i in range(10):  # one operator, ten fake agents, ten devices
-        V.submit(m("B1", f"s{i}", "attacker", f"dev{i}", 30))
+        V.submit(sm("B1", f"s{i}", "attacker", f"dev{i}", 30))
     assert "B1" not in V.confirmed
     assert V.ledger.entries == []
 
 
 def test_sybil_same_device_never_confirms():
-    V = Verifier(dict(FL))
-    for i in range(5):
-        V.submit(m("B1", f"s{i}", f"op{i}", "one-phone", 30))
+    V = FV()
+    for i in range(5):  # five operators claiming one phone: the phone is registered to none of them
+        assert V.submit(sm("B1", f"s{i}", f"op{i}", "one-phone", 30))["reason"] == "device not registered to this operator"
     assert "B1" not in V.confirmed
 
 
+def test_forged_identity_rejected():
+    V = FV()
+    # the attacker claims to be op1 on op1's device, but cannot sign with op1's key
+    r = V.submit(sm("B1", "fake", "op1", "d1", 30, key=KEYS["attacker"]))
+    assert r["ok"] is False and r["reason"] == "bad signature"
+    assert V.submit(sm("B1", "x", "nobody", "d1", 30))["reason"] == "unknown operator"
+    unsigned = m("B1", "a1", "op1", "d1", 8)
+    assert V.submit(unsigned)["reason"] == "bad signature"
+    assert Verifier(dict(FL)).submit(sm("B1", "a1", "op1", "d1", 8))["ok"] is False  # no registry, no floors
+
+
+def test_tampered_value_breaks_signature():
+    x = sm("B1", "a1", "op1", "d1", 8)
+    x.value = 30
+    assert FV().submit(x)["reason"] == "bad signature"
+
+
+def test_device_cannot_switch_operator():
+    R = reg()
+    with pytest.raises(ContractError):
+        R.register("op9", b"k9", ["d1"])
+
+
 def test_disagreement_stays_pending():
-    V = Verifier(dict(FL))
-    V.submit(m("B1", "a1", "op1", "d1", 4))
-    r = V.submit(m("B1", "a2", "op2", "d2", 8))
+    V = FV()
+    V.submit(sm("B1", "a1", "op1", "d1", 4))
+    r = V.submit(sm("B1", "a2", "op2", "d2", 8))
     assert r["state"] == "pending"
 
 
 def test_late_confirmer_paid_outlier_not():
-    V = Verifier(dict(FL))
-    V.submit(m("B1", "a1", "op1", "d1", 8))
-    V.submit(m("B1", "a2", "op2", "d2", 8))
-    assert V.submit(m("B1", "a3", "op3", "d3", 9))["paid"] == EARN["floors_confirmed"]
-    assert V.submit(m("B1", "a4", "op4", "d4", 20))["paid"] == 0
-    assert V.submit(m("B1", "a5", "op1", "d5", 8))["paid"] == 0  # op1 already counted
+    V = FV()
+    V.submit(sm("B1", "a1", "op1", "d1", 8))
+    V.submit(sm("B1", "a2", "op2", "d2", 8))
+    assert V.submit(sm("B1", "a3", "op3", "d3", 9))["paid"] == EARN["floors_confirmed"]
+    assert V.submit(sm("B1", "a4", "op4", "d4", 20))["paid"] == 0
+    assert V.submit(sm("B1", "a5", "op1", "d1b", 8))["paid"] == 0  # op1 already counted (second device, same operator)
 
 
 def test_floors_value_bounds():
-    V = Verifier(dict(FL))
+    V = FV()
     for bad in [0, 81, "8", 8.5, None]:
-        assert V.submit(m("B1", "a1", "op1", "d1", bad))["ok"] is False
+        assert V.submit(sm("B1", "a1", "op1", "d1", bad))["ok"] is False
 
 
-def test_spend_needs_balance():
+def test_spend_needs_balance_after_free_quota():
     V = Verifier({"001": {"kind": "photo", "verdict": "consistent"}})
-    assert V.spend("a1", "brain_call")["ok"] is False
+    for _ in range(FREE_BRAIN_CALLS_PER_DAY):
+        assert V.spend("a1", "brain_call", day=1)["spent"] == 0
+    assert V.spend("a1", "brain_call", day=1)["ok"] is False  # quota used, no CRD
     V.submit(m("001", "a1", "op1", "d1", {"verdict": "consistent"}))
-    assert V.spend("a1", "brain_call")["ok"] is True
+    assert V.spend("a1", "brain_call", day=1)["spent"] == 1
     assert V.ledger.balance("a1") == 0
+    assert V.spend("a1", "brain_call", day=2)["spent"] == 0  # new day, new quota
     assert V.spend("a1", "teleport")["ok"] is False
+
+
+def test_anchor_matches_head():
+    L = Ledger()
+    L._append("earn", "a", 1, "j")
+    assert L.anchor() == {"seq": 0, "head": L.head, "contract": "0.2"}

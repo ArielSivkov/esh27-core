@@ -119,7 +119,7 @@ def run(city_path: str, n_agents: int = 100, ticks: int = 360, brain=None, seed:
                    "jobs": [public_job(j) for jid, j in jobs.items() if jid not in a.done]}
             if getattr(brain, "costs_crd", False):
                 nj = nearest_job(obs)
-                if nj is not None and at_job(obs, nj) and not V.spend(a.id, "brain_call", f"t{t}")["ok"]:
+                if nj is not None and at_job(obs, nj) and not V.spend(a.id, "brain_call", f"t{t}", day=(t * TICK_S) // 86400)["ok"]:
                     stats["brain_spend_failed"] += 1  # cannot afford a model call: fall back to the rule brain
                     act = checked(RuleBrain().decide(obs))
                 else:
@@ -150,7 +150,7 @@ def run(city_path: str, n_agents: int = 100, ticks: int = 360, brain=None, seed:
     return {
         "contract": CONTRACT_VERSION, "brain": brain.name, "agents": n_agents, "ticks": ticks,
         "tick_s": TICK_S, "frame": "city_v0 local metres, origin o", "o": C["o"],
-        "stats": stats, "ledger_ok": V.ledger.verify(), "ledger_entries": len(V.ledger.entries),
+        "stats": stats, "ledger_ok": V.ledger.verify(), "ledger_entries": len(V.ledger.entries), "ledger_anchor": V.ledger.anchor(),
         "crd_total": sum(balances), "crd_top5": balances[:5], "crd_median": balances[len(balances) // 2],
         "jobs_done_by_anyone": len({e["ref"] for e in V.ledger.entries if e["kind"] == "earn"}),
         "agents_tracks": [{"id": a.id, "plot": a.plot, "t": a.track} for a in agents],
