@@ -1,0 +1,113 @@
+Found existing installation: torchao 0.10.0
+Uninstalling torchao-0.10.0:
+  Successfully uninstalled torchao-0.10.0
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[   0.8m] seed 27 BASE {'mul': 0.7, 'betti': 0.2, 'euler': 0.0875, 'gcd': 0.175, 'mean': 0.2906} ctrl 0.9875
+[   2.3m] seed 27 R1 kept 111/320
+[   2.5m]     epoch 1 loss 0.128 steps 14
+[   2.8m]     epoch 2 loss 0.020 steps 28
+[   3.1m] seed 27 R1 {'mul': 0.7125, 'betti': 0.1375, 'euler': 0.1125, 'gcd': 0.575, 'mean': 0.3844} ctrl 0.9875 -> PROMOTE
+[   4.7m] seed 27 R2 kept 160/320
+[   5.1m]     epoch 1 loss 0.101 steps 20
+[   5.6m]     epoch 2 loss 0.025 steps 40
+[   5.9m] seed 27 R2 {'mul': 0.7375, 'betti': 0.225, 'euler': 0.1375, 'gcd': 0.8, 'mean': 0.475} ctrl 0.9875 -> PROMOTE
+[   7.6m] seed 27 R3 kept 197/320
+[   8.1m]     epoch 1 loss 0.107 steps 25
+[   8.7m]     epoch 2 loss 0.332 steps 50
+[   9.0m] seed 27 R3 {'mul': 0.75, 'betti': 0.325, 'euler': 0.15, 'gcd': 0.8625, 'mean': 0.5219} ctrl 0.9875 -> PROMOTE
+[   9.5m] ctrl_add N=111 (target 111)
+[   9.7m]     epoch 1 loss 0.000 steps 14
+[   9.9m]     epoch 2 loss 0.000 steps 28
+[  10.2m] ctrl_add {'n': 111, 'steps': 28, 'test': {'mul': 0.7, 'betti': 0.15, 'euler': 0.075, 'gcd': 0.1625, 'mean': 0.2719}, 'control': 0.9625}
+[  10.5m]     epoch 1 loss 4.415 steps 14
+[  10.8m]     epoch 2 loss 2.471 steps 28
+[  11.1m] ctrl_shuf {'n': 111, 'steps': 28, 'test': {'mul': 0.0, 'betti': 0.0, 'euler': 0.025, 'gcd': 0.0125, 'mean': 0.0094}, 'control': 0.0}
+[  11.5m] seed 28 BASE {'mul': 0.7, 'betti': 0.2, 'euler': 0.0875, 'gcd': 0.175, 'mean': 0.2906} ctrl 0.9875
+[  13.2m] seed 28 R1 kept 141/320
+[  13.5m]     epoch 1 loss 0.240 steps 18
+[  13.9m]     epoch 2 loss 0.209 steps 36
+[  14.2m] seed 28 R1 {'mul': 0.75, 'betti': 0.2375, 'euler': 0.125, 'gcd': 0.65, 'mean': 0.4406} ctrl 0.9875 -> PROMOTE
+[  15.9m] seed 28 R2 kept 182/320
+[  16.4m]     epoch 1 loss 0.250 steps 23
+[  16.9m]     epoch 2 loss 0.011 steps 46
+[  17.2m] seed 28 R2 {'mul': 0.75, 'betti': 0.225, 'euler': 0.1625, 'gcd': 0.8625, 'mean': 0.5} ctrl 0.9875 -> PROMOTE
+[  18.9m] seed 28 R3 kept 188/320
+[  19.5m]     epoch 1 loss 0.060 steps 24
+[  20.0m]     epoch 2 loss 0.219 steps 48
+[  20.4m] seed 28 R3 {'mul': 0.7375, 'betti': 0.2375, 'euler': 0.125, 'gcd': 0.8875, 'mean': 0.4969} ctrl 0.9875 -> REJECT
+[  20.4m] training done
+[  20.8m] functional profile written
+{
+ "H1": {
+  "27": [
+   0.28979763728309016,
+   0.287177595430239,
+   0.33827376772960116
+  ],
+  "28": [
+   0.32144574216590904,
+   0.2950171518106137,
+   0.3354426242601573
+  ]
+ },
+ "H1_supported": false,
+ "H1s_seed_rho": 0.5949644225506295,
+ "H1s_ctrl_rho": 0.07279693486590037,
+ "H1s_supported": false,
+ "H2_median_erank_R1": 7.087820913167965,
+ "H2_supported": false,
+ "H3_consecutive_over_random": 7.260079522318307,
+ "H3_ctrl_overlap": 0.0361571292975742,
+ "H3_consecutive_overlap": 0.06617259981279706,
+ "H3_supported": true,
+ "H4_out_ratio_R1": 1.188709971116317,
+ "H4_outcome": "no preference",
+ "H1f": {
+  "27": [
+   0.4606596496638746,
+   0.5006800042490037,
+   0.43299761386323693
+  ],
+  "28": [
+   0.43214712435179137,
+   0.4197462775740721,
+   0.504304002688656
+  ]
+ },
+ "H1f_supported": false,
+ "H1fs_seed_rho": 0.4072249589490969,
+ "H1fs_ctrl_rho": 0.41598248494800216,
+ "gcd_over_add": {
+  "ctrl_add": 0.926,
+  "ctrl_shuf": 0.934,
+  "s27_r1": 0.994,
+  "s27_r2": 1.016,
+  "s27_r3": 0.981,
+  "s28_r1": 1.001,
+  "s28_r2": 1.052,
+  "s28_r3": 0.978
+ }
+}
+ctrl_add {'top_quarter_share': 0.269, 'top_layers': [26, 1, 27, 22, 13, 24, 18], 'q_share': 0.863, 'median_erank': 7.163, 'median_A_moved': 0.072, 'mean_out_top_ratio': 1.126, 'mean_in_top_ratio': 1.008, 'mean_out_top_ratio_q': 1.138, 'mean_out_top_ratio_v': 1.114, 'spearman_raw_vs_rel_profile': 0.111}
+ctrl_shuf {'top_quarter_share': 0.331, 'top_layers': [17, 19, 13, 16, 14, 26, 18], 'q_share': 0.83, 'median_erank': 6.005, 'median_A_moved': 0.222, 'mean_out_top_ratio': 1.293, 'mean_in_top_ratio': 1.131, 'mean_out_top_ratio_q': 1.193, 'mean_out_top_ratio_v': 1.393, 'spearman_raw_vs_rel_profile': 0.661}
+s27_r1 {'top_quarter_share': 0.29, 'top_layers': [23, 24, 22, 27, 13, 21, 26], 'q_share': 0.859, 'median_erank': 7.118, 'median_A_moved': 0.069, 'mean_out_top_ratio': 1.17, 'mean_in_top_ratio': 0.996, 'mean_out_top_ratio_q': 1.151, 'mean_out_top_ratio_v': 1.19, 'spearman_raw_vs_rel_profile': 0.149}
+s27_r2 {'top_quarter_share': 0.287, 'top_layers': [27, 24, 3, 22, 4, 18, 11], 'q_share': 0.861, 'median_erank': 7.09, 'median_A_moved': 0.083, 'mean_out_top_ratio': 1.148, 'mean_in_top_ratio': 0.993, 'mean_out_top_ratio_q': 1.175, 'mean_out_top_ratio_v': 1.121, 'spearman_raw_vs_rel_profile': 0.396}
+s27_r3 {'top_quarter_share': 0.338, 'top_layers': [24, 27, 26, 23, 25, 7, 16], 'q_share': 0.867, 'median_erank': 7.306, 'median_A_moved': 0.104, 'mean_out_top_ratio': 1.162, 'mean_in_top_ratio': 1.013, 'mean_out_top_ratio_q': 1.179, 'mean_out_top_ratio_v': 1.144, 'spearman_raw_vs_rel_profile': 0.633}
+s28_r1 {'top_quarter_share': 0.321, 'top_layers': [24, 27, 25, 23, 26, 12, 11], 'q_share': 0.853, 'median_erank': 7.058, 'median_A_moved': 0.084, 'mean_out_top_ratio': 1.207, 'mean_in_top_ratio': 1.02, 'mean_out_top_ratio_q': 1.159, 'mean_out_top_ratio_v': 1.256, 'spearman_raw_vs_rel_profile': 0.714}
+s28_r2 {'top_quarter_share': 0.295, 'top_layers': [27, 25, 26, 24, 1, 10, 9], 'q_share': 0.856, 'median_erank': 7.036, 'median_A_moved': 0.092, 'mean_out_top_ratio': 1.136, 'mean_in_top_ratio': 1.031, 'mean_out_top_ratio_q': 1.11, 'mean_out_top_ratio_v': 1.162, 'spearman_raw_vs_rel_profile': 0.494}
+s28_r3 {'top_quarter_share': 0.335, 'top_layers': [27, 25, 24, 26, 20, 22, 16], 'q_share': 0.857, 'median_erank': 7.282, 'median_A_moved': 0.099, 'mean_out_top_ratio': 1.148, 'mean_in_top_ratio': 1.009, 'mean_out_top_ratio_q': 1.178, 'mean_out_top_ratio_v': 1.118, 'spearman_raw_vs_rel_profile': 0.527}
+s27_r1|s27_r2 {'mean_cos': 0.001, 'mean_out_overlap': 0.073, 'out_overlap_over_random': 8.014, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 0.972, 'spearman_layer_profile': 0.153, 'out_overlap_q': 0.082, 'out_overlap_v': 0.064}
+s27_r2|s27_r3 {'mean_cos': 0.001, 'mean_out_overlap': 0.057, 'out_overlap_over_random': 6.268, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.049, 'spearman_layer_profile': 0.268, 'out_overlap_q': 0.071, 'out_overlap_v': 0.043}
+s27_r1|s27_r3 {'mean_cos': 0.001, 'mean_out_overlap': 0.049, 'out_overlap_over_random': 5.382, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.034, 'spearman_layer_profile': 0.593, 'out_overlap_q': 0.061, 'out_overlap_v': 0.037}
+s28_r1|s28_r2 {'mean_cos': 0.002, 'mean_out_overlap': 0.083, 'out_overlap_over_random': 9.106, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.051, 'spearman_layer_profile': 0.237, 'out_overlap_q': 0.084, 'out_overlap_v': 0.082}
+s28_r2|s28_r3 {'mean_cos': 0.0, 'mean_out_overlap': 0.052, 'out_overlap_over_random': 5.653, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.01, 'spearman_layer_profile': 0.239, 'out_overlap_q': 0.066, 'out_overlap_v': 0.037}
+s28_r1|s28_r3 {'mean_cos': 0.001, 'mean_out_overlap': 0.044, 'out_overlap_over_random': 4.814, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 0.972, 'spearman_layer_profile': 0.34, 'out_overlap_q': 0.059, 'out_overlap_v': 0.028}
+s27_r1|s28_r1 {'mean_cos': 0.003, 'mean_out_overlap': 0.11, 'out_overlap_over_random': 12.065, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.005, 'spearman_layer_profile': 0.595, 'out_overlap_q': 0.111, 'out_overlap_v': 0.109}
+s27_r2|s28_r2 {'mean_cos': 0.002, 'mean_out_overlap': 0.075, 'out_overlap_over_random': 8.209, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.022, 'spearman_layer_profile': 0.132, 'out_overlap_q': 0.086, 'out_overlap_v': 0.064}
+s27_r3|s28_r3 {'mean_cos': 0.001, 'mean_out_overlap': 0.046, 'out_overlap_over_random': 5.088, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.034, 'spearman_layer_profile': 0.568, 'out_overlap_q': 0.062, 'out_overlap_v': 0.031}
+s27_r1|ctrl_add {'mean_cos': -0.0, 'mean_out_overlap': 0.036, 'out_overlap_over_random': 3.921, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.094, 'spearman_layer_profile': 0.073, 'out_overlap_q': 0.046, 'out_overlap_v': 0.025}
+s27_r1|ctrl_shuf {'mean_cos': 0.002, 'mean_out_overlap': 0.049, 'out_overlap_over_random': 5.372, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.127, 'spearman_layer_profile': -0.042, 'out_overlap_q': 0.063, 'out_overlap_v': 0.035}
+s28_r1|ctrl_add {'mean_cos': 0.0, 'mean_out_overlap': 0.037, 'out_overlap_over_random': 4.013, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 0.971, 'spearman_layer_profile': 0.247, 'out_overlap_q': 0.049, 'out_overlap_v': 0.024}
+s28_r1|ctrl_shuf {'mean_cos': 0.0, 'mean_out_overlap': 0.042, 'out_overlap_over_random': 4.646, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.18, 'spearman_layer_profile': 0.229, 'out_overlap_q': 0.054, 'out_overlap_v': 0.031}
+ctrl_add|ctrl_shuf {'mean_cos': 0.001, 'mean_out_overlap': 0.035, 'out_overlap_over_random': 3.796, 'mean_in_overlap': 0.003, 'in_overlap_over_random': 1.133, 'spearman_layer_profile': 0.272, 'out_overlap_q': 0.048, 'out_overlap_v': 0.021}
+[  21.4m] ALL DONE
